@@ -82,7 +82,7 @@ layout <- tibble::tribble(
   "R/",              "Shared R scripts: _common.R, theme_publication.R, save_pub_fig.R, custom solvers",
   "part-1-foundations/", "Quarto chapters for Part I (game theory foundations)",
   "part-2-r-toolkit/",  "Quarto chapters for Part II (R packages and tools)",
-  "images/",         "Generated figures (PNG + PDF) from save_pub_fig()",
+  "_generated/figures/", "Generated figures (PNG + PDF) from save_pub_fig()",
   "data/",           "Raw and processed data files",
   "appendices/",     "Supplementary material: refresher, solutions, glossary",
   "_book/",          "Rendered output (HTML, PDF, EPUB) --- not committed to Git",

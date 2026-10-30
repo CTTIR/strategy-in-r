@@ -16,8 +16,6 @@ book:
   search: true
   page-navigation: true
   back-to-top-navigation: true
-  cover-image: images/cover.png
-  favicon: images/favicon.png
 
   chapters:
     - index.qmd
@@ -114,10 +112,10 @@ format:
     fig-pos: 'H'
     cite-method: biblatex
     biblio-style: apa
-  epub:
-    cover-image: images/cover.png
+  epub: default
 
 execute:
+  error: false
   freeze: auto
   warning: false
   message: false

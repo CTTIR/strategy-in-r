@@ -61,7 +61,7 @@ R_t^+(a) \,/\, \sum_{a'} R_t^+(a') & \text{if } \sum_{a'} R_t^+(a') > 0 \\
 \end{cases}
 $$ {#eq-regret-matching}
 
-where $R_t^+(a) = \max(0, R_t(a))$. This algorithm is the building block of **counterfactual regret minimization** (CFR), covered in @sec-cfr-poker.
+where $R_t^+(a) = \max(0, R_t(a))$. This algorithm is the building block of **counterfactual regret minimization** (CFR), covered in @sec-cfr.
 
 ### Feature representation for game-theoretic data
 
@@ -332,7 +332,7 @@ The opponent's recent cooperation rate is the strongest predictor — consistent
 ## Extensions
 
 - **Multiplicative weights update** is an alternative no-regret algorithm with tighter theoretical bounds. See @arora2012 for a survey of the multiplicative weights method and its connections to game theory.
-- **Counterfactual regret minimization** (@sec-cfr-poker) extends regret matching to extensive-form games, powering superhuman poker AI.
+- **Counterfactual regret minimization** (@sec-cfr) extends regret matching to extensive-form games, powering superhuman poker AI.
 - **Reinforcement learning** (@sec-reinforcement-learning) replaces the fixed-loss setting of online learning with sequential decision-making under an MDP.
 - **Feature engineering** for strategic data is an active research area: deep learning approaches learn features automatically, but interpretable features (cooperation rates, payoff summaries) remain valuable for analysis.
 

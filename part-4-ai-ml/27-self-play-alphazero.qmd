@@ -20,13 +20,13 @@ source(here::here("R", "_common.R"))
 - Explain why self-play is a powerful training paradigm for two-player zero-sum games.
 - Implement Monte Carlo Tree Search (MCTS) in base R, including UCT selection, rollout, and backpropagation.
 - Describe the AlphaZero architecture and how neural networks replace the rollout phase of MCTS.
-- Demonstrate MCTS convergence to optimal play in Tic-Tac-Toe through visit count analysis.
+- Inspect MCTS visit counts and measure finite-budget play against a random opponent.
 
 ## Motivation
 
 In @sec-q-learning and @sec-multi-agent-rl, we trained agents using tabular methods on small matrix games. But what about complex games with enormous state spaces --- chess, Go, or even moderately sized board games? Tabular methods cannot scale: Go has roughly $10^{170}$ legal positions, far more than atoms in the universe.
 
-**Self-play** offers an elegant solution. Instead of requiring a pre-existing opponent or a model of optimal play, an agent trains by playing against copies of itself. Each generation of the agent becomes a training partner for the next. This bootstrapping process, combined with Monte Carlo Tree Search (MCTS), enabled AlphaGo to defeat the world Go champion [@silver2016] and AlphaZero to master chess, shogi, and Go from scratch with no human knowledge beyond the rules [@silver2017].
+**Self-play** offers an elegant solution. Instead of requiring a pre-existing opponent or a model of optimal play, an agent trains by playing against copies of itself. Each generation of the agent becomes a training partner for the next. This bootstrapping process, combined with Monte Carlo Tree Search (MCTS), enabled AlphaGo to defeat the world Go champion [@silver2016] and AlphaZero to master chess, shogi, and Go from scratch with no human knowledge beyond the rules [@silver2017alphazero].
 
 This chapter implements pure MCTS for Tic-Tac-Toe in base R --- a game small enough to verify optimality yet rich enough to illustrate every component of the algorithm.
 
@@ -58,14 +58,14 @@ After a fixed number of iterations, the algorithm selects the action from the ro
 
 ### AlphaZero architecture
 
-AlphaZero [@silver2017] replaces the random rollout in step 3 with a **neural network** that directly evaluates positions. The network $f_\theta(s) = (\mathbf{p}, v)$ takes a board state $s$ and outputs:
+AlphaZero [@silver2017alphazero] replaces the random rollout in step 3 with a **neural network** that directly evaluates positions. The network $f_\theta(s) = (\mathbf{p}, v)$ takes a board state $s$ and outputs:
 
-- A **policy vector** $\mathbf{p}$: prior probabilities over legal moves, used to guide the UCT selection.
+- A **policy vector** $\mathbf{p}$: prior probabilities over legal moves, used in a prior-weighted tree policy (PUCT).
 - A **value estimate** $v \in [-1, 1]$: the predicted game outcome from state $s$.
 
-The training loop iterates: play self-play games using MCTS guided by $f_\theta$, store $(s_t, \pi_t, z_t)$ tuples (state, MCTS visit-count policy, outcome), and train $f_\theta$ to minimize $(\mathbf{p} - \pi)^2 + (v - z)^2$. AlphaZero learned chess at superhuman level using only the rules [@silver2017].
+The training loop iterates: play self-play games using MCTS guided by $f_\theta$, store $(s_t, \pi_t, z_t)$ tuples (state, MCTS visit-count policy, outcome), and train $f_\theta$ to minimize $(v-z)^2 - \pi^\top\log\mathbf{p} + c\lVert\theta\rVert^2$ (value error, policy cross-entropy, and weight regularization). AlphaZero learned chess at superhuman level using only the rules [@silver2017alphazero].
 
-Since neural networks require deep learning frameworks beyond our available packages, we implement **pure MCTS** (with random rollouts) below. The algorithmic structure is identical --- AlphaZero substitutes a learned evaluation for the random rollout.
+Since neural networks require deep learning frameworks beyond our available packages, we implement **pure MCTS** (with random rollouts) below. This illustrates tree search, not AlphaZero training: AlphaZero also uses policy priors in selection, learns a value function, and updates a network from self-play.
 
 ## Implementation in R {#sec-mcts-impl}
 
@@ -78,6 +78,12 @@ ttt_new <- function() rep(0L, 9)  # 0 = empty, 1 = X, -1 = O
 ttt_moves <- function(board) which(board == 0L)
 
 ttt_play <- function(board, pos, player) {
+  if (length(pos) != 1L || !is.numeric(pos) || !is.finite(pos) ||
+      pos != trunc(pos) || !pos %in% ttt_moves(board))
+    stop("pos must identify one empty square")
+  if (length(player) != 1L || is.na(player) ||
+      player != ttt_current_player(board) || !is.na(ttt_winner(board)))
+    stop("player must be the side to move in an unfinished game")
   board[pos] <- player
   board
 }
@@ -105,15 +111,16 @@ ttt_current_player <- function(board) {
 ```{r}
 #| label: mcts-core
 mcts_node <- function(board, parent = NULL, action = NULL) {
-  list(
+  # Environments give parent/child references shared mutable state.
+  list2env(list(
     board = board,
     parent = parent,
     action = action,
     children = list(),
     visits = 0,
     total_value = 0,
-    untried = ttt_moves(board)
-  )
+    untried = if (is.na(ttt_winner(board))) ttt_moves(board) else integer()
+  ), parent = emptyenv())
 }
 
 mcts_select <- function(node, c_explore = sqrt(2)) {
@@ -138,7 +145,7 @@ mcts_select <- function(node, c_explore = sqrt(2)) {
 
 mcts_expand <- function(node) {
   if (length(node$untried) == 0) return(node)
-  action <- sample(node$untried, 1)
+  action <- node$untried[sample.int(length(node$untried), 1L)]
   node$untried <- setdiff(node$untried, action)
   player <- ttt_current_player(node$board)
   new_board <- ttt_play(node$board, action, player)
@@ -151,7 +158,7 @@ mcts_rollout <- function(board) {
   while (is.na(ttt_winner(board))) {
     player <- ttt_current_player(board)
     moves <- ttt_moves(board)
-    board <- ttt_play(board, sample(moves, 1), player)
+    board <- ttt_play(board, moves[sample.int(length(moves), 1L)], player)
   }
   ttt_winner(board)
 }
@@ -170,6 +177,16 @@ mcts_backpropagate <- function(node, result) {
 ```{r}
 #| label: mcts-run-function
 mcts_search <- function(board, n_iterations = 1000, c_explore = sqrt(2)) {
+  if (!is.numeric(board) || length(board) != 9L || anyNA(board) ||
+      any(!board %in% c(-1L, 0L, 1L)) ||
+      !sum(board) %in% c(0, 1)) stop("board must be a legal nine-square position")
+  if (length(n_iterations) != 1L || !is.numeric(n_iterations) ||
+      !is.finite(n_iterations) || n_iterations < 1 ||
+      n_iterations != trunc(n_iterations) || n_iterations > .Machine$integer.max)
+    stop("n_iterations must be a positive integer")
+  if (length(c_explore) != 1L || !is.numeric(c_explore) ||
+      !is.finite(c_explore) || c_explore < 0) stop("c_explore must be finite and nonnegative")
+  if (!is.na(ttt_winner(board))) stop("search requires an unfinished game")
   root <- mcts_node(board)
 
   for (i in seq_len(n_iterations)) {
@@ -206,7 +223,7 @@ mcts_search <- function(board, n_iterations = 1000, c_explore = sqrt(2)) {
 
 ```{r}
 #| label: fig-mcts-tree
-#| fig-cap: "MCTS search from an empty Tic-Tac-Toe board (1000 iterations). Each cell shows visit count and win rate from X's perspective. The center (position 5) receives the most visits, reflecting its strategic importance. Corner moves also receive high visit counts, consistent with known optimal opening play."
+#| fig-cap: "MCTS search from an empty Tic-Tac-Toe board (1000 iterations). Each cell shows visits and mean score from X's perspective (win = 1, draw = 0.5, loss = 0). Finite-budget visit counts reflect this seeded search, not a proof that an opening is uniquely optimal."
 #| fig-width: 6
 #| fig-height: 6
 
@@ -228,7 +245,7 @@ board_df <- tibble(
     visits = replace_na(visits, 0),
     avg_value = replace_na(avg_value, 0),
     label = if_else(visits > 0,
-                    paste0("V:", visits, "\nW:", sprintf("%.0f%%",
+                    paste0("V:", visits, "\nS:", sprintf("%.0f%%",
                            (avg_value + 1) / 2 * 100)),
                     "")
   )
@@ -253,7 +270,9 @@ p_tree
 save_pub_fig(p_tree, "mcts-tree-visits", width = 6, height = 6)
 ```
 
-### Self-play win-rate tracking
+### Evaluation against a random opponent
+
+This experiment does not train a policy or perform self-play. It measures X's results in 50 games per search budget against a random O; sampling uncertainty and the first-player advantage matter.
 
 ```{r}
 #| label: self-play-simulation
@@ -268,7 +287,7 @@ mcts_vs_random <- function(n_iterations) {
     } else {
       # Random opponent
       moves <- ttt_moves(board)
-      board <- ttt_play(board, sample(moves, 1), player)
+      board <- ttt_play(board, moves[sample.int(length(moves), 1L)], player)
     }
   }
   ttt_winner(board)
@@ -296,7 +315,7 @@ for (n_iter in iteration_levels) {
 
 ```{r}
 #| label: fig-self-play-winrate
-#| fig-cap: "MCTS win rate against a random opponent as search budget increases. With only 10 iterations per move, MCTS wins roughly 70% of games. By 200 iterations it wins nearly every game, demonstrating how deeper search translates directly into stronger play."
+#| fig-cap: "MCTS win rate against a random opponent as search budget increases. Each point summarizes 50 seeded games with MCTS playing X. These finite samples do not establish monotonic improvement or optimality."
 #| fig-width: 7
 #| fig-height: 5
 
@@ -327,20 +346,21 @@ save_pub_fig(p_sp, "mcts-self-play-winrate", width = 7, height = 5)
 We trace MCTS solving a mid-game Tic-Tac-Toe position step by step. Consider this board state where X has a forced win:
 
 ```
- X | . | .
+ X | X | .
 -----------
- . | O | .
+ O | O | .
 -----------
- . | . | X
+ . | . | .
 ```
 
-X is at positions 1 and 9, O is at position 5. It is X's turn.
+X occupies positions 1 and 2; O occupies 4 and 5. It is X's turn, and position 3 wins immediately.
 
 ```{r}
 #| label: worked-example-mcts
 board_mid <- rep(0L, 9)
 board_mid[1] <- 1L   # X top-left
-board_mid[9] <- 1L   # X bottom-right
+board_mid[2] <- 1L   # X top-middle
+board_mid[4] <- -1L  # O middle-left
 board_mid[5] <- -1L  # O center
 
 cat("Board state:\n")
@@ -356,7 +376,7 @@ set.seed(42)
 result_mid <- mcts_search(board_mid, n_iterations = 2000)
 
 cat("\nMCTS analysis (2000 iterations):\n")
-cat("Move | Visits | Win Rate (X)\n")
+cat("Move | Visits | Mean Score (X)\n")
 cat("-----+--------+-------------\n")
 for (i in seq_len(nrow(result_mid$stats))) {
   s <- result_mid$stats[i, ]
@@ -366,19 +386,20 @@ for (i in seq_len(nrow(result_mid$stats))) {
 
 cat(sprintf("\nBest move: position %d\n", result_mid$best_move))
 
-# Explain the strategic reasoning
+# Check the resulting board rather than assume a tactical explanation.
 best <- result_mid$best_move
-cat(sprintf(
-  "\nPosition %d creates a double threat (fork). After X plays here,\n", best))
-cat("X threatens to complete two different lines simultaneously.\n")
-cat("O can only block one, so X wins on the next move.\n")
+if (isTRUE(ttt_winner(ttt_play(board_mid, best, 1L)) == 1L)) {
+  cat("The selected move completes X's top row and wins immediately.\n")
+} else {
+  cat("This finite search missed the immediate win at position 3.\n")
+}
 ```
 
-The visit count distribution reveals MCTS's reasoning: the optimal move receives the majority of visits because rollouts from that position yield the highest win rate. UCT (@eq-uct) balances exploration and exploitation without domain knowledge --- a principled solution to the multi-armed bandit problem applied recursively through the game tree.
+The visit count distribution reveals MCTS's reasoning: the distribution records how this finite search allocated its simulations. A winning move can be verified directly by the game rules. UCT (@eq-uct) balances exploration and exploitation without domain knowledge --- a principled solution to the multi-armed bandit problem applied recursively through the game tree.
 
 ## Extensions
 
-- **AlphaZero's neural MCTS**: Replace random rollouts with a neural network evaluation trained on self-play data, creating a virtuous cycle of improving evaluation, search, and training data [@silver2017].
+- **AlphaZero's neural MCTS**: Replace random rollouts with a neural network evaluation trained on self-play data, creating a virtuous cycle of improving evaluation, search, and training data [@silver2017alphazero].
 - **Progressive widening**: In games with large branching factors, expand moves proportional to visit count, focusing computation on promising subtrees.
 - **RAVE (Rapid Action Value Estimation)**: Share value estimates across sibling nodes to accelerate convergence in early search.
 - **Temperature-based move selection**: Sample moves proportional to $N(s,a)^{1/\tau}$ during training to maintain exploration diversity.

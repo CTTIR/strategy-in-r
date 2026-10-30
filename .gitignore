@@ -45,3 +45,8 @@ desktop.ini
 *.Rproj
 
 /.quarto/
+
+**/*.quarto_ipynb
+
+# Rebuilt figure exports; published illustrations remain in images/.
+_generated/

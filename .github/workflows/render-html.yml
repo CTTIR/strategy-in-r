@@ -18,8 +18,17 @@ jobs:
 
       - uses: quarto-dev/quarto-actions/setup@v2
 
+      - name: Check source references
+        run: python3 scripts/check-source-refs.py
+
+      - name: Check MCTS teaching implementation
+        run: Rscript tests/test-mcts.R
+
       - name: Render HTML
         run: quarto render --to html
+
+      - name: Verify rendered links and assets
+        run: python3 scripts/check-html-links.py _book html-links.json
 
       - name: Upload HTML artifact
         uses: actions/upload-artifact@v4

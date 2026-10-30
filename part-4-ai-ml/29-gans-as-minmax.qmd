@@ -303,8 +303,8 @@ cat("  dynamics would converge to covering both modes.\n")
 ## Extensions
 
 - **Wasserstein GANs**: Replace the Jensen-Shannon divergence implicit in the original GAN with the Wasserstein distance, providing more informative gradients and more stable training.
-- **Evolutionary game theory connection**: GAN training can be viewed through the lens of replicator dynamics (@sec-replicator), where the generator and discriminator populations co-evolve.
-- **Minimax theorem**: The GAN objective satisfies the conditions of von Neumann's minimax theorem (@sec-minimax) when the strategy spaces are convex and the payoff function is bilinear.
+- **Evolutionary game theory connection**: GAN training can be viewed through the lens of replicator dynamics (@sec-replicator-dynamics), where the generator and discriminator populations co-evolve.
+- **Minimax theorem**: The GAN objective satisfies the conditions of von Neumann's minimax theorem (@sec-custom-solvers) when the strategy spaces are convex and the payoff function is bilinear.
 - **Multi-agent RL** (@sec-multi-agent-rl) covers alternative adversarial training paradigms.
 
 For the foundational GAN paper, see @goodfellow2014.

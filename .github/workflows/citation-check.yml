@@ -55,7 +55,7 @@ jobs:
           }
 
           # Check arXiv IDs
-          arxiv_lines <- grep("eprint\\s*=|arxiv", bib, value = TRUE, ignore.case = TRUE)
+          arxiv_lines <- grep("^\\s*eprint\\s*=", bib, value = TRUE, ignore.case = TRUE)
           arxiv_ids <- gsub(".*\\{(.+?)\\}.*", "\\1", arxiv_lines)
           arxiv_ids <- trimws(arxiv_ids)
           arxiv_ids <- arxiv_ids[nchar(arxiv_ids) > 0 & grepl("^[0-9]", arxiv_ids)]

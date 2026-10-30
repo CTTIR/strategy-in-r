@@ -52,7 +52,7 @@ Dominant strategy
 : A strategy that yields a payoff at least as high as any alternative regardless of opponents' actions (weak dominance) or strictly higher (strict dominance).
 
 Evolutionary stable strategy (ESS)
-: A strategy that, once prevalent in a population, cannot be invaded by any rare mutant strategy. Formally, a strategy $s^*$ is an ESS if it is a best response to itself and, against any alternative best response, does strictly better against the mutant than the mutant does against itself. See @sec-evolutionary-stable-strategies.
+: A strategy that, once prevalent in a population, cannot be invaded by any rare mutant strategy. Formally, a strategy $s^*$ is an ESS if it is a best response to itself and, against any alternative best response, does strictly better against the mutant than the mutant does against itself. See @sec-ess.
 
 Extensive form
 : A representation of a game as a tree, specifying the order of moves, information available at each decision point, and payoffs at terminal nodes. See @sec-extensive-form.
