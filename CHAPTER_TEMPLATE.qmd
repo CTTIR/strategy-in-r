@@ -1,5 +1,4 @@
 ---
-title: "Chapter Title Here"
 short-title: "Short Title"
 author: "Raban Heller"
 date-modified: today
@@ -7,7 +6,7 @@ abstract: "One-sentence summary of the chapter's contribution."
 keywords: ["keyword1", "keyword2", "keyword3"]
 ---
 
-# Chapter Title {#sec-chapter-slug}
+# Chapter Title Here {#sec-chapter-slug}
 
 ```{r}
 #| label: setup

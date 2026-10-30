@@ -1,5 +1,4 @@
 ---
-title: "R Refresher"
 short-title: "R Refresher"
 author: "Raban Heller"
 date-modified: today

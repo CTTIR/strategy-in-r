@@ -1,5 +1,4 @@
 ---
-title: "Preface"
 author: "Raban Heller"
 date-modified: today
 ---

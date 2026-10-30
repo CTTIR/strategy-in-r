@@ -21,3 +21,9 @@ for name,text in zip(names,texts):
 print(f"Checked {len(names)} inputs, {len(labels)} section labels, {len(keys)} bibliography entries")
 if missing:
     raise SystemExit('\n'.join(missing))
+
+# A chapter must choose YAML title or H1, not both (otherwise it is numbered twice).
+for path in Path('.').rglob('*.qmd'):
+    text=path.read_text()
+    if re.search(r'^title:',text,re.M) and re.search(r'^# ',text,re.M):
+        raise SystemExit(f'Duplicate chapter title: {path}')

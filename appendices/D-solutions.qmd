@@ -1,5 +1,4 @@
 ---
-title: "Exercise Solutions"
 short-title: "Solutions"
 author: "Raban Heller"
 date-modified: today

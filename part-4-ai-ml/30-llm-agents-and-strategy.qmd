@@ -1,5 +1,4 @@
 ---
-title: "LLM Agents and Strategic Reasoning"
 short-title: "LLM Agents"
 author: "Raban Heller"
 date-modified: today
@@ -7,7 +6,7 @@ abstract: "Large language models as game-playing agents: level-k reasoning, cogn
 keywords: ["LLM", "language model", "agents", "strategic reasoning", "level-k", "cognitive hierarchy"]
 ---
 
-# LLM Agents and Strategy {#sec-llm-agents}
+# LLM Agents and Strategic Reasoning {#sec-llm-agents}
 
 ```{r}
 #| label: setup

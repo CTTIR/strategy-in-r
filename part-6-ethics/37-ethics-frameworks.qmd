@@ -1,5 +1,4 @@
 ---
-title: "Ethical Frameworks for Strategic AI"
 short-title: "Ethics Frameworks"
 author: "Raban Heller"
 date-modified: today

@@ -1,5 +1,4 @@
 ---
-title: "Multi-Agent Reinforcement Learning"
 short-title: "Multi-Agent RL"
 author: "Raban Heller"
 date-modified: today
@@ -7,7 +6,7 @@ abstract: "Independent learners, joint-action learners, minimax-Q for zero-sum g
 keywords: ["MARL", "multi-agent", "minimax-Q", "MADDPG", "PSRO", "independent learners"]
 ---
 
-# Multi-Agent RL {#sec-multi-agent-rl}
+# Multi-Agent Reinforcement Learning {#sec-multi-agent-rl}
 
 ```{r}
 #| label: setup

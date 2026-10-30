@@ -1,5 +1,4 @@
 ---
-title: "Bayesian Games"
 short-title: "Bayesian Games"
 author: "Raban Heller"
 date-modified: today

@@ -1,5 +1,4 @@
 ---
-title: "The CoopGame Package"
 short-title: "CoopGame"
 author: "Raban Heller"
 date-modified: today

@@ -1,5 +1,4 @@
 ---
-title: "GANs as Minimax Games"
 short-title: "GANs"
 author: "Raban Heller"
 date-modified: today

@@ -1,5 +1,4 @@
 ---
-title: "Replicator Dynamics"
 short-title: "Replicator Dynamics"
 author: "Raban Heller"
 date-modified: today

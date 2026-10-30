@@ -1,5 +1,4 @@
 ---
-title: "The Future of Strategy"
 short-title: "Future"
 author: "Raban Heller"
 date-modified: today

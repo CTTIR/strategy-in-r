@@ -1,5 +1,4 @@
 ---
-title: "Fairness in Machine Learning"
 short-title: "Fairness in ML"
 author: "Raban Heller"
 date-modified: today

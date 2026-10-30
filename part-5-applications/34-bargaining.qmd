@@ -1,5 +1,4 @@
 ---
-title: "Bargaining Theory"
 short-title: "Bargaining"
 author: "Raban Heller"
 date-modified: today

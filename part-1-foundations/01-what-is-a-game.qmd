@@ -1,5 +1,4 @@
 ---
-title: "What is a Game?"
 short-title: "What is a Game?"
 author: "Raban Heller"
 date-modified: today

@@ -50,3 +50,8 @@ desktop.ini
 
 # Rebuilt figure exports; published illustrations remain in images/.
 _generated/
+
+# Intermediate chapter render products; tracked historical illustrations remain.
+**/*_files/
+*.rmarkdown
+/site_libs/

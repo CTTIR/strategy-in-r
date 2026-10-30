@@ -1,5 +1,4 @@
 ---
-title: "The GameTheory Package"
 short-title: "GameTheory"
 author: "Raban Heller"
 date-modified: today

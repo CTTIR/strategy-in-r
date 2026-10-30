@@ -1,5 +1,4 @@
 ---
-title: "Mixed Strategies and the Indifference Principle"
 short-title: "Mixed Strategies"
 author: "Raban Heller"
 date-modified: today

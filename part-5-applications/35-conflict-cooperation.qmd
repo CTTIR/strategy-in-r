@@ -1,5 +1,4 @@
 ---
-title: "Conflict and Cooperation Models"
 short-title: "Conflict & Cooperation"
 author: "Raban Heller"
 date-modified: today

@@ -1,5 +1,4 @@
 ---
-title: "Evolutionarily Stable Strategies"
 short-title: "ESS"
 author: "Raban Heller"
 date-modified: today

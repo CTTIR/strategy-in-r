@@ -1,5 +1,4 @@
 ---
-title: "Cooperative Game Theory"
 short-title: "Cooperative GT"
 author: "Raban Heller"
 date-modified: today

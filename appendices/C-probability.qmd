@@ -1,5 +1,4 @@
 ---
-title: "Probability Essentials"
 short-title: "Probability"
 author: "Raban Heller"
 date-modified: today

@@ -1,5 +1,4 @@
 ---
-title: "Cooperative AI"
 short-title: "Cooperative AI"
 author: "Raban Heller"
 date-modified: today

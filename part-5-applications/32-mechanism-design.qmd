@@ -1,5 +1,4 @@
 ---
-title: "Mechanism Design"
 short-title: "Mechanism Design"
 author: "Raban Heller"
 date-modified: today

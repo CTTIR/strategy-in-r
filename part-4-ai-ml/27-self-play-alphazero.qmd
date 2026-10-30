@@ -1,5 +1,4 @@
 ---
-title: "Self-Play and AlphaZero"
 short-title: "AlphaZero"
 author: "Raban Heller"
 date-modified: today

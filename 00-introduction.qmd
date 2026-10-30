@@ -1,5 +1,4 @@
 ---
-title: "Introduction: Why Strategy in R?"
 short-title: "Introduction"
 author: "Raban Heller"
 date-modified: today
@@ -7,7 +6,7 @@ abstract: "Why study strategic interaction computationally, and why R is the rig
 keywords: ["game theory", "R", "computational social science", "strategy"]
 ---
 
-# Introduction {#sec-introduction}
+# Introduction: Why Strategy in R? {#sec-introduction}
 
 ## The computational turn in game theory
 

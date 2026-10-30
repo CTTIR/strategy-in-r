@@ -42,18 +42,21 @@ separate work, rather than being represented as tested.
 R 4.6.1, Quarto 1.10.19, macOS ARM64:
 
 - All 48 configured inputs rendered to HTML with execution errors fatal. Final
-  distribution render completed in 115.13 seconds.
-- EPUB render passed; ZIP CRC, required EPUB mimetype, 175 members and 98 XHTML
+  distribution render completed in 509.55 seconds.
+- EPUB render passed in 233.13 seconds; ZIP CRC, required EPUB mimetype, 127 members and 50 XHTML
   resources verified. HTML and EPUB coexist in `_book/`.
 - Source gate: 48 inputs, 88 labels, 67 bibliography entries; no unresolved local
-  section/citation keys. Rendered gate: 20,308 local references across 48 pages,
+  section/citation keys. Rendered gate: 20,213 local references across 48 pages,
   zero broken targets/anchors.
 - MCTS regression script passed. Chromium navigation to the self-play chapter,
   chapter content, unresolved-reference absence and 390-pixel reading passed;
   desktop/mobile screenshots retained and inspected.
-- A browser harness initially assumed a single H1, but Quarto renders a YAML
-  title block and an explicitly headed chapter. The check now targets the title
-  block and expected title directly; content/navigation assertions remain.
+- Visual inspection then revealed that duplicate YAML/body titles also advanced
+  the chapter counter twice. Removed the redundant YAML title while preserving
+  its full wording and the explicit chapter anchor in the H1, across chapters
+  and the template. Both formats passed full renders after this finding; browser checks confirm one
+  chapter H1 with the full title and working navigation on mobile.
+
 
 Exact commands, logs, primary-source bibliography notes and artifacts are in the
 local portfolio evidence directory's `strategy-in-r/` subdirectory. No remote CI,

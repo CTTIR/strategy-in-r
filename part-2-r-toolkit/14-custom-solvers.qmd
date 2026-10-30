@@ -1,5 +1,4 @@
 ---
-title: "Building Custom Solvers in R"
 short-title: "Custom Solvers"
 author: "Raban Heller"
 date-modified: today

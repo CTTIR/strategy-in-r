@@ -1,5 +1,4 @@
 ---
-title: "Reinforcement Learning Foundations"
 short-title: "RL Foundations"
 author: "Raban Heller"
 date-modified: today

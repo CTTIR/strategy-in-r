@@ -1,5 +1,4 @@
 ---
-title: "Agent-Based Models for Strategic Interaction"
 short-title: "Agent-Based Models"
 author: "Raban Heller"
 date-modified: today

@@ -1,5 +1,4 @@
 ---
-title: "Auction Theory"
 short-title: "Auctions"
 author: "Raban Heller"
 date-modified: today

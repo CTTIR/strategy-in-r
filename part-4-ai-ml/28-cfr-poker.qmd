@@ -1,5 +1,4 @@
 ---
-title: "Counterfactual Regret Minimization and Poker"
 short-title: "CFR"
 author: "Raban Heller"
 date-modified: today
@@ -7,7 +6,7 @@ abstract: "Counterfactual regret minimization for imperfect information games: i
 keywords: ["CFR", "counterfactual regret", "poker", "imperfect information", "Kuhn Poker"]
 ---
 
-# CFR and Poker {#sec-cfr}
+# Counterfactual Regret Minimization and Poker {#sec-cfr}
 
 ```{r}
 #| label: setup

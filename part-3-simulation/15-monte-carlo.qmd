@@ -1,5 +1,4 @@
 ---
-title: "Monte Carlo Methods for Games"
 short-title: "Monte Carlo Methods"
 author: "Raban Heller"
 date-modified: today

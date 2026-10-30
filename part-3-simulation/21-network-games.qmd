@@ -1,5 +1,4 @@
 ---
-title: "Games on Networks"
 short-title: "Network Games"
 author: "Raban Heller"
 date-modified: today

@@ -1,5 +1,4 @@
 ---
-title: "Machine Learning Foundations for Game Theory"
 short-title: "ML Foundations"
 author: "Raban Heller"
 date-modified: today
@@ -7,7 +6,7 @@ abstract: "Supervised learning as a game against nature, regret minimization and
 keywords: ["machine learning", "regret matching", "supervised learning", "logistic regression", "cross-validation"]
 ---
 
-# ML Foundations for Game Theory {#sec-ml-foundations}
+# Machine Learning Foundations for Game Theory {#sec-ml-foundations}
 
 ```{r}
 #| label: setup

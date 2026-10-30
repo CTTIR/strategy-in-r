@@ -1,5 +1,4 @@
 ---
-title: "The R Environment for Strategic Computation"
 short-title: "R Environment"
 author: "Raban Heller"
 date-modified: today
@@ -7,7 +6,7 @@ abstract: "A practical guide to setting up RStudio or Positron for game-theoreti
 keywords: ["R", "RStudio", "Positron", "renv", "project setup", "reproducibility", "knitr"]
 ---
 
-# The R Environment {#sec-r-environment}
+# The R Environment for Strategic Computation {#sec-r-environment}
 
 ```{r}
 #| label: setup

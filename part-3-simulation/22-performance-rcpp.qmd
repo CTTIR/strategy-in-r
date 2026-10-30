@@ -1,5 +1,4 @@
 ---
-title: "Performance Optimization"
 short-title: "Performance"
 author: "Raban Heller"
 date-modified: today

@@ -1,5 +1,4 @@
 ---
-title: "Repeated Games"
 short-title: "Repeated Games"
 author: "Raban Heller"
 date-modified: today

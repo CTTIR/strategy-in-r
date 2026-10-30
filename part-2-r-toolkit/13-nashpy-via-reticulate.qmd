@@ -1,5 +1,4 @@
 ---
-title: "nashpy via reticulate"
 short-title: "nashpy + reticulate"
 author: "Raban Heller"
 date-modified: today

@@ -1,5 +1,4 @@
 ---
-title: "Replicating Axelrod's Tournament"
 short-title: "Axelrod Tournament"
 author: "Raban Heller"
 date-modified: today

@@ -1,5 +1,4 @@
 ---
-title: "Glossary"
 short-title: "Glossary"
 author: "Raban Heller"
 date-modified: today

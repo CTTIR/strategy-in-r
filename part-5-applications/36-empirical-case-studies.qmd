@@ -1,5 +1,4 @@
 ---
-title: "Empirical Case Studies"
 short-title: "Case Studies"
 author: "Raban Heller"
 date-modified: today

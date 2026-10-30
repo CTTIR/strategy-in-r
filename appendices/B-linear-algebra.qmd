@@ -1,5 +1,4 @@
 ---
-title: "Linear Algebra Essentials"
 short-title: "Linear Algebra"
 author: "Raban Heller"
 date-modified: today

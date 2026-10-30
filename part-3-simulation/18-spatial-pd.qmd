@@ -1,5 +1,4 @@
 ---
-title: "The Spatial Prisoner's Dilemma"
 short-title: "Spatial PD"
 author: "Raban Heller"
 date-modified: today
@@ -7,7 +6,7 @@ abstract: "A computational exploration of Nowak and May's spatial Prisoner's Dil
 keywords: ["spatial games", "Prisoner's Dilemma", "lattice", "Nowak", "cooperation", "Moore neighborhood"]
 ---
 
-# Spatial Prisoner's Dilemma {#sec-spatial-pd}
+# The Spatial Prisoner's Dilemma {#sec-spatial-pd}
 
 ```{r}
 #| label: setup

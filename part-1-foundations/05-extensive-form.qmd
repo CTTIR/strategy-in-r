@@ -1,5 +1,4 @@
 ---
-title: "Extensive-Form Games"
 short-title: "Extensive Form"
 author: "Raban Heller"
 date-modified: today
