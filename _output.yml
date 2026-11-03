@@ -33,6 +33,7 @@ bookdown::pdf_book:
   pandoc_args: ["--top-level-division=chapter"]
 
 bookdown::epub_book:
+  pandoc_args: ["--lua-filter=scripts/epub-html.lua"]
   cover_image: "images/cover.png"
   stylesheet: style/style.css
   toc_depth: 3

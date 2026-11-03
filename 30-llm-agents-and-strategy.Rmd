@@ -1,4 +1,4 @@
-# LLM Agents and Strategy {#sec-llm-agents}
+# LLM Agents and Strategic Reasoning {#sec-llm-agents}
 
 > Large language models as game-playing agents: level-k reasoning, cognitive hierarchy theory, bounded rationality, and simulated beauty contest experiments in R.
 ```{r, setup, include=FALSE}

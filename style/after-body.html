@@ -25,54 +25,55 @@
   })();
 </script>
 
-<!-- Download links injected into the right sidebar above View source / Edit this page -->
+<!-- Downloads are offered only when the optional output exists. -->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", async function () {
     if (document.querySelector(".sidebar-downloads")) return;
-
-    var pageFile  = window.location.pathname.split("/").pop();
-    var chapterId = pageFile && pageFile !== "" && pageFile !== "index.html"
-      ? pageFile.replace(".html", ".pdf")
-      : null;
-
-    // Find the "View source / Edit this page" block. bs4_book wraps these in
-    // a section with the heading "On this page" + a list, followed by these
-    // links inside an <h2> sibling or a separate <ul>. We look for the
-    // canonical link text and walk up to its container, then insert before it.
     var anchor = null;
+    var chapterId = null;
     var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
     for (var i = 0; i < candidates.length; i++) {
-      var t = (candidates[i].textContent || "").trim().toLowerCase();
-      if (t === "view source" || t === "edit this page") {
-        anchor = candidates[i].closest("h2, .page-links, div, ul");
-        if (anchor) break;
+      var text = (candidates[i].textContent || "").trim().toLowerCase();
+      if (text === "view source" || text === "edit this page") {
+        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
+        var source = new URL(candidates[i].href, window.location.href);
+        var filename = decodeURIComponent(source.pathname.split("/").pop());
+        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
+          chapterId = filename.replace(/\.Rmd$/, ".pdf");
+        }
       }
     }
-    if (!anchor) return;  // theme variant we don't recognise — skip silently
-
+    if (!anchor) return;
+    var choices = [
+      ["strategy-in-r.pdf", "Entire book (PDF)"],
+      ["strategy-in-r.epub", "Entire book (EPUB)"]
+    ];
+    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
+    var available = await Promise.all(choices.map(async function (item) {
+      try {
+        var response = await fetch(item[0], { method: "HEAD" });
+        return response.ok ? item : null;
+      } catch (error) {
+        return null;
+      }
+    }));
+    available = available.filter(Boolean);
+    if (!available.length) return;
     var heading = document.createElement("h2");
     heading.className = "sidebar-downloads-heading";
     heading.textContent = "Download";
-
     var list = document.createElement("ul");
     list.className = "sidebar-downloads";
-
-    function addItem(href, label) {
+    available.forEach(function (item) {
       var li = document.createElement("li");
-      var a  = document.createElement("a");
-      a.href = href;
-      a.textContent = label;
-      li.appendChild(a);
+      var link = document.createElement("a");
+      link.href = item[0];
+      link.textContent = item[1];
+      li.appendChild(link);
       list.appendChild(li);
-    }
-
-    addItem("strategy-in-r.pdf", "Entire book (PDF)");
-    if (chapterId) {
-      addItem("pdf-chapters/" + chapterId, "This chapter (PDF)");
-    }
-
+    });
     anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list,    anchor);
+    anchor.parentNode.insertBefore(list, anchor);
   });
 </script>
 

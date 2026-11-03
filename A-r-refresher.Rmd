@@ -1,5 +1,3 @@
-# (APPENDIX) Appendices {-}
-
 # R Refresher {#sec-r-refresher}
 
 > A concise refresher on R fundamentals for readers who need a quick review.

@@ -11,7 +11,7 @@
 
 - Each chapter opens with a concrete question, not a definition.
 - Code is shown in full; outputs follow immediately; interpretation is a separate paragraph.
-- Cross-references use bookdown's `\@ref()` syntax: `Chapter \@ref(sec-nash-equilibrium)`, `Figure \@ref(fig:axelrod-ranking)`, `Table \@ref(tab:auction-types)`.
+- Cross-references use Bookdown’s syntax: a backslash, the at-sign, then `ref(...)` containing a defined label. For example, use `sec-nash-equilibrium` for the Nash equilibrium chapter, `fig:axelrod-ranking` for that figure, or `tab:your-table-label` for a numbered table that you have defined.
 - Exercises live at the end of each chapter; solutions are in Appendix D.
 
 ## Companion code and data {-}

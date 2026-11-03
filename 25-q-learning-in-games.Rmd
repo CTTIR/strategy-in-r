@@ -1,4 +1,4 @@
-# Q-Learning in Games {#sec-q-learning}
+# Q-Learning in 2-Player Games {#sec-q-learning}
 
 > Tabular Q-learning in matrix games: convergence in coordination games, divergence in zero-sum games, and the rational learning debate.
 ```{r, setup, include=FALSE}

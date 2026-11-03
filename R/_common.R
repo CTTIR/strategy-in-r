@@ -10,6 +10,7 @@ suppressPackageStartupMessages({
 })
 
 knitr::opts_chunk$set(
+  error = FALSE,
   dev = c("png", "pdf"),
   dpi = 300,
   fig.align = "center",

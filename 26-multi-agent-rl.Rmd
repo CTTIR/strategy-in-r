@@ -1,4 +1,4 @@
-# Multi-Agent RL {#sec-multi-agent-rl}
+# Multi-Agent Reinforcement Learning {#sec-multi-agent-rl}
 
 > Independent learners, joint-action learners, minimax-Q for zero-sum games, and the conceptual foundations of MADDPG and PSRO.
 ```{r, setup, include=FALSE}

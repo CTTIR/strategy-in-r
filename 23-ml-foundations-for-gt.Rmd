@@ -1,6 +1,4 @@
-# (PART) Part IV — AI and Machine Learning {-}
-
-# ML Foundations for Game Theory {#sec-ml-foundations}
+# Machine Learning Foundations for Game Theory {#sec-ml-foundations}
 
 > Supervised learning as a game against nature, regret minimization and regret matching, feature engineering for game-theoretic data, and cross-validation for strategic predictions.
 ```{r, setup, include=FALSE}
@@ -56,7 +54,7 @@ R_t^+(a) \,/\, \sum_{a'} R_t^+(a') & \text{if } \sum_{a'} R_t^+(a') > 0 \\
 (\#eq:regret-matching)
 \end{equation}
 
-where $R_t^+(a) = \max(0, R_t(a))$. This algorithm is the building block of **counterfactual regret minimization** (CFR), covered in \@ref(sec-cfr-poker).
+where $R_t^+(a) = \max(0, R_t(a))$. This algorithm is the building block of **counterfactual regret minimization** (CFR), covered in \@ref(sec-cfr).
 
 ### Feature representation for game-theoretic data
 
@@ -311,7 +309,7 @@ The opponent's recent cooperation rate is the strongest predictor — consistent
 ## Extensions
 
 - **Multiplicative weights update** is an alternative no-regret algorithm with tighter theoretical bounds. See @arora2012 for a survey of the multiplicative weights method and its connections to game theory.
-- **Counterfactual regret minimization** (\@ref(sec-cfr-poker)) extends regret matching to extensive-form games, powering superhuman poker AI.
+- **Counterfactual regret minimization** (\@ref(sec-cfr)) extends regret matching to extensive-form games, powering superhuman poker AI.
 - **Reinforcement learning** (\@ref(sec-reinforcement-learning)) replaces the fixed-loss setting of online learning with sequential decision-making under an MDP.
 - **Feature engineering** for strategic data is an active research area: deep learning approaches learn features automatically, but interpretable features (cooperation rates, payoff summaries) remain valuable for analysis.
 

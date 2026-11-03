@@ -14,3 +14,18 @@
 <meta property="og:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
+
+<!-- Wide equations scroll locally instead of widening the reading column. -->
+<style>
+@media (max-width: 767.98px) {
+  main .figure {
+    width: 100%;
+  }
+  main .math.display {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+</style>

@@ -325,7 +325,7 @@ for (eq in hd_eq) {
 }
 ```
 
-The Hawk-Dove game has two pure NE (one plays Hawk, the other Dove) and one mixed NE where each player plays Hawk with probability $V/C = 2/3$. The mixed equilibrium probability matches the evolutionary stable strategy from \@ref(sec-evolutionary-stable-strategies).
+The Hawk-Dove game has two pure NE (one plays Hawk, the other Dove) and one mixed NE where each player plays Hawk with probability $V/C = 2/3$. The mixed equilibrium probability matches the evolutionary stable strategy from \@ref(sec-ess).
 
 ### A 3x3 extension: Rock-Paper-Scissors
 
@@ -429,7 +429,7 @@ The support enumeration solver and the reticulate pattern described here connect
 - **Mixed strategies** (\@ref(sec-mixed-strategies)) develops the indifference principle that the algorithm operationalizes.
 - **Custom solvers** (\@ref(sec-custom-solvers)) extends the toolkit with the Lemke--Howson algorithm and fictitious play, which are more efficient for larger games.
 - **The gtree package** (\@ref(sec-gtree-package)) handles extensive-form games; converting an extensive form to normal form and then applying support enumeration is a standard workflow.
-- **Evolutionary stable strategies** (\@ref(sec-evolutionary-stable-strategies)) gives a population-dynamics interpretation of the Hawk-Dove mixed equilibrium.
+- **Evolutionary stable strategies** (\@ref(sec-ess)) gives a population-dynamics interpretation of the Hawk-Dove mixed equilibrium.
 
 The reticulate pattern generalizes beyond nashpy. Any Python game theory library --- Gambit's Python bindings, the Axelrod library for tournament simulations, or custom solvers built with NumPy --- can be called from R using the same `import()` and method-call pattern.
 

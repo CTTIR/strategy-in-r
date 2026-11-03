@@ -1,4 +1,4 @@
-# CFR and Poker {#sec-cfr}
+# Counterfactual Regret Minimization and Poker {#sec-cfr}
 
 > Counterfactual regret minimization for imperfect information games: information sets, regret matching, and a full Kuhn Poker implementation in R.
 ```{r, setup, include=FALSE}

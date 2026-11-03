@@ -1,5 +1,3 @@
-# (PART) Part V — Applications {-}
-
 # Auction Theory {#sec-auctions}
 
 > Game-theoretic analysis of auctions: first-price, second-price (Vickrey), English, and Dutch formats, revenue equivalence, optimal bidding strategies, and R simulations.

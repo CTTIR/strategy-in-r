@@ -53,3 +53,8 @@ desktop.ini
 *~
 *.bak
 *.orig
+
+# Preserve tracked illustrations; fresh exports and render caches stay local.
+/_generated/
+/*_cache/
+/_bookdown_files/

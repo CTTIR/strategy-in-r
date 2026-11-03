@@ -28,8 +28,22 @@ jobs:
         run: |
           Rscript -e 'pkgs <- c("bookdown", "downlit", "bslib", "rmarkdown", "knitr", "xml2"); install.packages(setdiff(pkgs, rownames(installed.packages())))'
 
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "24"
+
+      - name: Validate actual examples and source references
+        run: |
+          node --test tests/*.test.cjs
+          python3 scripts/check-source-refs.py
+          python3 tests/test-epub.py
+          Rscript tests/test-mcts.R
+
       - name: Render HTML
         run: Rscript -e 'bookdown::render_book("index.Rmd", output_format = "bookdown::bs4_book")'
+
+      - name: Validate rendered local links
+        run: python3 scripts/check-html-links.py docs html-links.json
 
       - name: Render PDF
         run: Rscript -e 'bookdown::render_book("index.Rmd", output_format = "bookdown::pdf_book")'
@@ -38,6 +52,12 @@ jobs:
       - name: Render EPUB
         run: Rscript -e 'bookdown::render_book("index.Rmd", output_format = "bookdown::epub_book")'
         continue-on-error: true
+
+      - name: Validate EPUB when produced
+        run: |
+          if [ -f docs/strategy-in-r.epub ]; then
+            python3 scripts/check-epub.py docs/strategy-in-r.epub epub-check.json
+          fi
 
       - name: Render per-chapter PDFs
         run: Rscript scripts/render-chapter-pdfs.R

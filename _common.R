@@ -7,6 +7,7 @@ suppressPackageStartupMessages({
 })
 
 knitr::opts_chunk$set(
+  error = FALSE,
   echo       = TRUE,
   message    = FALSE,
   warning    = FALSE,

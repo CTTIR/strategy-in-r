@@ -14,7 +14,7 @@ A free, open-source book by **Raban Heller**.
 
 - 📄 [Whole book (PDF)](https://r-heller.github.io/strategy-in-r/strategy-in-r.pdf)
 - 📚 [EPUB](https://r-heller.github.io/strategy-in-r/strategy-in-r.epub)
-- 📑 Per-chapter PDFs: every chapter has a download button at the top of its page.
+- 📑 Per-chapter PDFs: available outputs appear in each chapter’s download sidebar.
 
 ## What this book covers
 
@@ -59,6 +59,26 @@ R -e 'bookdown::render_book("index.Rmd", output_format = "all")'
 ```
 
 A handful of chapters use Python via `reticulate`; see `python/requirements.txt`.
+The original lockfile remains preserved; install the optional backends only when
+exercising those examples. The integration checks do not claim a fresh restoration
+of every historical lockfile entry.
+
+Before rendering, validate the functions printed in the MCTS chapter and the
+configured source references:
+
+```bash
+Rscript tests/test-mcts.R
+python3 scripts/check-source-refs.py
+```
+
+Serve the rendered directory with `python3 -m http.server 8000 --bind 127.0.0.1 --directory docs` and open `http://127.0.0.1:8000/`. The sidebar offers only files present in that build; PDF generation remains optional.
+
+After rendering HTML, verify its local links with
+`python3 scripts/check-html-links.py docs html-links.json`. Execution errors stop
+the build. Fresh figure exports go to `_generated/figures/`, preserving the
+tracked illustrations. See [the Bookdown integration record](INTEGRATION-2026-11-03.md)
+for observed format checks and remaining qualification. The earlier
+[Quarto maintenance record](MAINTENANCE.md) describes its historical artifacts.
 
 ## License
 
