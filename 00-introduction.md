@@ -1,4 +1,4 @@
-# Introduction {#sec-introduction}
+# Introduction: Why Strategy in R? {#sec-introduction}
 
 > Why study strategic interaction computationally, and why R is the right tool for the job.
 ## The computational turn in game theory

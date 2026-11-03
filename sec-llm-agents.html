@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 31 LLM Agents and Strategy | Strategy in R</title>
+<title>Chapter 31 LLM Agents and Strategic Reasoning | Strategy in R</title>
 <meta name="author" content="Raban Heller">
 <meta name="description" content="Large language models as game-playing agents: level-k reasoning, cognitive hierarchy theory, bounded rationality, and simulated beauty contest experiments in R.  Learning objectives Describe how...">
-<meta name="generator" content="bookdown 0.47 with bs4_book()">
-<meta property="og:title" content="Chapter 31 LLM Agents and Strategy | Strategy in R">
+<meta name="generator" content="bookdown 0.48 with bs4_book()">
+<meta property="og:title" content="Chapter 31 LLM Agents and Strategic Reasoning | Strategy in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://r-heller.github.io/strategy-in-r/sec-llm-agents.html">
 <meta property="og:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
 <meta property="og:description" content="Large language models as game-playing agents: level-k reasoning, cognitive hierarchy theory, bounded rationality, and simulated beauty contest experiments in R.  Learning objectives Describe how...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 31 LLM Agents and Strategy | Strategy in R">
+<meta name="twitter:title" content="Chapter 31 LLM Agents and Strategic Reasoning | Strategy in R">
 <meta name="twitter:description" content="Large language models as game-playing agents: level-k reasoning, cognitive hierarchy theory, bounded rationality, and simulated beauty contest experiments in R.  Learning objectives Describe how...">
 <meta name="twitter:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -26,13 +26,26 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 31 LLM Agents and Strategy | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
+<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 31 LLM Agents and Strategic Reasoning | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
 <meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://r-heller.github.io/strategy-in-r/">
 <meta property="og:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
+<!-- Wide equations scroll locally instead of widening the reading column. --><style>
+    @media (max-width: 767.98px) {
+      main .figure {
+        width: 100%;
+      }
+      main .math.display {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+    }
+    </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -88,8 +101,8 @@
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
 <li><a class="" href="notation.html">Notation</a></li>
-<li><a class="" href="sec-introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li class="book-part">Part I — Foundations of Game Theory</li>
+<li class="book-part">Foundations</li>
+<li><a class="" href="sec-introduction.html"><span class="header-section-number">1</span> Introduction: Why Strategy in R?</a></li>
 <li><a class="" href="sec-what-is-a-game.html"><span class="header-section-number">2</span> What is a Game?</a></li>
 <li><a class="" href="sec-normal-form.html"><span class="header-section-number">3</span> Normal-Form Games</a></li>
 <li><a class="" href="sec-nash-equilibrium.html"><span class="header-section-number">4</span> Nash Equilibrium</a></li>
@@ -98,45 +111,45 @@
 <li><a class="" href="sec-bayesian-games.html"><span class="header-section-number">7</span> Bayesian Games</a></li>
 <li><a class="" href="sec-repeated-games.html"><span class="header-section-number">8</span> Repeated Games</a></li>
 <li><a class="" href="sec-cooperative-gt.html"><span class="header-section-number">9</span> Cooperative Game Theory</a></li>
-<li class="book-part">Part II — The R Toolkit</li>
-<li><a class="" href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment</a></li>
+<li class="book-part">The R Toolkit</li>
+<li><a class="" href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment for Strategic Computation</a></li>
 <li><a class="" href="sec-gametheory-package.html"><span class="header-section-number">11</span> The GameTheory Package</a></li>
 <li><a class="" href="sec-coopgame-package.html"><span class="header-section-number">12</span> The CoopGame Package</a></li>
 <li><a class="" href="sec-gtree-package.html"><span class="header-section-number">13</span> The gtree Package</a></li>
 <li><a class="" href="sec-nashpy-reticulate.html"><span class="header-section-number">14</span> nashpy via reticulate</a></li>
 <li><a class="" href="sec-custom-solvers.html"><span class="header-section-number">15</span> Building Custom Solvers in R</a></li>
-<li class="book-part">Part III — Simulation</li>
+<li class="book-part">Simulation &amp; Evolutionary Dynamics</li>
 <li><a class="" href="sec-monte-carlo.html"><span class="header-section-number">16</span> Monte Carlo Methods for Games</a></li>
 <li><a class="" href="sec-agent-based-models.html"><span class="header-section-number">17</span> Agent-Based Models for Strategic Interaction</a></li>
 <li><a class="" href="sec-axelrod-tournament.html"><span class="header-section-number">18</span> Replicating Axelrod’s Tournament</a></li>
-<li><a class="" href="sec-spatial-pd.html"><span class="header-section-number">19</span> Spatial Prisoner’s Dilemma</a></li>
+<li><a class="" href="sec-spatial-pd.html"><span class="header-section-number">19</span> The Spatial Prisoner’s Dilemma</a></li>
 <li><a class="" href="sec-replicator-dynamics.html"><span class="header-section-number">20</span> Replicator Dynamics</a></li>
 <li><a class="" href="sec-ess.html"><span class="header-section-number">21</span> Evolutionarily Stable Strategies</a></li>
 <li><a class="" href="sec-network-games.html"><span class="header-section-number">22</span> Games on Networks</a></li>
 <li><a class="" href="sec-performance-rcpp.html"><span class="header-section-number">23</span> Performance Optimization</a></li>
-<li class="book-part">Part IV — AI and Machine Learning</li>
-<li><a class="" href="sec-ml-foundations.html"><span class="header-section-number">24</span> ML Foundations for Game Theory</a></li>
+<li class="book-part">Strategic AI</li>
+<li><a class="" href="sec-ml-foundations.html"><span class="header-section-number">24</span> Machine Learning Foundations for Game Theory</a></li>
 <li><a class="" href="sec-reinforcement-learning.html"><span class="header-section-number">25</span> Reinforcement Learning Foundations</a></li>
-<li><a class="" href="sec-q-learning.html"><span class="header-section-number">26</span> Q-Learning in Games</a></li>
-<li><a class="" href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent RL</a></li>
+<li><a class="" href="sec-q-learning.html"><span class="header-section-number">26</span> Q-Learning in 2-Player Games</a></li>
+<li><a class="" href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent Reinforcement Learning</a></li>
 <li><a class="" href="sec-self-play.html"><span class="header-section-number">28</span> Self-Play and AlphaZero</a></li>
-<li><a class="" href="sec-cfr.html"><span class="header-section-number">29</span> CFR and Poker</a></li>
+<li><a class="" href="sec-cfr.html"><span class="header-section-number">29</span> Counterfactual Regret Minimization and Poker</a></li>
 <li><a class="" href="sec-gans.html"><span class="header-section-number">30</span> GANs as Minimax Games</a></li>
-<li><a class="active" href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategy</a></li>
-<li class="book-part">Part V — Applications</li>
+<li><a class="active" href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategic Reasoning</a></li>
+<li class="book-part">Applications</li>
 <li><a class="" href="sec-auctions.html"><span class="header-section-number">32</span> Auction Theory</a></li>
 <li><a class="" href="sec-mechanism-design.html"><span class="header-section-number">33</span> Mechanism Design</a></li>
 <li><a class="" href="sec-matching-markets.html"><span class="header-section-number">34</span> Matching Markets</a></li>
 <li><a class="" href="sec-bargaining.html"><span class="header-section-number">35</span> Bargaining Theory</a></li>
 <li><a class="" href="sec-conflict-cooperation.html"><span class="header-section-number">36</span> Conflict and Cooperation Models</a></li>
 <li><a class="" href="sec-case-studies.html"><span class="header-section-number">37</span> Empirical Case Studies</a></li>
-<li class="book-part">Part VI — Ethics and the Future</li>
+<li class="book-part">Ethics &amp; Outlook</li>
 <li><a class="" href="sec-ethics-frameworks.html"><span class="header-section-number">38</span> Ethical Frameworks for Strategic AI</a></li>
 <li><a class="" href="sec-fairness-ml.html"><span class="header-section-number">39</span> Fairness in Machine Learning</a></li>
 <li><a class="" href="sec-ai-alignment.html"><span class="header-section-number">40</span> AI Alignment as a Game</a></li>
 <li><a class="" href="sec-cooperative-ai.html"><span class="header-section-number">41</span> Cooperative AI</a></li>
 <li><a class="" href="sec-future.html"><span class="header-section-number">42</span> The Future of Strategy</a></li>
-<li class="book-part">Appendices</li>
+<li class="book-part">Appendix</li>
 <li><a class="" href="sec-r-refresher.html"><span class="header-section-number">A</span> R Refresher</a></li>
 <li><a class="" href="sec-linear-algebra.html"><span class="header-section-number">B</span> Linear Algebra Essentials</a></li>
 <li><a class="" href="sec-probability.html"><span class="header-section-number">C</span> Probability Essentials</a></li>
@@ -156,7 +169,7 @@
 </div>
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-llm-agents" class="section level1" number="31">
 <h1>
-<span class="header-section-number">31</span> LLM Agents and Strategy<a class="anchor" aria-label="anchor" href="#sec-llm-agents"><i class="fas fa-link"></i></a>
+<span class="header-section-number">31</span> LLM Agents and Strategic Reasoning<a class="anchor" aria-label="anchor" href="#sec-llm-agents"><i class="fas fa-link"></i></a>
 </h1>
 <blockquote>
 <p>Large language models as game-playing agents: level-k reasoning, cognitive hierarchy theory, bounded rationality, and simulated beauty contest experiments in R.</p>
@@ -261,7 +274,7 @@ f(k) = \frac{e^{-\tau} \tau^k}{k!}
 <h3>
 <span class="header-section-number">31.3.1</span> Level-k beauty contest simulation<a class="anchor" aria-label="anchor" href="#level-k-beauty-contest-simulation"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb847"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb844"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">beauty_contest</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n_players</span> <span class="op">=</span> <span class="fl">20</span>, <span class="va">p</span> <span class="op">=</span> <span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="va">tau</span> <span class="op">=</span> <span class="fl">1.5</span>,</span>
 <span>                            <span class="va">level_distribution</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">level_distribution</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -301,7 +314,7 @@ f(k) = \frac{e^{-\tau} \tau^k}{k!}
 <h3>
 <span class="header-section-number">31.3.2</span> Run the simulation<a class="anchor" aria-label="anchor" href="#run-the-simulation"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb848"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb845"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">n_rounds</span> <span class="op">&lt;-</span> <span class="fl">500</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">/</span><span class="fl">3</span></span>
@@ -322,7 +335,7 @@ f(k) = \frac{e^{-\tau} \tau^k}{k!}
 <h3>
 <span class="header-section-number">31.3.3</span> Figure 1: Level-k action distributions<a class="anchor" aria-label="anchor" href="#figure-1-level-k-action-distributions"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb849"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb846"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Theoretical level-k distributions</span></span>
 <span><span class="va">level_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  level <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">4</span>,</span>
@@ -359,14 +372,14 @@ f(k) = \frac{e^{-\tau} \tau^k}{k!}
 Figure 31.1: Predicted choice distributions in a 2/3-beauty contest for different levels of reasoning. Level-0 players choose near 50 (uniform random anchor). Each subsequent level best-responds to the level below, producing geometrically decreasing choices that converge toward the Nash equilibrium of 0.
 </p>
 </div>
-<div class="sourceCode" id="cb850"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb847"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_levels</span>, <span class="st">"levelk-distributions"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="figure-2-strategy-performance-comparison" class="section level3" number="31.3.4">
 <h3>
 <span class="header-section-number">31.3.4</span> Figure 2: Strategy performance comparison<a class="anchor" aria-label="anchor" href="#figure-2-strategy-performance-comparison"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb851"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb848"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute win rates by level</span></span>
 <span><span class="va">win_rates</span> <span class="op">&lt;-</span> <span class="va">results</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">level</span> <span class="op">&lt;=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -434,7 +447,7 @@ Figure 31.1: Predicted choice distributions in a 2/3-beauty contest for differen
 Figure 31.2: Win rates by strategy type in simulated beauty contest games. Level-1 and level-2 players outperform level-0 (random) players, but higher levels show diminishing returns because the population contains mostly low-level reasoners. The Nash equilibrium strategy (choose 0) rarely wins against bounded rational opponents.
 </p>
 </div>
-<div class="sourceCode" id="cb852"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb849"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_perf</span>, <span class="st">"strategy-performance-comparison"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">4.5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -443,52 +456,52 @@ Figure 31.2: Win rates by strategy type in simulated beauty contest games. Level
 <span class="header-section-number">31.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-27"><i class="fas fa-link"></i></a>
 </h2>
 <p>We walk through a single round of the p-beauty contest with explicit level-k reasoning.</p>
-<div class="sourceCode" id="cb853"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb850"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"=== p-Beauty Contest Walkthrough (p = 2/3) ===\n\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; === p-Beauty Contest Walkthrough (p = 2/3) ===</code></pre>
-<div class="sourceCode" id="cb855"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb852"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Step 1: Level-0 reasoning\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Step 1: Level-0 reasoning</code></pre>
-<div class="sourceCode" id="cb857"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb854"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"  A level-0 player chooses randomly; expected value = 50.\n\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   A level-0 player chooses randomly; expected value = 50.</code></pre>
-<div class="sourceCode" id="cb859"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb856"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Step 2: Level-1 reasoning\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Step 2: Level-1 reasoning</code></pre>
-<div class="sourceCode" id="cb861"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb858"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"  'If everyone else is level-0, the average will be ~50.'\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   'If everyone else is level-0, the average will be ~50.'</code></pre>
-<div class="sourceCode" id="cb863"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb860"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  Best response: p * 50 = 2/3 * 50 = %.1f\n\n"</span>, <span class="va">p</span> <span class="op">*</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   Best response: p * 50 = 2/3 * 50 = 33.3</code></pre>
-<div class="sourceCode" id="cb865"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb862"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Step 3: Level-2 reasoning\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Step 3: Level-2 reasoning</code></pre>
-<div class="sourceCode" id="cb867"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb864"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"  'If everyone else is level-1, the average will be ~33.3.'\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   'If everyone else is level-1, the average will be ~33.3.'</code></pre>
-<div class="sourceCode" id="cb869"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb866"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  Best response: p * 33.3 = 2/3 * 33.3 = %.1f\n\n"</span>, <span class="va">p</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   Best response: p * 33.3 = 2/3 * 33.3 = 22.2</code></pre>
-<div class="sourceCode" id="cb871"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb868"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Step 4: Level-3 reasoning\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Step 4: Level-3 reasoning</code></pre>
-<div class="sourceCode" id="cb873"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb870"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"  'If everyone else is level-2, the average will be ~22.2.'\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   'If everyone else is level-2, the average will be ~22.2.'</code></pre>
-<div class="sourceCode" id="cb875"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb872"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  Best response: p * 22.2 = 2/3 * 22.2 = %.1f\n\n"</span>, <span class="va">p</span><span class="op">^</span><span class="fl">3</span> <span class="op">*</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   Best response: p * 22.2 = 2/3 * 22.2 = 14.8</code></pre>
-<div class="sourceCode" id="cb877"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb874"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Step 5: Nash equilibrium (infinite levels)\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Step 5: Nash equilibrium (infinite levels)</code></pre>
-<div class="sourceCode" id="cb879"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb876"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"  As k -&gt; infinity, the choice converges to 0.\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   As k -&gt; infinity, the choice converges to 0.</code></pre>
-<div class="sourceCode" id="cb881"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb878"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"  But choosing 0 only wins if ALL other players also choose 0.\n\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   But choosing 0 only wins if ALL other players also choose 0.</code></pre>
-<div class="sourceCode" id="cb883"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb880"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Show a concrete simulated round</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">example_game</span> <span class="op">&lt;-</span> <span class="fu">beauty_contest</span><span class="op">(</span>n_players <span class="op">=</span> <span class="fl">10</span>, p <span class="op">=</span> <span class="va">p</span>, tau <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
@@ -496,7 +509,7 @@ Figure 31.2: Win rates by strategy type in simulated beauty contest games. Level
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"=== Example Round with 10 Players ===\n\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; === Example Round with 10 Players ===</code></pre>
-<div class="sourceCode" id="cb885"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb882"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_game</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Level-"</span>, <span class="va">level</span><span class="op">)</span>,</span>
@@ -520,14 +533,14 @@ Figure 31.2: Win rates by strategy type in simulated beauty contest games. Level
 #&gt;  8      6 Level-1  35.8            19.3  
 #&gt;  9      1 Level-1  36.8            20.3  
 #&gt; 10      2 Level-0  50.9            34.4</code></pre>
-<div class="sourceCode" id="cb887"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb884"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"\nAverage choice: %.1f\n"</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">example_game</span><span class="op">$</span><span class="va">choice</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; 
 #&gt; Average choice: 24.8</code></pre>
-<div class="sourceCode" id="cb889"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb886"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Target (2/3 * average): %.1f\n"</span>, <span class="va">target</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Target (2/3 * average): 16.5</code></pre>
-<div class="sourceCode" id="cb891"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb888"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Winner: Player %d (Level-%d, chose %.1f)\n"</span>,</span>
 <span>            <span class="va">example_game</span><span class="op">$</span><span class="va">player</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">example_game</span><span class="op">$</span><span class="va">choice</span> <span class="op">-</span> <span class="va">target</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>            <span class="va">example_game</span><span class="op">$</span><span class="va">level</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">example_game</span><span class="op">$</span><span class="va">choice</span> <span class="op">-</span> <span class="va">target</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>,</span>
@@ -566,89 +579,13 @@ Figure 31.2: Win rates by strategy type in simulated beauty contest games. Level
 
 
 
-<!-- Dark/light mode toggle -->
-<div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
-</div>
-
-<script>
-  (function () {
-    var stored = localStorage.getItem('themeMode');
-    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var initial = stored || (prefersDark ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', initial);
-
-    document.addEventListener('DOMContentLoaded', function () {
-      var btn = document.getElementById('mode-switch');
-      if (!btn) return;
-      btn.addEventListener('click', function () {
-        var current = document.documentElement.getAttribute('data-theme');
-        var next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('themeMode', next);
-      });
-    });
-  })();
-</script><!-- Download links injected into the right sidebar above View source / Edit this page --><script>
-  document.addEventListener("DOMContentLoaded", function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-
-    var pageFile  = window.location.pathname.split("/").pop();
-    var chapterId = pageFile && pageFile !== "" && pageFile !== "index.html"
-      ? pageFile.replace(".html", ".pdf")
-      : null;
-
-    // Find the "View source / Edit this page" block. bs4_book wraps these in
-    // a section with the heading "On this page" + a list, followed by these
-    // links inside an <h2> sibling or a separate <ul>. We look for the
-    // canonical link text and walk up to its container, then insert before it.
-    var anchor = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var t = (candidates[i].textContent || "").trim().toLowerCase();
-      if (t === "view source" || t === "edit this page") {
-        anchor = candidates[i].closest("h2, .page-links, div, ul");
-        if (anchor) break;
-      }
-    }
-    if (!anchor) return;  // theme variant we don't recognise — skip silently
-
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-
-    function addItem(href, label) {
-      var li = document.createElement("li");
-      var a  = document.createElement("a");
-      a.href = href;
-      a.textContent = label;
-      li.appendChild(a);
-      list.appendChild(li);
-    }
-
-    addItem("strategy-in-r.pdf", "Entire book (PDF)");
-    if (chapterId) {
-      addItem("pdf-chapters/" + chapterId, "This chapter (PDF)");
-    }
-
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list,    anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
-  This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
-</div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-gans.html"><span class="header-section-number">30</span> GANs as Minimax Games</a></div>
 <div class="next"><a href="sec-auctions.html"><span class="header-section-number">32</span> Auction Theory</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#sec-llm-agents"><span class="header-section-number">31</span> LLM Agents and Strategy</a></li>
+<li><a class="nav-link" href="#sec-llm-agents"><span class="header-section-number">31</span> LLM Agents and Strategic Reasoning</a></li>
 <li><a class="nav-link" href="#learning-objectives-29">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-29"><span class="header-section-number">31.1</span> Motivation</a></li>
 <li>
@@ -681,14 +618,95 @@ Figure 31.2: Win rates by strategy type in simulated beauty contest games. Level
 </div>
     </nav>
 </div>
+</div>
+<!-- Dark/light mode toggle -->
+<div class="sticky-item">
+  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
+    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+  </button>
+</div>
+
+<script>
+  (function () {
+    var stored = localStorage.getItem('themeMode');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var initial = stored || (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', initial);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var btn = document.getElementById('mode-switch');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('themeMode', next);
+      });
+    });
+  })();
+</script><!-- Downloads are offered only when the optional output exists. --><script>
+  document.addEventListener("DOMContentLoaded", async function () {
+    if (document.querySelector(".sidebar-downloads")) return;
+    var anchor = null;
+    var chapterId = null;
+    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
+    for (var i = 0; i < candidates.length; i++) {
+      var text = (candidates[i].textContent || "").trim().toLowerCase();
+      if (text === "view source" || text === "edit this page") {
+        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
+        var source = new URL(candidates[i].href, window.location.href);
+        var filename = decodeURIComponent(source.pathname.split("/").pop());
+        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
+          chapterId = filename.replace(/\.Rmd$/, ".pdf");
+        }
+      }
+    }
+    if (!anchor) return;
+    var choices = [
+      ["strategy-in-r.pdf", "Entire book (PDF)"],
+      ["strategy-in-r.epub", "Entire book (EPUB)"]
+    ];
+    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
+    var available = await Promise.all(choices.map(async function (item) {
+      try {
+        var response = await fetch(item[0], { method: "HEAD" });
+        return response.ok ? item : null;
+      } catch (error) {
+        return null;
+      }
+    }));
+    available = available.filter(Boolean);
+    if (!available.length) return;
+    var heading = document.createElement("h2");
+    heading.className = "sidebar-downloads-heading";
+    heading.textContent = "Download";
+    var list = document.createElement("ul");
+    list.className = "sidebar-downloads";
+    available.forEach(function (item) {
+      var li = document.createElement("li");
+      var link = document.createElement("a");
+      link.href = item[0];
+      link.textContent = item[1];
+      li.appendChild(link);
+      list.appendChild(li);
+    });
+    anchor.parentNode.insertBefore(heading, anchor);
+    anchor.parentNode.insertBefore(list, anchor);
+  });
+</script><!-- Footer attribution --><div class="bookdown-attribution">
+  This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
+</div>
+  
+
+  
 
 </div>
-</div> <!-- .container -->
+ <!-- .container -->
 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-07-19.</p>
+    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

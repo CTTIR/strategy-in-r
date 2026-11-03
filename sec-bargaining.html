@@ -7,7 +7,7 @@
 <title>Chapter 35 Bargaining Theory | Strategy in R</title>
 <meta name="author" content="Raban Heller">
 <meta name="description" content="Nash bargaining and ultimatum games — axiomatic solutions, alternating-offers models, and computational implementations in R.  Learning objectives State the four axioms of the Nash bargaining...">
-<meta name="generator" content="bookdown 0.47 with bs4_book()">
+<meta name="generator" content="bookdown 0.48 with bs4_book()">
 <meta property="og:title" content="Chapter 35 Bargaining Theory | Strategy in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://r-heller.github.io/strategy-in-r/sec-bargaining.html">
@@ -33,6 +33,19 @@
 <meta property="og:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
+<!-- Wide equations scroll locally instead of widening the reading column. --><style>
+    @media (max-width: 767.98px) {
+      main .figure {
+        width: 100%;
+      }
+      main .math.display {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+    }
+    </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -88,8 +101,8 @@
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
 <li><a class="" href="notation.html">Notation</a></li>
-<li><a class="" href="sec-introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li class="book-part">Part I — Foundations of Game Theory</li>
+<li class="book-part">Foundations</li>
+<li><a class="" href="sec-introduction.html"><span class="header-section-number">1</span> Introduction: Why Strategy in R?</a></li>
 <li><a class="" href="sec-what-is-a-game.html"><span class="header-section-number">2</span> What is a Game?</a></li>
 <li><a class="" href="sec-normal-form.html"><span class="header-section-number">3</span> Normal-Form Games</a></li>
 <li><a class="" href="sec-nash-equilibrium.html"><span class="header-section-number">4</span> Nash Equilibrium</a></li>
@@ -98,45 +111,45 @@
 <li><a class="" href="sec-bayesian-games.html"><span class="header-section-number">7</span> Bayesian Games</a></li>
 <li><a class="" href="sec-repeated-games.html"><span class="header-section-number">8</span> Repeated Games</a></li>
 <li><a class="" href="sec-cooperative-gt.html"><span class="header-section-number">9</span> Cooperative Game Theory</a></li>
-<li class="book-part">Part II — The R Toolkit</li>
-<li><a class="" href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment</a></li>
+<li class="book-part">The R Toolkit</li>
+<li><a class="" href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment for Strategic Computation</a></li>
 <li><a class="" href="sec-gametheory-package.html"><span class="header-section-number">11</span> The GameTheory Package</a></li>
 <li><a class="" href="sec-coopgame-package.html"><span class="header-section-number">12</span> The CoopGame Package</a></li>
 <li><a class="" href="sec-gtree-package.html"><span class="header-section-number">13</span> The gtree Package</a></li>
 <li><a class="" href="sec-nashpy-reticulate.html"><span class="header-section-number">14</span> nashpy via reticulate</a></li>
 <li><a class="" href="sec-custom-solvers.html"><span class="header-section-number">15</span> Building Custom Solvers in R</a></li>
-<li class="book-part">Part III — Simulation</li>
+<li class="book-part">Simulation &amp; Evolutionary Dynamics</li>
 <li><a class="" href="sec-monte-carlo.html"><span class="header-section-number">16</span> Monte Carlo Methods for Games</a></li>
 <li><a class="" href="sec-agent-based-models.html"><span class="header-section-number">17</span> Agent-Based Models for Strategic Interaction</a></li>
 <li><a class="" href="sec-axelrod-tournament.html"><span class="header-section-number">18</span> Replicating Axelrod’s Tournament</a></li>
-<li><a class="" href="sec-spatial-pd.html"><span class="header-section-number">19</span> Spatial Prisoner’s Dilemma</a></li>
+<li><a class="" href="sec-spatial-pd.html"><span class="header-section-number">19</span> The Spatial Prisoner’s Dilemma</a></li>
 <li><a class="" href="sec-replicator-dynamics.html"><span class="header-section-number">20</span> Replicator Dynamics</a></li>
 <li><a class="" href="sec-ess.html"><span class="header-section-number">21</span> Evolutionarily Stable Strategies</a></li>
 <li><a class="" href="sec-network-games.html"><span class="header-section-number">22</span> Games on Networks</a></li>
 <li><a class="" href="sec-performance-rcpp.html"><span class="header-section-number">23</span> Performance Optimization</a></li>
-<li class="book-part">Part IV — AI and Machine Learning</li>
-<li><a class="" href="sec-ml-foundations.html"><span class="header-section-number">24</span> ML Foundations for Game Theory</a></li>
+<li class="book-part">Strategic AI</li>
+<li><a class="" href="sec-ml-foundations.html"><span class="header-section-number">24</span> Machine Learning Foundations for Game Theory</a></li>
 <li><a class="" href="sec-reinforcement-learning.html"><span class="header-section-number">25</span> Reinforcement Learning Foundations</a></li>
-<li><a class="" href="sec-q-learning.html"><span class="header-section-number">26</span> Q-Learning in Games</a></li>
-<li><a class="" href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent RL</a></li>
+<li><a class="" href="sec-q-learning.html"><span class="header-section-number">26</span> Q-Learning in 2-Player Games</a></li>
+<li><a class="" href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent Reinforcement Learning</a></li>
 <li><a class="" href="sec-self-play.html"><span class="header-section-number">28</span> Self-Play and AlphaZero</a></li>
-<li><a class="" href="sec-cfr.html"><span class="header-section-number">29</span> CFR and Poker</a></li>
+<li><a class="" href="sec-cfr.html"><span class="header-section-number">29</span> Counterfactual Regret Minimization and Poker</a></li>
 <li><a class="" href="sec-gans.html"><span class="header-section-number">30</span> GANs as Minimax Games</a></li>
-<li><a class="" href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategy</a></li>
-<li class="book-part">Part V — Applications</li>
+<li><a class="" href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategic Reasoning</a></li>
+<li class="book-part">Applications</li>
 <li><a class="" href="sec-auctions.html"><span class="header-section-number">32</span> Auction Theory</a></li>
 <li><a class="" href="sec-mechanism-design.html"><span class="header-section-number">33</span> Mechanism Design</a></li>
 <li><a class="" href="sec-matching-markets.html"><span class="header-section-number">34</span> Matching Markets</a></li>
 <li><a class="active" href="sec-bargaining.html"><span class="header-section-number">35</span> Bargaining Theory</a></li>
 <li><a class="" href="sec-conflict-cooperation.html"><span class="header-section-number">36</span> Conflict and Cooperation Models</a></li>
 <li><a class="" href="sec-case-studies.html"><span class="header-section-number">37</span> Empirical Case Studies</a></li>
-<li class="book-part">Part VI — Ethics and the Future</li>
+<li class="book-part">Ethics &amp; Outlook</li>
 <li><a class="" href="sec-ethics-frameworks.html"><span class="header-section-number">38</span> Ethical Frameworks for Strategic AI</a></li>
 <li><a class="" href="sec-fairness-ml.html"><span class="header-section-number">39</span> Fairness in Machine Learning</a></li>
 <li><a class="" href="sec-ai-alignment.html"><span class="header-section-number">40</span> AI Alignment as a Game</a></li>
 <li><a class="" href="sec-cooperative-ai.html"><span class="header-section-number">41</span> Cooperative AI</a></li>
 <li><a class="" href="sec-future.html"><span class="header-section-number">42</span> The Future of Strategy</a></li>
-<li class="book-part">Appendices</li>
+<li class="book-part">Appendix</li>
 <li><a class="" href="sec-r-refresher.html"><span class="header-section-number">A</span> R Refresher</a></li>
 <li><a class="" href="sec-linear-algebra.html"><span class="header-section-number">B</span> Linear Algebra Essentials</a></li>
 <li><a class="" href="sec-probability.html"><span class="header-section-number">C</span> Probability Essentials</a></li>
@@ -249,7 +262,7 @@ x_1^* = \frac{1 - \delta_2}{1 - \delta_1 \delta_2}
 <h3>
 <span class="header-section-number">35.3.1</span> Nash bargaining solution computation<a class="anchor" aria-label="anchor" href="#nash-bargaining-solution-computation"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb986"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb983"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nash_bargaining</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">frontier_fn</span>, <span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, <span class="va">alpha</span> <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>                            <span class="va">n_grid</span> <span class="op">=</span> <span class="fl">1000</span>, <span class="va">u1_max</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
 <span></span>
@@ -282,7 +295,7 @@ x_1^* = \frac{1 - \delta_2}{1 - \delta_1 \delta_2}
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">nash_bargaining</span><span class="op">(</span><span class="va">frontier</span>, d <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Nash bargaining solution: (%.2f, %.2f)\n"</span>, <span class="va">result</span><span class="op">$</span><span class="va">u1</span>, <span class="va">result</span><span class="op">$</span><span class="va">u2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Nash bargaining solution: (4.50, 5.50)</code></pre>
-<div class="sourceCode" id="cb988"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb985"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Nash product: %.4f\n"</span>, <span class="va">result</span><span class="op">$</span><span class="va">nash_product</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Nash product: 3.5000</code></pre>
 </div>
@@ -290,7 +303,7 @@ x_1^* = \frac{1 - \delta_2}{1 - \delta_1 \delta_2}
 <h3>
 <span class="header-section-number">35.3.2</span> Nash bargaining visualization<a class="anchor" aria-label="anchor" href="#nash-bargaining-visualization"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb990"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb987"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Concave frontier: u2 = sqrt(100 - u1^2) (quarter-circle, radius 10)</span></span>
 <span><span class="va">frontier_concave</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">u1</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmax</a></span><span class="op">(</span><span class="fl">100</span> <span class="op">-</span> <span class="va">u1</span><span class="op">^</span><span class="fl">2</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">d_point</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
@@ -333,14 +346,14 @@ x_1^* = \frac{1 - \delta_2}{1 - \delta_1 \delta_2}
 Figure 35.1: Nash bargaining solution for a concave feasible frontier. The orange curve marks the Pareto frontier. Grey contours show the Nash product. The red point is the Nash bargaining solution and the black point is the disagreement outcome.
 </p>
 </div>
-<div class="sourceCode" id="cb991"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb988"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_nash</span>, <span class="st">"nash-bargaining-solution"</span>, width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="rubinstein-alternating-offers-model-1" class="section level3" number="35.3.3">
 <h3>
 <span class="header-section-number">35.3.3</span> Rubinstein alternating-offers model<a class="anchor" aria-label="anchor" href="#rubinstein-alternating-offers-model-1"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb992"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb989"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rubinstein_equilibrium</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">delta1</span>, <span class="va">delta2</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">x1</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">delta2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">delta1</span> <span class="op">*</span> <span class="va">delta2</span><span class="op">)</span></span>
 <span>  <span class="va">x2</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">x1</span></span>
@@ -352,7 +365,7 @@ Figure 35.1: Nash bargaining solution for a concave feasible frontier. The orang
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Symmetric (delta=0.9): Player 1 gets %.4f, Player 2 gets %.4f\n"</span>,</span>
 <span>            <span class="va">eq_sym</span><span class="op">$</span><span class="va">share1</span>, <span class="va">eq_sym</span><span class="op">$</span><span class="va">share2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Symmetric (delta=0.9): Player 1 gets 0.5263, Player 2 gets 0.4737</code></pre>
-<div class="sourceCode" id="cb994"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb991"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Asymmetric: Player 1 more patient</span></span>
 <span><span class="va">eq_asym</span> <span class="op">&lt;-</span> <span class="fu">rubinstein_equilibrium</span><span class="op">(</span><span class="fl">0.95</span>, <span class="fl">0.8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Asymmetric (d1=0.95, d2=0.8): Player 1 gets %.4f, Player 2 gets %.4f\n"</span>,</span>
@@ -363,7 +376,7 @@ Figure 35.1: Nash bargaining solution for a concave feasible frontier. The orang
 <h3>
 <span class="header-section-number">35.3.4</span> Rubinstein equilibrium shares by discount factor<a class="anchor" aria-label="anchor" href="#rubinstein-equilibrium-shares-by-discount-factor"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb996"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb993"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">delta2_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.99</span>, length.out <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">rubinstein_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_dfr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.85</span>, <span class="fl">0.95</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">d1</span><span class="op">)</span> <span class="op">{</span></span>
@@ -398,7 +411,7 @@ Figure 35.1: Nash bargaining solution for a concave feasible frontier. The orang
 Figure 35.2: Rubinstein equilibrium share of Player 1 as a function of Player 2’s discount factor, for three values of Player 1’s discount factor. More patient players (higher delta) receive a larger share.
 </p>
 </div>
-<div class="sourceCode" id="cb997"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb994"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_rub</span>, <span class="st">"rubinstein-shares"</span>, width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">4.5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -412,7 +425,7 @@ Figure 35.2: Rubinstein equilibrium share of Player 1 as a function of Player 2�
 </h3>
 <p>A firm and its union bargain over how to split a surplus of $10 million generated by a new contract. If negotiations fail, the firm earns $2 million from replacement workers and the union’s members earn $1 million from outside options. The union’s bargaining power is <span class="math inline">\(\alpha = 0.6\)</span> due to strong labor laws.</p>
 <p><strong>Step 1: Set up the bargaining problem.</strong></p>
-<div class="sourceCode" id="cb998"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb995"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">surplus</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
 <span><span class="va">d_firm</span> <span class="op">&lt;-</span> <span class="fl">2</span>   <span class="co"># disagreement payoff: firm</span></span>
 <span><span class="va">d_union</span> <span class="op">&lt;-</span> <span class="fl">1</span>  <span class="co"># disagreement payoff: union</span></span>
@@ -424,26 +437,26 @@ Figure 35.2: Rubinstein equilibrium share of Player 1 as a function of Player 2�
 <p><span class="math display">\[
 u_u^* = d_u + \alpha(V - d_f - d_u), \quad u_f^* = d_f + (1-\alpha)(V - d_f - d_u)
 \]</span></p>
-<div class="sourceCode" id="cb999"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb996"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">net_surplus</span> <span class="op">&lt;-</span> <span class="va">surplus</span> <span class="op">-</span> <span class="va">d_firm</span> <span class="op">-</span> <span class="va">d_union</span></span>
 <span><span class="va">u_union</span> <span class="op">&lt;-</span> <span class="va">d_union</span> <span class="op">+</span> <span class="va">alpha</span> <span class="op">*</span> <span class="va">net_surplus</span></span>
 <span><span class="va">u_firm</span> <span class="op">&lt;-</span> <span class="va">d_firm</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">alpha</span><span class="op">)</span> <span class="op">*</span> <span class="va">net_surplus</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Net surplus: $%.0fM\n"</span>, <span class="va">net_surplus</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Net surplus: $7M</code></pre>
-<div class="sourceCode" id="cb1001"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb998"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Union payoff: $%.1fM (disagree) + $%.1fM = $%.1fM\n"</span>,</span>
 <span>            <span class="va">d_union</span>, <span class="va">alpha</span> <span class="op">*</span> <span class="va">net_surplus</span>, <span class="va">u_union</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Union payoff: $1.0M (disagree) + $4.2M = $5.2M</code></pre>
-<div class="sourceCode" id="cb1003"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1000"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Firm payoff:  $%.1fM (disagree) + $%.1fM = $%.1fM\n"</span>,</span>
 <span>            <span class="va">d_firm</span>, <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">alpha</span><span class="op">)</span> <span class="op">*</span> <span class="va">net_surplus</span>, <span class="va">u_firm</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Firm payoff:  $2.0M (disagree) + $2.8M = $4.8M</code></pre>
-<div class="sourceCode" id="cb1005"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1002"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Union wage share: %.0f%%\n"</span>, <span class="fl">100</span> <span class="op">*</span> <span class="va">u_union</span> <span class="op">/</span> <span class="va">surplus</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Union wage share: 52%</code></pre>
 <p><strong>Step 3: Verify with numerical solver.</strong></p>
-<div class="sourceCode" id="cb1007"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1004"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">frontier_linear</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">u_union</span><span class="op">)</span> <span class="va">surplus</span> <span class="op">-</span> <span class="va">u_union</span></span>
 <span><span class="va">sol_labor</span> <span class="op">&lt;-</span> <span class="fu">nash_bargaining</span><span class="op">(</span><span class="va">frontier_linear</span>, d <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">d_union</span>, <span class="va">d_firm</span><span class="op">)</span>,</span>
 <span>                             alpha <span class="op">=</span> <span class="va">alpha</span><span class="op">)</span></span>
@@ -451,7 +464,7 @@ u_u^* = d_u + \alpha(V - d_f - d_u), \quad u_f^* = d_f + (1-\alpha)(V - d_f - d_
 <span>            <span class="va">sol_labor</span><span class="op">$</span><span class="va">u1</span>, <span class="va">sol_labor</span><span class="op">$</span><span class="va">u2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Numerical NBS: union = $5.20M, firm = $4.80M</code></pre>
 <p><strong>Step 4: Rubinstein interpretation.</strong> If bargaining rounds occur weekly with annual discount rates <span class="math inline">\(r_f = 0.05\)</span> and <span class="math inline">\(r_u = 0.10\)</span>, the weekly discount factors are:</p>
-<div class="sourceCode" id="cb1009"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1006"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">delta_firm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.05</span> <span class="op">/</span> <span class="fl">52</span><span class="op">)</span></span>
 <span><span class="va">delta_union</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.10</span> <span class="op">/</span> <span class="fl">52</span><span class="op">)</span></span>
 <span></span>
@@ -459,11 +472,11 @@ u_u^* = d_u + \alpha(V - d_f - d_u), \quad u_f^* = d_f + (1-\alpha)(V - d_f - d_
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Weekly discount factors: union = %.6f, firm = %.6f\n"</span>,</span>
 <span>            <span class="va">delta_union</span>, <span class="va">delta_firm</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Weekly discount factors: union = 0.998079, firm = 0.999039</code></pre>
-<div class="sourceCode" id="cb1011"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1008"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Rubinstein share: union = %.4f, firm = %.4f\n"</span>,</span>
 <span>            <span class="va">eq_labor</span><span class="op">$</span><span class="va">share1</span>, <span class="va">eq_labor</span><span class="op">$</span><span class="va">share2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Rubinstein share: union = 0.3337, firm = 0.6663</code></pre>
-<div class="sourceCode" id="cb1013"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1010"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Union gets $%.2fM of the $%dM surplus\n"</span>,</span>
 <span>            <span class="va">eq_labor</span><span class="op">$</span><span class="va">share1</span> <span class="op">*</span> <span class="va">surplus</span>, <span class="va">surplus</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Union gets $3.34M of the $10M surplus</code></pre>
@@ -480,7 +493,7 @@ u_u^* = d_u + \alpha(V - d_f - d_u), \quad u_f^* = d_f + (1-\alpha)(V - d_f - d_
 <li>
 <strong>Incomplete information</strong> about the opponent’s discount factor or reservation value leads to delay and inefficiency; see <span class="citation">Kennan &amp; Wilson (<a href="references.html#ref-kennan1993">1993</a>)</span> for a survey.</li>
 <li>
-<strong>Multi-party bargaining</strong> extends these ideas to legislatures and coalitions, connecting to the <strong>Shapley value</strong> (<a href="#sec-cooperative-games"><strong>??</strong></a>).</li>
+<strong>Multi-party bargaining</strong> extends these ideas to legislatures and coalitions, connecting to the <strong>Shapley value</strong> (<a href="sec-cooperative-gt.html#sec-cooperative-gt">9</a>).</li>
 <li>
 <strong>Behavioral bargaining</strong> — ultimatum game experiments consistently show that proposers offer 40–50% rather than the minimal amount predicted by backward induction, suggesting fairness norms matter.</li>
 </ul>
@@ -522,53 +535,54 @@ u_u^* = d_u + \alpha(V - d_f - d_u), \quad u_f^* = d_f + (1-\alpha)(V - d_f - d_
       });
     });
   })();
-</script><!-- Download links injected into the right sidebar above View source / Edit this page --><script>
-  document.addEventListener("DOMContentLoaded", function () {
+</script><!-- Downloads are offered only when the optional output exists. --><script>
+  document.addEventListener("DOMContentLoaded", async function () {
     if (document.querySelector(".sidebar-downloads")) return;
-
-    var pageFile  = window.location.pathname.split("/").pop();
-    var chapterId = pageFile && pageFile !== "" && pageFile !== "index.html"
-      ? pageFile.replace(".html", ".pdf")
-      : null;
-
-    // Find the "View source / Edit this page" block. bs4_book wraps these in
-    // a section with the heading "On this page" + a list, followed by these
-    // links inside an <h2> sibling or a separate <ul>. We look for the
-    // canonical link text and walk up to its container, then insert before it.
     var anchor = null;
+    var chapterId = null;
     var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
     for (var i = 0; i < candidates.length; i++) {
-      var t = (candidates[i].textContent || "").trim().toLowerCase();
-      if (t === "view source" || t === "edit this page") {
-        anchor = candidates[i].closest("h2, .page-links, div, ul");
-        if (anchor) break;
+      var text = (candidates[i].textContent || "").trim().toLowerCase();
+      if (text === "view source" || text === "edit this page") {
+        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
+        var source = new URL(candidates[i].href, window.location.href);
+        var filename = decodeURIComponent(source.pathname.split("/").pop());
+        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
+          chapterId = filename.replace(/\.Rmd$/, ".pdf");
+        }
       }
     }
-    if (!anchor) return;  // theme variant we don't recognise — skip silently
-
+    if (!anchor) return;
+    var choices = [
+      ["strategy-in-r.pdf", "Entire book (PDF)"],
+      ["strategy-in-r.epub", "Entire book (EPUB)"]
+    ];
+    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
+    var available = await Promise.all(choices.map(async function (item) {
+      try {
+        var response = await fetch(item[0], { method: "HEAD" });
+        return response.ok ? item : null;
+      } catch (error) {
+        return null;
+      }
+    }));
+    available = available.filter(Boolean);
+    if (!available.length) return;
     var heading = document.createElement("h2");
     heading.className = "sidebar-downloads-heading";
     heading.textContent = "Download";
-
     var list = document.createElement("ul");
     list.className = "sidebar-downloads";
-
-    function addItem(href, label) {
+    available.forEach(function (item) {
       var li = document.createElement("li");
-      var a  = document.createElement("a");
-      a.href = href;
-      a.textContent = label;
-      li.appendChild(a);
+      var link = document.createElement("a");
+      link.href = item[0];
+      link.textContent = item[1];
+      li.appendChild(link);
       list.appendChild(li);
-    }
-
-    addItem("strategy-in-r.pdf", "Entire book (PDF)");
-    if (chapterId) {
-      addItem("pdf-chapters/" + chapterId, "This chapter (PDF)");
-    }
-
+    });
     anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list,    anchor);
+    anchor.parentNode.insertBefore(list, anchor);
   });
 </script><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
@@ -620,7 +634,7 @@ u_u^* = d_u + \alpha(V - d_f - d_u), \quad u_f^* = d_f + (1-\alpha)(V - d_f - d_
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-07-19.</p>
+    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

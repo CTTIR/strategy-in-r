@@ -1,6 +1,4 @@
-# (PART) Part II — The R Toolkit {-}
-
-# The R Environment {#sec-r-environment}
+# The R Environment for Strategic Computation {#sec-r-environment}
 
 > A practical guide to setting up RStudio or Positron for game-theoretic computation in R, managing reproducibility with renv, organizing projects with a consistent directory layout, and configuring the shared R/_common.R pattern and knitr options used throughout this book.
 
@@ -35,7 +33,7 @@ Reproducibility in computational research operates at several layers, each build
 
 3. **Project structure.** A conventional directory layout ensures that scripts, data, and output live in predictable locations. The `here` package provides a project-root-aware path constructor so that `here("R", "_common.R")` resolves correctly regardless of the working directory.
 
-4. **Rendering options.** Quarto and `knitr` chunk options control how code is executed, cached, and displayed. Consistent defaults --- set once in a shared file --- prevent output discrepancies across chapters.
+4. **Rendering options.** Bookdown and `knitr` chunk options control how code is executed, cached, and displayed. Consistent defaults --- set once in a shared file --- prevent output discrepancies across chapters.
 
 ### Why IDE configuration matters for game theory
 
@@ -69,12 +67,12 @@ layout <- tibble::tribble(
   ~Folder,           ~Purpose,
 
   "R/",              "Shared R scripts: _common.R, theme_publication.R, save_pub_fig.R, custom solvers",
-  "part-1-foundations/", "Quarto chapters for Part I (game theory foundations)",
-  "part-2-r-toolkit/",  "Quarto chapters for Part II (R packages and tools)",
-  "images/",         "Generated figures (PNG + PDF) from save_pub_fig()",
+  "*.Rmd",           "Bookdown chapters in the project root, ordered by _bookdown.yml",
+  "style/",          "Shared HTML and PDF styling",
+  "_generated/figures/", "Generated figures (PNG + PDF) from save_pub_fig()",
   "data/",           "Raw and processed data files",
-  "appendices/",     "Supplementary material: refresher, solutions, glossary",
-  "_book/",          "Rendered output (HTML, PDF, EPUB) --- not committed to Git",
+  "A-*.Rmd to E-*.Rmd", "Appendices: refresher, solutions and glossary",
+  "docs/",           "Rendered output (HTML, PDF and EPUB)",
   "renv/",           "Project-local package library managed by renv"
 )
 
@@ -553,18 +551,18 @@ layout |>
   <tbody class="gt_table_body">
     <tr><td headers="Folder" class="gt_row gt_left">R/</td>
 <td headers="Purpose" class="gt_row gt_left">Shared R scripts: _common.R, theme_publication.R, save_pub_fig.R, custom solvers</td></tr>
-    <tr><td headers="Folder" class="gt_row gt_left">part-1-foundations/</td>
-<td headers="Purpose" class="gt_row gt_left">Quarto chapters for Part I (game theory foundations)</td></tr>
-    <tr><td headers="Folder" class="gt_row gt_left">part-2-r-toolkit/</td>
-<td headers="Purpose" class="gt_row gt_left">Quarto chapters for Part II (R packages and tools)</td></tr>
-    <tr><td headers="Folder" class="gt_row gt_left">images/</td>
+    <tr><td headers="Folder" class="gt_row gt_left">*.Rmd</td>
+<td headers="Purpose" class="gt_row gt_left">Bookdown chapters in the project root, ordered by _bookdown.yml</td></tr>
+    <tr><td headers="Folder" class="gt_row gt_left">style/</td>
+<td headers="Purpose" class="gt_row gt_left">Shared HTML and PDF styling</td></tr>
+    <tr><td headers="Folder" class="gt_row gt_left">_generated/figures/</td>
 <td headers="Purpose" class="gt_row gt_left">Generated figures (PNG + PDF) from save_pub_fig()</td></tr>
     <tr><td headers="Folder" class="gt_row gt_left">data/</td>
 <td headers="Purpose" class="gt_row gt_left">Raw and processed data files</td></tr>
-    <tr><td headers="Folder" class="gt_row gt_left">appendices/</td>
-<td headers="Purpose" class="gt_row gt_left">Supplementary material: refresher, solutions, glossary</td></tr>
-    <tr><td headers="Folder" class="gt_row gt_left">_book/</td>
-<td headers="Purpose" class="gt_row gt_left">Rendered output (HTML, PDF, EPUB) --- not committed to Git</td></tr>
+    <tr><td headers="Folder" class="gt_row gt_left">A-*.Rmd to E-*.Rmd</td>
+<td headers="Purpose" class="gt_row gt_left">Appendices: refresher, solutions and glossary</td></tr>
+    <tr><td headers="Folder" class="gt_row gt_left">docs/</td>
+<td headers="Purpose" class="gt_row gt_left">Rendered output (HTML, PDF and EPUB)</td></tr>
     <tr><td headers="Folder" class="gt_row gt_left">renv/</td>
 <td headers="Purpose" class="gt_row gt_left">Project-local package library managed by renv</td></tr>
   </tbody>
@@ -742,7 +740,7 @@ dirs <- c("R", "data", "images", "output")
 for (d in dirs) dir.create(d, showWarnings = FALSE)
 ```
 
-**Step 3 --- Write the shared setup file.** Create `R/_common.R` with package loads and knitr defaults, following the pattern shown above. This file will be sourced at the top of every `.qmd` chapter.
+**Step 3 --- Write the shared setup file.** Create `R/_common.R` with package loads and knitr defaults, following the pattern shown above. This file will be sourced at the top of every `.Rmd` chapter.
 
 **Step 4 --- Install and snapshot dependencies.**
 
@@ -757,10 +755,10 @@ renv::snapshot()
 
 After this step, `renv.lock` contains a complete record of every package and its version. Sharing this file (along with the code) allows anyone to recreate the exact environment.
 
-**Step 5 --- Create the first analysis file.** Create `01-pd-analysis.qmd` in the project root:
+**Step 5 --- Create the first analysis file.** Create `01-pd-analysis.Rmd` in the project root:
 
 ``` r
-# At the top of 01-pd-analysis.qmd:
+# At the top of 01-pd-analysis.Rmd:
 source(here::here("R", "_common.R"))
 
 # Define the Prisoner's Dilemma payoff matrix
@@ -1263,7 +1261,7 @@ env_info |>
   </thead>
   <tbody class="gt_table_body">
     <tr><td headers="Component" class="gt_row gt_left">R version</td>
-<td headers="Value" class="gt_row gt_left">4.6.1</td></tr>
+<td headers="Value" class="gt_row gt_left">4.6.2</td></tr>
     <tr><td headers="Component" class="gt_row gt_left">Platform</td>
 <td headers="Value" class="gt_row gt_left">x86_64-pc-linux-gnu</td></tr>
     <tr><td headers="Component" class="gt_row gt_left">tidyverse</td>
@@ -1287,7 +1285,7 @@ env_info |>
 The project setup described here can be extended in several directions:
 
 - **Docker containers.** For maximum reproducibility, wrap the entire R environment in a Docker image. The `rocker` project provides pre-built images with R, RStudio Server, and the tidyverse. This guarantees identical results regardless of the host operating system.
-- **Continuous integration.** Services like GitHub Actions can render your Quarto book on every push, catching errors early. This book uses a GitHub Actions workflow that installs dependencies via `renv::restore()` and renders all chapters.
+- **Continuous integration.** Services like GitHub Actions can render your Bookdown book on every push, catching errors early. This book uses a GitHub Actions workflow that installs dependencies via `renv::restore()` and renders all chapters.
 - **Targets pipelines.** The `targets` package extends reproducibility from package management to workflow management, tracking which outputs are up-to-date and re-running only what has changed. This is particularly valuable for long-running game-theoretic simulations.
 - **Computational environments for teaching.** Posit Cloud (formerly RStudio Cloud) provides browser-based R environments with pre-configured packages, eliminating setup friction for students new to R. Each student gets an isolated workspace with the correct package versions.
 

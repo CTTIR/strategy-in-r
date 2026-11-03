@@ -7,7 +7,7 @@
 <title>Chapter 4 Nash Equilibrium | Strategy in R</title>
 <meta name="author" content="Raban Heller">
 <meta name="description" content="Definition, existence, computation, and multiplicity of Nash equilibrium — the central solution concept in non-cooperative game theory.  Learning objectives Define Nash equilibrium in terms of...">
-<meta name="generator" content="bookdown 0.47 with bs4_book()">
+<meta name="generator" content="bookdown 0.48 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Nash Equilibrium | Strategy in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://r-heller.github.io/strategy-in-r/sec-nash-equilibrium.html">
@@ -33,6 +33,19 @@
 <meta property="og:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
+<!-- Wide equations scroll locally instead of widening the reading column. --><style>
+    @media (max-width: 767.98px) {
+      main .figure {
+        width: 100%;
+      }
+      main .math.display {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+    }
+    </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -88,8 +101,8 @@
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
 <li><a class="" href="notation.html">Notation</a></li>
-<li><a class="" href="sec-introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li class="book-part">Part I — Foundations of Game Theory</li>
+<li class="book-part">Foundations</li>
+<li><a class="" href="sec-introduction.html"><span class="header-section-number">1</span> Introduction: Why Strategy in R?</a></li>
 <li><a class="" href="sec-what-is-a-game.html"><span class="header-section-number">2</span> What is a Game?</a></li>
 <li><a class="" href="sec-normal-form.html"><span class="header-section-number">3</span> Normal-Form Games</a></li>
 <li><a class="active" href="sec-nash-equilibrium.html"><span class="header-section-number">4</span> Nash Equilibrium</a></li>
@@ -98,45 +111,45 @@
 <li><a class="" href="sec-bayesian-games.html"><span class="header-section-number">7</span> Bayesian Games</a></li>
 <li><a class="" href="sec-repeated-games.html"><span class="header-section-number">8</span> Repeated Games</a></li>
 <li><a class="" href="sec-cooperative-gt.html"><span class="header-section-number">9</span> Cooperative Game Theory</a></li>
-<li class="book-part">Part II — The R Toolkit</li>
-<li><a class="" href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment</a></li>
+<li class="book-part">The R Toolkit</li>
+<li><a class="" href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment for Strategic Computation</a></li>
 <li><a class="" href="sec-gametheory-package.html"><span class="header-section-number">11</span> The GameTheory Package</a></li>
 <li><a class="" href="sec-coopgame-package.html"><span class="header-section-number">12</span> The CoopGame Package</a></li>
 <li><a class="" href="sec-gtree-package.html"><span class="header-section-number">13</span> The gtree Package</a></li>
 <li><a class="" href="sec-nashpy-reticulate.html"><span class="header-section-number">14</span> nashpy via reticulate</a></li>
 <li><a class="" href="sec-custom-solvers.html"><span class="header-section-number">15</span> Building Custom Solvers in R</a></li>
-<li class="book-part">Part III — Simulation</li>
+<li class="book-part">Simulation &amp; Evolutionary Dynamics</li>
 <li><a class="" href="sec-monte-carlo.html"><span class="header-section-number">16</span> Monte Carlo Methods for Games</a></li>
 <li><a class="" href="sec-agent-based-models.html"><span class="header-section-number">17</span> Agent-Based Models for Strategic Interaction</a></li>
 <li><a class="" href="sec-axelrod-tournament.html"><span class="header-section-number">18</span> Replicating Axelrod’s Tournament</a></li>
-<li><a class="" href="sec-spatial-pd.html"><span class="header-section-number">19</span> Spatial Prisoner’s Dilemma</a></li>
+<li><a class="" href="sec-spatial-pd.html"><span class="header-section-number">19</span> The Spatial Prisoner’s Dilemma</a></li>
 <li><a class="" href="sec-replicator-dynamics.html"><span class="header-section-number">20</span> Replicator Dynamics</a></li>
 <li><a class="" href="sec-ess.html"><span class="header-section-number">21</span> Evolutionarily Stable Strategies</a></li>
 <li><a class="" href="sec-network-games.html"><span class="header-section-number">22</span> Games on Networks</a></li>
 <li><a class="" href="sec-performance-rcpp.html"><span class="header-section-number">23</span> Performance Optimization</a></li>
-<li class="book-part">Part IV — AI and Machine Learning</li>
-<li><a class="" href="sec-ml-foundations.html"><span class="header-section-number">24</span> ML Foundations for Game Theory</a></li>
+<li class="book-part">Strategic AI</li>
+<li><a class="" href="sec-ml-foundations.html"><span class="header-section-number">24</span> Machine Learning Foundations for Game Theory</a></li>
 <li><a class="" href="sec-reinforcement-learning.html"><span class="header-section-number">25</span> Reinforcement Learning Foundations</a></li>
-<li><a class="" href="sec-q-learning.html"><span class="header-section-number">26</span> Q-Learning in Games</a></li>
-<li><a class="" href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent RL</a></li>
+<li><a class="" href="sec-q-learning.html"><span class="header-section-number">26</span> Q-Learning in 2-Player Games</a></li>
+<li><a class="" href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent Reinforcement Learning</a></li>
 <li><a class="" href="sec-self-play.html"><span class="header-section-number">28</span> Self-Play and AlphaZero</a></li>
-<li><a class="" href="sec-cfr.html"><span class="header-section-number">29</span> CFR and Poker</a></li>
+<li><a class="" href="sec-cfr.html"><span class="header-section-number">29</span> Counterfactual Regret Minimization and Poker</a></li>
 <li><a class="" href="sec-gans.html"><span class="header-section-number">30</span> GANs as Minimax Games</a></li>
-<li><a class="" href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategy</a></li>
-<li class="book-part">Part V — Applications</li>
+<li><a class="" href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategic Reasoning</a></li>
+<li class="book-part">Applications</li>
 <li><a class="" href="sec-auctions.html"><span class="header-section-number">32</span> Auction Theory</a></li>
 <li><a class="" href="sec-mechanism-design.html"><span class="header-section-number">33</span> Mechanism Design</a></li>
 <li><a class="" href="sec-matching-markets.html"><span class="header-section-number">34</span> Matching Markets</a></li>
 <li><a class="" href="sec-bargaining.html"><span class="header-section-number">35</span> Bargaining Theory</a></li>
 <li><a class="" href="sec-conflict-cooperation.html"><span class="header-section-number">36</span> Conflict and Cooperation Models</a></li>
 <li><a class="" href="sec-case-studies.html"><span class="header-section-number">37</span> Empirical Case Studies</a></li>
-<li class="book-part">Part VI — Ethics and the Future</li>
+<li class="book-part">Ethics &amp; Outlook</li>
 <li><a class="" href="sec-ethics-frameworks.html"><span class="header-section-number">38</span> Ethical Frameworks for Strategic AI</a></li>
 <li><a class="" href="sec-fairness-ml.html"><span class="header-section-number">39</span> Fairness in Machine Learning</a></li>
 <li><a class="" href="sec-ai-alignment.html"><span class="header-section-number">40</span> AI Alignment as a Game</a></li>
 <li><a class="" href="sec-cooperative-ai.html"><span class="header-section-number">41</span> Cooperative AI</a></li>
 <li><a class="" href="sec-future.html"><span class="header-section-number">42</span> The Future of Strategy</a></li>
-<li class="book-part">Appendices</li>
+<li class="book-part">Appendix</li>
 <li><a class="" href="sec-r-refresher.html"><span class="header-section-number">A</span> R Refresher</a></li>
 <li><a class="" href="sec-linear-algebra.html"><span class="header-section-number">B</span> Linear Algebra Essentials</a></li>
 <li><a class="" href="sec-probability.html"><span class="header-section-number">C</span> Probability Essentials</a></li>
@@ -502,53 +515,54 @@ Figure 4.1: Best-response correspondences for the Battle of the Sexes. Player 1�
       });
     });
   })();
-</script><!-- Download links injected into the right sidebar above View source / Edit this page --><script>
-  document.addEventListener("DOMContentLoaded", function () {
+</script><!-- Downloads are offered only when the optional output exists. --><script>
+  document.addEventListener("DOMContentLoaded", async function () {
     if (document.querySelector(".sidebar-downloads")) return;
-
-    var pageFile  = window.location.pathname.split("/").pop();
-    var chapterId = pageFile && pageFile !== "" && pageFile !== "index.html"
-      ? pageFile.replace(".html", ".pdf")
-      : null;
-
-    // Find the "View source / Edit this page" block. bs4_book wraps these in
-    // a section with the heading "On this page" + a list, followed by these
-    // links inside an <h2> sibling or a separate <ul>. We look for the
-    // canonical link text and walk up to its container, then insert before it.
     var anchor = null;
+    var chapterId = null;
     var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
     for (var i = 0; i < candidates.length; i++) {
-      var t = (candidates[i].textContent || "").trim().toLowerCase();
-      if (t === "view source" || t === "edit this page") {
-        anchor = candidates[i].closest("h2, .page-links, div, ul");
-        if (anchor) break;
+      var text = (candidates[i].textContent || "").trim().toLowerCase();
+      if (text === "view source" || text === "edit this page") {
+        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
+        var source = new URL(candidates[i].href, window.location.href);
+        var filename = decodeURIComponent(source.pathname.split("/").pop());
+        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
+          chapterId = filename.replace(/\.Rmd$/, ".pdf");
+        }
       }
     }
-    if (!anchor) return;  // theme variant we don't recognise — skip silently
-
+    if (!anchor) return;
+    var choices = [
+      ["strategy-in-r.pdf", "Entire book (PDF)"],
+      ["strategy-in-r.epub", "Entire book (EPUB)"]
+    ];
+    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
+    var available = await Promise.all(choices.map(async function (item) {
+      try {
+        var response = await fetch(item[0], { method: "HEAD" });
+        return response.ok ? item : null;
+      } catch (error) {
+        return null;
+      }
+    }));
+    available = available.filter(Boolean);
+    if (!available.length) return;
     var heading = document.createElement("h2");
     heading.className = "sidebar-downloads-heading";
     heading.textContent = "Download";
-
     var list = document.createElement("ul");
     list.className = "sidebar-downloads";
-
-    function addItem(href, label) {
+    available.forEach(function (item) {
       var li = document.createElement("li");
-      var a  = document.createElement("a");
-      a.href = href;
-      a.textContent = label;
-      li.appendChild(a);
+      var link = document.createElement("a");
+      link.href = item[0];
+      link.textContent = item[1];
+      li.appendChild(link);
       list.appendChild(li);
-    }
-
-    addItem("strategy-in-r.pdf", "Entire book (PDF)");
-    if (chapterId) {
-      addItem("pdf-chapters/" + chapterId, "This chapter (PDF)");
-    }
-
+    });
     anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list,    anchor);
+    anchor.parentNode.insertBefore(list, anchor);
   });
 </script><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
@@ -597,7 +611,7 @@ Figure 4.1: Best-response correspondences for the Battle of the Sexes. Player 1�
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-07-19.</p>
+    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

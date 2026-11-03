@@ -206,7 +206,7 @@
 \makeatother
 \subtitle{Game Theory, Simulation, and Machine Intelligence}
 \author{Raban Heller}
-\date{2026-07-19}
+\date{2026-11-03}
 
 \begin{document}
 \maketitle
@@ -243,7 +243,7 @@ The book is for graduate students, researchers, and practitioners with working R
 \item
   \textbf{Code lives} under \texttt{R/} (helpers, theme, solvers) and \texttt{python/} (CFR, deep RL via \texttt{reticulate}); example data under \texttt{data/}. Every chapter is rebuildable in isolation: \texttt{bookdown::preview\_chapter("12-gtree-package.Rmd")}.
 \item
-  \textbf{Per-chapter PDF.} Every chapter page has a ``⬇ Download this chapter (PDF)'' button in the top-right.
+  \textbf{Per-chapter PDF.} When a chapter PDF is available, its download appears in the sidebar.
 \item
   \textbf{Whole-book downloads.} The PDF and EPUB are linked from the navbar's Download menu.
 \item
@@ -266,7 +266,7 @@ Simulation, and Machine Intelligence} (Version v0.1.0). Self-published
 via GitHub Pages. \url{https://r-heller.github.io/strategy-in-r/}.
 \end{boxempty}
 
-Download the reference as \href{citation-files/citation.bib}{BibTeX} or \href{citation-files/citation.ris}{RIS}.
+Download the reference as \href{https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.bib}{BibTeX} or \href{https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.ris}{RIS}.
 
 \chapter*{Impressum}\label{impressum}
 \addcontentsline{toc}{chapter}{Impressum}
@@ -282,7 +282,7 @@ Source code released under the \href{https://opensource.org/licenses/MIT}{MIT Li
 Published online: \url{https://r-heller.github.io/strategy-in-r/}
 Source repository: \url{https://github.com/r-heller/strategy-in-r}
 
-Version: v0.1.0 · Build date: 2026-07-19
+Version: v0.1.0 · Build date: 2026-11-03
 
 \section*{Suggested citation}\label{suggested-citation}
 \addcontentsline{toc}{section}{Suggested citation}
@@ -329,7 +329,7 @@ For corrections, suggestions, or issues: \url{https://github.com/r-heller/strate
 \item
   Code is shown in full; outputs follow immediately; interpretation is a separate paragraph.
 \item
-  Cross-references use bookdown's \texttt{\textbackslash{}@ref()} syntax: \texttt{Chapter\ \textbackslash{}@ref(sec-nash-equilibrium)}, \texttt{Figure\ \textbackslash{}@ref(fig:axelrod-ranking)}, \texttt{Table\ \textbackslash{}@ref(tab:auction-types)}.
+  Cross-references use Bookdown's syntax: a backslash, the at-sign, then \texttt{ref(...)} containing a defined label. For example, use \texttt{sec-nash-equilibrium} for the Nash equilibrium chapter, \texttt{fig:axelrod-ranking} for that figure, or \texttt{tab:your-table-label} for a numbered table that you have defined.
 \item
   Exercises live at the end of each chapter; solutions are in Appendix D.
 \end{itemize}
@@ -421,7 +421,9 @@ VCG & Vickrey--Clarke--Groves mechanism \\
 \end{longtable}
 }
 
-\chapter{Introduction}\label{sec-introduction}
+\part{Foundations}\label{part-foundations}
+
+\chapter{Introduction: Why Strategy in R?}\label{sec-introduction}
 
 \begin{quote}
 Why study strategic interaction computationally, and why R is the right tool for the job.
@@ -470,8 +472,6 @@ Each chapter is self-contained enough to read independently, but the parts are d
 \textbf{Project-based reading} pairs well with the exercises. Each chapter ends with problems that can serve as starting points for course projects or research extensions.
 
 Let's begin.
-
-\part{Part I --- Foundations of Game Theory}\label{part-part-i-foundations-of-game-theory}
 
 \chapter{What is a Game?}\label{sec-what-is-a-game}
 
@@ -4211,9 +4211,9 @@ For the mathematical foundations of cooperative game theory, see Neumann \& Morg
 
 Solutions appear in \ref{sec-solutions}.
 
-\part{Part II --- The R Toolkit}\label{part-part-ii-the-r-toolkit}
+\part{The R Toolkit}\label{part-the-r-toolkit}
 
-\chapter{The R Environment}\label{sec-r-environment}
+\chapter{The R Environment for Strategic Computation}\label{sec-r-environment}
 
 \begin{quote}
 A practical guide to setting up RStudio or Positron for game-theoretic computation in R, managing reproducibility with renv, organizing projects with a consistent directory layout, and configuring the shared R/\_common.R pattern and knitr options used throughout this book.
@@ -4261,7 +4261,7 @@ Reproducibility in computational research operates at several layers, each build
 \item
   \textbf{Project structure.} A conventional directory layout ensures that scripts, data, and output live in predictable locations. The \texttt{here} package provides a project-root-aware path constructor so that \texttt{here("R",\ "\_common.R")} resolves correctly regardless of the working directory.
 \item
-  \textbf{Rendering options.} Quarto and \texttt{knitr} chunk options control how code is executed, cached, and displayed. Consistent defaults --- set once in a shared file --- prevent output discrepancies across chapters.
+  \textbf{Rendering options.} Bookdown and \texttt{knitr} chunk options control how code is executed, cached, and displayed. Consistent defaults --- set once in a shared file --- prevent output discrepancies across chapters.
 \end{enumerate}
 
 \subsection{Why IDE configuration matters for game theory}\label{why-ide-configuration-matters-for-game-theory}
@@ -4309,12 +4309,12 @@ The directory structure used in this book is a good template for any game theory
   \SpecialCharTok{\textasciitilde{}}\NormalTok{Folder,           }\SpecialCharTok{\textasciitilde{}}\NormalTok{Purpose,}
 
   \StringTok{"R/"}\NormalTok{,              }\StringTok{"Shared R scripts: \_common.R, theme\_publication.R, save\_pub\_fig.R, custom solvers"}\NormalTok{,}
-  \StringTok{"part{-}1{-}foundations/"}\NormalTok{, }\StringTok{"Quarto chapters for Part I (game theory foundations)"}\NormalTok{,}
-  \StringTok{"part{-}2{-}r{-}toolkit/"}\NormalTok{,  }\StringTok{"Quarto chapters for Part II (R packages and tools)"}\NormalTok{,}
-  \StringTok{"images/"}\NormalTok{,         }\StringTok{"Generated figures (PNG + PDF) from save\_pub\_fig()"}\NormalTok{,}
+  \StringTok{"*.Rmd"}\NormalTok{,           }\StringTok{"Bookdown chapters in the project root, ordered by \_bookdown.yml"}\NormalTok{,}
+  \StringTok{"style/"}\NormalTok{,          }\StringTok{"Shared HTML and PDF styling"}\NormalTok{,}
+  \StringTok{"\_generated/figures/"}\NormalTok{, }\StringTok{"Generated figures (PNG + PDF) from save\_pub\_fig()"}\NormalTok{,}
   \StringTok{"data/"}\NormalTok{,           }\StringTok{"Raw and processed data files"}\NormalTok{,}
-  \StringTok{"appendices/"}\NormalTok{,     }\StringTok{"Supplementary material: refresher, solutions, glossary"}\NormalTok{,}
-  \StringTok{"\_book/"}\NormalTok{,          }\StringTok{"Rendered output (HTML, PDF, EPUB) {-}{-}{-} not committed to Git"}\NormalTok{,}
+  \StringTok{"A{-}*.Rmd to E{-}*.Rmd"}\NormalTok{, }\StringTok{"Appendices: refresher, solutions and glossary"}\NormalTok{,}
+  \StringTok{"docs/"}\NormalTok{,           }\StringTok{"Rendered output (HTML, PDF and EPUB)"}\NormalTok{,}
   \StringTok{"renv/"}\NormalTok{,           }\StringTok{"Project{-}local package library managed by renv"}
 \NormalTok{)}
 
@@ -4336,12 +4336,12 @@ The directory structure used in this book is a good template for any game theory
 Directory & Contents and purpose \\ 
 \midrule\addlinespace[2.5pt]
 R/ & Shared R scripts: \_common.R, theme\_publication.R, save\_pub\_fig.R, custom solvers \\ 
-part-1-foundations/ & Quarto chapters for Part I (game theory foundations) \\ 
-part-2-r-toolkit/ & Quarto chapters for Part II (R packages and tools) \\ 
-images/ & Generated figures (PNG + PDF) from save\_pub\_fig() \\ 
+*.Rmd & Bookdown chapters in the project root, ordered by \_bookdown.yml \\ 
+style/ & Shared HTML and PDF styling \\ 
+\_generated/figures/ & Generated figures (PNG + PDF) from save\_pub\_fig() \\ 
 data/ & Raw and processed data files \\ 
-appendices/ & Supplementary material: refresher, solutions, glossary \\ 
-\_book/ & Rendered output (HTML, PDF, EPUB) --- not committed to Git \\ 
+A-*.Rmd to E-*.Rmd & Appendices: refresher, solutions and glossary \\ 
+docs/ & Rendered output (HTML, PDF and EPUB) \\ 
 renv/ & Project-local package library managed by renv \\ 
 \bottomrule
 \end{tabular*}
@@ -4523,7 +4523,7 @@ We now walk through setting up a new game theory analysis project from scratch, 
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{Step 3 --- Write the shared setup file.} Create \texttt{R/\_common.R} with package loads and knitr defaults, following the pattern shown above. This file will be sourced at the top of every \texttt{.qmd} chapter.
+\textbf{Step 3 --- Write the shared setup file.} Create \texttt{R/\_common.R} with package loads and knitr defaults, following the pattern shown above. This file will be sourced at the top of every \texttt{.Rmd} chapter.
 
 \textbf{Step 4 --- Install and snapshot dependencies.}
 
@@ -4539,11 +4539,11 @@ We now walk through setting up a new game theory analysis project from scratch, 
 
 After this step, \texttt{renv.lock} contains a complete record of every package and its version. Sharing this file (along with the code) allows anyone to recreate the exact environment.
 
-\textbf{Step 5 --- Create the first analysis file.} Create \texttt{01-pd-analysis.qmd} in the project root:
+\textbf{Step 5 --- Create the first analysis file.} Create \texttt{01-pd-analysis.Rmd} in the project root:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# At the top of 01{-}pd{-}analysis.qmd:}
+\CommentTok{\# At the top of 01{-}pd{-}analysis.Rmd:}
 \FunctionTok{source}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"R"}\NormalTok{, }\StringTok{"\_common.R"}\NormalTok{))}
 
 \CommentTok{\# Define the Prisoner\textquotesingle{}s Dilemma payoff matrix}
@@ -4600,7 +4600,7 @@ In Positron, equivalent settings live in the Settings editor (Ctrl+,). The key s
 \toprule
 Component & Detected value \\ 
 \midrule\addlinespace[2.5pt]
-R version & 4.6.1 \\ 
+R version & 4.6.2 \\ 
 Platform & x86\_64-pc-linux-gnu \\ 
 tidyverse & 2.0.0 \\ 
 ggplot2 & 4.0.3 \\ 
@@ -4620,7 +4620,7 @@ The project setup described here can be extended in several directions:
 \item
   \textbf{Docker containers.} For maximum reproducibility, wrap the entire R environment in a Docker image. The \texttt{rocker} project provides pre-built images with R, RStudio Server, and the tidyverse. This guarantees identical results regardless of the host operating system.
 \item
-  \textbf{Continuous integration.} Services like GitHub Actions can render your Quarto book on every push, catching errors early. This book uses a GitHub Actions workflow that installs dependencies via \texttt{renv::restore()} and renders all chapters.
+  \textbf{Continuous integration.} Services like GitHub Actions can render your Bookdown book on every push, catching errors early. This book uses a GitHub Actions workflow that installs dependencies via \texttt{renv::restore()} and renders all chapters.
 \item
   \textbf{Targets pipelines.} The \texttt{targets} package extends reproducibility from package management to workflow management, tracking which outputs are up-to-date and re-running only what has changed. This is particularly valuable for long-running game-theoretic simulations.
 \item
@@ -6295,18 +6295,18 @@ Depth & Branching & Terminal Nodes & Time (ms) \\
 \midrule\addlinespace[2.5pt]
 2 & 2 & 4 & 0.00 \\ 
 3 & 2 & 8 & 0.00 \\ 
-4 & 2 & 16 & 0.00 \\ 
+4 & 2 & 16 & 1.00 \\ 
 5 & 2 & 32 & 1.00 \\ 
-6 & 2 & 64 & 2.00 \\ 
+6 & 2 & 64 & 1.00 \\ 
 7 & 2 & 128 & 2.00 \\ 
 8 & 2 & 256 & 5.00 \\ 
 2 & 3 & 9 & 0.00 \\ 
-3 & 3 & 27 & 0.00 \\ 
+3 & 3 & 27 & 1.00 \\ 
 4 & 3 & 81 & 1.00 \\ 
-5 & 3 & 243 & 3.00 \\ 
+5 & 3 & 243 & 2.00 \\ 
 6 & 3 & 729 & 8.00 \\ 
-7 & 3 & 2,187 & 21.00 \\ 
-8 & 3 & 6,561 & 68.00 \\ 
+7 & 3 & 2,187 & 23.00 \\ 
+8 & 3 & 6,561 & 71.00 \\ 
 \bottomrule
 \end{tabular*}
 \end{table}
@@ -6913,7 +6913,7 @@ Two animals contest a resource worth \(V = 4\). Each plays Hawk (aggressive) or 
 #>   [Mixed] p(Hawk) = 0.6667, q(Hawk) = 0.6667, payoffs = (0.667, 0.667)
 \end{verbatim}
 
-The Hawk-Dove game has two pure NE (one plays Hawk, the other Dove) and one mixed NE where each player plays Hawk with probability \(V/C = 2/3\). The mixed equilibrium probability matches the evolutionary stable strategy from \ref{sec-evolutionary-stable-strategies}.
+The Hawk-Dove game has two pure NE (one plays Hawk, the other Dove) and one mixed NE where each player plays Hawk with probability \(V/C = 2/3\). The mixed equilibrium probability matches the evolutionary stable strategy from \ref{sec-ess}.
 
 \subsection{A 3x3 extension: Rock-Paper-Scissors}\label{a-3x3-extension-rock-paper-scissors}
 
@@ -7083,7 +7083,7 @@ The support enumeration solver and the reticulate pattern described here connect
 \item
   \textbf{The gtree package} (\ref{sec-gtree-package}) handles extensive-form games; converting an extensive form to normal form and then applying support enumeration is a standard workflow.
 \item
-  \textbf{Evolutionary stable strategies} (\ref{sec-evolutionary-stable-strategies}) gives a population-dynamics interpretation of the Hawk-Dove mixed equilibrium.
+  \textbf{Evolutionary stable strategies} (\ref{sec-ess}) gives a population-dynamics interpretation of the Hawk-Dove mixed equilibrium.
 \end{itemize}
 
 The reticulate pattern generalizes beyond nashpy. Any Python game theory library --- Gambit's Python bindings, the Axelrod library for tournament simulations, or custom solvers built with NumPy --- can be called from R using the same \texttt{import()} and method-call pattern.
@@ -7869,7 +7869,7 @@ For the theoretical foundations of equilibrium computation, including the PPAD c
 
 Solutions appear in \ref{sec-solutions}.
 
-\part{Part III --- Simulation}\label{part-part-iii-simulation}
+\part{Simulation \& Evolutionary Dynamics}\label{part-simulation-evolutionary-dynamics}
 
 \chapter{Monte Carlo Methods for Games}\label{sec-monte-carlo}
 
@@ -9176,7 +9176,7 @@ The pattern reveals alternating retaliation: Suspicious TFT defects in round 1, 
 
 Solutions appear in \ref{sec-solutions}.
 
-\chapter{Spatial Prisoner's Dilemma}\label{sec-spatial-pd}
+\chapter{The Spatial Prisoner's Dilemma}\label{sec-spatial-pd}
 
 \begin{quote}
 A computational exploration of Nowak and May's spatial Prisoner's Dilemma, showing how local interaction on a lattice allows cooperation to survive through cluster formation --- even without memory, reciprocity, or reputation.
@@ -11222,7 +11222,7 @@ The key insight is that summing neighbor cooperators is a \textbf{convolution} -
 \end{Shaded}
 
 \begin{verbatim}
-#>   Loop-based:  0.259 s (sd: 0.020)
+#>   Loop-based:  0.262 s (sd: 0.021)
 \end{verbatim}
 
 \begin{Shaded}
@@ -11232,7 +11232,7 @@ The key insight is that summing neighbor cooperators is a \textbf{convolution} -
 \end{Shaded}
 
 \begin{verbatim}
-#>   Vectorized:  0.016 s (sd: 0.011)
+#>   Vectorized:  0.015 s (sd: 0.011)
 \end{verbatim}
 
 \begin{Shaded}
@@ -11242,7 +11242,7 @@ The key insight is that summing neighbor cooperators is a \textbf{convolution} -
 \end{Shaded}
 
 \begin{verbatim}
-#>   Speedup:     16.2x
+#>   Speedup:     17.0x
 \end{verbatim}
 
 \subsection{Verifying correctness}\label{verifying-correctness}
@@ -11414,7 +11414,7 @@ We optimize the spatial PD simulation step by step, measuring the impact of each
 \end{Shaded}
 
 \begin{verbatim}
-#>   Total elapsed time: 0.173 s
+#>   Total elapsed time: 0.174 s
 \end{verbatim}
 
 \begin{Shaded}
@@ -11460,7 +11460,7 @@ The key rewrite replaces the inner double loop with four matrix-shift operations
 \end{Shaded}
 
 \begin{verbatim}
-#>   Vectorized time:  0.006 s
+#>   Vectorized time:  0.005 s
 \end{verbatim}
 
 \begin{Shaded}
@@ -11470,7 +11470,7 @@ The key rewrite replaces the inner double loop with four matrix-shift operations
 \end{Shaded}
 
 \begin{verbatim}
-#>   Loop-based time:  0.173 s
+#>   Loop-based time:  0.174 s
 \end{verbatim}
 
 \begin{Shaded}
@@ -11480,7 +11480,7 @@ The key rewrite replaces the inner double loop with four matrix-shift operations
 \end{Shaded}
 
 \begin{verbatim}
-#>   Speedup:          28.8x
+#>   Speedup:          34.8x
 \end{verbatim}
 
 \subsection{Step 3: Memory pre-allocation matters}\label{step-3-memory-pre-allocation-matters}
@@ -11548,10 +11548,10 @@ A common anti-pattern in R is growing a data frame row by row. We demonstrate th
 \end{Shaded}
 
 \begin{verbatim}
-#>   1,000     0.0040    0.0030      1x
-#>   5,000     0.0220    0.0000      Infx
-#>   10,000    0.0810    0.0000      Infx
-#>   20,000    0.3210    0.0010      321x
+#>   1,000     0.0040    0.0040      1x
+#>   5,000     0.0200    0.0010      20x
+#>   10,000    0.0740    0.0010      74x
+#>   20,000    0.2900    0.0010      290x
 \end{verbatim}
 
 The growing vector copies the entire vector on each append, producing \(O(n^2)\) total work. Pre-allocation is \(O(n)\).
@@ -11603,9 +11603,9 @@ The decision rule is simple: \textbf{vectorize first, Rcpp second}. If the bottl
 
 Solutions appear in \ref{sec-solutions}.
 
-\part{Part IV --- AI and Machine Learning}\label{part-part-iv-ai-and-machine-learning}
+\part{Strategic AI}\label{part-strategic-ai}
 
-\chapter{ML Foundations for Game Theory}\label{sec-ml-foundations}
+\chapter{Machine Learning Foundations for Game Theory}\label{sec-ml-foundations}
 
 \begin{quote}
 Supervised learning as a game against nature, regret minimization and regret matching, feature engineering for game-theoretic data, and cross-validation for strategic predictions.
@@ -11668,7 +11668,7 @@ R_t^+(a) \,/\, \sum_{a'} R_t^+(a') & \text{if } \sum_{a'} R_t^+(a') > 0 \\
 \label{eq:regret-matching}
 \end{equation}
 
-where \(R_t^+(a) = \max(0, R_t(a))\). This algorithm is the building block of \textbf{counterfactual regret minimization} (CFR), covered in \ref{sec-cfr-poker}.
+where \(R_t^+(a) = \max(0, R_t(a))\). This algorithm is the building block of \textbf{counterfactual regret minimization} (CFR), covered in \ref{sec-cfr}.
 
 \subsection{Feature representation for game-theoretic data}\label{feature-representation-for-game-theoretic-data}
 
@@ -12044,7 +12044,7 @@ The opponent's recent cooperation rate is the strongest predictor --- consistent
 \item
   \textbf{Multiplicative weights update} is an alternative no-regret algorithm with tighter theoretical bounds. See Arora et al. (\citeproc{ref-arora2012}{2012}) for a survey of the multiplicative weights method and its connections to game theory.
 \item
-  \textbf{Counterfactual regret minimization} (\ref{sec-cfr-poker}) extends regret matching to extensive-form games, powering superhuman poker AI.
+  \textbf{Counterfactual regret minimization} (\ref{sec-cfr}) extends regret matching to extensive-form games, powering superhuman poker AI.
 \item
   \textbf{Reinforcement learning} (\ref{sec-reinforcement-learning}) replaces the fixed-loss setting of online learning with sequential decision-making under an MDP.
 \item
@@ -12527,7 +12527,7 @@ Q-learning finds the optimal route because it evaluates the greedy policy (via \
 
 Solutions appear in \ref{sec-solutions}.
 
-\chapter{Q-Learning in Games}\label{sec-q-learning}
+\chapter{Q-Learning in 2-Player Games}\label{sec-q-learning}
 
 \begin{quote}
 Tabular Q-learning in matrix games: convergence in coordination games, divergence in zero-sum games, and the rational learning debate.
@@ -12886,7 +12886,7 @@ For the theoretical debate on rational learning in games, see Shoham \& Leyton-B
 
 Solutions appear in \ref{sec-solutions}.
 
-\chapter{Multi-Agent RL}\label{sec-multi-agent-rl}
+\chapter{Multi-Agent Reinforcement Learning}\label{sec-multi-agent-rl}
 
 \begin{quote}
 Independent learners, joint-action learners, minimax-Q for zero-sum games, and the conceptual foundations of MADDPG and PSRO.
@@ -13415,14 +13415,14 @@ Monte Carlo tree search in base R, the self-play training paradigm, and how Alph
 \item
   Describe the AlphaZero architecture and how neural networks replace the rollout phase of MCTS.
 \item
-  Demonstrate MCTS convergence to optimal play in Tic-Tac-Toe through visit count analysis.
+  Inspect MCTS visit counts and measure finite-budget play against a random opponent.
 \end{itemize}
 
 \section{Motivation}\label{motivation-26}
 
 In \ref{sec-q-learning} and \ref{sec-multi-agent-rl}, we trained agents using tabular methods on small matrix games. But what about complex games with enormous state spaces --- chess, Go, or even moderately sized board games? Tabular methods cannot scale: Go has roughly \(10^{170}\) legal positions, far more than atoms in the universe.
 
-\textbf{Self-play} offers an elegant solution. Instead of requiring a pre-existing opponent or a model of optimal play, an agent trains by playing against copies of itself. Each generation of the agent becomes a training partner for the next. This bootstrapping process, combined with Monte Carlo Tree Search (MCTS), enabled AlphaGo to defeat the world Go champion (\citeproc{ref-silver2016}{Silver et al., 2016}) and AlphaZero to master chess, shogi, and Go from scratch with no human knowledge beyond the rules (\citeproc{ref-silver2017}{Silver et al., 2017}).
+\textbf{Self-play} offers an elegant solution. Instead of requiring a pre-existing opponent or a model of optimal play, an agent trains by playing against copies of itself. Each generation of the agent becomes a training partner for the next. This bootstrapping process, combined with Monte Carlo Tree Search (MCTS), enabled AlphaGo to defeat the world Go champion (\citeproc{ref-silver2016}{Silver et al., 2016}) and AlphaZero to master chess, shogi, and Go from scratch with no human knowledge beyond the rules (\citeproc{ref-silver2017alphazero}{Silver et al., 2017}).
 
 This chapter implements pure MCTS for Tic-Tac-Toe in base R --- a game small enough to verify optimality yet rich enough to illustrate every component of the algorithm.
 
@@ -13465,19 +13465,19 @@ After a fixed number of iterations, the algorithm selects the action from the ro
 
 \subsection{AlphaZero architecture}\label{alphazero-architecture}
 
-AlphaZero (\citeproc{ref-silver2017}{Silver et al., 2017}) replaces the random rollout in step 3 with a \textbf{neural network} that directly evaluates positions. The network \(f_\theta(s) = (\mathbf{p}, v)\) takes a board state \(s\) and outputs:
+AlphaZero (\citeproc{ref-silver2017alphazero}{Silver et al., 2017}) replaces the random rollout in step 3 with a \textbf{neural network} that directly evaluates positions. The network \(f_\theta(s) = (\mathbf{p}, v)\) takes a board state \(s\) and outputs:
 
 \begin{itemize}
 \tightlist
 \item
-  A \textbf{policy vector} \(\mathbf{p}\): prior probabilities over legal moves, used to guide the UCT selection.
+  A \textbf{policy vector} \(\mathbf{p}\): prior probabilities over legal moves, used in a prior-weighted tree policy (PUCT).
 \item
   A \textbf{value estimate} \(v \in [-1, 1]\): the predicted game outcome from state \(s\).
 \end{itemize}
 
-The training loop iterates: play self-play games using MCTS guided by \(f_\theta\), store \((s_t, \pi_t, z_t)\) tuples (state, MCTS visit-count policy, outcome), and train \(f_\theta\) to minimize \((\mathbf{p} - \pi)^2 + (v - z)^2\). AlphaZero learned chess at superhuman level using only the rules (\citeproc{ref-silver2017}{Silver et al., 2017}).
+The training loop iterates: play self-play games using MCTS guided by \(f_\theta\), store \((s_t, \pi_t, z_t)\) tuples (state, MCTS visit-count policy, outcome), and train \(f_\theta\) to minimize \((v-z)^2 - \pi^\top\log\mathbf{p} + c\lVert\theta\rVert^2\) (value error, policy cross-entropy, and weight regularization). AlphaZero learned chess at superhuman level using only the rules (\citeproc{ref-silver2017alphazero}{Silver et al., 2017}).
 
-Since neural networks require deep learning frameworks beyond our available packages, we implement \textbf{pure MCTS} (with random rollouts) below. The algorithmic structure is identical --- AlphaZero substitutes a learned evaluation for the random rollout.
+Since neural networks require deep learning frameworks beyond our available packages, we implement \textbf{pure MCTS} (with random rollouts) below. This illustrates tree search, not AlphaZero training: AlphaZero also uses policy priors in selection, learns a value function, and updates a network from self-play.
 
 \section{Implementation in R}\label{sec-mcts-impl}
 
@@ -13490,6 +13490,12 @@ Since neural networks require deep learning frameworks beyond our available pack
 \NormalTok{ttt\_moves }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(board) }\FunctionTok{which}\NormalTok{(board }\SpecialCharTok{==} \DecValTok{0}\DataTypeTok{L}\NormalTok{)}
 
 \NormalTok{ttt\_play }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(board, pos, player) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(pos) }\SpecialCharTok{!=} \DecValTok{1}\DataTypeTok{L} \SpecialCharTok{||} \SpecialCharTok{!}\FunctionTok{is.numeric}\NormalTok{(pos) }\SpecialCharTok{||} \SpecialCharTok{!}\FunctionTok{is.finite}\NormalTok{(pos) }\SpecialCharTok{||}
+\NormalTok{      pos }\SpecialCharTok{!=} \FunctionTok{trunc}\NormalTok{(pos) }\SpecialCharTok{||} \SpecialCharTok{!}\NormalTok{pos }\SpecialCharTok{\%in\%} \FunctionTok{ttt\_moves}\NormalTok{(board))}
+    \FunctionTok{stop}\NormalTok{(}\StringTok{"pos must identify one empty square"}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(player) }\SpecialCharTok{!=} \DecValTok{1}\DataTypeTok{L} \SpecialCharTok{||} \FunctionTok{is.na}\NormalTok{(player) }\SpecialCharTok{||}
+\NormalTok{      player }\SpecialCharTok{!=} \FunctionTok{ttt\_current\_player}\NormalTok{(board) }\SpecialCharTok{||} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(}\FunctionTok{ttt\_winner}\NormalTok{(board)))}
+    \FunctionTok{stop}\NormalTok{(}\StringTok{"player must be the side to move in an unfinished game"}\NormalTok{)}
 \NormalTok{  board[pos] }\OtherTok{\textless{}{-}}\NormalTok{ player}
 \NormalTok{  board}
 \NormalTok{\}}
@@ -13518,15 +13524,16 @@ Since neural networks require deep learning frameworks beyond our available pack
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{mcts\_node }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(board, }\AttributeTok{parent =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{action =} \ConstantTok{NULL}\NormalTok{) \{}
-  \FunctionTok{list}\NormalTok{(}
+  \CommentTok{\# Environments give parent/child references shared mutable state.}
+  \FunctionTok{list2env}\NormalTok{(}\FunctionTok{list}\NormalTok{(}
     \AttributeTok{board =}\NormalTok{ board,}
     \AttributeTok{parent =}\NormalTok{ parent,}
     \AttributeTok{action =}\NormalTok{ action,}
     \AttributeTok{children =} \FunctionTok{list}\NormalTok{(),}
     \AttributeTok{visits =} \DecValTok{0}\NormalTok{,}
     \AttributeTok{total\_value =} \DecValTok{0}\NormalTok{,}
-    \AttributeTok{untried =} \FunctionTok{ttt\_moves}\NormalTok{(board)}
-\NormalTok{  )}
+    \AttributeTok{untried =} \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.na}\NormalTok{(}\FunctionTok{ttt\_winner}\NormalTok{(board))) }\FunctionTok{ttt\_moves}\NormalTok{(board) }\ControlFlowTok{else} \FunctionTok{integer}\NormalTok{()}
+\NormalTok{  ), }\AttributeTok{parent =} \FunctionTok{emptyenv}\NormalTok{())}
 \NormalTok{\}}
 
 \NormalTok{mcts\_select }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(node, }\AttributeTok{c\_explore =} \FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\NormalTok{)) \{}
@@ -13551,7 +13558,7 @@ Since neural networks require deep learning frameworks beyond our available pack
 
 \NormalTok{mcts\_expand }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(node) \{}
   \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(node}\SpecialCharTok{$}\NormalTok{untried) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) }\FunctionTok{return}\NormalTok{(node)}
-\NormalTok{  action }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(node}\SpecialCharTok{$}\NormalTok{untried, }\DecValTok{1}\NormalTok{)}
+\NormalTok{  action }\OtherTok{\textless{}{-}}\NormalTok{ node}\SpecialCharTok{$}\NormalTok{untried[}\FunctionTok{sample.int}\NormalTok{(}\FunctionTok{length}\NormalTok{(node}\SpecialCharTok{$}\NormalTok{untried), }\DecValTok{1}\DataTypeTok{L}\NormalTok{)]}
 \NormalTok{  node}\SpecialCharTok{$}\NormalTok{untried }\OtherTok{\textless{}{-}} \FunctionTok{setdiff}\NormalTok{(node}\SpecialCharTok{$}\NormalTok{untried, action)}
 \NormalTok{  player }\OtherTok{\textless{}{-}} \FunctionTok{ttt\_current\_player}\NormalTok{(node}\SpecialCharTok{$}\NormalTok{board)}
 \NormalTok{  new\_board }\OtherTok{\textless{}{-}} \FunctionTok{ttt\_play}\NormalTok{(node}\SpecialCharTok{$}\NormalTok{board, action, player)}
@@ -13564,7 +13571,7 @@ Since neural networks require deep learning frameworks beyond our available pack
   \ControlFlowTok{while}\NormalTok{ (}\FunctionTok{is.na}\NormalTok{(}\FunctionTok{ttt\_winner}\NormalTok{(board))) \{}
 \NormalTok{    player }\OtherTok{\textless{}{-}} \FunctionTok{ttt\_current\_player}\NormalTok{(board)}
 \NormalTok{    moves }\OtherTok{\textless{}{-}} \FunctionTok{ttt\_moves}\NormalTok{(board)}
-\NormalTok{    board }\OtherTok{\textless{}{-}} \FunctionTok{ttt\_play}\NormalTok{(board, }\FunctionTok{sample}\NormalTok{(moves, }\DecValTok{1}\NormalTok{), player)}
+\NormalTok{    board }\OtherTok{\textless{}{-}} \FunctionTok{ttt\_play}\NormalTok{(board, moves[}\FunctionTok{sample.int}\NormalTok{(}\FunctionTok{length}\NormalTok{(moves), }\DecValTok{1}\DataTypeTok{L}\NormalTok{)], player)}
 \NormalTok{  \}}
   \FunctionTok{ttt\_winner}\NormalTok{(board)}
 \NormalTok{\}}
@@ -13583,7 +13590,17 @@ Since neural networks require deep learning frameworks beyond our available pack
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mcts\_search }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(board, }\AttributeTok{n\_iterations =} \DecValTok{100}\NormalTok{, }\AttributeTok{c\_explore =} \FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\NormalTok{)) \{}
+\NormalTok{mcts\_search }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(board, }\AttributeTok{n\_iterations =} \DecValTok{1000}\NormalTok{, }\AttributeTok{c\_explore =} \FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\NormalTok{)) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{is.numeric}\NormalTok{(board) }\SpecialCharTok{||} \FunctionTok{length}\NormalTok{(board) }\SpecialCharTok{!=} \DecValTok{9}\DataTypeTok{L} \SpecialCharTok{||} \FunctionTok{anyNA}\NormalTok{(board) }\SpecialCharTok{||}
+      \FunctionTok{any}\NormalTok{(}\SpecialCharTok{!}\NormalTok{board }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\DataTypeTok{L}\NormalTok{, }\DecValTok{0}\DataTypeTok{L}\NormalTok{, }\DecValTok{1}\DataTypeTok{L}\NormalTok{)) }\SpecialCharTok{||}
+      \SpecialCharTok{!}\FunctionTok{sum}\NormalTok{(board) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\FunctionTok{stop}\NormalTok{(}\StringTok{"board must be a legal nine{-}square position"}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(n\_iterations) }\SpecialCharTok{!=} \DecValTok{1}\DataTypeTok{L} \SpecialCharTok{||} \SpecialCharTok{!}\FunctionTok{is.numeric}\NormalTok{(n\_iterations) }\SpecialCharTok{||}
+      \SpecialCharTok{!}\FunctionTok{is.finite}\NormalTok{(n\_iterations) }\SpecialCharTok{||}\NormalTok{ n\_iterations }\SpecialCharTok{\textless{}} \DecValTok{1} \SpecialCharTok{||}
+\NormalTok{      n\_iterations }\SpecialCharTok{!=} \FunctionTok{trunc}\NormalTok{(n\_iterations) }\SpecialCharTok{||}\NormalTok{ n\_iterations }\SpecialCharTok{\textgreater{}}\NormalTok{ .Machine}\SpecialCharTok{$}\NormalTok{integer.max)}
+    \FunctionTok{stop}\NormalTok{(}\StringTok{"n\_iterations must be a positive integer"}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(c\_explore) }\SpecialCharTok{!=} \DecValTok{1}\DataTypeTok{L} \SpecialCharTok{||} \SpecialCharTok{!}\FunctionTok{is.numeric}\NormalTok{(c\_explore) }\SpecialCharTok{||}
+      \SpecialCharTok{!}\FunctionTok{is.finite}\NormalTok{(c\_explore) }\SpecialCharTok{||}\NormalTok{ c\_explore }\SpecialCharTok{\textless{}} \DecValTok{0}\NormalTok{) }\FunctionTok{stop}\NormalTok{(}\StringTok{"c\_explore must be finite and nonnegative"}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(}\FunctionTok{ttt\_winner}\NormalTok{(board))) }\FunctionTok{stop}\NormalTok{(}\StringTok{"search requires an unfinished game"}\NormalTok{)}
 \NormalTok{  root }\OtherTok{\textless{}{-}} \FunctionTok{mcts\_node}\NormalTok{(board)}
 
   \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{seq\_len}\NormalTok{(n\_iterations)) \{}
@@ -13639,7 +13656,7 @@ Since neural networks require deep learning frameworks beyond our available pack
     \AttributeTok{visits =} \FunctionTok{replace\_na}\NormalTok{(visits, }\DecValTok{0}\NormalTok{),}
     \AttributeTok{avg\_value =} \FunctionTok{replace\_na}\NormalTok{(avg\_value, }\DecValTok{0}\NormalTok{),}
     \AttributeTok{label =} \FunctionTok{if\_else}\NormalTok{(visits }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{,}
-                    \FunctionTok{paste0}\NormalTok{(}\StringTok{"V:"}\NormalTok{, visits, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{W:"}\NormalTok{, }\FunctionTok{sprintf}\NormalTok{(}\StringTok{"\%.0f\%\%"}\NormalTok{,}
+                    \FunctionTok{paste0}\NormalTok{(}\StringTok{"V:"}\NormalTok{, visits, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{S:"}\NormalTok{, }\FunctionTok{sprintf}\NormalTok{(}\StringTok{"\%.0f\%\%"}\NormalTok{,}
 \NormalTok{                           (avg\_value }\SpecialCharTok{+} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/} \DecValTok{2} \SpecialCharTok{*} \DecValTok{100}\NormalTok{)),}
                     \StringTok{""}\NormalTok{)}
 \NormalTok{  )}
@@ -13670,7 +13687,7 @@ Since neural networks require deep learning frameworks beyond our available pack
 
 }
 
-\caption{MCTS search from an empty Tic-Tac-Toe board (100 iterations). Each cell shows visit count and win rate from X's perspective. The center (position 5) receives the most visits, reflecting its strategic importance. Corner moves also receive high visit counts, consistent with known optimal opening play.}\label{fig:mcts-tree}
+\caption{MCTS search from an empty Tic-Tac-Toe board (1000 iterations). Each cell shows visits and mean score from X's perspective (win = 1, draw = 0.5, loss = 0). Finite-budget visit counts reflect this seeded search, not a proof that an opening is uniquely optimal.}\label{fig:mcts-tree}
 \end{figure}
 
 \begin{Shaded}
@@ -13679,9 +13696,9 @@ Since neural networks require deep learning frameworks beyond our available pack
 \end{Highlighting}
 \end{Shaded}
 
-\subsection{Self-play win-rate tracking}\label{self-play-win-rate-tracking}
+\subsection{Evaluation against a random opponent}\label{evaluation-against-a-random-opponent}
 
-The function below plays MCTS (as X) against a random opponent and returns the game outcome. Running many games at high iteration counts is slow in pure R, so we show the function and provide pre-computed results.
+This experiment does not train a policy or perform self-play. It measures X's results in 50 games per search budget against a random O; sampling uncertainty and the first-player advantage matter.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13690,26 +13707,36 @@ The function below plays MCTS (as X) against a random opponent and returns the g
   \ControlFlowTok{while}\NormalTok{ (}\FunctionTok{is.na}\NormalTok{(}\FunctionTok{ttt\_winner}\NormalTok{(board))) \{}
 \NormalTok{    player }\OtherTok{\textless{}{-}} \FunctionTok{ttt\_current\_player}\NormalTok{(board)}
     \ControlFlowTok{if}\NormalTok{ (player }\SpecialCharTok{==} \DecValTok{1}\DataTypeTok{L}\NormalTok{) \{}
+      \CommentTok{\# MCTS player}
 \NormalTok{      res }\OtherTok{\textless{}{-}} \FunctionTok{mcts\_search}\NormalTok{(board, }\AttributeTok{n\_iterations =}\NormalTok{ n\_iterations)}
 \NormalTok{      board }\OtherTok{\textless{}{-}} \FunctionTok{ttt\_play}\NormalTok{(board, res}\SpecialCharTok{$}\NormalTok{best\_move, player)}
 \NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+      \CommentTok{\# Random opponent}
 \NormalTok{      moves }\OtherTok{\textless{}{-}} \FunctionTok{ttt\_moves}\NormalTok{(board)}
-\NormalTok{      board }\OtherTok{\textless{}{-}} \FunctionTok{ttt\_play}\NormalTok{(board, }\FunctionTok{sample}\NormalTok{(moves, }\DecValTok{1}\NormalTok{), player)}
+\NormalTok{      board }\OtherTok{\textless{}{-}} \FunctionTok{ttt\_play}\NormalTok{(board, moves[}\FunctionTok{sample.int}\NormalTok{(}\FunctionTok{length}\NormalTok{(moves), }\DecValTok{1}\DataTypeTok{L}\NormalTok{)], player)}
 \NormalTok{    \}}
 \NormalTok{  \}}
   \FunctionTok{ttt\_winner}\NormalTok{(board)}
 \NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{Shaded}
-\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
 \NormalTok{iteration\_levels }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DecValTok{500}\NormalTok{)}
+\NormalTok{n\_games }\OtherTok{\textless{}{-}} \DecValTok{50}
+
 \NormalTok{self\_play\_results }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
-  \AttributeTok{iterations =}\NormalTok{ iteration\_levels,}
-  \AttributeTok{win\_rate =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.68}\NormalTok{, }\FloatTok{0.78}\NormalTok{, }\FloatTok{0.86}\NormalTok{, }\FloatTok{0.92}\NormalTok{, }\FloatTok{0.96}\NormalTok{, }\FloatTok{0.98}\NormalTok{),}
-  \AttributeTok{draw\_rate =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.12}\NormalTok{, }\FloatTok{0.14}\NormalTok{, }\FloatTok{0.10}\NormalTok{, }\FloatTok{0.06}\NormalTok{, }\FloatTok{0.04}\NormalTok{, }\FloatTok{0.02}\NormalTok{)}
+  \AttributeTok{iterations =} \FunctionTok{integer}\NormalTok{(),}
+  \AttributeTok{win\_rate =} \FunctionTok{double}\NormalTok{(),}
+  \AttributeTok{draw\_rate =} \FunctionTok{double}\NormalTok{()}
 \NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{ (n\_iter }\ControlFlowTok{in}\NormalTok{ iteration\_levels) \{}
+\NormalTok{  outcomes }\OtherTok{\textless{}{-}} \FunctionTok{replicate}\NormalTok{(n\_games, }\FunctionTok{mcts\_vs\_random}\NormalTok{(n\_iter))}
+\NormalTok{  self\_play\_results }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(self\_play\_results, }\FunctionTok{tibble}\NormalTok{(}
+    \AttributeTok{iterations =}\NormalTok{ n\_iter,}
+    \AttributeTok{win\_rate =} \FunctionTok{mean}\NormalTok{(outcomes }\SpecialCharTok{==} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{draw\_rate =} \FunctionTok{mean}\NormalTok{(outcomes }\SpecialCharTok{==} \DecValTok{0}\NormalTok{)}
+\NormalTok{  ))}
+\NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -13743,7 +13770,7 @@ The function below plays MCTS (as X) against a random opponent and returns the g
 
 }
 
-\caption{MCTS win rate against a random opponent as search budget increases. With only 10 iterations per move, MCTS wins about 68\% of games. By 500 iterations it wins nearly every game, demonstrating how deeper search translates directly into stronger play.}\label{fig:self-play-winrate}
+\caption{MCTS win rate against a random opponent as search budget increases. Each point summarizes 50 seeded games with MCTS playing X. These finite samples do not establish monotonic improvement or optimality.}\label{fig:self-play-winrate}
 \end{figure}
 
 \begin{Shaded}
@@ -13757,20 +13784,21 @@ The function below plays MCTS (as X) against a random opponent and returns the g
 We trace MCTS solving a mid-game Tic-Tac-Toe position step by step. Consider this board state where X has a forced win:
 
 \begin{verbatim}
- X | . | .
+ X | X | .
 -----------
- . | O | .
+ O | O | .
 -----------
- . | . | X
+ . | . | .
 \end{verbatim}
 
-X is at positions 1 and 9, O is at position 5. It is X's turn.
+X occupies positions 1 and 2; O occupies 4 and 5. It is X's turn, and position 3 wins immediately.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{board\_mid }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\DataTypeTok{L}\NormalTok{, }\DecValTok{9}\NormalTok{)}
 \NormalTok{board\_mid[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}\DataTypeTok{L}   \CommentTok{\# X top{-}left}
-\NormalTok{board\_mid[}\DecValTok{9}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}\DataTypeTok{L}   \CommentTok{\# X bottom{-}right}
+\NormalTok{board\_mid[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}\DataTypeTok{L}   \CommentTok{\# X top{-}middle}
+\NormalTok{board\_mid[}\DecValTok{4}\NormalTok{] }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\DecValTok{1}\DataTypeTok{L}  \CommentTok{\# O middle{-}left}
 \NormalTok{board\_mid[}\DecValTok{5}\NormalTok{] }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\DecValTok{1}\DataTypeTok{L}  \CommentTok{\# O center}
 
 \FunctionTok{cat}\NormalTok{(}\StringTok{"Board state:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
@@ -13794,35 +13822,35 @@ X is at positions 1 and 9, O is at position 5. It is X's turn.
 \end{Shaded}
 
 \begin{verbatim}
-#>   X | . | . 
+#>   X | X | . 
 #>   ---------
-#>   . | O | . 
+#>   O | O | . 
 #>   ---------
-#>   . | . | X
+#>   . | . | .
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
-\NormalTok{result\_mid }\OtherTok{\textless{}{-}} \FunctionTok{mcts\_search}\NormalTok{(board\_mid, }\AttributeTok{n\_iterations =} \DecValTok{200}\NormalTok{)}
+\NormalTok{result\_mid }\OtherTok{\textless{}{-}} \FunctionTok{mcts\_search}\NormalTok{(board\_mid, }\AttributeTok{n\_iterations =} \DecValTok{2000}\NormalTok{)}
 
-\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{MCTS analysis (200 iterations):}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{MCTS analysis (2000 iterations):}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 #> 
-#> MCTS analysis (200 iterations):
+#> MCTS analysis (2000 iterations):
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{cat}\NormalTok{(}\StringTok{"Move | Visits | Win Rate (X)}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Move | Visits | Mean Score (X)}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-#> Move | Visits | Win Rate (X)
+#> Move | Visits | Mean Score (X)
 \end{verbatim}
 
 \begin{Shaded}
@@ -13842,58 +13870,52 @@ X is at positions 1 and 9, O is at position 5. It is X's turn.
   \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"  \%d  |  \%4d  |   \%.1f\%\%}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{,}
 \NormalTok{              s}\SpecialCharTok{$}\NormalTok{move, s}\SpecialCharTok{$}\NormalTok{visits, (s}\SpecialCharTok{$}\NormalTok{avg\_value }\SpecialCharTok{+} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/} \DecValTok{2} \SpecialCharTok{*} \DecValTok{100}\NormalTok{))}
 \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{verbatim}
+#>   3  |  1958  |   100.0%
+#>   6  |    20  |   60.0%
+#>   9  |     9  |   38.9%
+#>   8  |     7  |   28.6%
+#>   7  |     6  |   16.7%
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Best move: position \%d}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, result\_mid}\SpecialCharTok{$}\NormalTok{best\_move))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 #> 
-#> Best move: position NA
+#> Best move: position 3
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Explain the strategic reasoning}
+\CommentTok{\# Check the resulting board rather than assume a tactical explanation.}
 \NormalTok{best }\OtherTok{\textless{}{-}}\NormalTok{ result\_mid}\SpecialCharTok{$}\NormalTok{best\_move}
-\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}
-  \StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Position \%d creates a double threat (fork). After X plays here,}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, best))}
+\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{isTRUE}\NormalTok{(}\FunctionTok{ttt\_winner}\NormalTok{(}\FunctionTok{ttt\_play}\NormalTok{(board\_mid, best, }\DecValTok{1}\DataTypeTok{L}\NormalTok{)) }\SpecialCharTok{==} \DecValTok{1}\DataTypeTok{L}\NormalTok{)) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"The selected move completes X\textquotesingle{}s top row and wins immediately.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"This finite search missed the immediate win at position 3.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-#> 
-#> Position NA creates a double threat (fork). After X plays here,
+#> The selected move completes X's top row and wins immediately.
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cat}\NormalTok{(}\StringTok{"X threatens to complete two different lines simultaneously.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-#> X threatens to complete two different lines simultaneously.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cat}\NormalTok{(}\StringTok{"O can only block one, so X wins on the next move.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-#> O can only block one, so X wins on the next move.
-\end{verbatim}
-
-The visit count distribution reveals MCTS's reasoning: the optimal move receives the majority of visits because rollouts from that position yield the highest win rate. UCT (\eqref{eq:uct}) balances exploration and exploitation without domain knowledge --- a principled solution to the multi-armed bandit problem applied recursively through the game tree.
+The visit count distribution reveals MCTS's reasoning: the distribution records how this finite search allocated its simulations. A winning move can be verified directly by the game rules. UCT (\eqref{eq:uct}) balances exploration and exploitation without domain knowledge --- a principled solution to the multi-armed bandit problem applied recursively through the game tree.
 
 \section{Extensions}\label{extensions-26}
 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{AlphaZero's neural MCTS}: Replace random rollouts with a neural network evaluation trained on self-play data, creating a virtuous cycle of improving evaluation, search, and training data (\citeproc{ref-silver2017}{Silver et al., 2017}).
+  \textbf{AlphaZero's neural MCTS}: Replace random rollouts with a neural network evaluation trained on self-play data, creating a virtuous cycle of improving evaluation, search, and training data (\citeproc{ref-silver2017alphazero}{Silver et al., 2017}).
 \item
   \textbf{Progressive widening}: In games with large branching factors, expand moves proportional to visit count, focusing computation on promising subtrees.
 \item
@@ -13921,7 +13943,7 @@ The visit count distribution reveals MCTS's reasoning: the optimal move receives
 
 Solutions appear in \ref{sec-solutions}.
 
-\chapter{CFR and Poker}\label{sec-cfr}
+\chapter{Counterfactual Regret Minimization and Poker}\label{sec-cfr}
 
 \begin{quote}
 Counterfactual regret minimization for imperfect information games: information sets, regret matching, and a full Kuhn Poker implementation in R.
@@ -14899,9 +14921,9 @@ We trace the game-theoretic dynamics step by step.
 \item
   \textbf{Wasserstein GANs}: Replace the Jensen-Shannon divergence implicit in the original GAN with the Wasserstein distance, providing more informative gradients and more stable training.
 \item
-  \textbf{Evolutionary game theory connection}: GAN training can be viewed through the lens of replicator dynamics (\ref{sec-replicator}), where the generator and discriminator populations co-evolve.
+  \textbf{Evolutionary game theory connection}: GAN training can be viewed through the lens of replicator dynamics (\ref{sec-replicator-dynamics}), where the generator and discriminator populations co-evolve.
 \item
-  \textbf{Minimax theorem}: The GAN objective satisfies the conditions of von Neumann's minimax theorem (\ref{sec-minimax}) when the strategy spaces are convex and the payoff function is bilinear.
+  \textbf{Minimax theorem}: The GAN objective satisfies the conditions of von Neumann's minimax theorem (\ref{sec-custom-solvers}) when the strategy spaces are convex and the payoff function is bilinear.
 \item
   \textbf{Multi-agent RL} (\ref{sec-multi-agent-rl}) covers alternative adversarial training paradigms.
 \end{itemize}
@@ -14923,7 +14945,7 @@ For the foundational GAN paper, see Goodfellow et al. (\citeproc{ref-goodfellow2
 
 Solutions appear in \ref{sec-solutions}.
 
-\chapter{LLM Agents and Strategy}\label{sec-llm-agents}
+\chapter{LLM Agents and Strategic Reasoning}\label{sec-llm-agents}
 
 \begin{quote}
 Large language models as game-playing agents: level-k reasoning, cognitive hierarchy theory, bounded rationality, and simulated beauty contest experiments in R.
@@ -15495,7 +15517,7 @@ For the foundational level-k theory, see Stahl \& Wilson (\citeproc{ref-stahl199
 
 Solutions appear in \ref{sec-solutions}.
 
-\part{Part V --- Applications}\label{part-part-v-applications}
+\part{Applications}\label{part-applications}
 
 \chapter{Auction Theory}\label{sec-auctions}
 
@@ -17298,7 +17320,7 @@ The more patient firm (lower discount rate) captures a larger share, consistent 
 \item
   \textbf{Incomplete information} about the opponent's discount factor or reservation value leads to delay and inefficiency; see Kennan \& Wilson (\citeproc{ref-kennan1993}{1993}) for a survey.
 \item
-  \textbf{Multi-party bargaining} extends these ideas to legislatures and coalitions, connecting to the \textbf{Shapley value} (\ref{sec-cooperative-games}).
+  \textbf{Multi-party bargaining} extends these ideas to legislatures and coalitions, connecting to the \textbf{Shapley value} (\ref{sec-cooperative-gt}).
 \item
   \textbf{Behavioral bargaining} --- ultimatum game experiments consistently show that proposers offer 40--50\% rather than the minimal amount predicted by backward induction, suggesting fairness norms matter.
 \end{itemize}
@@ -17739,13 +17761,13 @@ In October 1962, the US and USSR faced a standoff over Soviet missiles in Cuba. 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Evolutionary dynamics} on Chicken and Stag Hunt are explored in \ref{sec-evolutionary-dynamics}, where mixed equilibria correspond to polymorphic population states.
+  \textbf{Evolutionary dynamics} on Chicken and Stag Hunt are explored in \ref{sec-replicator-dynamics}, where mixed equilibria correspond to polymorphic population states.
 \item
   \textbf{Repeated interaction} transforms one-shot Chicken into a folk-theorem setting where cooperation can be sustained (\ref{sec-repeated-games}).
 \item
   \textbf{Incomplete information} versions of Chicken model situations where each player is uncertain about the other's resolve --- see Osborne (\citeproc{ref-osborne2004}{2004}) (Chapter 9).
 \item
-  \textbf{Network effects} on coordination games are covered in \ref{sec-networks}, where Stag Hunt dynamics depend on the structure of social connections.
+  \textbf{Network effects} on coordination games are covered in \ref{sec-network-games}, where Stag Hunt dynamics depend on the structure of social connections.
 \end{itemize}
 
 \section*{Exercises}\label{exercises-34}
@@ -18358,7 +18380,7 @@ The gap between the Wardrop equilibrium and the social optimum is the \textbf{pr
 
 Solutions appear in \ref{sec-solutions}.
 
-\part{Part VI --- Ethics and the Future}\label{part-part-vi-ethics-and-the-future}
+\part{Ethics \& Outlook}\label{part-ethics-outlook}
 
 \chapter{Ethical Frameworks for Strategic AI}\label{sec-ethics-frameworks}
 
@@ -20213,13 +20235,13 @@ We demonstrate how mutual code inspection enables cooperation in the Prisoner's 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Partial code transparency.} In practice, full code inspection may be infeasible. Barasz et al. (\citeproc{ref-barasz2014}{2014}) study \emph{robust program equilibria} that work even with limited code access.
+  \textbf{Provability-based cooperation.} Barasz et al. (\citeproc{ref-barasz2014}{2014}) study agents with read-access to each other's source code. Their construction permits cooperation without requiring identical programs; it is not a result about limited code access.
 \item
-  \textbf{Multi-agent commitment.} Extending commitment to \(n > 2\) agents introduces coalition formation problems. See \ref{sec-cooperative-games} for the cooperative game theory framework.
+  \textbf{Multi-agent commitment.} Extending commitment to \(n > 2\) agents introduces coalition formation problems. See \ref{sec-cooperative-gt} for the cooperative game theory framework.
 \item
   \textbf{AI safety applications.} Commitment devices can ensure that AI systems follow safety constraints. This connects to corrigibility (\ref{sec-ai-alignment}) and mechanism design (\ref{sec-mechanism-design}).
 \item
-  Dafoe et al. (\citeproc{ref-dafoe2020}{2020}) lay out a comprehensive research agenda for cooperative AI, identifying commitment, communication, and coordination as the three pillars.
+  Dafoe et al. (\citeproc{ref-dafoe2020}{2020}) lay out a comprehensive research agenda for cooperative AI, examining capabilities and institutions needed for cooperation, including communication and commitment.
 \end{itemize}
 
 \section*{Exercises}\label{exercises-39}
@@ -21446,7 +21468,7 @@ A handful of patterns recur throughout the chapters.
 Vectors, matrices, eigenvalues, and the linear algebra used throughout this book.
 \end{quote}
 
-This appendix reviews the linear algebra that appears most often in game theory. The focus is on concepts rather than proofs, with R implementations alongside each topic. For a thorough mathematical treatment, see Strang (\citeproc{ref-strang2022}{2022}).
+This appendix reviews the linear algebra that appears most often in game theory. The focus is on concepts rather than proofs, with R implementations alongside each topic. For a thorough mathematical treatment, see Strang (\citeproc{ref-strang2023}{2023}).
 
 \section{Vectors and vector operations}\label{vectors-and-vector-operations}
 
@@ -22830,7 +22852,7 @@ A parameter \(\delta \in [0, 1)\) representing the weight a player places on fut
 \item[Dominant strategy]
 A strategy that yields a payoff at least as high as any alternative regardless of opponents' actions (weak dominance) or strictly higher (strict dominance).
 \item[Evolutionary stable strategy (ESS)]
-A strategy that, once prevalent in a population, cannot be invaded by any rare mutant strategy. Formally, a strategy \(s^*\) is an ESS if it is a best response to itself and, against any alternative best response, does strictly better against the mutant than the mutant does against itself. See \ref{sec-evolutionary-stable-strategies}.
+A strategy that, once prevalent in a population, cannot be invaded by any rare mutant strategy. Formally, a strategy \(s^*\) is an ESS if it is a best response to itself and, against any alternative best response, does strictly better against the mutant than the mutant does against itself. See \ref{sec-ess}.
 \item[Extensive form]
 A representation of a game as a tree, specifying the order of moves, information available at each decision point, and payoffs at terminal nodes. See \ref{sec-extensive-form}.
 \item[Feasible payoff set]
@@ -22933,7 +22955,7 @@ was verified against its DOI, arXiv ID, or ISBN.
 \item
   ORCID: \href{https://orcid.org/0000-0001-8006-9742}{0000-0001-8006-9742}
 \item
-  GitHub: \href{https://github.com/r-heller}{(\citeproc{ref-r-heller}{\textbf{r-heller?}})}
+  GitHub: \href{https://github.com/r-heller}{@r-heller}
 \item
   Website: \url{https://r-heller.github.io/website/}
 \end{itemize}
@@ -22946,19 +22968,19 @@ was verified against its DOI, arXiv ID, or ISBN.
 \end{verbatim}
 
 \begin{verbatim}
-#>   bookdown: 0.47
+#>   bookdown: 0.48
 \end{verbatim}
 
 \begin{verbatim}
-#>   R:        R version 4.6.1 (2026-06-24)
+#>   R:        R version 4.6.2 (2026-10-29)
 \end{verbatim}
 
 \begin{verbatim}
-#>   Build date: 2026-07-19
+#>   Build date: 2026-11-03
 \end{verbatim}
 
 \begin{verbatim}
-#>   Commit:   8ace7f7
+#>   Commit:   0e8e770
 \end{verbatim}
 
 LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via Ollama/\texttt{ollamar}) was used for copyediting, formatting, and scaffolding tasks only --- see Acknowledgments.
@@ -22967,9 +22989,9 @@ LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via O
 \addcontentsline{toc}{section}{Session info}
 
 \begin{verbatim}
-#> R version 4.6.1 (2026-06-24)
+#> R version 4.6.2 (2026-10-29)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.4 LTS
+#> Running under: Ubuntu 24.04.5 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -22994,15 +23016,15 @@ LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via O
 #> [13] ggplot2_4.0.3   tidyverse_2.0.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] gtable_0.3.6       compiler_4.6.1     renv_1.2.2         tidyselect_1.2.1  
+#>  [1] gtable_0.3.6       compiler_4.6.2     renv_1.2.2         tidyselect_1.2.1  
 #>  [5] xml2_1.5.2         fastmap_1.2.0      yaml_2.3.12        R6_2.6.1          
-#>  [9] generics_0.1.4     knitr_1.51         bookdown_0.47      rprojroot_2.1.1   
+#>  [9] generics_0.1.4     knitr_1.51         bookdown_0.48      rprojroot_2.1.1   
 #> [13] pillar_1.11.1      RColorBrewer_1.1-3 tzdb_0.5.0         rlang_1.2.0       
-#> [17] stringi_1.8.7      xfun_0.57          fs_2.1.0           S7_0.2.2          
+#> [17] stringi_1.8.7      xfun_0.62          fs_2.1.0           S7_0.2.2          
 #> [21] otel_0.2.0         timechange_0.4.0   cli_3.6.6          withr_3.0.2       
-#> [25] magrittr_2.0.5     digest_0.6.39      grid_4.6.1         hms_1.1.4         
+#> [25] magrittr_2.0.5     digest_0.6.39      grid_4.6.2         hms_1.1.4         
 #> [29] lifecycle_1.0.5    vctrs_0.7.3        evaluate_1.0.5     farver_2.1.2      
-#> [33] codetools_0.2-20   rmarkdown_2.31     htmltools_0.5.9    tools_4.6.1       
+#> [33] codetools_0.2-20   rmarkdown_2.31     htmltools_0.5.9    tools_4.6.2       
 #> [37] pkgconfig_2.0.3
 \end{verbatim}
 
@@ -23017,7 +23039,7 @@ Simulation, and Machine Intelligence} (Version v0.1.0). Self-published
 via GitHub Pages. \url{https://r-heller.github.io/strategy-in-r/}.
 \end{boxempty}
 
-Download the reference as \href{citation-files/citation.bib}{BibTeX} or \href{citation-files/citation.ris}{RIS}.
+Download the reference as \href{https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.bib}{BibTeX} or \href{https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.ris}{RIS}.
 
 \chapter*{References}\label{references}
 \addcontentsline{toc}{chapter}{References}
@@ -23165,8 +23187,8 @@ Shoham, Y., \& Leyton-Brown, K. (2009). \emph{Multiagent systems: Algorithmic, g
 \bibitem[\citeproctext]{ref-silver2016}
 Silver, D., Huang, A., Maddison, C. J., Guez, A., Sifre, L., Driessche, G. van den, Schrittwieser, J., Antonoglou, I., Panneershelvam, V., Lanctot, M., Dieleman, S., Grewe, D., Nham, J., Kalchbrenner, N., Sutskever, I., Lillicrap, T., Leach, M., Kavukcuoglu, K., Graepel, T., \& Hassabis, D. (2016). Mastering the game of go with deep neural networks and tree search. \emph{Nature}, \emph{529}(7587), 484--489. \url{https://doi.org/10.1038/nature16961}
 
-\bibitem[\citeproctext]{ref-silver2017}
-Silver, D., Schrittwieser, J., Simonyan, K., Antonoglou, I., Huang, A., Guez, A., Hubert, T., Baker, L., Lai, M., Bolton, A., Chen, Y., Lillicrap, T., Hui, F., Sifre, L., Driessche, G. van den, Graepel, T., \& Hassabis, D. (2017). Mastering the game of go without human knowledge. \emph{Nature}, \emph{550}(7676), 354--359. \url{https://doi.org/10.1038/nature24270}
+\bibitem[\citeproctext]{ref-silver2017alphazero}
+Silver, D., Hubert, T., Schrittwieser, J., Antonoglou, I., Lai, M., Guez, A., Lanctot, M., Sifre, L., Kumaran, D., Graepel, T., Lillicrap, T., Simonyan, K., \& Hassabis, D. (2017). \emph{Mastering chess and shogi by self-play with a general reinforcement learning algorithm}. \url{https://doi.org/10.48550/arXiv.1712.01815}
 
 \bibitem[\citeproctext]{ref-soares2015}
 Soares, N., \& Fallenstein, B. (2015). Agent foundations for aligning machine intelligence with human interests: A technical research agenda. \emph{Machine Intelligence Research Institute Technical Report}.
@@ -23174,8 +23196,8 @@ Soares, N., \& Fallenstein, B. (2015). Agent foundations for aligning machine in
 \bibitem[\citeproctext]{ref-stahl1995}
 Stahl, D. O., \& Wilson, P. W. (1995). On players' models of other players: Theory and experimental evidence. \emph{Games and Economic Behavior}, \emph{10}(1), 218--254. \url{https://doi.org/10.1006/game.1995.1031}
 
-\bibitem[\citeproctext]{ref-strang2022}
-Strang, G. (2022). \emph{Introduction to linear algebra} (6th ed.). Wellesley-Cambridge Press.
+\bibitem[\citeproctext]{ref-strang2023}
+Strang, G. (2023). \emph{Introduction to linear algebra} (6th ed.). Wellesley-Cambridge Press. \url{https://math.mit.edu/~gs/linearalgebra/ila6/indexila6.html}
 
 \bibitem[\citeproctext]{ref-sutton2018}
 Sutton, R. S., \& Barto, A. G. (2018). \emph{Reinforcement learning: An introduction} (2nd ed.). MIT Press.

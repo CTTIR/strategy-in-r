@@ -3,7 +3,7 @@
 > Vectors, matrices, eigenvalues, and the linear algebra used throughout this book.
 
 
-This appendix reviews the linear algebra that appears most often in game theory. The focus is on concepts rather than proofs, with R implementations alongside each topic. For a thorough mathematical treatment, see @strang2022.
+This appendix reviews the linear algebra that appears most often in game theory. The focus is on concepts rather than proofs, with R implementations alongside each topic. For a thorough mathematical treatment, see @strang2023.
 
 ## Vectors and vector operations
 

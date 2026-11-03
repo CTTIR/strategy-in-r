@@ -10,4 +10,4 @@ href="https://r-heller.github.io/strategy-in-r/"
 class="uri">https://r-heller.github.io/strategy-in-r/</a>.</p>
 </div>
 
-Download the reference as [BibTeX](citation-files/citation.bib) or [RIS](citation-files/citation.ris).
+Download the reference as [BibTeX](https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.bib) or [RIS](https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.ris).

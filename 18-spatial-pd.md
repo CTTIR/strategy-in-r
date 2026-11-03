@@ -1,4 +1,4 @@
-# Spatial Prisoner's Dilemma {#sec-spatial-pd}
+# The Spatial Prisoner's Dilemma {#sec-spatial-pd}
 
 > A computational exploration of Nowak and May's spatial Prisoner's Dilemma, showing how local interaction on a lattice allows cooperation to survive through cluster formation — even without memory, reciprocity, or reputation.
 

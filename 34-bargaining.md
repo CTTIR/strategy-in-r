@@ -369,7 +369,7 @@ The more patient firm (lower discount rate) captures a larger share, consistent 
 
 - **Outside options** can shift the disagreement point and change the Nash bargaining solution. See @osborne2004 (Chapter 15) for models where players can exit bargaining.
 - **Incomplete information** about the opponent's discount factor or reservation value leads to delay and inefficiency; see @kennan1993 for a survey.
-- **Multi-party bargaining** extends these ideas to legislatures and coalitions, connecting to the **Shapley value** (\@ref(sec-cooperative-games)).
+- **Multi-party bargaining** extends these ideas to legislatures and coalitions, connecting to the **Shapley value** (\@ref(sec-cooperative-gt)).
 - **Behavioral bargaining** — ultimatum game experiments consistently show that proposers offer 40--50% rather than the minimal amount predicted by backward induction, suggesting fairness norms matter.
 
 ## Exercises {-}

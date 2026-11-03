@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 29 CFR and Poker | Strategy in R</title>
+<title>Chapter 29 Counterfactual Regret Minimization and Poker | Strategy in R</title>
 <meta name="author" content="Raban Heller">
 <meta name="description" content="Counterfactual regret minimization for imperfect information games: information sets, regret matching, and a full Kuhn Poker implementation in R.  Learning objectives Distinguish perfect and...">
-<meta name="generator" content="bookdown 0.47 with bs4_book()">
-<meta property="og:title" content="Chapter 29 CFR and Poker | Strategy in R">
+<meta name="generator" content="bookdown 0.48 with bs4_book()">
+<meta property="og:title" content="Chapter 29 Counterfactual Regret Minimization and Poker | Strategy in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://r-heller.github.io/strategy-in-r/sec-cfr.html">
 <meta property="og:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
 <meta property="og:description" content="Counterfactual regret minimization for imperfect information games: information sets, regret matching, and a full Kuhn Poker implementation in R.  Learning objectives Distinguish perfect and...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 29 CFR and Poker | Strategy in R">
+<meta name="twitter:title" content="Chapter 29 Counterfactual Regret Minimization and Poker | Strategy in R">
 <meta name="twitter:description" content="Counterfactual regret minimization for imperfect information games: information sets, regret matching, and a full Kuhn Poker implementation in R.  Learning objectives Distinguish perfect and...">
 <meta name="twitter:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -26,13 +26,26 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 29 CFR and Poker | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
+<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 29 Counterfactual Regret Minimization and Poker | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
 <meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://r-heller.github.io/strategy-in-r/">
 <meta property="og:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
+<!-- Wide equations scroll locally instead of widening the reading column. --><style>
+    @media (max-width: 767.98px) {
+      main .figure {
+        width: 100%;
+      }
+      main .math.display {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+    }
+    </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -88,8 +101,8 @@
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
 <li><a class="" href="notation.html">Notation</a></li>
-<li><a class="" href="sec-introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li class="book-part">Part I — Foundations of Game Theory</li>
+<li class="book-part">Foundations</li>
+<li><a class="" href="sec-introduction.html"><span class="header-section-number">1</span> Introduction: Why Strategy in R?</a></li>
 <li><a class="" href="sec-what-is-a-game.html"><span class="header-section-number">2</span> What is a Game?</a></li>
 <li><a class="" href="sec-normal-form.html"><span class="header-section-number">3</span> Normal-Form Games</a></li>
 <li><a class="" href="sec-nash-equilibrium.html"><span class="header-section-number">4</span> Nash Equilibrium</a></li>
@@ -98,45 +111,45 @@
 <li><a class="" href="sec-bayesian-games.html"><span class="header-section-number">7</span> Bayesian Games</a></li>
 <li><a class="" href="sec-repeated-games.html"><span class="header-section-number">8</span> Repeated Games</a></li>
 <li><a class="" href="sec-cooperative-gt.html"><span class="header-section-number">9</span> Cooperative Game Theory</a></li>
-<li class="book-part">Part II — The R Toolkit</li>
-<li><a class="" href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment</a></li>
+<li class="book-part">The R Toolkit</li>
+<li><a class="" href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment for Strategic Computation</a></li>
 <li><a class="" href="sec-gametheory-package.html"><span class="header-section-number">11</span> The GameTheory Package</a></li>
 <li><a class="" href="sec-coopgame-package.html"><span class="header-section-number">12</span> The CoopGame Package</a></li>
 <li><a class="" href="sec-gtree-package.html"><span class="header-section-number">13</span> The gtree Package</a></li>
 <li><a class="" href="sec-nashpy-reticulate.html"><span class="header-section-number">14</span> nashpy via reticulate</a></li>
 <li><a class="" href="sec-custom-solvers.html"><span class="header-section-number">15</span> Building Custom Solvers in R</a></li>
-<li class="book-part">Part III — Simulation</li>
+<li class="book-part">Simulation &amp; Evolutionary Dynamics</li>
 <li><a class="" href="sec-monte-carlo.html"><span class="header-section-number">16</span> Monte Carlo Methods for Games</a></li>
 <li><a class="" href="sec-agent-based-models.html"><span class="header-section-number">17</span> Agent-Based Models for Strategic Interaction</a></li>
 <li><a class="" href="sec-axelrod-tournament.html"><span class="header-section-number">18</span> Replicating Axelrod’s Tournament</a></li>
-<li><a class="" href="sec-spatial-pd.html"><span class="header-section-number">19</span> Spatial Prisoner’s Dilemma</a></li>
+<li><a class="" href="sec-spatial-pd.html"><span class="header-section-number">19</span> The Spatial Prisoner’s Dilemma</a></li>
 <li><a class="" href="sec-replicator-dynamics.html"><span class="header-section-number">20</span> Replicator Dynamics</a></li>
 <li><a class="" href="sec-ess.html"><span class="header-section-number">21</span> Evolutionarily Stable Strategies</a></li>
 <li><a class="" href="sec-network-games.html"><span class="header-section-number">22</span> Games on Networks</a></li>
 <li><a class="" href="sec-performance-rcpp.html"><span class="header-section-number">23</span> Performance Optimization</a></li>
-<li class="book-part">Part IV — AI and Machine Learning</li>
-<li><a class="" href="sec-ml-foundations.html"><span class="header-section-number">24</span> ML Foundations for Game Theory</a></li>
+<li class="book-part">Strategic AI</li>
+<li><a class="" href="sec-ml-foundations.html"><span class="header-section-number">24</span> Machine Learning Foundations for Game Theory</a></li>
 <li><a class="" href="sec-reinforcement-learning.html"><span class="header-section-number">25</span> Reinforcement Learning Foundations</a></li>
-<li><a class="" href="sec-q-learning.html"><span class="header-section-number">26</span> Q-Learning in Games</a></li>
-<li><a class="" href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent RL</a></li>
+<li><a class="" href="sec-q-learning.html"><span class="header-section-number">26</span> Q-Learning in 2-Player Games</a></li>
+<li><a class="" href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent Reinforcement Learning</a></li>
 <li><a class="" href="sec-self-play.html"><span class="header-section-number">28</span> Self-Play and AlphaZero</a></li>
-<li><a class="active" href="sec-cfr.html"><span class="header-section-number">29</span> CFR and Poker</a></li>
+<li><a class="active" href="sec-cfr.html"><span class="header-section-number">29</span> Counterfactual Regret Minimization and Poker</a></li>
 <li><a class="" href="sec-gans.html"><span class="header-section-number">30</span> GANs as Minimax Games</a></li>
-<li><a class="" href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategy</a></li>
-<li class="book-part">Part V — Applications</li>
+<li><a class="" href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategic Reasoning</a></li>
+<li class="book-part">Applications</li>
 <li><a class="" href="sec-auctions.html"><span class="header-section-number">32</span> Auction Theory</a></li>
 <li><a class="" href="sec-mechanism-design.html"><span class="header-section-number">33</span> Mechanism Design</a></li>
 <li><a class="" href="sec-matching-markets.html"><span class="header-section-number">34</span> Matching Markets</a></li>
 <li><a class="" href="sec-bargaining.html"><span class="header-section-number">35</span> Bargaining Theory</a></li>
 <li><a class="" href="sec-conflict-cooperation.html"><span class="header-section-number">36</span> Conflict and Cooperation Models</a></li>
 <li><a class="" href="sec-case-studies.html"><span class="header-section-number">37</span> Empirical Case Studies</a></li>
-<li class="book-part">Part VI — Ethics and the Future</li>
+<li class="book-part">Ethics &amp; Outlook</li>
 <li><a class="" href="sec-ethics-frameworks.html"><span class="header-section-number">38</span> Ethical Frameworks for Strategic AI</a></li>
 <li><a class="" href="sec-fairness-ml.html"><span class="header-section-number">39</span> Fairness in Machine Learning</a></li>
 <li><a class="" href="sec-ai-alignment.html"><span class="header-section-number">40</span> AI Alignment as a Game</a></li>
 <li><a class="" href="sec-cooperative-ai.html"><span class="header-section-number">41</span> Cooperative AI</a></li>
 <li><a class="" href="sec-future.html"><span class="header-section-number">42</span> The Future of Strategy</a></li>
-<li class="book-part">Appendices</li>
+<li class="book-part">Appendix</li>
 <li><a class="" href="sec-r-refresher.html"><span class="header-section-number">A</span> R Refresher</a></li>
 <li><a class="" href="sec-linear-algebra.html"><span class="header-section-number">B</span> Linear Algebra Essentials</a></li>
 <li><a class="" href="sec-probability.html"><span class="header-section-number">C</span> Probability Essentials</a></li>
@@ -156,7 +169,7 @@
 </div>
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-cfr" class="section level1" number="29">
 <h1>
-<span class="header-section-number">29</span> CFR and Poker<a class="anchor" aria-label="anchor" href="#sec-cfr"><i class="fas fa-link"></i></a>
+<span class="header-section-number">29</span> Counterfactual Regret Minimization and Poker<a class="anchor" aria-label="anchor" href="#sec-cfr"><i class="fas fa-link"></i></a>
 </h1>
 <blockquote>
 <p>Counterfactual regret minimization for imperfect information games: information sets, regret matching, and a full Kuhn Poker implementation in R.</p>
@@ -242,7 +255,7 @@ v_i(I) = \sum_{z \in Z_I} \pi_{-i}(z) \cdot \pi_i(z[I] \to z) \cdot u_i(z)
 <h3>
 <span class="header-section-number">29.3.1</span> Regret matching<a class="anchor" aria-label="anchor" href="#regret-matching-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb777"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb774"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">regret_match</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">cumulative_regret</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">positive</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmax</a></span><span class="op">(</span><span class="va">cumulative_regret</span>, <span class="fl">0</span><span class="op">)</span></span>
 <span>  <span class="va">total</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">positive</span><span class="op">)</span></span>
@@ -257,7 +270,7 @@ v_i(I) = \sum_{z \in Z_I} \pi_{-i}(z) \cdot \pi_i(z[I] \to z) \cdot u_i(z)
 <h3>
 <span class="header-section-number">29.3.2</span> Kuhn Poker CFR<a class="anchor" aria-label="anchor" href="#kuhn-poker-cfr"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb778"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb775"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kuhn_cfr</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n_iterations</span> <span class="op">=</span> <span class="fl">10000</span>, <span class="va">snapshot_every</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">cards</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"J"</span>, <span class="st">"Q"</span>, <span class="st">"K"</span><span class="op">)</span></span>
 <span>  <span class="va">n_actions</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
@@ -353,7 +366,7 @@ v_i(I) = \sum_{z \in Z_I} \pi_{-i}(z) \cdot \pi_i(z[I] \to z) \cdot u_i(z)
 <h3>
 <span class="header-section-number">29.3.3</span> Run CFR<a class="anchor" aria-label="anchor" href="#run-cfr"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb779"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb776"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">n_iter</span> <span class="op">&lt;-</span> <span class="fl">5000</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">kuhn_cfr</span><span class="op">(</span>n_iterations <span class="op">=</span> <span class="va">n_iter</span>, snapshot_every <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
@@ -362,7 +375,7 @@ v_i(I) = \sum_{z \in Z_I} \pi_{-i}(z) \cdot \pi_i(z[I] \to z) \cdot u_i(z)
 <h3>
 <span class="header-section-number">29.3.4</span> Figure 1: Strategy convergence<a class="anchor" aria-label="anchor" href="#figure-1-strategy-convergence"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb780"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb777"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">snapshots</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">snapshots</span></span>
 <span></span>
 <span><span class="co"># Select key information sets for display</span></span>
@@ -394,14 +407,14 @@ v_i(I) = \sum_{z \in Z_I} \pi_{-i}(z) \cdot \pi_i(z[I] \to z) \cdot u_i(z)
 Figure 29.1: Strategy convergence in Kuhn Poker CFR. Action probabilities at key information sets stabilize to the Nash equilibrium strategy over iterations. Player 1 with a Jack learns to bluff approximately one-third of the time.
 </p>
 </div>
-<div class="sourceCode" id="cb781"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb778"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_conv</span>, <span class="st">"cfr-strategy-convergence"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="figure-2-exploitability" class="section level3" number="29.3.5">
 <h3>
 <span class="header-section-number">29.3.5</span> Figure 2: Exploitability<a class="anchor" aria-label="anchor" href="#figure-2-exploitability"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb782"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb779"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute exploitability as absolute deviation from known NE game value</span></span>
 <span><span class="co"># Kuhn Poker NE value for Player 1 = -1/18</span></span>
 <span><span class="va">ne_value</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">18</span></span>
@@ -431,7 +444,7 @@ Figure 29.1: Strategy convergence in Kuhn Poker CFR. Action probabilities at key
 Figure 29.2: Exploitability decreasing over CFR iterations. The average strategy converges toward a Nash equilibrium, with exploitability dropping toward zero at a rate of approximately O(1/sqrt(T)).
 </p>
 </div>
-<div class="sourceCode" id="cb783"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb780"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_exploit</span>, <span class="st">"cfr-exploitability"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">4.5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -440,16 +453,16 @@ Figure 29.2: Exploitability decreasing over CFR iterations. The average strategy
 <span class="header-section-number">29.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-25"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let us examine the converged average strategies from our CFR run.</p>
-<div class="sourceCode" id="cb784"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb781"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Converged Kuhn Poker strategies (bet/call probability):\n\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Converged Kuhn Poker strategies (bet/call probability):</code></pre>
-<div class="sourceCode" id="cb786"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb783"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%-12s  %-8s  %-8s\n"</span>, <span class="st">"Info Set"</span>, <span class="st">"Check/Fold"</span>, <span class="st">"Bet/Call"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Info Set      Check/Fold  Bet/Call</code></pre>
-<div class="sourceCode" id="cb788"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb785"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strrep.html">strrep</a></span><span class="op">(</span><span class="st">"-"</span>, <span class="fl">36</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; ------------------------------------</code></pre>
-<div class="sourceCode" id="cb790"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb787"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">key</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">avg_strategies</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">s</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">avg_strategies</span><span class="op">[[</span><span class="va">key</span><span class="op">]</span><span class="op">]</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%-12s  %8.3f  %8.3f\n"</span>, <span class="va">key</span>, <span class="va">s</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">s</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
@@ -481,23 +494,23 @@ Figure 29.2: Exploitability decreasing over CFR iterations. The average strategy
 <li>
 <strong>Player 2 with Queen facing a bet</strong>: Calls with probability <span class="math inline">\(1/3\)</span>. This makes Player 1 indifferent between bluffing and checking with a Jack.</li>
 </ul>
-<div class="sourceCode" id="cb792"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb789"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nComparison with analytical Nash equilibrium:\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; 
 #&gt; Comparison with analytical Nash equilibrium:</code></pre>
-<div class="sourceCode" id="cb794"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb791"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"P1 Jack bluff rate:   CFR = %.3f  (NE = 0.333)\n"</span>,</span>
 <span>            <span class="va">result</span><span class="op">$</span><span class="va">avg_strategies</span><span class="op">[[</span><span class="st">"J"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; P1 Jack bluff rate:   CFR = 0.215  (NE = 0.333)</code></pre>
-<div class="sourceCode" id="cb796"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb793"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"P1 King bet rate:     CFR = %.3f  (NE = 1.000)\n"</span>,</span>
 <span>            <span class="va">result</span><span class="op">$</span><span class="va">avg_strategies</span><span class="op">[[</span><span class="st">"K"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; P1 King bet rate:     CFR = 0.668  (NE = 1.000)</code></pre>
-<div class="sourceCode" id="cb798"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb795"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"P2 Queen call rate:   CFR = %.3f  (NE = 0.333)\n"</span>,</span>
 <span>            <span class="va">result</span><span class="op">$</span><span class="va">avg_strategies</span><span class="op">[[</span><span class="st">"Qb"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; P2 Queen call rate:   CFR = 0.336  (NE = 0.333)</code></pre>
-<div class="sourceCode" id="cb800"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb797"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"\nNE game value for P1: %.4f  (analytical = %.4f)\n"</span>,</span>
 <span>            <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">game_values</span><span class="op">)</span>, <span class="va">ne_value</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; 
@@ -558,53 +571,54 @@ Figure 29.2: Exploitability decreasing over CFR iterations. The average strategy
       });
     });
   })();
-</script><!-- Download links injected into the right sidebar above View source / Edit this page --><script>
-  document.addEventListener("DOMContentLoaded", function () {
+</script><!-- Downloads are offered only when the optional output exists. --><script>
+  document.addEventListener("DOMContentLoaded", async function () {
     if (document.querySelector(".sidebar-downloads")) return;
-
-    var pageFile  = window.location.pathname.split("/").pop();
-    var chapterId = pageFile && pageFile !== "" && pageFile !== "index.html"
-      ? pageFile.replace(".html", ".pdf")
-      : null;
-
-    // Find the "View source / Edit this page" block. bs4_book wraps these in
-    // a section with the heading "On this page" + a list, followed by these
-    // links inside an <h2> sibling or a separate <ul>. We look for the
-    // canonical link text and walk up to its container, then insert before it.
     var anchor = null;
+    var chapterId = null;
     var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
     for (var i = 0; i < candidates.length; i++) {
-      var t = (candidates[i].textContent || "").trim().toLowerCase();
-      if (t === "view source" || t === "edit this page") {
-        anchor = candidates[i].closest("h2, .page-links, div, ul");
-        if (anchor) break;
+      var text = (candidates[i].textContent || "").trim().toLowerCase();
+      if (text === "view source" || text === "edit this page") {
+        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
+        var source = new URL(candidates[i].href, window.location.href);
+        var filename = decodeURIComponent(source.pathname.split("/").pop());
+        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
+          chapterId = filename.replace(/\.Rmd$/, ".pdf");
+        }
       }
     }
-    if (!anchor) return;  // theme variant we don't recognise — skip silently
-
+    if (!anchor) return;
+    var choices = [
+      ["strategy-in-r.pdf", "Entire book (PDF)"],
+      ["strategy-in-r.epub", "Entire book (EPUB)"]
+    ];
+    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
+    var available = await Promise.all(choices.map(async function (item) {
+      try {
+        var response = await fetch(item[0], { method: "HEAD" });
+        return response.ok ? item : null;
+      } catch (error) {
+        return null;
+      }
+    }));
+    available = available.filter(Boolean);
+    if (!available.length) return;
     var heading = document.createElement("h2");
     heading.className = "sidebar-downloads-heading";
     heading.textContent = "Download";
-
     var list = document.createElement("ul");
     list.className = "sidebar-downloads";
-
-    function addItem(href, label) {
+    available.forEach(function (item) {
       var li = document.createElement("li");
-      var a  = document.createElement("a");
-      a.href = href;
-      a.textContent = label;
-      li.appendChild(a);
+      var link = document.createElement("a");
+      link.href = item[0];
+      link.textContent = item[1];
+      li.appendChild(link);
       list.appendChild(li);
-    }
-
-    addItem("strategy-in-r.pdf", "Entire book (PDF)");
-    if (chapterId) {
-      addItem("pdf-chapters/" + chapterId, "This chapter (PDF)");
-    }
-
+    });
     anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list,    anchor);
+    anchor.parentNode.insertBefore(list, anchor);
   });
 </script><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
@@ -615,7 +629,7 @@ Figure 29.2: Exploitability decreasing over CFR iterations. The average strategy
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#sec-cfr"><span class="header-section-number">29</span> CFR and Poker</a></li>
+<li><a class="nav-link" href="#sec-cfr"><span class="header-section-number">29</span> Counterfactual Regret Minimization and Poker</a></li>
 <li><a class="nav-link" href="#learning-objectives-27">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-27"><span class="header-section-number">29.1</span> Motivation</a></li>
 <li>
@@ -655,7 +669,7 @@ Figure 29.2: Exploitability decreasing over CFR iterations. The average strategy
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-07-19.</p>
+    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1,5 +1,3 @@
-# (PART) Part III — Simulation {-}
-
 # Monte Carlo Methods for Games {#sec-monte-carlo}
 
 > Monte Carlo simulation applied to game theory: estimating mixed-strategy payoffs, evaluating extensive-form strategies by sampling terminal nodes, and constructing bootstrap confidence intervals for expected values.

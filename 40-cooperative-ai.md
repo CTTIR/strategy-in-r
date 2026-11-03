@@ -477,10 +477,10 @@ cat("\nequilibrium of (1, 1) from Always Defect.\n")
 
 ## Extensions
 
-- **Partial code transparency.** In practice, full code inspection may be infeasible. @barasz2014 study *robust program equilibria* that work even with limited code access.
-- **Multi-agent commitment.** Extending commitment to $n > 2$ agents introduces coalition formation problems. See \@ref(sec-cooperative-games) for the cooperative game theory framework.
+- **Provability-based cooperation.** @barasz2014 study agents with read-access to each other's source code. Their construction permits cooperation without requiring identical programs; it is not a result about limited code access.
+- **Multi-agent commitment.** Extending commitment to $n > 2$ agents introduces coalition formation problems. See \@ref(sec-cooperative-gt) for the cooperative game theory framework.
 - **AI safety applications.** Commitment devices can ensure that AI systems follow safety constraints. This connects to corrigibility (\@ref(sec-ai-alignment)) and mechanism design (\@ref(sec-mechanism-design)).
-- @dafoe2020 lay out a comprehensive research agenda for cooperative AI, identifying commitment, communication, and coordination as the three pillars.
+- @dafoe2020 lay out a comprehensive research agenda for cooperative AI, examining capabilities and institutions needed for cooperation, including communication and commitment.
 
 ## Exercises {-}
 

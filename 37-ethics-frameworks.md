@@ -1,5 +1,3 @@
-# (PART) Part VI — Ethics and the Future {-}
-
 # Ethical Frameworks for Strategic AI {#sec-ethics-frameworks}
 
 > Consequentialism, deontology, and virtue ethics applied to AI decisions, with formal social welfare functions for resource allocation.

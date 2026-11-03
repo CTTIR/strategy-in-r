@@ -7,7 +7,7 @@
 <title>Chapter 28 Self-Play and AlphaZero | Strategy in R</title>
 <meta name="author" content="Raban Heller">
 <meta name="description" content="Monte Carlo tree search in base R, the self-play training paradigm, and how AlphaZero combines MCTS with deep learning to master board games from scratch.  Learning objectives Explain why...">
-<meta name="generator" content="bookdown 0.47 with bs4_book()">
+<meta name="generator" content="bookdown 0.48 with bs4_book()">
 <meta property="og:title" content="Chapter 28 Self-Play and AlphaZero | Strategy in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://r-heller.github.io/strategy-in-r/sec-self-play.html">
@@ -33,6 +33,19 @@
 <meta property="og:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://r-heller.github.io/strategy-in-r/images/cover.png">
+<!-- Wide equations scroll locally instead of widening the reading column. --><style>
+    @media (max-width: 767.98px) {
+      main .figure {
+        width: 100%;
+      }
+      main .math.display {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+    }
+    </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -88,8 +101,8 @@
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
 <li><a class="" href="notation.html">Notation</a></li>
-<li><a class="" href="sec-introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li class="book-part">Part I — Foundations of Game Theory</li>
+<li class="book-part">Foundations</li>
+<li><a class="" href="sec-introduction.html"><span class="header-section-number">1</span> Introduction: Why Strategy in R?</a></li>
 <li><a class="" href="sec-what-is-a-game.html"><span class="header-section-number">2</span> What is a Game?</a></li>
 <li><a class="" href="sec-normal-form.html"><span class="header-section-number">3</span> Normal-Form Games</a></li>
 <li><a class="" href="sec-nash-equilibrium.html"><span class="header-section-number">4</span> Nash Equilibrium</a></li>
@@ -98,45 +111,45 @@
 <li><a class="" href="sec-bayesian-games.html"><span class="header-section-number">7</span> Bayesian Games</a></li>
 <li><a class="" href="sec-repeated-games.html"><span class="header-section-number">8</span> Repeated Games</a></li>
 <li><a class="" href="sec-cooperative-gt.html"><span class="header-section-number">9</span> Cooperative Game Theory</a></li>
-<li class="book-part">Part II — The R Toolkit</li>
-<li><a class="" href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment</a></li>
+<li class="book-part">The R Toolkit</li>
+<li><a class="" href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment for Strategic Computation</a></li>
 <li><a class="" href="sec-gametheory-package.html"><span class="header-section-number">11</span> The GameTheory Package</a></li>
 <li><a class="" href="sec-coopgame-package.html"><span class="header-section-number">12</span> The CoopGame Package</a></li>
 <li><a class="" href="sec-gtree-package.html"><span class="header-section-number">13</span> The gtree Package</a></li>
 <li><a class="" href="sec-nashpy-reticulate.html"><span class="header-section-number">14</span> nashpy via reticulate</a></li>
 <li><a class="" href="sec-custom-solvers.html"><span class="header-section-number">15</span> Building Custom Solvers in R</a></li>
-<li class="book-part">Part III — Simulation</li>
+<li class="book-part">Simulation &amp; Evolutionary Dynamics</li>
 <li><a class="" href="sec-monte-carlo.html"><span class="header-section-number">16</span> Monte Carlo Methods for Games</a></li>
 <li><a class="" href="sec-agent-based-models.html"><span class="header-section-number">17</span> Agent-Based Models for Strategic Interaction</a></li>
 <li><a class="" href="sec-axelrod-tournament.html"><span class="header-section-number">18</span> Replicating Axelrod’s Tournament</a></li>
-<li><a class="" href="sec-spatial-pd.html"><span class="header-section-number">19</span> Spatial Prisoner’s Dilemma</a></li>
+<li><a class="" href="sec-spatial-pd.html"><span class="header-section-number">19</span> The Spatial Prisoner’s Dilemma</a></li>
 <li><a class="" href="sec-replicator-dynamics.html"><span class="header-section-number">20</span> Replicator Dynamics</a></li>
 <li><a class="" href="sec-ess.html"><span class="header-section-number">21</span> Evolutionarily Stable Strategies</a></li>
 <li><a class="" href="sec-network-games.html"><span class="header-section-number">22</span> Games on Networks</a></li>
 <li><a class="" href="sec-performance-rcpp.html"><span class="header-section-number">23</span> Performance Optimization</a></li>
-<li class="book-part">Part IV — AI and Machine Learning</li>
-<li><a class="" href="sec-ml-foundations.html"><span class="header-section-number">24</span> ML Foundations for Game Theory</a></li>
+<li class="book-part">Strategic AI</li>
+<li><a class="" href="sec-ml-foundations.html"><span class="header-section-number">24</span> Machine Learning Foundations for Game Theory</a></li>
 <li><a class="" href="sec-reinforcement-learning.html"><span class="header-section-number">25</span> Reinforcement Learning Foundations</a></li>
-<li><a class="" href="sec-q-learning.html"><span class="header-section-number">26</span> Q-Learning in Games</a></li>
-<li><a class="" href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent RL</a></li>
+<li><a class="" href="sec-q-learning.html"><span class="header-section-number">26</span> Q-Learning in 2-Player Games</a></li>
+<li><a class="" href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent Reinforcement Learning</a></li>
 <li><a class="active" href="sec-self-play.html"><span class="header-section-number">28</span> Self-Play and AlphaZero</a></li>
-<li><a class="" href="sec-cfr.html"><span class="header-section-number">29</span> CFR and Poker</a></li>
+<li><a class="" href="sec-cfr.html"><span class="header-section-number">29</span> Counterfactual Regret Minimization and Poker</a></li>
 <li><a class="" href="sec-gans.html"><span class="header-section-number">30</span> GANs as Minimax Games</a></li>
-<li><a class="" href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategy</a></li>
-<li class="book-part">Part V — Applications</li>
+<li><a class="" href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategic Reasoning</a></li>
+<li class="book-part">Applications</li>
 <li><a class="" href="sec-auctions.html"><span class="header-section-number">32</span> Auction Theory</a></li>
 <li><a class="" href="sec-mechanism-design.html"><span class="header-section-number">33</span> Mechanism Design</a></li>
 <li><a class="" href="sec-matching-markets.html"><span class="header-section-number">34</span> Matching Markets</a></li>
 <li><a class="" href="sec-bargaining.html"><span class="header-section-number">35</span> Bargaining Theory</a></li>
 <li><a class="" href="sec-conflict-cooperation.html"><span class="header-section-number">36</span> Conflict and Cooperation Models</a></li>
 <li><a class="" href="sec-case-studies.html"><span class="header-section-number">37</span> Empirical Case Studies</a></li>
-<li class="book-part">Part VI — Ethics and the Future</li>
+<li class="book-part">Ethics &amp; Outlook</li>
 <li><a class="" href="sec-ethics-frameworks.html"><span class="header-section-number">38</span> Ethical Frameworks for Strategic AI</a></li>
 <li><a class="" href="sec-fairness-ml.html"><span class="header-section-number">39</span> Fairness in Machine Learning</a></li>
 <li><a class="" href="sec-ai-alignment.html"><span class="header-section-number">40</span> AI Alignment as a Game</a></li>
 <li><a class="" href="sec-cooperative-ai.html"><span class="header-section-number">41</span> Cooperative AI</a></li>
 <li><a class="" href="sec-future.html"><span class="header-section-number">42</span> The Future of Strategy</a></li>
-<li class="book-part">Appendices</li>
+<li class="book-part">Appendix</li>
 <li><a class="" href="sec-r-refresher.html"><span class="header-section-number">A</span> R Refresher</a></li>
 <li><a class="" href="sec-linear-algebra.html"><span class="header-section-number">B</span> Linear Algebra Essentials</a></li>
 <li><a class="" href="sec-probability.html"><span class="header-section-number">C</span> Probability Essentials</a></li>
@@ -168,7 +181,7 @@
 <li>Explain why self-play is a powerful training paradigm for two-player zero-sum games.</li>
 <li>Implement Monte Carlo Tree Search (MCTS) in base R, including UCT selection, rollout, and backpropagation.</li>
 <li>Describe the AlphaZero architecture and how neural networks replace the rollout phase of MCTS.</li>
-<li>Demonstrate MCTS convergence to optimal play in Tic-Tac-Toe through visit count analysis.</li>
+<li>Inspect MCTS visit counts and measure finite-budget play against a random opponent.</li>
 </ul>
 </div>
 <div id="motivation-26" class="section level2" number="28.1">
@@ -176,7 +189,7 @@
 <span class="header-section-number">28.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-26"><i class="fas fa-link"></i></a>
 </h2>
 <p>In <a href="sec-q-learning.html#sec-q-learning">26</a> and <a href="sec-multi-agent-rl.html#sec-multi-agent-rl">27</a>, we trained agents using tabular methods on small matrix games. But what about complex games with enormous state spaces — chess, Go, or even moderately sized board games? Tabular methods cannot scale: Go has roughly <span class="math inline">\(10^{170}\)</span> legal positions, far more than atoms in the universe.</p>
-<p><strong>Self-play</strong> offers an elegant solution. Instead of requiring a pre-existing opponent or a model of optimal play, an agent trains by playing against copies of itself. Each generation of the agent becomes a training partner for the next. This bootstrapping process, combined with Monte Carlo Tree Search (MCTS), enabled AlphaGo to defeat the world Go champion <span class="citation">(<a href="references.html#ref-silver2016">Silver et al., 2016</a>)</span> and AlphaZero to master chess, shogi, and Go from scratch with no human knowledge beyond the rules <span class="citation">(<a href="references.html#ref-silver2017">Silver et al., 2017</a>)</span>.</p>
+<p><strong>Self-play</strong> offers an elegant solution. Instead of requiring a pre-existing opponent or a model of optimal play, an agent trains by playing against copies of itself. Each generation of the agent becomes a training partner for the next. This bootstrapping process, combined with Monte Carlo Tree Search (MCTS), enabled AlphaGo to defeat the world Go champion <span class="citation">(<a href="references.html#ref-silver2016">Silver et al., 2016</a>)</span> and AlphaZero to master chess, shogi, and Go from scratch with no human knowledge beyond the rules <span class="citation">(<a href="references.html#ref-silver2017alphazero">Silver et al., 2017</a>)</span>.</p>
 <p>This chapter implements pure MCTS for Tic-Tac-Toe in base R — a game small enough to verify optimality yet rich enough to illustrate every component of the algorithm.</p>
 </div>
 <div id="theory-26" class="section level2" number="28.2">
@@ -214,13 +227,13 @@
 <h3>
 <span class="header-section-number">28.2.3</span> AlphaZero architecture<a class="anchor" aria-label="anchor" href="#alphazero-architecture"><i class="fas fa-link"></i></a>
 </h3>
-<p>AlphaZero <span class="citation">(<a href="references.html#ref-silver2017">Silver et al., 2017</a>)</span> replaces the random rollout in step 3 with a <strong>neural network</strong> that directly evaluates positions. The network <span class="math inline">\(f_\theta(s) = (\mathbf{p}, v)\)</span> takes a board state <span class="math inline">\(s\)</span> and outputs:</p>
+<p>AlphaZero <span class="citation">(<a href="references.html#ref-silver2017alphazero">Silver et al., 2017</a>)</span> replaces the random rollout in step 3 with a <strong>neural network</strong> that directly evaluates positions. The network <span class="math inline">\(f_\theta(s) = (\mathbf{p}, v)\)</span> takes a board state <span class="math inline">\(s\)</span> and outputs:</p>
 <ul>
-<li>A <strong>policy vector</strong> <span class="math inline">\(\mathbf{p}\)</span>: prior probabilities over legal moves, used to guide the UCT selection.</li>
+<li>A <strong>policy vector</strong> <span class="math inline">\(\mathbf{p}\)</span>: prior probabilities over legal moves, used in a prior-weighted tree policy (PUCT).</li>
 <li>A <strong>value estimate</strong> <span class="math inline">\(v \in [-1, 1]\)</span>: the predicted game outcome from state <span class="math inline">\(s\)</span>.</li>
 </ul>
-<p>The training loop iterates: play self-play games using MCTS guided by <span class="math inline">\(f_\theta\)</span>, store <span class="math inline">\((s_t, \pi_t, z_t)\)</span> tuples (state, MCTS visit-count policy, outcome), and train <span class="math inline">\(f_\theta\)</span> to minimize <span class="math inline">\((\mathbf{p} - \pi)^2 + (v - z)^2\)</span>. AlphaZero learned chess at superhuman level using only the rules <span class="citation">(<a href="references.html#ref-silver2017">Silver et al., 2017</a>)</span>.</p>
-<p>Since neural networks require deep learning frameworks beyond our available packages, we implement <strong>pure MCTS</strong> (with random rollouts) below. The algorithmic structure is identical — AlphaZero substitutes a learned evaluation for the random rollout.</p>
+<p>The training loop iterates: play self-play games using MCTS guided by <span class="math inline">\(f_\theta\)</span>, store <span class="math inline">\((s_t, \pi_t, z_t)\)</span> tuples (state, MCTS visit-count policy, outcome), and train <span class="math inline">\(f_\theta\)</span> to minimize <span class="math inline">\((v-z)^2 - \pi^\top\log\mathbf{p} + c\lVert\theta\rVert^2\)</span> (value error, policy cross-entropy, and weight regularization). AlphaZero learned chess at superhuman level using only the rules <span class="citation">(<a href="references.html#ref-silver2017alphazero">Silver et al., 2017</a>)</span>.</p>
+<p>Since neural networks require deep learning frameworks beyond our available packages, we implement <strong>pure MCTS</strong> (with random rollouts) below. This illustrates tree search, not AlphaZero training: AlphaZero also uses policy priors in selection, learns a value function, and updates a network from self-play.</p>
 </div>
 </div>
 <div id="sec-mcts-impl" class="section level2" number="28.3">
@@ -237,6 +250,12 @@
 <span><span class="va">ttt_moves</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">board</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">board</span> <span class="op">==</span> <span class="fl">0L</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ttt_play</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">board</span>, <span class="va">pos</span>, <span class="va">player</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">1L</span> <span class="op">||</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span> <span class="op">||</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.finite</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span> <span class="op">||</span></span>
+<span>      <span class="va">pos</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">trunc</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span> <span class="op">||</span> <span class="op">!</span><span class="va">pos</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu">ttt_moves</span><span class="op">(</span><span class="va">board</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"pos must identify one empty square"</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">player</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">1L</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">player</span><span class="op">)</span> <span class="op">||</span></span>
+<span>      <span class="va">player</span> <span class="op">!=</span> <span class="fu">ttt_current_player</span><span class="op">(</span><span class="va">board</span><span class="op">)</span> <span class="op">||</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="fu">ttt_winner</span><span class="op">(</span><span class="va">board</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"player must be the side to move in an unfinished game"</span><span class="op">)</span></span>
 <span>  <span class="va">board</span><span class="op">[</span><span class="va">pos</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">player</span></span>
 <span>  <span class="va">board</span></span>
 <span><span class="op">}</span></span>
@@ -264,15 +283,16 @@
 </h3>
 <div class="sourceCode" id="cb750"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mcts_node</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">board</span>, <span class="va">parent</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">action</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  <span class="co"># Environments give parent/child references shared mutable state.</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list2env.html">list2env</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>    board <span class="op">=</span> <span class="va">board</span>,</span>
 <span>    parent <span class="op">=</span> <span class="va">parent</span>,</span>
 <span>    action <span class="op">=</span> <span class="va">action</span>,</span>
 <span>    children <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    visits <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>    total_value <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>    untried <span class="op">=</span> <span class="fu">ttt_moves</span><span class="op">(</span><span class="va">board</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
+<span>    untried <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="fu">ttt_winner</span><span class="op">(</span><span class="va">board</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="fu">ttt_moves</span><span class="op">(</span><span class="va">board</span><span class="op">)</span> <span class="kw">else</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>, parent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">emptyenv</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="va">mcts_select</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">node</span>, <span class="va">c_explore</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -297,7 +317,7 @@
 <span></span>
 <span><span class="va">mcts_expand</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">node</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">node</span><span class="op">$</span><span class="va">untried</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">node</span><span class="op">)</span></span>
-<span>  <span class="va">action</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">node</span><span class="op">$</span><span class="va">untried</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="va">action</span> <span class="op">&lt;-</span> <span class="va">node</span><span class="op">$</span><span class="va">untried</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">node</span><span class="op">$</span><span class="va">untried</span><span class="op">)</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">]</span></span>
 <span>  <span class="va">node</span><span class="op">$</span><span class="va">untried</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">node</span><span class="op">$</span><span class="va">untried</span>, <span class="va">action</span><span class="op">)</span></span>
 <span>  <span class="va">player</span> <span class="op">&lt;-</span> <span class="fu">ttt_current_player</span><span class="op">(</span><span class="va">node</span><span class="op">$</span><span class="va">board</span><span class="op">)</span></span>
 <span>  <span class="va">new_board</span> <span class="op">&lt;-</span> <span class="fu">ttt_play</span><span class="op">(</span><span class="va">node</span><span class="op">$</span><span class="va">board</span>, <span class="va">action</span>, <span class="va">player</span><span class="op">)</span></span>
@@ -310,7 +330,7 @@
 <span>  <span class="kw">while</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="fu">ttt_winner</span><span class="op">(</span><span class="va">board</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">player</span> <span class="op">&lt;-</span> <span class="fu">ttt_current_player</span><span class="op">(</span><span class="va">board</span><span class="op">)</span></span>
 <span>    <span class="va">moves</span> <span class="op">&lt;-</span> <span class="fu">ttt_moves</span><span class="op">(</span><span class="va">board</span><span class="op">)</span></span>
-<span>    <span class="va">board</span> <span class="op">&lt;-</span> <span class="fu">ttt_play</span><span class="op">(</span><span class="va">board</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">moves</span>, <span class="fl">1</span><span class="op">)</span>, <span class="va">player</span><span class="op">)</span></span>
+<span>    <span class="va">board</span> <span class="op">&lt;-</span> <span class="fu">ttt_play</span><span class="op">(</span><span class="va">board</span>, <span class="va">moves</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">moves</span><span class="op">)</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">]</span>, <span class="va">player</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span>  <span class="fu">ttt_winner</span><span class="op">(</span><span class="va">board</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -328,7 +348,17 @@
 <span class="header-section-number">28.3.3</span> Running MCTS<a class="anchor" aria-label="anchor" href="#running-mcts"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb751"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mcts_search</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">board</span>, <span class="va">n_iterations</span> <span class="op">=</span> <span class="fl">100</span>, <span class="va">c_explore</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<code class="sourceCode R"><span><span class="va">mcts_search</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">board</span>, <span class="va">n_iterations</span> <span class="op">=</span> <span class="fl">1000</span>, <span class="va">c_explore</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">board</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">board</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">9L</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">anyNA</a></span><span class="op">(</span><span class="va">board</span><span class="op">)</span> <span class="op">||</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="op">!</span><span class="va">board</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1L</span>, <span class="fl">0L</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">)</span> <span class="op">||</span></span>
+<span>      <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">board</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"board must be a legal nine-square position"</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">n_iterations</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">1L</span> <span class="op">||</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">n_iterations</span><span class="op">)</span> <span class="op">||</span></span>
+<span>      <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.finite</a></span><span class="op">(</span><span class="va">n_iterations</span><span class="op">)</span> <span class="op">||</span> <span class="va">n_iterations</span> <span class="op">&lt;</span> <span class="fl">1</span> <span class="op">||</span></span>
+<span>      <span class="va">n_iterations</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">trunc</a></span><span class="op">(</span><span class="va">n_iterations</span><span class="op">)</span> <span class="op">||</span> <span class="va">n_iterations</span> <span class="op">&gt;</span> <span class="va">.Machine</span><span class="op">$</span><span class="va">integer.max</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"n_iterations must be a positive integer"</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">c_explore</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">1L</span> <span class="op">||</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">c_explore</span><span class="op">)</span> <span class="op">||</span></span>
+<span>      <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.finite</a></span><span class="op">(</span><span class="va">c_explore</span><span class="op">)</span> <span class="op">||</span> <span class="va">c_explore</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"c_explore must be finite and nonnegative"</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="fu">ttt_winner</span><span class="op">(</span><span class="va">board</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"search requires an unfinished game"</span><span class="op">)</span></span>
 <span>  <span class="va">root</span> <span class="op">&lt;-</span> <span class="fu">mcts_node</span><span class="op">(</span><span class="va">board</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_iterations</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -383,7 +413,7 @@
 <span>    visits <span class="op">=</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/replace_na.html">replace_na</a></span><span class="op">(</span><span class="va">visits</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>    avg_value <span class="op">=</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/replace_na.html">replace_na</a></span><span class="op">(</span><span class="va">avg_value</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>    label <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">visits</span> <span class="op">&gt;</span> <span class="fl">0</span>,</span>
-<span>                    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"V:"</span>, <span class="va">visits</span>, <span class="st">"\nW:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%.0f%%"</span>,</span>
+<span>                    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"V:"</span>, <span class="va">visits</span>, <span class="st">"\nS:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%.0f%%"</span>,</span>
 <span>                           <span class="op">(</span><span class="va">avg_value</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                    <span class="st">""</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
@@ -407,41 +437,55 @@
 <span><span class="va">p_tree</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:mcts-tree"></span>
-<img src="27-self-play-alphazero_files/figure-html/mcts-tree-1.png" alt="MCTS search from an empty Tic-Tac-Toe board (100 iterations). Each cell shows visit count and win rate from X's perspective. The center (position 5) receives the most visits, reflecting its strategic importance. Corner moves also receive high visit counts, consistent with known optimal opening play." width="80%"><p class="caption">
-Figure 28.1: MCTS search from an empty Tic-Tac-Toe board (100 iterations). Each cell shows visit count and win rate from X’s perspective. The center (position 5) receives the most visits, reflecting its strategic importance. Corner moves also receive high visit counts, consistent with known optimal opening play.
+<img src="27-self-play-alphazero_files/figure-html/mcts-tree-1.png" alt="MCTS search from an empty Tic-Tac-Toe board (1000 iterations). Each cell shows visits and mean score from X's perspective (win = 1, draw = 0.5, loss = 0). Finite-budget visit counts reflect this seeded search, not a proof that an opening is uniquely optimal." width="80%"><p class="caption">
+Figure 28.1: MCTS search from an empty Tic-Tac-Toe board (1000 iterations). Each cell shows visits and mean score from X’s perspective (win = 1, draw = 0.5, loss = 0). Finite-budget visit counts reflect this seeded search, not a proof that an opening is uniquely optimal.
 </p>
 </div>
 <div class="sourceCode" id="cb753"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_tree</span>, <span class="st">"mcts-tree-visits"</span>, width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="self-play-win-rate-tracking" class="section level3" number="28.3.5">
+<div id="evaluation-against-a-random-opponent" class="section level3" number="28.3.5">
 <h3>
-<span class="header-section-number">28.3.5</span> Self-play win-rate tracking<a class="anchor" aria-label="anchor" href="#self-play-win-rate-tracking"><i class="fas fa-link"></i></a>
+<span class="header-section-number">28.3.5</span> Evaluation against a random opponent<a class="anchor" aria-label="anchor" href="#evaluation-against-a-random-opponent"><i class="fas fa-link"></i></a>
 </h3>
-<p>The function below plays MCTS (as X) against a random opponent and returns the game outcome. Running many games at high iteration counts is slow in pure R, so we show the function and provide pre-computed results.</p>
+<p>This experiment does not train a policy or perform self-play. It measures X’s results in 50 games per search budget against a random O; sampling uncertainty and the first-player advantage matter.</p>
 <div class="sourceCode" id="cb754"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mcts_vs_random</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n_iterations</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">board</span> <span class="op">&lt;-</span> <span class="fu">ttt_new</span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="kw">while</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="fu">ttt_winner</span><span class="op">(</span><span class="va">board</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">player</span> <span class="op">&lt;-</span> <span class="fu">ttt_current_player</span><span class="op">(</span><span class="va">board</span><span class="op">)</span></span>
 <span>    <span class="kw">if</span> <span class="op">(</span><span class="va">player</span> <span class="op">==</span> <span class="fl">1L</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="co"># MCTS player</span></span>
 <span>      <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mcts_search</span><span class="op">(</span><span class="va">board</span>, n_iterations <span class="op">=</span> <span class="va">n_iterations</span><span class="op">)</span></span>
 <span>      <span class="va">board</span> <span class="op">&lt;-</span> <span class="fu">ttt_play</span><span class="op">(</span><span class="va">board</span>, <span class="va">res</span><span class="op">$</span><span class="va">best_move</span>, <span class="va">player</span><span class="op">)</span></span>
 <span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>      <span class="co"># Random opponent</span></span>
 <span>      <span class="va">moves</span> <span class="op">&lt;-</span> <span class="fu">ttt_moves</span><span class="op">(</span><span class="va">board</span><span class="op">)</span></span>
-<span>      <span class="va">board</span> <span class="op">&lt;-</span> <span class="fu">ttt_play</span><span class="op">(</span><span class="va">board</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">moves</span>, <span class="fl">1</span><span class="op">)</span>, <span class="va">player</span><span class="op">)</span></span>
+<span>      <span class="va">board</span> <span class="op">&lt;-</span> <span class="fu">ttt_play</span><span class="op">(</span><span class="va">board</span>, <span class="va">moves</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">moves</span><span class="op">)</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">]</span>, <span class="va">player</span><span class="op">)</span></span>
 <span>    <span class="op">}</span></span>
 <span>  <span class="op">}</span></span>
 <span>  <span class="fu">ttt_winner</span><span class="op">(</span><span class="va">board</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">iteration_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">100</span>, <span class="fl">200</span>, <span class="fl">500</span><span class="op">)</span></span>
+<span><span class="va">n_games</span> <span class="op">&lt;-</span> <span class="fl">50</span></span>
+<span></span>
+<span><span class="va">self_play_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  iterations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  win_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">double</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  draw_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">double</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">n_iter</span> <span class="kw">in</span> <span class="va">iteration_levels</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">outcomes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">n_games</span>, <span class="fu">mcts_vs_random</span><span class="op">(</span><span class="va">n_iter</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">self_play_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span><span class="va">self_play_results</span>, <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>    iterations <span class="op">=</span> <span class="va">n_iter</span>,</span>
+<span>    win_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">outcomes</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    draw_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">outcomes</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb755"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iteration_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">100</span>, <span class="fl">200</span>, <span class="fl">500</span><span class="op">)</span></span>
-<span><span class="va">self_play_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
-<span>  iterations <span class="op">=</span> <span class="va">iteration_levels</span>,</span>
-<span>  win_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.68</span>, <span class="fl">0.78</span>, <span class="fl">0.86</span>, <span class="fl">0.92</span>, <span class="fl">0.96</span>, <span class="fl">0.98</span><span class="op">)</span>,</span>
-<span>  draw_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.12</span>, <span class="fl">0.14</span>, <span class="fl">0.10</span>, <span class="fl">0.06</span>, <span class="fl">0.04</span>, <span class="fl">0.02</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb756"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sp</span> <span class="op">&lt;-</span> <span class="va">self_play_results</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">win_rate</span>, <span class="va">draw_rate</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"outcome"</span>,</span>
 <span>               values_to <span class="op">=</span> <span class="st">"rate"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -463,11 +507,11 @@ Figure 28.1: MCTS search from an empty Tic-Tac-Toe board (100 iterations). Each 
 <span><span class="va">p_sp</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:self-play-winrate"></span>
-<img src="27-self-play-alphazero_files/figure-html/self-play-winrate-1.png" alt="MCTS win rate against a random opponent as search budget increases. With only 10 iterations per move, MCTS wins about 68% of games. By 500 iterations it wins nearly every game, demonstrating how deeper search translates directly into stronger play." width="80%"><p class="caption">
-Figure 28.2: MCTS win rate against a random opponent as search budget increases. With only 10 iterations per move, MCTS wins about 68% of games. By 500 iterations it wins nearly every game, demonstrating how deeper search translates directly into stronger play.
+<img src="27-self-play-alphazero_files/figure-html/self-play-winrate-1.png" alt="MCTS win rate against a random opponent as search budget increases. Each point summarizes 50 seeded games with MCTS playing X. These finite samples do not establish monotonic improvement or optimality." width="80%"><p class="caption">
+Figure 28.2: MCTS win rate against a random opponent as search budget increases. Each point summarizes 50 seeded games with MCTS playing X. These finite samples do not establish monotonic improvement or optimality.
 </p>
 </div>
-<div class="sourceCode" id="cb757"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb756"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_sp</span>, <span class="st">"mcts-self-play-winrate"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -476,21 +520,22 @@ Figure 28.2: MCTS win rate against a random opponent as search budget increases.
 <span class="header-section-number">28.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-24"><i class="fas fa-link"></i></a>
 </h2>
 <p>We trace MCTS solving a mid-game Tic-Tac-Toe position step by step. Consider this board state where X has a forced win:</p>
-<pre><code> X | . | .
+<pre><code> X | X | .
 -----------
- . | O | .
+ O | O | .
 -----------
- . | . | X</code></pre>
-<p>X is at positions 1 and 9, O is at position 5. It is X’s turn.</p>
-<div class="sourceCode" id="cb759"><pre class="downlit sourceCode r">
+ . | . | .</code></pre>
+<p>X occupies positions 1 and 2; O occupies 4 and 5. It is X’s turn, and position 3 wins immediately.</p>
+<div class="sourceCode" id="cb758"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">board_mid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0L</span>, <span class="fl">9</span><span class="op">)</span></span>
 <span><span class="va">board_mid</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1L</span>   <span class="co"># X top-left</span></span>
-<span><span class="va">board_mid</span><span class="op">[</span><span class="fl">9</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1L</span>   <span class="co"># X bottom-right</span></span>
+<span><span class="va">board_mid</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1L</span>   <span class="co"># X top-middle</span></span>
+<span><span class="va">board_mid</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1L</span>  <span class="co"># O middle-left</span></span>
 <span><span class="va">board_mid</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1L</span>  <span class="co"># O center</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Board state:\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Board state:</code></pre>
-<div class="sourceCode" id="cb761"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb760"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">symbols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"-1"</span> <span class="op">=</span> <span class="st">"O"</span>, <span class="st">"0"</span> <span class="op">=</span> <span class="st">"."</span>, <span class="st">"1"</span> <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">r</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">row_str</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">symbols</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">board_mid</span><span class="op">[</span><span class="op">(</span><span class="va">r</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">3</span> <span class="op">+</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">]</span>,</span>
@@ -498,48 +543,49 @@ Figure 28.2: MCTS win rate against a random opponent as search budget increases.
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">" "</span>, <span class="va">row_str</span>, <span class="st">"\n"</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">r</span> <span class="op">&lt;</span> <span class="fl">3</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"  ---------\n"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<pre><code>#&gt;   X | . | . 
+<pre><code>#&gt;   X | X | . 
 #&gt;   ---------
-#&gt;   . | O | . 
+#&gt;   O | O | . 
 #&gt;   ---------
-#&gt;   . | . | X</code></pre>
-<div class="sourceCode" id="cb763"><pre class="downlit sourceCode r">
+#&gt;   . | . | .</code></pre>
+<div class="sourceCode" id="cb762"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">result_mid</span> <span class="op">&lt;-</span> <span class="fu">mcts_search</span><span class="op">(</span><span class="va">board_mid</span>, n_iterations <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
+<span><span class="va">result_mid</span> <span class="op">&lt;-</span> <span class="fu">mcts_search</span><span class="op">(</span><span class="va">board_mid</span>, n_iterations <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nMCTS analysis (200 iterations):\n"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nMCTS analysis (2000 iterations):\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; 
-#&gt; MCTS analysis (200 iterations):</code></pre>
-<div class="sourceCode" id="cb765"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Move | Visits | Win Rate (X)\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code>#&gt; Move | Visits | Win Rate (X)</code></pre>
-<div class="sourceCode" id="cb767"><pre class="downlit sourceCode r">
+#&gt; MCTS analysis (2000 iterations):</code></pre>
+<div class="sourceCode" id="cb764"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Move | Visits | Mean Score (X)\n"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>#&gt; Move | Visits | Mean Score (X)</code></pre>
+<div class="sourceCode" id="cb766"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"-----+--------+-------------\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; -----+--------+-------------</code></pre>
-<div class="sourceCode" id="cb769"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb768"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">result_mid</span><span class="op">$</span><span class="va">stats</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">s</span> <span class="op">&lt;-</span> <span class="va">result_mid</span><span class="op">$</span><span class="va">stats</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  %d  |  %4d  |   %.1f%%\n"</span>,</span>
 <span>              <span class="va">s</span><span class="op">$</span><span class="va">move</span>, <span class="va">s</span><span class="op">$</span><span class="va">visits</span>, <span class="op">(</span><span class="va">s</span><span class="op">$</span><span class="va">avg_value</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"\nBest move: position %d\n"</span>, <span class="va">result_mid</span><span class="op">$</span><span class="va">best_move</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">}</span></span></code></pre></div>
+<pre><code>#&gt;   3  |  1958  |   100.0%
+#&gt;   6  |    20  |   60.0%
+#&gt;   9  |     9  |   38.9%
+#&gt;   8  |     7  |   28.6%
+#&gt;   7  |     6  |   16.7%</code></pre>
+<div class="sourceCode" id="cb770"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"\nBest move: position %d\n"</span>, <span class="va">result_mid</span><span class="op">$</span><span class="va">best_move</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; 
-#&gt; Best move: position NA</code></pre>
-<div class="sourceCode" id="cb771"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Explain the strategic reasoning</span></span>
+#&gt; Best move: position 3</code></pre>
+<div class="sourceCode" id="cb772"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Check the resulting board rather than assume a tactical explanation.</span></span>
 <span><span class="va">best</span> <span class="op">&lt;-</span> <span class="va">result_mid</span><span class="op">$</span><span class="va">best_move</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
-<span>  <span class="st">"\nPosition %d creates a double threat (fork). After X plays here,\n"</span>, <span class="va">best</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>#&gt; 
-#&gt; Position NA creates a double threat (fork). After X plays here,</code></pre>
-<div class="sourceCode" id="cb773"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"X threatens to complete two different lines simultaneously.\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code>#&gt; X threatens to complete two different lines simultaneously.</code></pre>
-<div class="sourceCode" id="cb775"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"O can only block one, so X wins on the next move.\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code>#&gt; O can only block one, so X wins on the next move.</code></pre>
-<p>The visit count distribution reveals MCTS’s reasoning: the optimal move receives the majority of visits because rollouts from that position yield the highest win rate. UCT (<a href="sec-self-play.html#eq:uct">(28.1)</a>) balances exploration and exploitation without domain knowledge — a principled solution to the multi-armed bandit problem applied recursively through the game tree.</p>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Logic.html">isTRUE</a></span><span class="op">(</span><span class="fu">ttt_winner</span><span class="op">(</span><span class="fu">ttt_play</span><span class="op">(</span><span class="va">board_mid</span>, <span class="va">best</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1L</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"The selected move completes X's top row and wins immediately.\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"This finite search missed the immediate win at position 3.\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<pre><code>#&gt; The selected move completes X's top row and wins immediately.</code></pre>
+<p>The visit count distribution reveals MCTS’s reasoning: the distribution records how this finite search allocated its simulations. A winning move can be verified directly by the game rules. UCT (<a href="sec-self-play.html#eq:uct">(28.1)</a>) balances exploration and exploitation without domain knowledge — a principled solution to the multi-armed bandit problem applied recursively through the game tree.</p>
 </div>
 <div id="extensions-26" class="section level2" number="28.5">
 <h2>
@@ -547,7 +593,7 @@ Figure 28.2: MCTS win rate against a random opponent as search budget increases.
 </h2>
 <ul>
 <li>
-<strong>AlphaZero’s neural MCTS</strong>: Replace random rollouts with a neural network evaluation trained on self-play data, creating a virtuous cycle of improving evaluation, search, and training data <span class="citation">(<a href="references.html#ref-silver2017">Silver et al., 2017</a>)</span>.</li>
+<strong>AlphaZero’s neural MCTS</strong>: Replace random rollouts with a neural network evaluation trained on self-play data, creating a virtuous cycle of improving evaluation, search, and training data <span class="citation">(<a href="references.html#ref-silver2017alphazero">Silver et al., 2017</a>)</span>.</li>
 <li>
 <strong>Progressive widening</strong>: In games with large branching factors, expand moves proportional to visit count, focusing computation on promising subtrees.</li>
 <li>
@@ -597,60 +643,61 @@ Figure 28.2: MCTS win rate against a random opponent as search budget increases.
       });
     });
   })();
-</script><!-- Download links injected into the right sidebar above View source / Edit this page --><script>
-  document.addEventListener("DOMContentLoaded", function () {
+</script><!-- Downloads are offered only when the optional output exists. --><script>
+  document.addEventListener("DOMContentLoaded", async function () {
     if (document.querySelector(".sidebar-downloads")) return;
-
-    var pageFile  = window.location.pathname.split("/").pop();
-    var chapterId = pageFile && pageFile !== "" && pageFile !== "index.html"
-      ? pageFile.replace(".html", ".pdf")
-      : null;
-
-    // Find the "View source / Edit this page" block. bs4_book wraps these in
-    // a section with the heading "On this page" + a list, followed by these
-    // links inside an <h2> sibling or a separate <ul>. We look for the
-    // canonical link text and walk up to its container, then insert before it.
     var anchor = null;
+    var chapterId = null;
     var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
     for (var i = 0; i < candidates.length; i++) {
-      var t = (candidates[i].textContent || "").trim().toLowerCase();
-      if (t === "view source" || t === "edit this page") {
-        anchor = candidates[i].closest("h2, .page-links, div, ul");
-        if (anchor) break;
+      var text = (candidates[i].textContent || "").trim().toLowerCase();
+      if (text === "view source" || text === "edit this page") {
+        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
+        var source = new URL(candidates[i].href, window.location.href);
+        var filename = decodeURIComponent(source.pathname.split("/").pop());
+        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
+          chapterId = filename.replace(/\.Rmd$/, ".pdf");
+        }
       }
     }
-    if (!anchor) return;  // theme variant we don't recognise — skip silently
-
+    if (!anchor) return;
+    var choices = [
+      ["strategy-in-r.pdf", "Entire book (PDF)"],
+      ["strategy-in-r.epub", "Entire book (EPUB)"]
+    ];
+    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
+    var available = await Promise.all(choices.map(async function (item) {
+      try {
+        var response = await fetch(item[0], { method: "HEAD" });
+        return response.ok ? item : null;
+      } catch (error) {
+        return null;
+      }
+    }));
+    available = available.filter(Boolean);
+    if (!available.length) return;
     var heading = document.createElement("h2");
     heading.className = "sidebar-downloads-heading";
     heading.textContent = "Download";
-
     var list = document.createElement("ul");
     list.className = "sidebar-downloads";
-
-    function addItem(href, label) {
+    available.forEach(function (item) {
       var li = document.createElement("li");
-      var a  = document.createElement("a");
-      a.href = href;
-      a.textContent = label;
-      li.appendChild(a);
+      var link = document.createElement("a");
+      link.href = item[0];
+      link.textContent = item[1];
+      li.appendChild(link);
       list.appendChild(li);
-    }
-
-    addItem("strategy-in-r.pdf", "Entire book (PDF)");
-    if (chapterId) {
-      addItem("pdf-chapters/" + chapterId, "This chapter (PDF)");
-    }
-
+    });
     anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list,    anchor);
+    anchor.parentNode.insertBefore(list, anchor);
   });
 </script><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent RL</a></div>
-<div class="next"><a href="sec-cfr.html"><span class="header-section-number">29</span> CFR and Poker</a></div>
+<div class="prev"><a href="sec-multi-agent-rl.html"><span class="header-section-number">27</span> Multi-Agent Reinforcement Learning</a></div>
+<div class="next"><a href="sec-cfr.html"><span class="header-section-number">29</span> Counterfactual Regret Minimization and Poker</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -670,7 +717,7 @@ Figure 28.2: MCTS win rate against a random opponent as search budget increases.
 <li><a class="nav-link" href="#mcts-implementation"><span class="header-section-number">28.3.2</span> MCTS implementation</a></li>
 <li><a class="nav-link" href="#running-mcts"><span class="header-section-number">28.3.3</span> Running MCTS</a></li>
 <li><a class="nav-link" href="#mcts-tree-visualization"><span class="header-section-number">28.3.4</span> MCTS tree visualization</a></li>
-<li><a class="nav-link" href="#self-play-win-rate-tracking"><span class="header-section-number">28.3.5</span> Self-play win-rate tracking</a></li>
+<li><a class="nav-link" href="#evaluation-against-a-random-opponent"><span class="header-section-number">28.3.5</span> Evaluation against a random opponent</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#worked-example-24"><span class="header-section-number">28.4</span> Worked example</a></li>
@@ -693,7 +740,7 @@ Figure 28.2: MCTS win rate against a random opponent as search budget increases.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-07-19.</p>
+    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

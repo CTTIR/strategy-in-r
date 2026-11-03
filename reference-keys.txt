@@ -512,7 +512,7 @@ tic-tac-toe-game-engine
 mcts-implementation
 running-mcts
 mcts-tree-visualization
-self-play-win-rate-tracking
+evaluation-against-a-random-opponent
 worked-example-24
 extensions-26
 sec-cfr

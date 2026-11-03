@@ -2,7 +2,7 @@
 title: "Strategy in R"
 subtitle: "Game Theory, Simulation, and Machine Intelligence"
 author: "Raban Heller"
-date: "2026-07-19"
+date: "2026-11-03"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -35,7 +35,7 @@ The book is for graduate students, researchers, and practitioners with working R
 
 - **Reading paths.** Front-to-back works; theorists can skim Parts II–IV; R programmers can dip into Parts II–IV and refer back to Part I as needed.
 - **Code lives** under `R/` (helpers, theme, solvers) and `python/` (CFR, deep RL via `reticulate`); example data under `data/`. Every chapter is rebuildable in isolation: `bookdown::preview_chapter("12-gtree-package.Rmd")`.
-- **Per-chapter PDF.** Every chapter page has a "⬇ Download this chapter (PDF)" button in the top-right.
+- **Per-chapter PDF.** When a chapter PDF is available, its download appears in the sidebar.
 - **Whole-book downloads.** The PDF and EPUB are linked from the navbar's Download menu.
 - **Corrections and suggestions** go to the [issue tracker](https://github.com/r-heller/strategy-in-r/issues).
 
@@ -55,4 +55,4 @@ href="https://r-heller.github.io/strategy-in-r/"
 class="uri">https://r-heller.github.io/strategy-in-r/</a>.</p>
 </div>
 
-Download the reference as [BibTeX](citation-files/citation.bib) or [RIS](citation-files/citation.ris).
+Download the reference as [BibTeX](https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.bib) or [RIS](https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.ris).

@@ -353,10 +353,10 @@ cat(sprintf("Both sides would prefer mutual accommodation (3, 3).\n"))
 
 ## Extensions
 
-- **Evolutionary dynamics** on Chicken and Stag Hunt are explored in \@ref(sec-evolutionary-dynamics), where mixed equilibria correspond to polymorphic population states.
+- **Evolutionary dynamics** on Chicken and Stag Hunt are explored in \@ref(sec-replicator-dynamics), where mixed equilibria correspond to polymorphic population states.
 - **Repeated interaction** transforms one-shot Chicken into a folk-theorem setting where cooperation can be sustained (\@ref(sec-repeated-games)).
 - **Incomplete information** versions of Chicken model situations where each player is uncertain about the other's resolve — see @osborne2004 (Chapter 9).
-- **Network effects** on coordination games are covered in \@ref(sec-networks), where Stag Hunt dynamics depend on the structure of social connections.
+- **Network effects** on coordination games are covered in \@ref(sec-network-games), where Stag Hunt dynamics depend on the structure of social connections.
 
 ## Exercises {-}
 
