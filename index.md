@@ -2,7 +2,7 @@
 title: "Strategy in R"
 subtitle: "Game Theory, Simulation, and Machine Intelligence"
 author: "Raban Heller"
-date: "2026-11-03"
+date: "2026-11-08"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
