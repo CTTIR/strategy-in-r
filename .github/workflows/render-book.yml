@@ -59,12 +59,17 @@ jobs:
             python3 scripts/check-epub.py docs/strategy-in-r.epub epub-check.json
           fi
 
-      - name: Render per-chapter PDFs
-        run: Rscript scripts/render-chapter-pdfs.R
-        continue-on-error: true
-
       - name: Disable Jekyll on Pages
         run: touch docs/.nojekyll
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and verify every book and chapter download
+        run: bash scripts/build-downloads-ci.sh docs strategy-in-r https://cttir.github.io/strategy-in-r/
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
