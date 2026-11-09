@@ -6294,20 +6294,20 @@ How does backward induction perform as the game tree grows? We generate random t
 \toprule
 Depth & Branching & Terminal Nodes & Time (ms) \\ 
 \midrule\addlinespace[2.5pt]
-2 & 2 & 4 & 1.00 \\ 
+2 & 2 & 4 & 0.00 \\ 
 3 & 2 & 8 & 0.00 \\ 
 4 & 2 & 16 & 0.00 \\ 
-5 & 2 & 32 & 1.00 \\ 
+5 & 2 & 32 & 0.00 \\ 
 6 & 2 & 64 & 1.00 \\ 
-7 & 2 & 128 & 2.00 \\ 
-8 & 2 & 256 & 4.00 \\ 
+7 & 2 & 128 & 3.00 \\ 
+8 & 2 & 256 & 5.00 \\ 
 2 & 3 & 9 & 1.00 \\ 
-3 & 3 & 27 & 0.00 \\ 
+3 & 3 & 27 & 1.00 \\ 
 4 & 3 & 81 & 1.00 \\ 
-5 & 3 & 243 & 2.00 \\ 
-6 & 3 & 729 & 7.00 \\ 
-7 & 3 & 2,187 & 18.00 \\ 
-8 & 3 & 6,561 & 58.00 \\ 
+5 & 3 & 243 & 3.00 \\ 
+6 & 3 & 729 & 8.00 \\ 
+7 & 3 & 2,187 & 23.00 \\ 
+8 & 3 & 6,561 & 69.00 \\ 
 \bottomrule
 \end{tabular*}
 \end{table}
@@ -11223,7 +11223,7 @@ The key insight is that summing neighbor cooperators is a \textbf{convolution} -
 \end{Shaded}
 
 \begin{verbatim}
-#>   Loop-based:  0.238 s (sd: 0.019)
+#>   Loop-based:  0.270 s (sd: 0.022)
 \end{verbatim}
 
 \begin{Shaded}
@@ -11233,7 +11233,7 @@ The key insight is that summing neighbor cooperators is a \textbf{convolution} -
 \end{Shaded}
 
 \begin{verbatim}
-#>   Vectorized:  0.015 s (sd: 0.009)
+#>   Vectorized:  0.017 s (sd: 0.010)
 \end{verbatim}
 
 \begin{Shaded}
@@ -11243,7 +11243,7 @@ The key insight is that summing neighbor cooperators is a \textbf{convolution} -
 \end{Shaded}
 
 \begin{verbatim}
-#>   Speedup:     15.4x
+#>   Speedup:     15.5x
 \end{verbatim}
 
 \subsection{Verifying correctness}\label{verifying-correctness}
@@ -11415,7 +11415,7 @@ We optimize the spatial PD simulation step by step, measuring the impact of each
 \end{Shaded}
 
 \begin{verbatim}
-#>   Total elapsed time: 0.162 s
+#>   Total elapsed time: 0.184 s
 \end{verbatim}
 
 \begin{Shaded}
@@ -11461,7 +11461,7 @@ The key rewrite replaces the inner double loop with four matrix-shift operations
 \end{Shaded}
 
 \begin{verbatim}
-#>   Vectorized time:  0.006 s
+#>   Vectorized time:  0.007 s
 \end{verbatim}
 
 \begin{Shaded}
@@ -11471,7 +11471,7 @@ The key rewrite replaces the inner double loop with four matrix-shift operations
 \end{Shaded}
 
 \begin{verbatim}
-#>   Loop-based time:  0.162 s
+#>   Loop-based time:  0.184 s
 \end{verbatim}
 
 \begin{Shaded}
@@ -11481,7 +11481,7 @@ The key rewrite replaces the inner double loop with four matrix-shift operations
 \end{Shaded}
 
 \begin{verbatim}
-#>   Speedup:          27.0x
+#>   Speedup:          26.3x
 \end{verbatim}
 
 \subsection{Step 3: Memory pre-allocation matters}\label{step-3-memory-pre-allocation-matters}
@@ -11550,9 +11550,9 @@ A common anti-pattern in R is growing a data frame row by row. We demonstrate th
 
 \begin{verbatim}
 #>   1,000     0.0040    0.0030      1x
-#>   5,000     0.0200    0.0000      Infx
-#>   10,000    0.0730    0.0010      73x
-#>   20,000    0.2890    0.0010      289x
+#>   5,000     0.0180    0.0000      Infx
+#>   10,000    0.0660    0.0010      66x
+#>   20,000    0.2600    0.0010      260x
 \end{verbatim}
 
 The growing vector copies the entire vector on each append, producing \(O(n^2)\) total work. Pre-allocation is \(O(n)\).
@@ -22981,7 +22981,7 @@ was verified against its DOI, arXiv ID, or ISBN.
 \end{verbatim}
 
 \begin{verbatim}
-#>   Commit:   9f33db8
+#>   Commit:   5804818
 \end{verbatim}
 
 LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via Ollama/\texttt{ollamar}) was used for copyediting, formatting, and scaffolding tasks only --- see Acknowledgments.
