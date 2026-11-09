@@ -8,7 +8,7 @@ async function render(available, reject = false) {
   let ready;
   const inserted = [];
   const anchor = { parentNode: { insertBefore: element => inserted.push(element) } };
-  const item = { textContent: 'View source', href: 'https://github.com/r-heller/strategy-in-r/blob/main/27-self-play-alphazero.Rmd', closest: () => anchor };
+  const item = { textContent: 'View source', href: 'https://github.com/CTTIR/strategy-in-r/blob/main/27-self-play-alphazero.Rmd', closest: () => anchor };
   const node = () => ({ children: [], appendChild(child) { this.children.push(child); } });
   vm.runInNewContext(script, {
     URL, window: { location: { href: 'https://example.test/sec-self-play.html', pathname: '/sec-self-play.html' } },

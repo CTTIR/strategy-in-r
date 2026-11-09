@@ -10,7 +10,7 @@ bookdown::bs4_book:
     code_font:
       google: "JetBrains Mono"
   repo:
-    base: https://github.com/r-heller/strategy-in-r
+    base: https://github.com/CTTIR/strategy-in-r
     branch: main
   css: [style/style.css, style/font-awesome.min.css]
   includes:

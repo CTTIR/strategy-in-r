@@ -3,7 +3,7 @@
 The suggested citation is:
 
 ```{block, type='boxempty'}
-**Heller, R.** (2026). *Strategy in R: Game Theory, Simulation, and Machine Intelligence* (Version v0.1.0). Self-published via GitHub Pages. <https://r-heller.github.io/strategy-in-r/>.
+**Heller, R.** (2026). *Strategy in R: Game Theory, Simulation, and Machine Intelligence* (Version v0.1.0). Self-published via GitHub Pages. <https://cttir.github.io/strategy-in-r/>.
 ```
 
-Download the reference as [BibTeX](https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.bib) or [RIS](https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.ris).
+Download the reference as [BibTeX](https://raw.githubusercontent.com/CTTIR/strategy-in-r/main/citation.bib) or [RIS](https://raw.githubusercontent.com/CTTIR/strategy-in-r/main/citation.ris).

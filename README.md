@@ -1,4 +1,4 @@
-<p align="center"><a href="https://r-heller.github.io/strategy-in-r/"><img src="images/cover.png" alt="Strategy in R cover" width="280"></a></p>
+<p align="center"><a href="https://cttir.github.io/strategy-in-r/"><img src="images/cover.png" alt="Strategy in R cover" width="280"></a></p>
 
 # Strategy in R
 
@@ -8,12 +8,12 @@ A free, open-source book by **Raban Heller**.
 
 ## Read it online
 
-📖 **<https://r-heller.github.io/strategy-in-r/>**
+📖 **<https://cttir.github.io/strategy-in-r/>**
 
 ## Download
 
-- 📄 [Whole book (PDF)](https://r-heller.github.io/strategy-in-r/strategy-in-r.pdf)
-- 📚 [EPUB](https://r-heller.github.io/strategy-in-r/strategy-in-r.epub)
+- 📄 [Whole book (PDF)](https://cttir.github.io/strategy-in-r/strategy-in-r.pdf)
+- 📚 [EPUB](https://cttir.github.io/strategy-in-r/strategy-in-r.epub)
 - 📑 Per-chapter PDFs: available outputs appear in each chapter’s download sidebar.
 
 ## What this book covers
@@ -34,7 +34,7 @@ The book is for graduate students, researchers, and practitioners with working R
 
 ## How to cite
 
-Heller, R. (2026). *Strategy in R: Game Theory, Simulation, and Machine Intelligence* (Version v0.1.0). <https://r-heller.github.io/strategy-in-r/>.
+Heller, R. (2026). *Strategy in R: Game Theory, Simulation, and Machine Intelligence* (Version v0.1.0). <https://cttir.github.io/strategy-in-r/>.
 
 ```bibtex
 @book{heller2026strategy,
@@ -42,7 +42,7 @@ Heller, R. (2026). *Strategy in R: Game Theory, Simulation, and Machine Intellig
   title     = {Strategy in R: Game Theory, Simulation, and Machine Intelligence},
   year      = {2026},
   publisher = {Self-published via GitHub Pages},
-  url       = {https://r-heller.github.io/strategy-in-r/},
+  url       = {https://cttir.github.io/strategy-in-r/},
   note      = {Version v0.1.0}
 }
 ```
@@ -52,7 +52,7 @@ Heller, R. (2026). *Strategy in R: Game Theory, Simulation, and Machine Intellig
 Built with [bookdown](https://bookdown.org/), R, and `renv`. To rebuild locally:
 
 ```bash
-git clone https://github.com/r-heller/strategy-in-r.git
+git clone https://github.com/CTTIR/strategy-in-r.git
 cd strategy-in-r
 R -e 'renv::restore()'
 R -e 'bookdown::render_book("index.Rmd", output_format = "all")'
