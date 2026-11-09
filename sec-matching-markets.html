@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 34 Matching Markets | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Two-sided matching: stable matching, the Gale-Shapley deferred acceptance algorithm, strategy-proofness, and implementation in R.  Learning objectives Define stable matching and explain why...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 34 Matching Markets | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-matching-markets.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Two-sided matching: stable matching, the Gale-Shapley deferred acceptance algorithm, strategy-proofness, and implementation in R.  Learning objectives Define stable matching and explain why...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 34 Matching Markets | Strategy in R">
-<meta name="twitter:description" content="Two-sided matching: stable matching, the Gale-Shapley deferred acceptance algorithm, strategy-proofness, and implementation in R.  Learning objectives Define stable matching and explain why...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 34 Matching Markets | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Two-sided matching: stable matching, the Gale-Shapley deferred acceptance algorithm, strategy-proofness, and implementation in R.  Learning objectives Define stable matching and explain why..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 34 Matching Markets | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-matching-markets.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Two-sided matching: stable matching, the Gale-Shapley deferred acceptance algorithm, strategy-proofness, and implementation in R.  Learning objectives Define stable matching and explain why..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 34 Matching Markets | Strategy in R" name="twitter:title"/>
+<meta content="Two-sided matching: stable matching, the Gale-Shapley deferred acceptance algorithm, strategy-proofness, and implementation in R.  Learning objectives Define stable matching and explain why..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 34 Matching Markets | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-matching-markets" class="section level1" number="34">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-matching-markets" number="34">
 <h1>
-<span class="header-section-number">34</span> Matching Markets<a class="anchor" aria-label="anchor" href="#sec-matching-markets"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">34</span> Matching Markets<a aria-label="anchor" class="anchor" href="#sec-matching-markets"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-matching-markets.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-matching-markets.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Two-sided matching: stable matching, the Gale-Shapley deferred acceptance algorithm, strategy-proofness, and implementation in R.</p>
 </blockquote>
-<div id="learning-objectives-32" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-32"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-32">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-32"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Define stable matching and explain why unstable matchings unravel.</li>
@@ -183,20 +190,20 @@
 <li>Visualize matchings as bipartite graphs and compare welfare across proposer-optimal and receiver-optimal outcomes.</li>
 </ul>
 </div>
-<div id="motivation-32" class="section level2" number="34.1">
+<div class="section level2" id="motivation-32" number="34.1">
 <h2>
-<span class="header-section-number">34.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-32"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-32"><i class="fas fa-link"></i></a>
 </h2>
 <p>Each year, approximately 40,000 medical school graduates in the United States are matched to residency programs through the National Resident Matching Program (NRMP). The system uses the Gale-Shapley deferred acceptance algorithm, which produces a stable matching — one where no hospital-resident pair would prefer to bypass the system and match with each other directly.</p>
 <p>The practical significance of stability was demonstrated when the NRMP switched to a resident-proposing algorithm in 1998 (previously hospital-proposing), improving outcomes for residents. The theoretical foundation for this was laid by <span class="citation">Roth (<a href="references.html#ref-roth2002">2002</a>)</span>, building on the seminal work of Gale and Shapley (1962), which earned Lloyd Shapley and Alvin Roth the 2012 Nobel Prize in Economics.</p>
 </div>
-<div id="theory-32" class="section level2" number="34.2">
+<div class="section level2" id="theory-32" number="34.2">
 <h2>
-<span class="header-section-number">34.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-32"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-32"><i class="fas fa-link"></i></a>
 </h2>
-<div id="stable-matching" class="section level3" number="34.2.1">
+<div class="section level3" id="stable-matching" number="34.2.1">
 <h3>
-<span class="header-section-number">34.2.1</span> Stable matching<a class="anchor" aria-label="anchor" href="#stable-matching"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.2.1</span> Stable matching<a aria-label="anchor" class="anchor" href="#stable-matching"><i class="fas fa-link"></i></a>
 </h3>
 <p>Consider two disjoint sets of equal size <span class="math inline">\(n\)</span>: <strong>proposers</strong> <span class="math inline">\(P = \{p_1, \ldots, p_n\}\)</span> and <strong>receivers</strong> <span class="math inline">\(R = \{r_1, \ldots, r_n\}\)</span>. Each agent has a strict preference ordering over agents on the other side.</p>
 <div class="rmdnote">
@@ -205,9 +212,9 @@
 </div>
 <p>Stability is the key property that prevents unraveling: if a matching is unstable, some pair has an incentive to deviate, undermining the system.</p>
 </div>
-<div id="the-gale-shapley-algorithm" class="section level3" number="34.2.2">
+<div class="section level3" id="the-gale-shapley-algorithm" number="34.2.2">
 <h3>
-<span class="header-section-number">34.2.2</span> The Gale-Shapley algorithm<a class="anchor" aria-label="anchor" href="#the-gale-shapley-algorithm"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.2.2</span> The Gale-Shapley algorithm<a aria-label="anchor" class="anchor" href="#the-gale-shapley-algorithm"><i class="fas fa-link"></i></a>
 </h3>
 <p>The <strong>deferred acceptance</strong> algorithm proceeds in rounds:</p>
 <ol style="list-style-type: decimal">
@@ -221,20 +228,20 @@
 <p>The Gale-Shapley algorithm always terminates and produces a stable matching. When proposers propose, the result is the <strong>proposer-optimal</strong> stable matching: every proposer is matched to their best achievable partner across all stable matchings. Simultaneously, it is the <strong>receiver-pessimal</strong> stable matching.</p>
 </div>
 </div>
-<div id="strategy-proofness" class="section level3" number="34.2.3">
+<div class="section level3" id="strategy-proofness" number="34.2.3">
 <h3>
-<span class="header-section-number">34.2.3</span> Strategy-proofness<a class="anchor" aria-label="anchor" href="#strategy-proofness"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.2.3</span> Strategy-proofness<a aria-label="anchor" class="anchor" href="#strategy-proofness"><i class="fas fa-link"></i></a>
 </h3>
 <p>The Gale-Shapley algorithm is <strong>strategy-proof</strong> for the proposing side: no proposer can improve their outcome by misreporting preferences. However, receivers <em>can</em> potentially benefit from strategic misreporting — a result with practical implications for the design of matching markets <span class="citation">(<a href="references.html#ref-roth2002">Roth, 2002</a>)</span>.</p>
 </div>
 </div>
-<div id="sec-matching-implementation" class="section level2" number="34.3">
+<div class="section level2" id="sec-matching-implementation" number="34.3">
 <h2>
-<span class="header-section-number">34.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-matching-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-matching-implementation"><i class="fas fa-link"></i></a>
 </h2>
-<div id="gale-shapley-algorithm" class="section level3" number="34.3.1">
+<div class="section level3" id="gale-shapley-algorithm" number="34.3.1">
 <h3>
-<span class="header-section-number">34.3.1</span> Gale-Shapley algorithm<a class="anchor" aria-label="anchor" href="#gale-shapley-algorithm"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.3.1</span> Gale-Shapley algorithm<a aria-label="anchor" class="anchor" href="#gale-shapley-algorithm"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb953"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gale_shapley</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">proposer_prefs</span>, <span class="va">receiver_prefs</span><span class="op">)</span></span>
@@ -289,9 +296,9 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>matching <span class="op">=</span> <span class="va">matched_to</span>, rounds <span class="op">=</span> <span class="va">rounds</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="helper-compute-welfare" class="section level3" number="34.3.2">
+<div class="section level3" id="helper-compute-welfare" number="34.3.2">
 <h3>
-<span class="header-section-number">34.3.2</span> Helper: compute welfare<a class="anchor" aria-label="anchor" href="#helper-compute-welfare"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.3.2</span> Helper: compute welfare<a aria-label="anchor" class="anchor" href="#helper-compute-welfare"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb954"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">matching_welfare</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">matching</span>, <span class="va">proposer_prefs</span>, <span class="va">receiver_prefs</span><span class="op">)</span> <span class="op">{</span></span>
@@ -316,9 +323,9 @@
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="figure-1-matching-visualization" class="section level3" number="34.3.3">
+<div class="section level3" id="figure-1-matching-visualization" number="34.3.3">
 <h3>
-<span class="header-section-number">34.3.3</span> Figure 1: Matching visualization<a class="anchor" aria-label="anchor" href="#figure-1-matching-visualization"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.3.3</span> Figure 1: Matching visualization<a aria-label="anchor" class="anchor" href="#figure-1-matching-visualization"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb955"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -372,17 +379,17 @@
 <span></span>
 <span><span class="va">p_matching</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:matching-bipartite"></span>
-<img src="33-matching-markets_files/figure-html/matching-bipartite-1.png" alt="Bipartite graph of the proposer-optimal stable matching for 6 hospitals and 6 residents. Left nodes are hospitals (proposers), right nodes are residents (receivers), and line segments connect matched pairs." width="80%"><p class="caption">
+<span id="fig:matching-bipartite" style="display:block;"></span>
+<img alt="Bipartite graph of the proposer-optimal stable matching for 6 hospitals and 6 residents. Left nodes are hospitals (proposers), right nodes are residents (receivers), and line segments connect matched pairs." src="33-matching-markets_files/figure-html/matching-bipartite-1.png" width="80%"/><p class="caption">
 Figure 34.1: Bipartite graph of the proposer-optimal stable matching for 6 hospitals and 6 residents. Left nodes are hospitals (proposers), right nodes are residents (receivers), and line segments connect matched pairs.
 </p>
 </div>
 <div class="sourceCode" id="cb956"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_matching</span>, <span class="st">"matching-bipartite"</span>, width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="figure-2-proposer-advantage" class="section level3" number="34.3.4">
+<div class="section level3" id="figure-2-proposer-advantage" number="34.3.4">
 <h3>
-<span class="header-section-number">34.3.4</span> Figure 2: Proposer advantage<a class="anchor" aria-label="anchor" href="#figure-2-proposer-advantage"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.3.4</span> Figure 2: Proposer advantage<a aria-label="anchor" class="anchor" href="#figure-2-proposer-advantage"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb957"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -437,8 +444,8 @@ Figure 34.1: Bipartite graph of the proposer-optimal stable matching for 6 hospi
 <span></span>
 <span><span class="va">p_advantage</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:proposer-advantage"></span>
-<img src="33-matching-markets_files/figure-html/proposer-advantage-1.png" alt="Average rank of matched partner under proposer-optimal and receiver-optimal stable matchings across 200 random instances. Proposers obtain significantly better matches when they propose, confirming the structural advantage of the proposing side." width="80%"><p class="caption">
+<span id="fig:proposer-advantage" style="display:block;"></span>
+<img alt="Average rank of matched partner under proposer-optimal and receiver-optimal stable matchings across 200 random instances. Proposers obtain significantly better matches when they propose, confirming the structural advantage of the proposing side." src="33-matching-markets_files/figure-html/proposer-advantage-1.png" width="80%"/><p class="caption">
 Figure 34.2: Average rank of matched partner under proposer-optimal and receiver-optimal stable matchings across 200 random instances. Proposers obtain significantly better matches when they propose, confirming the structural advantage of the proposing side.
 </p>
 </div>
@@ -446,9 +453,9 @@ Figure 34.2: Average rank of matched partner under proposer-optimal and receiver
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_advantage</span>, <span class="st">"matching-proposer-advantage"</span>, width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-30" class="section level2" number="34.4">
+<div class="section level2" id="worked-example-30" number="34.4">
 <h2>
-<span class="header-section-number">34.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-30"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-30"><i class="fas fa-link"></i></a>
 </h2>
 <p>We trace the Gale-Shapley algorithm step by step for 5 hospitals and 5 residents.</p>
 <div class="sourceCode" id="cb959"><pre class="downlit sourceCode r">
@@ -556,9 +563,9 @@ Figure 34.2: Average rank of matched partner under proposer-optimal and receiver
 <pre><code>#&gt; Mean resident rank of match: 1.4</code></pre>
 <p>The hospital-proposing version yields better outcomes for hospitals (lower mean rank of match), while the resident-proposing version favours residents. This asymmetry motivated the NRMP’s switch to a resident-proposing algorithm in 1998 — a change that improved resident welfare without sacrificing stability.</p>
 </div>
-<div id="extensions-32" class="section level2" number="34.5">
+<div class="section level2" id="extensions-32" number="34.5">
 <h2>
-<span class="header-section-number">34.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-32"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-32"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -571,8 +578,8 @@ Figure 34.2: Average rank of matched partner under proposer-optimal and receiver
 <strong>Matching with contracts</strong> <span class="citation">(<a href="references.html#ref-roth2002">Roth, 2002</a>)</span> unifies many-to-one matching and auction theory into a single framework, with applications to military cadet branching and supply chains.</li>
 </ul>
 </div>
-<div id="exercises-32" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-32"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-32">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-32"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Uniqueness.</strong> Construct a 3-by-3 matching instance where the proposer-optimal and receiver-optimal stable matchings are identical — meaning there is a unique stable matching. Verify your example by running <code>gale_shapley()</code> with both sides proposing. What structural property of the preference lists guarantees uniqueness?</p></li>
@@ -580,16 +587,14 @@ Figure 34.2: Average rank of matched partner under proposer-optimal and receiver
 <li><p><strong>Scaling behaviour.</strong> Run the Gale-Shapley algorithm for <span class="math inline">\(n \in \{10, 50, 100, 500, 1000\}\)</span> with random preferences (50 instances each). Record the number of rounds until convergence and plot it against <span class="math inline">\(n\)</span>. What is the empirical relationship? Compare to the theoretical bound of <span class="math inline">\(O(n^2)\)</span>.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -608,64 +613,15 @@ Figure 34.2: Average rank of matched partner under proposer-optimal and receiver
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-mechanism-design.html"><span class="header-section-number">33</span> Mechanism Design</a></div>
 <div class="next"><a href="sec-bargaining.html"><span class="header-section-number">35</span> Bargaining Theory</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-matching-markets"><span class="header-section-number">34</span> Matching Markets</a></li>
 <li><a class="nav-link" href="#learning-objectives-32">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-32"><span class="header-section-number">34.1</span> Motivation</a></li>
@@ -688,29 +644,23 @@ Figure 34.2: Average rank of matched partner under proposer-optimal and receiver
 <li><a class="nav-link" href="#extensions-32"><span class="header-section-number">34.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-32">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/33-matching-markets.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/33-matching-markets.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/33-matching-markets.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/33-matching-markets.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

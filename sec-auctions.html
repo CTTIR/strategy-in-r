@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 32 Auction Theory | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Game-theoretic analysis of auctions: first-price, second-price (Vickrey), English, and Dutch formats, revenue equivalence, optimal bidding strategies, and R simulations.  Learning objectives...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 32 Auction Theory | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-auctions.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Game-theoretic analysis of auctions: first-price, second-price (Vickrey), English, and Dutch formats, revenue equivalence, optimal bidding strategies, and R simulations.  Learning objectives...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 32 Auction Theory | Strategy in R">
-<meta name="twitter:description" content="Game-theoretic analysis of auctions: first-price, second-price (Vickrey), English, and Dutch formats, revenue equivalence, optimal bidding strategies, and R simulations.  Learning objectives...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 32 Auction Theory | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Game-theoretic analysis of auctions: first-price, second-price (Vickrey), English, and Dutch formats, revenue equivalence, optimal bidding strategies, and R simulations.  Learning objectives..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 32 Auction Theory | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-auctions.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Game-theoretic analysis of auctions: first-price, second-price (Vickrey), English, and Dutch formats, revenue equivalence, optimal bidding strategies, and R simulations.  Learning objectives..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 32 Auction Theory | Strategy in R" name="twitter:title"/>
+<meta content="Game-theoretic analysis of auctions: first-price, second-price (Vickrey), English, and Dutch formats, revenue equivalence, optimal bidding strategies, and R simulations.  Learning objectives..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 32 Auction Theory | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-auctions" class="section level1" number="32">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-auctions" number="32">
 <h1>
-<span class="header-section-number">32</span> Auction Theory<a class="anchor" aria-label="anchor" href="#sec-auctions"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">32</span> Auction Theory<a aria-label="anchor" class="anchor" href="#sec-auctions"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-auctions.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-auctions.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Game-theoretic analysis of auctions: first-price, second-price (Vickrey), English, and Dutch formats, revenue equivalence, optimal bidding strategies, and R simulations.</p>
 </blockquote>
-<div id="learning-objectives-30" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-30"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-30">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-30"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Distinguish first-price, second-price (Vickrey), English, and Dutch auction formats and their strategic equivalences.</li>
@@ -183,20 +190,20 @@
 <li>Simulate auctions with <span class="math inline">\(N\)</span> bidders in R and compare expected revenues across formats.</li>
 </ul>
 </div>
-<div id="motivation-30" class="section level2" number="32.1">
+<div class="section level2" id="motivation-30" number="32.1">
 <h2>
-<span class="header-section-number">32.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-30"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-30"><i class="fas fa-link"></i></a>
 </h2>
 <p>Auctions allocate billions of dollars in goods each year — from government spectrum licenses and treasury bonds to online advertising slots and fine art. The choice of auction format has profound consequences for both seller revenue and allocative efficiency. In 2020, the FCC raised over $80 billion through spectrum auctions, while platforms like Google run billions of ad auctions daily.</p>
 <p>A natural question arises: does the auction format matter? Should a seller prefer a first-price or second-price auction? The revenue equivalence theorem gives a striking answer — under standard assumptions, all four major formats yield the same expected revenue. Understanding when this result holds, and when it breaks down, is essential for practical auction design <span class="citation">(<a href="references.html#ref-myerson1991">Myerson, 1991</a>)</span>.</p>
 </div>
-<div id="theory-30" class="section level2" number="32.2">
+<div class="section level2" id="theory-30" number="32.2">
 <h2>
-<span class="header-section-number">32.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-30"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-30"><i class="fas fa-link"></i></a>
 </h2>
-<div id="auction-formats" class="section level3" number="32.2.1">
+<div class="section level3" id="auction-formats" number="32.2.1">
 <h3>
-<span class="header-section-number">32.2.1</span> Auction formats<a class="anchor" aria-label="anchor" href="#auction-formats"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.2.1</span> Auction formats<a aria-label="anchor" class="anchor" href="#auction-formats"><i class="fas fa-link"></i></a>
 </h3>
 <p>We consider four canonical single-item auction formats with <span class="math inline">\(N\)</span> bidders, each having a private valuation <span class="math inline">\(v_i\)</span> drawn independently from a common distribution <span class="math inline">\(F\)</span> on <span class="math inline">\([0, 1]\)</span>.</p>
 <p><strong>First-price sealed-bid.</strong> Each bidder submits a sealed bid. The highest bidder wins and pays their bid. Bidders shade their bids below their valuations to earn positive surplus.</p>
@@ -204,9 +211,9 @@
 <p><strong>English (ascending).</strong> The price rises continuously; bidders drop out when the price exceeds their valuation. The last remaining bidder wins at the price where the second-to-last bidder dropped out. Strategically equivalent to the Vickrey auction.</p>
 <p><strong>Dutch (descending).</strong> The price starts high and falls. The first bidder to accept the current price wins and pays that price. Strategically equivalent to the first-price sealed-bid auction.</p>
 </div>
-<div id="dominant-strategy-in-second-price-auctions" class="section level3" number="32.2.2">
+<div class="section level3" id="dominant-strategy-in-second-price-auctions" number="32.2.2">
 <h3>
-<span class="header-section-number">32.2.2</span> Dominant strategy in second-price auctions<a class="anchor" aria-label="anchor" href="#dominant-strategy-in-second-price-auctions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.2.2</span> Dominant strategy in second-price auctions<a aria-label="anchor" class="anchor" href="#dominant-strategy-in-second-price-auctions"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdnote">
 <p><strong>Proposition: Truthful Bidding in Vickrey Auctions</strong></p>
@@ -214,9 +221,9 @@
 </div>
 <p>The intuition is straightforward. Bidding above your valuation risks winning at a price you cannot afford; bidding below your valuation risks losing an auction you would have profited from. Since the winner pays the <em>second</em>-highest bid, your bid affects only whether you win, not what you pay — so truthful bidding is optimal regardless of others’ strategies.</p>
 </div>
-<div id="optimal-bidding-in-first-price-auctions" class="section level3" number="32.2.3">
+<div class="section level3" id="optimal-bidding-in-first-price-auctions" number="32.2.3">
 <h3>
-<span class="header-section-number">32.2.3</span> Optimal bidding in first-price auctions<a class="anchor" aria-label="anchor" href="#optimal-bidding-in-first-price-auctions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.2.3</span> Optimal bidding in first-price auctions<a aria-label="anchor" class="anchor" href="#optimal-bidding-in-first-price-auctions"><i class="fas fa-link"></i></a>
 </h3>
 <p>In a first-price auction, bidding truthfully guarantees zero profit. Bidders must therefore <strong>shade</strong> their bids. To derive the equilibrium, suppose all bidders follow an increasing strategy <span class="math inline">\(b(v)\)</span>. Bidder <span class="math inline">\(i\)</span> with valuation <span class="math inline">\(v_i\)</span> wins if all others have lower valuations. With <span class="math inline">\(v_j \sim \text{Uniform}(0, 1)\)</span>, the probability of winning with bid <span class="math inline">\(b\)</span> is <span class="math inline">\(F(b^{-1}(b))^{N-1} = (b^{-1}(b))^{N-1}\)</span>.</p>
 <p>Maximizing expected payoff <span class="math inline">\((v_i - b) \cdot \Pr(\text{win})\)</span> and imposing the boundary condition <span class="math inline">\(b(0) = 0\)</span> yields the symmetric Bayesian Nash equilibrium:</p>
@@ -226,9 +233,9 @@ b^*(v) = \frac{N - 1}{N} \cdot v
 \end{equation}\]</span></p>
 <p>Each bidder shades their bid by a factor of <span class="math inline">\(1/N\)</span>. As <span class="math inline">\(N \to \infty\)</span>, bids converge to valuations — competition eliminates the bidder’s surplus. With <span class="math inline">\(N = 2\)</span>, bidders bid half their valuation; with <span class="math inline">\(N = 10\)</span>, they bid 90% of their valuation.</p>
 </div>
-<div id="winners-expected-payment" class="section level3" number="32.2.4">
+<div class="section level3" id="winners-expected-payment" number="32.2.4">
 <h3>
-<span class="header-section-number">32.2.4</span> Winner’s expected payment<a class="anchor" aria-label="anchor" href="#winners-expected-payment"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.2.4</span> Winner’s expected payment<a aria-label="anchor" class="anchor" href="#winners-expected-payment"><i class="fas fa-link"></i></a>
 </h3>
 <p>Under both formats, the expected revenue equals the expected second-highest order statistic. For <span class="math inline">\(N\)</span> bidders with <span class="math inline">\(v_i \sim \text{Uniform}(0, 1)\)</span>, the expected value of the <span class="math inline">\(k\)</span>-th order statistic is <span class="math inline">\(k/(N+1)\)</span>, so:</p>
 <p><span class="math display" id="eq:expected-revenue">\[\begin{equation}
@@ -237,9 +244,9 @@ b^*(v) = \frac{N - 1}{N} \cdot v
 \end{equation}\]</span></p>
 <p>For example, with <span class="math inline">\(N = 5\)</span> bidders, the expected revenue is <span class="math inline">\(4/6 \approx 0.667\)</span>.</p>
 </div>
-<div id="revenue-equivalence-theorem" class="section level3" number="32.2.5">
+<div class="section level3" id="revenue-equivalence-theorem" number="32.2.5">
 <h3>
-<span class="header-section-number">32.2.5</span> Revenue equivalence theorem<a class="anchor" aria-label="anchor" href="#revenue-equivalence-theorem"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.2.5</span> Revenue equivalence theorem<a aria-label="anchor" class="anchor" href="#revenue-equivalence-theorem"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdtip">
 <p><strong>Theorem: Revenue Equivalence</strong></p>
@@ -248,13 +255,13 @@ b^*(v) = \frac{N - 1}{N} \cdot v
 <p>Under these conditions, the expected revenue in all four standard formats equals the expected value of the second-highest order statistic. For <span class="math inline">\(v_i \sim \text{Uniform}(0, 1)\)</span>, this is <span class="math inline">\((N-1)/(N+1)\)</span> <span class="citation">(<a href="references.html#ref-nisan2007">Nisan et al., 2007, Chapter 9</a>)</span>.</p>
 </div>
 </div>
-<div id="sec-auctions-implementation" class="section level2" number="32.3">
+<div class="section level2" id="sec-auctions-implementation" number="32.3">
 <h2>
-<span class="header-section-number">32.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-auctions-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-auctions-implementation"><i class="fas fa-link"></i></a>
 </h2>
-<div id="auction-simulation-functions" class="section level3" number="32.3.1">
+<div class="section level3" id="auction-simulation-functions" number="32.3.1">
 <h3>
-<span class="header-section-number">32.3.1</span> Auction simulation functions<a class="anchor" aria-label="anchor" href="#auction-simulation-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.3.1</span> Auction simulation functions<a aria-label="anchor" class="anchor" href="#auction-simulation-functions"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb890"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulate_auctions</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n_auctions</span>, <span class="va">n_bidders</span><span class="op">)</span> <span class="op">{</span></span>
@@ -285,9 +292,9 @@ b^*(v) = \frac{N - 1}{N} \cdot v
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="figure-1-revenue-comparison-across-auction-types" class="section level3" number="32.3.2">
+<div class="section level3" id="figure-1-revenue-comparison-across-auction-types" number="32.3.2">
 <h3>
-<span class="header-section-number">32.3.2</span> Figure 1: Revenue comparison across auction types<a class="anchor" aria-label="anchor" href="#figure-1-revenue-comparison-across-auction-types"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.3.2</span> Figure 1: Revenue comparison across auction types<a aria-label="anchor" class="anchor" href="#figure-1-revenue-comparison-across-auction-types"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb891"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -314,17 +321,17 @@ b^*(v) = \frac{N - 1}{N} \cdot v
 <span></span>
 <span><span class="va">p_revenue</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:revenue-comparison"></span>
-<img src="31-auctions_files/figure-html/revenue-comparison-1.png" alt="Expected revenue comparison across four auction formats with 5 bidders and 1000 simulated auctions. Revenue equivalence holds: all formats yield similar expected revenue." width="80%"><p class="caption">
+<span id="fig:revenue-comparison" style="display:block;"></span>
+<img alt="Expected revenue comparison across four auction formats with 5 bidders and 1000 simulated auctions. Revenue equivalence holds: all formats yield similar expected revenue." src="31-auctions_files/figure-html/revenue-comparison-1.png" width="80%"/><p class="caption">
 Figure 32.1: Expected revenue comparison across four auction formats with 5 bidders and 1000 simulated auctions. Revenue equivalence holds: all formats yield similar expected revenue.
 </p>
 </div>
 <div class="sourceCode" id="cb892"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_revenue</span>, <span class="st">"auction-revenue-comparison"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="figure-2-optimal-bid-function-in-first-price-auction" class="section level3" number="32.3.3">
+<div class="section level3" id="figure-2-optimal-bid-function-in-first-price-auction" number="32.3.3">
 <h3>
-<span class="header-section-number">32.3.3</span> Figure 2: Optimal bid function in first-price auction<a class="anchor" aria-label="anchor" href="#figure-2-optimal-bid-function-in-first-price-auction"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.3.3</span> Figure 2: Optimal bid function in first-price auction<a aria-label="anchor" class="anchor" href="#figure-2-optimal-bid-function-in-first-price-auction"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb893"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bid_curves</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_dfr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">50</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
@@ -350,8 +357,8 @@ Figure 32.1: Expected revenue comparison across four auction formats with 5 bidd
 <span></span>
 <span><span class="va">p_bid</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:bid-function"></span>
-<img src="31-auctions_files/figure-html/bid-function-1.png" alt="Optimal bid as a function of valuation in a first-price sealed-bid auction. As the number of bidders increases, equilibrium bids approach valuations (the 45-degree line), reflecting increased competition." width="80%"><p class="caption">
+<span id="fig:bid-function" style="display:block;"></span>
+<img alt="Optimal bid as a function of valuation in a first-price sealed-bid auction. As the number of bidders increases, equilibrium bids approach valuations (the 45-degree line), reflecting increased competition." src="31-auctions_files/figure-html/bid-function-1.png" width="80%"/><p class="caption">
 Figure 32.2: Optimal bid as a function of valuation in a first-price sealed-bid auction. As the number of bidders increases, equilibrium bids approach valuations (the 45-degree line), reflecting increased competition.
 </p>
 </div>
@@ -359,9 +366,9 @@ Figure 32.2: Optimal bid as a function of valuation in a first-price sealed-bid 
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_bid</span>, <span class="st">"auction-bid-function"</span>, width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-28" class="section level2" number="32.4">
+<div class="section level2" id="worked-example-28" number="32.4">
 <h2>
-<span class="header-section-number">32.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-28"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-28"><i class="fas fa-link"></i></a>
 </h2>
 <p>We simulate 1000 first-price sealed-bid auctions with 5 bidders and compare the revenue to 1000 Vickrey auctions. If revenue equivalence holds, the mean revenues should be close.</p>
 <div class="sourceCode" id="cb895"><pre class="downlit sourceCode r">
@@ -420,9 +427,9 @@ Figure 32.2: Optimal bid as a function of valuation in a first-price sealed-bid 
 <pre><code>#&gt; Conclusion: No significant difference -- revenue equivalence holds.</code></pre>
 <p>Both formats produce mean revenues close to the theoretical value of <span class="math inline">\((N-1)/(N+1) = 4/6 \approx 0.667\)</span>. The paired <span class="math inline">\(t\)</span>-test confirms no statistically significant difference, consistent with the revenue equivalence theorem. Note that while <em>expected</em> revenues are equal, individual auction revenues differ — in the first-price format, revenue variance is typically lower because the winner pays a bid that is already close to the second-highest valuation.</p>
 </div>
-<div id="extensions-30" class="section level2" number="32.5">
+<div class="section level2" id="extensions-30" number="32.5">
 <h2>
-<span class="header-section-number">32.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-30"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-30"><i class="fas fa-link"></i></a>
 </h2>
 <p>Revenue equivalence breaks down when its assumptions are violated, opening the door to richer auction design:</p>
 <ul>
@@ -439,8 +446,8 @@ Figure 32.2: Optimal bid as a function of valuation in a first-price sealed-bid 
 </ul>
 <p>For a comprehensive treatment of auction theory, see <span class="citation">Myerson (<a href="references.html#ref-myerson1991">1991</a>)</span> (Chapter 8) and <span class="citation">Nisan et al. (<a href="references.html#ref-nisan2007">2007</a>)</span> (Chapters 9–11).</p>
 </div>
-<div id="exercises-30" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-30"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-30">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-30"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Reserve prices.</strong> Modify the <code>simulate_auctions()</code> function to include a reserve price <span class="math inline">\(r = 0.3\)</span>. If no bid exceeds <span class="math inline">\(r\)</span>, the item is unsold (revenue = 0). Run 1000 simulations with <span class="math inline">\(N = 3\)</span> bidders and compare mean revenue to the case without a reserve price. Does a reserve price increase expected revenue? Explain why using the theory of optimal auctions.</p></li>
@@ -448,16 +455,14 @@ Figure 32.2: Optimal bid as a function of valuation in a first-price sealed-bid 
 <li><p><strong>Number of bidders.</strong> Using the simulation framework from this chapter, plot expected seller revenue as a function of the number of bidders <span class="math inline">\(N \in \{2, 3, 5, 10, 20, 50\}\)</span> for both first-price and Vickrey auctions. Overlay the theoretical curve <span class="math inline">\((N-1)/(N+1)\)</span>. What happens as <span class="math inline">\(N \to \infty\)</span>?</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -476,64 +481,15 @@ Figure 32.2: Optimal bid as a function of valuation in a first-price sealed-bid 
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategic Reasoning</a></div>
 <div class="next"><a href="sec-mechanism-design.html"><span class="header-section-number">33</span> Mechanism Design</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-auctions"><span class="header-section-number">32</span> Auction Theory</a></li>
 <li><a class="nav-link" href="#learning-objectives-30">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-30"><span class="header-section-number">32.1</span> Motivation</a></li>
@@ -557,29 +513,23 @@ Figure 32.2: Optimal bid as a function of valuation in a first-price sealed-bid 
 <li><a class="nav-link" href="#extensions-30"><span class="header-section-number">32.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-30">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/31-auctions.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/31-auctions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/31-auctions.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/31-auctions.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

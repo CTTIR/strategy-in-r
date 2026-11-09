@@ -126,6 +126,7 @@ fig:complexity-landscape
 fig:timeline
 fig:ggplot2-example
 sec-introduction
+the-computational-turn-in-game-theory
 why-r
 the-structure-of-this-book
 how-to-use-this-book-2

@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 7 Bayesian Games | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Games of incomplete information where players hold private types and form beliefs about opponents. Covers Bayesian Nash equilibrium, signaling games, and separating versus pooling equilibria with...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 7 Bayesian Games | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-bayesian-games.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Games of incomplete information where players hold private types and form beliefs about opponents. Covers Bayesian Nash equilibrium, signaling games, and separating versus pooling equilibria with...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 7 Bayesian Games | Strategy in R">
-<meta name="twitter:description" content="Games of incomplete information where players hold private types and form beliefs about opponents. Covers Bayesian Nash equilibrium, signaling games, and separating versus pooling equilibria with...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 7 Bayesian Games | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Games of incomplete information where players hold private types and form beliefs about opponents. Covers Bayesian Nash equilibrium, signaling games, and separating versus pooling equilibria with..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 7 Bayesian Games | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-bayesian-games.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Games of incomplete information where players hold private types and form beliefs about opponents. Covers Bayesian Nash equilibrium, signaling games, and separating versus pooling equilibria with..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 7 Bayesian Games | Strategy in R" name="twitter:title"/>
+<meta content="Games of incomplete information where players hold private types and form beliefs about opponents. Covers Bayesian Nash equilibrium, signaling games, and separating versus pooling equilibria with..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 7 Bayesian Games | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-bayesian-games" class="section level1" number="7">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-bayesian-games" number="7">
 <h1>
-<span class="header-section-number">7</span> Bayesian Games<a class="anchor" aria-label="anchor" href="#sec-bayesian-games"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">7</span> Bayesian Games<a aria-label="anchor" class="anchor" href="#sec-bayesian-games"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-bayesian-games.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-bayesian-games.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Games of incomplete information where players hold private types and form beliefs about opponents. Covers Bayesian Nash equilibrium, signaling games, and separating versus pooling equilibria with a worked job-market signaling example.</p>
 </blockquote>
-<div id="learning-objectives-5" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-5"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-5">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-5"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Explain how types and prior beliefs extend the normal-form model to incomplete information settings.</li>
@@ -183,21 +190,21 @@
 <li>Implement expected-payoff calculations under type uncertainty in R and produce publication-quality figures.</li>
 </ul>
 </div>
-<div id="motivation-5" class="section level2" number="7.1">
+<div class="section level2" id="motivation-5" number="7.1">
 <h2>
-<span class="header-section-number">7.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-5"><i class="fas fa-link"></i></a>
 </h2>
 <p>In every game we have studied so far — from normal-form games (<a href="sec-normal-form.html#sec-normal-form">3</a>) to extensive-form games (<a href="sec-extensive-form.html#sec-extensive-form">6</a>) — players share complete knowledge of the payoff structure. In practice, this assumption is heroic. A firm entering a new market does not know its rival’s cost structure. A job applicant knows her own ability, but the employer does not. A bidder in an auction knows his own valuation but must guess at others’ valuations.</p>
 <p>John Harsanyi’s insight was that incomplete information can be modeled by introducing <em>types</em>: each player privately observes a type drawn from a commonly known distribution, and this type determines the player’s payoffs. The resulting game is a <strong>Bayesian game</strong>, and the appropriate equilibrium concept is <strong>Bayesian Nash equilibrium</strong> (BNE). As <span class="citation">Osborne (<a href="references.html#ref-osborne2004">2004, Chapter 9</a>)</span> develops in detail, BNE asks each player to choose a strategy — a complete plan mapping types to actions — that is optimal in expectation over the other players’ types.</p>
 <p>Signaling games, a particularly important class of Bayesian games, arise when an informed player moves first and an uninformed player observes the action before responding. Spence’s job-market signaling model is the classic example: a worker’s education choice may reveal (or conceal) her productivity type to employers.</p>
 </div>
-<div id="theory-5" class="section level2" number="7.2">
+<div class="section level2" id="theory-5" number="7.2">
 <h2>
-<span class="header-section-number">7.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-5"><i class="fas fa-link"></i></a>
 </h2>
-<div id="the-bayesian-game-model" class="section level3" number="7.2.1">
+<div class="section level3" id="the-bayesian-game-model" number="7.2.1">
 <h3>
-<span class="header-section-number">7.2.1</span> The Bayesian game model<a class="anchor" aria-label="anchor" href="#the-bayesian-game-model"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.2.1</span> The Bayesian game model<a aria-label="anchor" class="anchor" href="#the-bayesian-game-model"><i class="fas fa-link"></i></a>
 </h3>
 <p>A Bayesian game extends the standard normal form with three additional ingredients:</p>
 <ol style="list-style-type: decimal">
@@ -210,9 +217,9 @@
 </ol>
 <p>A <strong>strategy</strong> in a Bayesian game is a function <span class="math inline">\(s_i : \Theta_i \to A_i\)</span> mapping each possible type to an action.</p>
 </div>
-<div id="bayesian-nash-equilibrium" class="section level3" number="7.2.2">
+<div class="section level3" id="bayesian-nash-equilibrium" number="7.2.2">
 <h3>
-<span class="header-section-number">7.2.2</span> Bayesian Nash equilibrium<a class="anchor" aria-label="anchor" href="#bayesian-nash-equilibrium"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.2.2</span> Bayesian Nash equilibrium<a aria-label="anchor" class="anchor" href="#bayesian-nash-equilibrium"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdnote">
 <p><strong>Definition: Bayesian Nash Equilibrium</strong></p>
@@ -225,9 +232,9 @@
 </div>
 <p>In words, each type of each player maximizes expected payoff given the prior distribution over others’ types and others’ equilibrium strategies. BNE is the natural extension of Nash equilibrium (<a href="sec-nash-equilibrium.html#sec-nash-equilibrium">4</a>) to incomplete information.</p>
 </div>
-<div id="signaling-games" class="section level3" number="7.2.3">
+<div class="section level3" id="signaling-games" number="7.2.3">
 <h3>
-<span class="header-section-number">7.2.3</span> Signaling games<a class="anchor" aria-label="anchor" href="#signaling-games"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.2.3</span> Signaling games<a aria-label="anchor" class="anchor" href="#signaling-games"><i class="fas fa-link"></i></a>
 </h3>
 <p>A <strong>signaling game</strong> is a two-player Bayesian game with sequential moves:</p>
 <ol style="list-style-type: decimal">
@@ -238,9 +245,9 @@
 </ol>
 <p>The equilibrium concept for signaling games is <strong>perfect Bayesian equilibrium</strong> (PBE), which requires that the receiver’s beliefs about <span class="math inline">\(\theta\)</span> are derived from Bayes’ rule whenever possible.</p>
 </div>
-<div id="separating-vs.-pooling-equilibria" class="section level3" number="7.2.4">
+<div class="section level3" id="separating-vs.-pooling-equilibria" number="7.2.4">
 <h3>
-<span class="header-section-number">7.2.4</span> Separating vs. pooling equilibria<a class="anchor" aria-label="anchor" href="#separating-vs.-pooling-equilibria"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.2.4</span> Separating vs. pooling equilibria<a aria-label="anchor" class="anchor" href="#separating-vs.-pooling-equilibria"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li>
@@ -253,9 +260,9 @@
 <p>The existence and nature of these equilibria depend on the cost structure of signaling and the payoff differences across types.</p>
 </div>
 </div>
-<div id="implementation-in-r-4" class="section level2" number="7.3">
+<div class="section level2" id="implementation-in-r-4" number="7.3">
 <h2>
-<span class="header-section-number">7.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#implementation-in-r-4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#implementation-in-r-4"><i class="fas fa-link"></i></a>
 </h2>
 <p>We implement a two-type signaling game inspired by the Spence job-market model. A worker is either High-ability (<span class="math inline">\(\theta_H\)</span>) or Low-ability (<span class="math inline">\(\theta_L\)</span>), each with equal prior probability. The worker chooses whether to acquire education (<span class="math inline">\(E\)</span>) or not (<span class="math inline">\(N\)</span>). Education costs differ by type: it costs the High type <span class="math inline">\(c_H = 1\)</span> and the Low type <span class="math inline">\(c_L = 4\)</span>. An employer then offers a wage equal to the expected productivity conditional on the observed education decision.</p>
 <div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
@@ -280,9 +287,9 @@
 <div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Pooling wage (prior expectation): %.1f\n"</span>, <span class="va">wage_pooled</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Pooling wage (prior expectation): 4.0</code></pre>
-<div id="expected-payoffs-under-each-equilibrium-type" class="section level3" number="7.3.1">
+<div class="section level3" id="expected-payoffs-under-each-equilibrium-type" number="7.3.1">
 <h3>
-<span class="header-section-number">7.3.1</span> Expected payoffs under each equilibrium type<a class="anchor" aria-label="anchor" href="#expected-payoffs-under-each-equilibrium-type"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.3.1</span> Expected payoffs under each equilibrium type<a aria-label="anchor" class="anchor" href="#expected-payoffs-under-each-equilibrium-type"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Separating equilibrium: High educates, Low does not</span></span>
@@ -342,9 +349,9 @@
 #&gt; 3 Low   Educate           0 Pooling    
 #&gt; 4 Low   No Education      2 Deviation</code></pre>
 </div>
-<div id="checking-incentive-compatibility" class="section level3" number="7.3.2">
+<div class="section level3" id="checking-incentive-compatibility" number="7.3.2">
 <h3>
-<span class="header-section-number">7.3.2</span> Checking incentive compatibility<a class="anchor" aria-label="anchor" href="#checking-incentive-compatibility"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.3.2</span> Checking incentive compatibility<a aria-label="anchor" class="anchor" href="#checking-incentive-compatibility"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Separating equilibrium IC checks</span></span>
@@ -366,9 +373,9 @@
 <span>            <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">low_sep</span> <span class="op">&gt;=</span> <span class="va">low_dev</span>, <span class="st">"IC satisfied"</span>, <span class="st">"IC violated"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   Low type:  No Education (2) vs Educate (2) -&gt; IC satisfied</code></pre>
 </div>
-<div id="publication-figure-expected-payoffs-by-type-and-equilibrium" class="section level3" number="7.3.3">
+<div class="section level3" id="publication-figure-expected-payoffs-by-type-and-equilibrium" number="7.3.3">
 <h3>
-<span class="header-section-number">7.3.3</span> Publication figure: expected payoffs by type and equilibrium<a class="anchor" aria-label="anchor" href="#publication-figure-expected-payoffs-by-type-and-equilibrium"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.3.3</span> Publication figure: expected payoffs by type and equilibrium<a aria-label="anchor" class="anchor" href="#publication-figure-expected-payoffs-by-type-and-equilibrium"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Combine equilibrium payoffs for the chosen (non-deviation) actions</span></span>
@@ -402,8 +409,8 @@
 <span></span>
 <span><span class="va">p_bayesian</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:bayesian-payoffs"></span>
-<img src="06-bayesian-games_files/figure-html/bayesian-payoffs-1.png" alt="Expected payoffs for each worker type under separating and pooling equilibria in the job-market signaling game. In the separating equilibrium the High type earns 5 (wage 6 minus education cost 1) while the Low type earns 2. In the pooling equilibrium the High type earns 3 (pooling wage 4 minus cost 1) and the Low type earns 0 (pooling wage 4 minus cost 4). Bars shaded by equilibrium type." width="80%"><p class="caption">
+<span id="fig:bayesian-payoffs" style="display:block;"></span>
+<img alt="Expected payoffs for each worker type under separating and pooling equilibria in the job-market signaling game. In the separating equilibrium the High type earns 5 (wage 6 minus education cost 1) while the Low type earns 2. In the pooling equilibrium the High type earns 3 (pooling wage 4 minus cost 1) and the Low type earns 0 (pooling wage 4 minus cost 4). Bars shaded by equilibrium type." src="06-bayesian-games_files/figure-html/bayesian-payoffs-1.png" width="80%"/><p class="caption">
 Figure 7.1: Expected payoffs for each worker type under separating and pooling equilibria in the job-market signaling game. In the separating equilibrium the High type earns 5 (wage 6 minus education cost 1) while the Low type earns 2. In the pooling equilibrium the High type earns 3 (pooling wage 4 minus cost 1) and the Low type earns 0 (pooling wage 4 minus cost 4). Bars shaded by equilibrium type.
 </p>
 </div>
@@ -411,9 +418,9 @@ Figure 7.1: Expected payoffs for each worker type under separating and pooling e
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_bayesian</span>, <span class="st">"bayesian-payoff-comparison"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-5" class="section level2" number="7.4">
+<div class="section level2" id="worked-example-5" number="7.4">
 <h2>
-<span class="header-section-number">7.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-5"><i class="fas fa-link"></i></a>
 </h2>
 <p>We walk through the separating equilibrium step by step.</p>
 <p><strong>Step 1: Set up the game.</strong> Nature draws the worker’s type: High (<span class="math inline">\(\theta_H\)</span>, productivity 6) or Low (<span class="math inline">\(\theta_L\)</span>, productivity 2), each with probability 0.5. Education costs 1 for the High type and 4 for the Low type.</p>
@@ -888,48 +895,48 @@ Figure 7.1: Expected payoffs for each worker type under separating and pooling e
   height: 0px !important;
 }
 </style>
-<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<div class="inline-table"><table class="gt_table" data-quarto-bootstrap="false" data-quarto-disable-processing="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="7" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Separating Equilibrium in the Job-Market Signaling Game</td>
-    </tr>
+<td class="gt_heading gt_title gt_font_normal gt_bottom_border" colspan="7" style="">Separating Equilibrium in the Job-Market Signaling Game</td>
+</tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Worker-type">Worker type</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Equilibrium-action">Equilibrium action</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Wage-received">Wage received</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Education-cost">Education cost</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Net-payoff">Net payoff</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Deviation-payoff">Deviation payoff</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="IC-satisfied?">IC satisfied?</th>
-    </tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Worker-type" rowspan="1" scope="col">Worker type</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Equilibrium-action" rowspan="1" scope="col">Equilibrium action</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Wage-received" rowspan="1" scope="col">Wage received</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Education-cost" rowspan="1" scope="col">Education cost</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Net-payoff" rowspan="1" scope="col">Net payoff</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Deviation-payoff" rowspan="1" scope="col">Deviation payoff</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="IC-satisfied?" rowspan="1" scope="col">IC satisfied?</th>
+</tr>
 </thead>
 <tbody class="gt_table_body">
 <tr>
-<td headers="Worker type" class="gt_row gt_center">High</td>
-<td headers="Equilibrium action" class="gt_row gt_center">Educate</td>
-<td headers="Wage received" class="gt_row gt_center">6</td>
-<td headers="Education cost" class="gt_row gt_center">1</td>
-<td headers="Net payoff" class="gt_row gt_center">5</td>
-<td headers="Deviation payoff" class="gt_row gt_center">2</td>
-<td headers="IC satisfied?" class="gt_row gt_center">Yes (5 &gt; 2)</td>
+<td class="gt_row gt_center" headers="Worker type">High</td>
+<td class="gt_row gt_center" headers="Equilibrium action">Educate</td>
+<td class="gt_row gt_center" headers="Wage received">6</td>
+<td class="gt_row gt_center" headers="Education cost">1</td>
+<td class="gt_row gt_center" headers="Net payoff">5</td>
+<td class="gt_row gt_center" headers="Deviation payoff">2</td>
+<td class="gt_row gt_center" headers="IC satisfied?">Yes (5 &gt; 2)</td>
 </tr>
 <tr>
-<td headers="Worker type" class="gt_row gt_center">Low</td>
-<td headers="Equilibrium action" class="gt_row gt_center">No Education</td>
-<td headers="Wage received" class="gt_row gt_center">2</td>
-<td headers="Education cost" class="gt_row gt_center">0</td>
-<td headers="Net payoff" class="gt_row gt_center">2</td>
-<td headers="Deviation payoff" class="gt_row gt_center">2</td>
-<td headers="IC satisfied?" class="gt_row gt_center">Yes (2 &gt;= 2)</td>
+<td class="gt_row gt_center" headers="Worker type">Low</td>
+<td class="gt_row gt_center" headers="Equilibrium action">No Education</td>
+<td class="gt_row gt_center" headers="Wage received">2</td>
+<td class="gt_row gt_center" headers="Education cost">0</td>
+<td class="gt_row gt_center" headers="Net payoff">2</td>
+<td class="gt_row gt_center" headers="Deviation payoff">2</td>
+<td class="gt_row gt_center" headers="IC satisfied?">Yes (2 &gt;= 2)</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <p>Note that the separating equilibrium Pareto-dominates the pooling equilibrium for the High type (payoff 5 vs. 3) but is weakly better for the Low type as well (payoff 2 vs. 0). This is a distinctive feature of signaling models: the ability to separate benefits the high type at the cost of an investment (education) that is socially wasteful if it does not enhance actual productivity.</p>
 </div>
-<div id="extensions-5" class="section level2" number="7.5">
+<div class="section level2" id="extensions-5" number="7.5">
 <h2>
-<span class="header-section-number">7.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-5"><i class="fas fa-link"></i></a>
 </h2>
 <p>Bayesian games and signaling models underpin a vast literature in economics and political science:</p>
 <ul>
@@ -944,8 +951,8 @@ Figure 7.1: Expected payoffs for each worker type under separating and pooling e
 </ul>
 <p>For a thorough treatment of Bayesian games, see <span class="citation">Osborne (<a href="references.html#ref-osborne2004">2004, Chapter 9</a>)</span> and <span class="citation">Shoham &amp; Leyton-Brown (<a href="references.html#ref-shoham2009">2009</a>)</span>. The original formalization of types and Bayesian equilibrium traces to Harsanyi’s foundational work, building on the strategic framework of <span class="citation">Neumann &amp; Morgenstern (<a href="references.html#ref-von-neumann1944">1944</a>)</span>.</p>
 </div>
-<div id="exercises-5" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-5"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-5">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-5"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Modified signaling costs.</strong> Suppose the Low type’s education cost falls to <span class="math inline">\(c_L = 3\)</span>. Does the separating equilibrium from the worked example survive? If not, what is the minimum cost <span class="math inline">\(c_L\)</span> that sustains separation? Verify your answer in R.</p></li>
@@ -955,16 +962,14 @@ Figure 7.1: Expected payoffs for each worker type under separating and pooling e
 <li><p><strong>Visualization.</strong> Create a figure showing how the High type’s payoff advantage in the separating equilibrium changes as the cost ratio <span class="math inline">\(c_L / c_H\)</span> varies from 1 to 8. At what ratio does the separating equilibrium first become sustainable?</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -983,64 +988,15 @@ Figure 7.1: Expected payoffs for each worker type under separating and pooling e
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-extensive-form.html"><span class="header-section-number">6</span> Extensive-Form Games</a></div>
 <div class="next"><a href="sec-repeated-games.html"><span class="header-section-number">8</span> Repeated Games</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-bayesian-games"><span class="header-section-number">7</span> Bayesian Games</a></li>
 <li><a class="nav-link" href="#learning-objectives-5">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-5"><span class="header-section-number">7.1</span> Motivation</a></li>
@@ -1063,29 +1019,23 @@ Figure 7.1: Expected payoffs for each worker type under separating and pooling e
 <li><a class="nav-link" href="#extensions-5"><span class="header-section-number">7.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-5">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/06-bayesian-games.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/06-bayesian-games.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/06-bayesian-games.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/06-bayesian-games.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

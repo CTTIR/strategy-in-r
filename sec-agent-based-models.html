@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 17 Agent-Based Models for Strategic Interaction | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Building agent-based models where heterogeneous agents play games, reproduce proportional to fitness, and evolve strategies over generations — illustrated with the Hawk-Dove game.  Learning...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 17 Agent-Based Models for Strategic Interaction | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-agent-based-models.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Building agent-based models where heterogeneous agents play games, reproduce proportional to fitness, and evolve strategies over generations — illustrated with the Hawk-Dove game.  Learning...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 17 Agent-Based Models for Strategic Interaction | Strategy in R">
-<meta name="twitter:description" content="Building agent-based models where heterogeneous agents play games, reproduce proportional to fitness, and evolve strategies over generations — illustrated with the Hawk-Dove game.  Learning...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 17 Agent-Based Models for Strategic Interaction | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Building agent-based models where heterogeneous agents play games, reproduce proportional to fitness, and evolve strategies over generations — illustrated with the Hawk-Dove game.  Learning..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 17 Agent-Based Models for Strategic Interaction | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-agent-based-models.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Building agent-based models where heterogeneous agents play games, reproduce proportional to fitness, and evolve strategies over generations — illustrated with the Hawk-Dove game.  Learning..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 17 Agent-Based Models for Strategic Interaction | Strategy in R" name="twitter:title"/>
+<meta content="Building agent-based models where heterogeneous agents play games, reproduce proportional to fitness, and evolve strategies over generations — illustrated with the Hawk-Dove game.  Learning..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 17 Agent-Based Models for Strategic Interaction | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-agent-based-models" class="section level1" number="17">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-agent-based-models" number="17">
 <h1>
-<span class="header-section-number">17</span> Agent-Based Models for Strategic Interaction<a class="anchor" aria-label="anchor" href="#sec-agent-based-models"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">17</span> Agent-Based Models for Strategic Interaction<a aria-label="anchor" class="anchor" href="#sec-agent-based-models"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-agent-based-models.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-agent-based-models.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Building agent-based models where heterogeneous agents play games, reproduce proportional to fitness, and evolve strategies over generations — illustrated with the Hawk-Dove game.</p>
 </blockquote>
-<div id="learning-objectives-15" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-15"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-15">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-15"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Contrast the agent-based modeling paradigm with analytical equilibrium analysis.</li>
@@ -183,23 +190,23 @@
 <li>Simulate the Hawk-Dove game and interpret the emergent strategy frequencies in terms of the evolutionarily stable strategy.</li>
 </ul>
 </div>
-<div id="motivation-15" class="section level2" number="17.1">
+<div class="section level2" id="motivation-15" number="17.1">
 <h2>
-<span class="header-section-number">17.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-15"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-15"><i class="fas fa-link"></i></a>
 </h2>
 <p>Analytical game theory derives equilibria by assuming fully rational players with common knowledge. This is powerful but sometimes unrealistic. In biology, economics, and social science, we often observe populations of agents with limited information, heterogeneous strategies, and adaptive behavior. How do strategy frequencies evolve when agents interact locally, reproduce based on success, and occasionally mutate?</p>
 <p>Agent-based models (ABMs) answer this question computationally. Instead of solving for equilibrium, we simulate it. Each agent carries a strategy, plays games against others, earns payoffs, and the population evolves over generations. ABMs can reveal dynamics that analytical models miss: path dependence, transient oscillations, the role of population size, and the effect of mutation rates. Maynard Smith’s Hawk-Dove game — a cornerstone of evolutionary game theory — provides the ideal testbed because it has a known analytical equilibrium we can compare against <span class="citation">(<a href="references.html#ref-osborne2004">Osborne, 2004</a>)</span>.</p>
 </div>
-<div id="theory-15" class="section level2" number="17.2">
+<div class="section level2" id="theory-15" number="17.2">
 <h2>
-<span class="header-section-number">17.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-15"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-15"><i class="fas fa-link"></i></a>
 </h2>
-<div id="the-hawk-dove-game" class="section level3" number="17.2.1">
+<div class="section level3" id="the-hawk-dove-game" number="17.2.1">
 <h3>
-<span class="header-section-number">17.2.1</span> The Hawk-Dove game<a class="anchor" aria-label="anchor" href="#the-hawk-dove-game"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.2.1</span> The Hawk-Dove game<a aria-label="anchor" class="anchor" href="#the-hawk-dove-game"><i class="fas fa-link"></i></a>
 </h3>
 <p>Two animals contest a resource of value <span class="math inline">\(v\)</span>. Each can play <strong>Hawk</strong> (escalate) or <strong>Dove</strong> (yield). The payoff matrix is:</p>
-<div class="inline-table"><table id="tbl-hawk-dove" class="table table-sm">
+<div class="inline-table"><table class="table table-sm" id="tbl-hawk-dove">
 <caption>Hawk-Dove payoff matrix, where <span class="math inline">\(v\)</span> is the resource value and <span class="math inline">\(c\)</span> is the cost of fighting.</caption>
 <thead><tr class="header">
 <th></th>
@@ -226,9 +233,9 @@ p^* = \frac{v}{c}
 \end{equation}\]</span></p>
 <p>This is also the evolutionarily stable strategy (ESS): a population at frequency <span class="math inline">\(p^*\)</span> cannot be invaded by either pure strategy <span class="citation">(<a href="references.html#ref-osborne2004">Osborne, 2004</a>)</span>.</p>
 </div>
-<div id="agent-based-evolutionary-dynamics" class="section level3" number="17.2.2">
+<div class="section level3" id="agent-based-evolutionary-dynamics" number="17.2.2">
 <h3>
-<span class="header-section-number">17.2.2</span> Agent-based evolutionary dynamics<a class="anchor" aria-label="anchor" href="#agent-based-evolutionary-dynamics"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.2.2</span> Agent-based evolutionary dynamics<a aria-label="anchor" class="anchor" href="#agent-based-evolutionary-dynamics"><i class="fas fa-link"></i></a>
 </h3>
 <p>In the ABM framework, we model a finite population of <span class="math inline">\(N\)</span> agents. Each generation proceeds in three steps:</p>
 <ol style="list-style-type: decimal">
@@ -249,9 +256,9 @@ p^* = \frac{v}{c}
 <p>An <strong>agent-based model</strong> (ABM) is a computational model in which autonomous agents with individual attributes interact according to specified rules. Macro-level patterns emerge from these micro-level interactions without being explicitly programmed.</p>
 </div>
 </div>
-<div id="connection-to-replicator-dynamics" class="section level3" number="17.2.3">
+<div class="section level3" id="connection-to-replicator-dynamics" number="17.2.3">
 <h3>
-<span class="header-section-number">17.2.3</span> Connection to replicator dynamics<a class="anchor" aria-label="anchor" href="#connection-to-replicator-dynamics"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.2.3</span> Connection to replicator dynamics<a aria-label="anchor" class="anchor" href="#connection-to-replicator-dynamics"><i class="fas fa-link"></i></a>
 </h3>
 <p>In the limit of large populations, weak selection, and low mutation, the ABM dynamics converge to the <strong>replicator equation</strong> (<a href="sec-replicator-dynamics.html#sec-replicator-dynamics">20</a>):</p>
 <p><span class="math display" id="eq:replicator">\[\begin{equation}
@@ -261,13 +268,13 @@ p^* = \frac{v}{c}
 <p>where <span class="math inline">\(x_H\)</span> is the frequency of Hawks, <span class="math inline">\(\pi_H\)</span> is the expected payoff to a Hawk, and <span class="math inline">\(\bar{\pi}\)</span> is the population average payoff. The ABM allows us to see how finite population effects, stochastic drift, and mutation perturb these deterministic predictions.</p>
 </div>
 </div>
-<div id="sec-abm-implementation" class="section level2" number="17.3">
+<div class="section level2" id="sec-abm-implementation" number="17.3">
 <h2>
-<span class="header-section-number">17.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-abm-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-abm-implementation"><i class="fas fa-link"></i></a>
 </h2>
-<div id="core-simulation-functions" class="section level3" number="17.3.1">
+<div class="section level3" id="core-simulation-functions" number="17.3.1">
 <h3>
-<span class="header-section-number">17.3.1</span> Core simulation functions<a class="anchor" aria-label="anchor" href="#core-simulation-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.3.1</span> Core simulation functions<a aria-label="anchor" class="anchor" href="#core-simulation-functions"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb478"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Hawk-Dove payoff function</span></span>
@@ -315,9 +322,9 @@ p^* = \frac{v}{c}
 <span>  <span class="va">population</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="running-the-abm" class="section level3" number="17.3.2">
+<div class="section level3" id="running-the-abm" number="17.3.2">
 <h3>
-<span class="header-section-number">17.3.2</span> Running the ABM<a class="anchor" aria-label="anchor" href="#running-the-abm"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.3.2</span> Running the ABM<a aria-label="anchor" class="anchor" href="#running-the-abm"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb479"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">run_hawk_dove_abm</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n_agents</span> <span class="op">=</span> <span class="fl">200</span>, <span class="va">n_generations</span> <span class="op">=</span> <span class="fl">300</span>,</span>
@@ -358,9 +365,9 @@ p^* = \frac{v}{c}
 <span>  <span class="va">history</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="strategy-frequency-evolution" class="section level3" number="17.3.3">
+<div class="section level3" id="strategy-frequency-evolution" number="17.3.3">
 <h3>
-<span class="header-section-number">17.3.3</span> Strategy frequency evolution<a class="anchor" aria-label="anchor" href="#strategy-frequency-evolution"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.3.3</span> Strategy frequency evolution<a aria-label="anchor" class="anchor" href="#strategy-frequency-evolution"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb480"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
@@ -397,17 +404,17 @@ p^* = \frac{v}{c}
 <span></span>
 <span><span class="va">p_evolution</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:abm-strategy-evolution"></span>
-<img src="16-agent-based-models_files/figure-html/abm-strategy-evolution-1.png" alt="Strategy frequency evolution in the Hawk-Dove agent-based model across three independent runs. The dashed horizontal line marks the analytical ESS frequency $p^* = v/c = 0.4$. Despite starting from different initial conditions, all runs converge to fluctuate around the predicted equilibrium." width="80%"><p class="caption">
+<span id="fig:abm-strategy-evolution" style="display:block;"></span>
+<img alt="Strategy frequency evolution in the Hawk-Dove agent-based model across three independent runs. The dashed horizontal line marks the analytical ESS frequency $p^* = v/c = 0.4$. Despite starting from different initial conditions, all runs converge to fluctuate around the predicted equilibrium." src="16-agent-based-models_files/figure-html/abm-strategy-evolution-1.png" width="80%"/><p class="caption">
 Figure 17.1: Strategy frequency evolution in the Hawk-Dove agent-based model across three independent runs. The dashed horizontal line marks the analytical ESS frequency <span class="math inline">\(p^* = v/c = 0.4\)</span>. Despite starting from different initial conditions, all runs converge to fluctuate around the predicted equilibrium.
 </p>
 </div>
 <div class="sourceCode" id="cb481"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_evolution</span>, <span class="st">"abm-strategy-evolution"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="population-fitness-over-time" class="section level3" number="17.3.4">
+<div class="section level3" id="population-fitness-over-time" number="17.3.4">
 <h3>
-<span class="header-section-number">17.3.4</span> Population fitness over time<a class="anchor" aria-label="anchor" href="#population-fitness-over-time"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.3.4</span> Population fitness over time<a aria-label="anchor" class="anchor" href="#population-fitness-over-time"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb482"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute the analytical equilibrium fitness</span></span>
@@ -430,8 +437,8 @@ Figure 17.1: Strategy frequency evolution in the Hawk-Dove agent-based model acr
 <span></span>
 <span><span class="va">p_fitness</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:abm-fitness"></span>
-<img src="16-agent-based-models_files/figure-html/abm-fitness-1.png" alt="Average population fitness over generations in the Hawk-Dove ABM. Fitness is highest when the population is near the ESS. Early generations show rapid fitness changes as the population adjusts from its initial state; later generations fluctuate around the equilibrium fitness level." width="80%"><p class="caption">
+<span id="fig:abm-fitness" style="display:block;"></span>
+<img alt="Average population fitness over generations in the Hawk-Dove ABM. Fitness is highest when the population is near the ESS. Early generations show rapid fitness changes as the population adjusts from its initial state; later generations fluctuate around the equilibrium fitness level." src="16-agent-based-models_files/figure-html/abm-fitness-1.png" width="80%"/><p class="caption">
 Figure 17.2: Average population fitness over generations in the Hawk-Dove ABM. Fitness is highest when the population is near the ESS. Early generations show rapid fitness changes as the population adjusts from its initial state; later generations fluctuate around the equilibrium fitness level.
 </p>
 </div>
@@ -439,9 +446,9 @@ Figure 17.2: Average population fitness over generations in the Hawk-Dove ABM. F
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_fitness</span>, <span class="st">"abm-fitness"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-13" class="section level2" number="17.4">
+<div class="section level2" id="worked-example-13" number="17.4">
 <h2>
-<span class="header-section-number">17.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-13"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-13"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let us trace through the first few generations of a small population to understand the mechanics.</p>
 <div class="sourceCode" id="cb484"><pre class="downlit sourceCode r">
@@ -504,9 +511,9 @@ Figure 17.2: Average population fitness over generations in the Hawk-Dove ABM. F
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"  Hawk frequency: {mean(population_new == 'Hawk')}"</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   Hawk frequency: 0.7</code></pre>
 <p>The population moves toward the ESS. Because Hawks are overrepresented (70% vs. the ESS of 40%), they frequently fight each other and incur the costly loss of <span class="math inline">\((v-c)/2 = -1.5\)</span>. Doves, meanwhile, avoid fighting costs entirely. Selection therefore favors Doves, pulling the population toward the equilibrium frequency.</p>
-<div id="sensitivity-to-parameters" class="section level3" number="17.4.1">
+<div class="section level3" id="sensitivity-to-parameters" number="17.4.1">
 <h3>
-<span class="header-section-number">17.4.1</span> Sensitivity to parameters<a class="anchor" aria-label="anchor" href="#sensitivity-to-parameters"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.4.1</span> Sensitivity to parameters<a aria-label="anchor" class="anchor" href="#sensitivity-to-parameters"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb504"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Effect of mutation rate on variance of equilibrium frequency</span></span>
@@ -981,40 +988,40 @@ Figure 17.2: Average population fitness over generations in the Hawk-Dove ABM. F
   height: 0px !important;
 }
 </style>
-<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<div class="inline-table"><table class="gt_table" data-quarto-bootstrap="false" data-quarto-disable-processing="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="3" class="gt_heading gt_title gt_font_normal" style>Effect of Mutation Rate on Equilibrium Behavior</td>
-    </tr>
+<td class="gt_heading gt_title gt_font_normal" colspan="3" style="">Effect of Mutation Rate on Equilibrium Behavior</td>
+</tr>
 <tr class="gt_heading">
-<td colspan="3" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>Steady-state statistics from last 100 of 300 generations</td>
-    </tr>
+<td class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" colspan="3" style="">Steady-state statistics from last 100 of 300 generations</td>
+</tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mutation_rate">Mutation rate</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mean_hawk_freq">Mean Hawk freq</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sd_hawk_freq">SD of Hawk freq</th>
-    </tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" colspan="1" id="mutation_rate" rowspan="1" scope="col">Mutation rate</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" colspan="1" id="mean_hawk_freq" rowspan="1" scope="col">Mean Hawk freq</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" colspan="1" id="sd_hawk_freq" rowspan="1" scope="col">SD of Hawk freq</th>
+</tr>
 </thead>
 <tbody class="gt_table_body">
 <tr>
-<td headers="mutation_rate" class="gt_row gt_right">0.001</td>
-<td headers="mean_hawk_freq" class="gt_row gt_right">0.417</td>
-<td headers="sd_hawk_freq" class="gt_row gt_right">0.045</td>
+<td class="gt_row gt_right" headers="mutation_rate">0.001</td>
+<td class="gt_row gt_right" headers="mean_hawk_freq">0.417</td>
+<td class="gt_row gt_right" headers="sd_hawk_freq">0.045</td>
 </tr>
 <tr>
-<td headers="mutation_rate" class="gt_row gt_right">0.010</td>
-<td headers="mean_hawk_freq" class="gt_row gt_right">0.407</td>
-<td headers="sd_hawk_freq" class="gt_row gt_right">0.052</td>
+<td class="gt_row gt_right" headers="mutation_rate">0.010</td>
+<td class="gt_row gt_right" headers="mean_hawk_freq">0.407</td>
+<td class="gt_row gt_right" headers="sd_hawk_freq">0.052</td>
 </tr>
 <tr>
-<td headers="mutation_rate" class="gt_row gt_right">0.050</td>
-<td headers="mean_hawk_freq" class="gt_row gt_right">0.419</td>
-<td headers="sd_hawk_freq" class="gt_row gt_right">0.040</td>
+<td class="gt_row gt_right" headers="mutation_rate">0.050</td>
+<td class="gt_row gt_right" headers="mean_hawk_freq">0.419</td>
+<td class="gt_row gt_right" headers="sd_hawk_freq">0.040</td>
 </tr>
 <tr>
-<td headers="mutation_rate" class="gt_row gt_right">0.100</td>
-<td headers="mean_hawk_freq" class="gt_row gt_right">0.444</td>
-<td headers="sd_hawk_freq" class="gt_row gt_right">0.041</td>
+<td class="gt_row gt_right" headers="mutation_rate">0.100</td>
+<td class="gt_row gt_right" headers="mean_hawk_freq">0.444</td>
+<td class="gt_row gt_right" headers="sd_hawk_freq">0.041</td>
 </tr>
 </tbody>
 </table></div>
@@ -1022,9 +1029,9 @@ Figure 17.2: Average population fitness over generations in the Hawk-Dove ABM. F
 <p>Higher mutation rates increase the variance around the ESS — agents are more frequently pushed away from the equilibrium — but the mean frequency remains close to <span class="math inline">\(p^* = 0.4\)</span> across all mutation rates. This robustness is a signature of the ESS: selection pressure always pushes back toward equilibrium, regardless of perturbations <span class="citation">(<a href="references.html#ref-von-neumann1944">Neumann &amp; Morgenstern, 1944</a>)</span>.</p>
 </div>
 </div>
-<div id="extensions-15" class="section level2" number="17.5">
+<div class="section level2" id="extensions-15" number="17.5">
 <h2>
-<span class="header-section-number">17.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-15"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-15"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -1039,8 +1046,8 @@ Figure 17.2: Average population fitness over generations in the Hawk-Dove ABM. F
 <strong>Network structure.</strong> When the interaction graph is not well-mixed but has network structure, cooperation dynamics change qualitatively (<a href="sec-network-games.html#sec-network-games">22</a>). For the foundational analysis, see <span class="citation">Shoham &amp; Leyton-Brown (<a href="references.html#ref-shoham2009">2009</a>)</span>.</li>
 </ul>
 </div>
-<div id="exercises-15" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-15"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-15">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-15"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Three strategies.</strong> Add a third strategy, <strong>Retaliator</strong>, that plays Dove against Doves and Hawk against Hawks (it matches the opponent’s type). This requires each agent to observe its opponent’s strategy before acting. Run the ABM and report whether Retaliator can invade a Hawk-Dove population at the ESS.</p></li>
@@ -1048,16 +1055,14 @@ Figure 17.2: Average population fitness over generations in the Hawk-Dove ABM. F
 <li><p><strong>Stag Hunt dynamics.</strong> Replace the Hawk-Dove payoff matrix with the Stag Hunt: mutual cooperation (Stag, Stag) yields 4 each, mutual defection (Hare, Hare) yields 2 each, and miscoordination yields 0 for the Stag player and 2 for the Hare player. Run the ABM from initial cooperation frequencies of 0.3, 0.5, and 0.8. Does the population always converge to the same equilibrium? Explain in terms of the game’s two Nash equilibria.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -1076,64 +1081,15 @@ Figure 17.2: Average population fitness over generations in the Hawk-Dove ABM. F
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-monte-carlo.html"><span class="header-section-number">16</span> Monte Carlo Methods for Games</a></div>
 <div class="next"><a href="sec-axelrod-tournament.html"><span class="header-section-number">18</span> Replicating Axelrod’s Tournament</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-agent-based-models"><span class="header-section-number">17</span> Agent-Based Models for Strategic Interaction</a></li>
 <li><a class="nav-link" href="#learning-objectives-15">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-15"><span class="header-section-number">17.1</span> Motivation</a></li>
@@ -1158,29 +1114,23 @@ Figure 17.2: Average population fitness over generations in the Hawk-Dove ABM. F
 <li><a class="nav-link" href="#extensions-15"><span class="header-section-number">17.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-15">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/16-agent-based-models.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/16-agent-based-models.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/16-agent-based-models.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/16-agent-based-models.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 8 Repeated Games | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="How repetition transforms strategic interaction. Covers finite and infinite horizon repeated games, discount factors, the folk theorem, and trigger strategies including Grim Trigger and...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 8 Repeated Games | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-repeated-games.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="How repetition transforms strategic interaction. Covers finite and infinite horizon repeated games, discount factors, the folk theorem, and trigger strategies including Grim Trigger and...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 8 Repeated Games | Strategy in R">
-<meta name="twitter:description" content="How repetition transforms strategic interaction. Covers finite and infinite horizon repeated games, discount factors, the folk theorem, and trigger strategies including Grim Trigger and...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 8 Repeated Games | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="How repetition transforms strategic interaction. Covers finite and infinite horizon repeated games, discount factors, the folk theorem, and trigger strategies including Grim Trigger and..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 8 Repeated Games | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-repeated-games.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="How repetition transforms strategic interaction. Covers finite and infinite horizon repeated games, discount factors, the folk theorem, and trigger strategies including Grim Trigger and..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 8 Repeated Games | Strategy in R" name="twitter:title"/>
+<meta content="How repetition transforms strategic interaction. Covers finite and infinite horizon repeated games, discount factors, the folk theorem, and trigger strategies including Grim Trigger and..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 8 Repeated Games | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-repeated-games" class="section level1" number="8">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-repeated-games" number="8">
 <h1>
-<span class="header-section-number">8</span> Repeated Games<a class="anchor" aria-label="anchor" href="#sec-repeated-games"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">8</span> Repeated Games<a aria-label="anchor" class="anchor" href="#sec-repeated-games"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-repeated-games.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-repeated-games.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>How repetition transforms strategic interaction. Covers finite and infinite horizon repeated games, discount factors, the folk theorem, and trigger strategies including Grim Trigger and Tit-for-Tat, with a worked example showing how cooperation can be sustained in the infinitely repeated Prisoner’s Dilemma.</p>
 </blockquote>
-<div id="learning-objectives-6" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-6"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-6">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-6"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Distinguish between finitely and infinitely repeated games and explain the role of the discount factor.</li>
@@ -183,21 +190,21 @@
 <li>Plot the folk-theorem payoff region for a given stage game in R and verify trigger-strategy equilibria computationally.</li>
 </ul>
 </div>
-<div id="motivation-6" class="section level2" number="8.1">
+<div class="section level2" id="motivation-6" number="8.1">
 <h2>
-<span class="header-section-number">8.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-6"><i class="fas fa-link"></i></a>
 </h2>
 <p>The Prisoner’s Dilemma has a famously bleak prediction: rational players defect, even though mutual cooperation would make both better off. Yet in the real world, firms competing in the same market quarter after quarter often sustain tacit collusion. Nations locked in arms races sometimes reach stable agreements. Individuals in small communities cooperate routinely without binding contracts.</p>
 <p>What changes when a game is played not once, but repeatedly? Repetition introduces the possibility of <strong>punishment</strong>: a player who defects today can be punished tomorrow. If the future matters enough — that is, if the <strong>discount factor</strong> is sufficiently high — the threat of future punishment can sustain cooperation as an equilibrium outcome. This is the central message of the <strong>folk theorem</strong>, one of the most powerful results in game theory.</p>
 <p>Robert Axelrod’s celebrated computer tournaments <span class="citation">(<a href="references.html#ref-axelrod1981">Axelrod, 1981</a>)</span> demonstrated this insight empirically: Tit-for-Tat, a simple strategy that cooperates initially and then mirrors the opponent’s previous action, emerged as the tournament winner, outperforming far more sophisticated strategies. We revisit Axelrod’s tournament in <a href="sec-axelrod-tournament.html#sec-axelrod-tournament">18</a>; here we lay the theoretical foundations.</p>
 </div>
-<div id="theory-6" class="section level2" number="8.2">
+<div class="section level2" id="theory-6" number="8.2">
 <h2>
-<span class="header-section-number">8.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-6"><i class="fas fa-link"></i></a>
 </h2>
-<div id="the-stage-game" class="section level3" number="8.2.1">
+<div class="section level3" id="the-stage-game" number="8.2.1">
 <h3>
-<span class="header-section-number">8.2.1</span> The stage game<a class="anchor" aria-label="anchor" href="#the-stage-game"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.1</span> The stage game<a aria-label="anchor" class="anchor" href="#the-stage-game"><i class="fas fa-link"></i></a>
 </h3>
 <p>A <strong>repeated game</strong> is built on a <strong>stage game</strong> <span class="math inline">\(G = (N, (A_i), (u_i))\)</span> played in each period <span class="math inline">\(t = 0, 1, 2, \ldots\)</span> The stage game we use throughout this chapter is the Prisoner’s Dilemma with the following payoff matrix:</p>
 <div class="inline-table"><table class="table table-sm">
@@ -221,9 +228,9 @@
 </table></div>
 <p>Here <span class="math inline">\(T = 5\)</span> is the temptation payoff, <span class="math inline">\(R = 3\)</span> the reward for mutual cooperation, <span class="math inline">\(P = 1\)</span> the punishment for mutual defection, and <span class="math inline">\(S = 0\)</span> the sucker’s payoff, satisfying the standard ordering <span class="math inline">\(T &gt; R &gt; P &gt; S\)</span>.</p>
 </div>
-<div id="finite-vs.-infinite-horizon" class="section level3" number="8.2.2">
+<div class="section level3" id="finite-vs.-infinite-horizon" number="8.2.2">
 <h3>
-<span class="header-section-number">8.2.2</span> Finite vs. infinite horizon<a class="anchor" aria-label="anchor" href="#finite-vs.-infinite-horizon"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.2</span> Finite vs. infinite horizon<a aria-label="anchor" class="anchor" href="#finite-vs.-infinite-horizon"><i class="fas fa-link"></i></a>
 </h3>
 <p>In a <strong>finitely repeated</strong> game with <span class="math inline">\(T\)</span> periods, backward induction unravels cooperation: in the last period, defection is dominant (just as in the one-shot game). Knowing this, both players defect in period <span class="math inline">\(T - 1\)</span>, and so on, all the way back to period 1. The unique subgame-perfect equilibrium of the finitely repeated Prisoner’s Dilemma is defection in every period.</p>
 <p>In an <strong>infinitely repeated</strong> game, there is no last period, so backward induction cannot get started. Players evaluate infinite payoff streams using the <strong>discount factor</strong> <span class="math inline">\(\delta \in [0, 1)\)</span>. The discounted average payoff from a stream <span class="math inline">\((u_0, u_1, u_2, \ldots)\)</span> is:</p>
@@ -233,9 +240,9 @@ V = (1 - \delta) \sum_{t=0}^{\infty} \delta^t u_t
 \end{equation}\]</span></p>
 <p>The factor <span class="math inline">\((1 - \delta)\)</span> normalizes the sum so that a constant stream <span class="math inline">\(u_t = c\)</span> yields <span class="math inline">\(V = c\)</span>, making payoffs comparable to the stage game.</p>
 </div>
-<div id="trigger-strategies" class="section level3" number="8.2.3">
+<div class="section level3" id="trigger-strategies" number="8.2.3">
 <h3>
-<span class="header-section-number">8.2.3</span> Trigger strategies<a class="anchor" aria-label="anchor" href="#trigger-strategies"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.3</span> Trigger strategies<a aria-label="anchor" class="anchor" href="#trigger-strategies"><i class="fas fa-link"></i></a>
 </h3>
 <p>A <strong>trigger strategy</strong> prescribes cooperation as long as no player has deviated, and switches permanently (or temporarily) to a punishment phase after a deviation.</p>
 <ul>
@@ -245,9 +252,9 @@ V = (1 - \delta) \sum_{t=0}^{\infty} \delta^t u_t
 <strong>Tit-for-Tat (TFT):</strong> Cooperate in the first period. In each subsequent period, play whatever the opponent played in the previous period. TFT punishes defection but forgives it after one period — a feature that proved remarkably effective in <span class="citation">Axelrod (<a href="references.html#ref-axelrod1981">1981</a>)</span>’s tournament.</li>
 </ul>
 </div>
-<div id="the-grim-trigger-condition" class="section level3" number="8.2.4">
+<div class="section level3" id="the-grim-trigger-condition" number="8.2.4">
 <h3>
-<span class="header-section-number">8.2.4</span> The Grim Trigger condition<a class="anchor" aria-label="anchor" href="#the-grim-trigger-condition"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.4</span> The Grim Trigger condition<a aria-label="anchor" class="anchor" href="#the-grim-trigger-condition"><i class="fas fa-link"></i></a>
 </h3>
 <p>Under Grim Trigger, the cooperative payoff stream is <span class="math inline">\(R, R, R, \ldots\)</span> with discounted value <span class="math inline">\(V_C = R = 3\)</span>. If a player deviates in period <span class="math inline">\(t\)</span>, she earns <span class="math inline">\(T = 5\)</span> in that period but triggers permanent defection, earning <span class="math inline">\(P = 1\)</span> forever after. The deviation payoff is:</p>
 <p><span class="math display" id="eq:grim-deviation">\[\begin{equation}
@@ -261,9 +268,9 @@ R \geq (1 - \delta) T + \delta P \quad \Longleftrightarrow \quad \delta \geq \fr
 \end{equation}\]</span></p>
 <p>For our payoffs: <span class="math inline">\(\delta \geq \frac{5 - 3}{5 - 1} = \frac{1}{2}\)</span>.</p>
 </div>
-<div id="the-folk-theorem" class="section level3" number="8.2.5">
+<div class="section level3" id="the-folk-theorem" number="8.2.5">
 <h3>
-<span class="header-section-number">8.2.5</span> The folk theorem<a class="anchor" aria-label="anchor" href="#the-folk-theorem"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.5</span> The folk theorem<a aria-label="anchor" class="anchor" href="#the-folk-theorem"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdtip">
 <p><strong>Theorem: Folk Theorem (Friedman, 1971)</strong></p>
@@ -272,13 +279,13 @@ R \geq (1 - \delta) T + \delta P \quad \Longleftrightarrow \quad \delta \geq \fr
 <p>The folk theorem tells us that repetition with patient players can sustain <em>any</em> feasible, individually rational payoff profile — a dramatic expansion of the equilibrium set compared to the one-shot game. The set of achievable payoffs forms a convex polytope bounded by feasibility (the convex hull of stage-game payoff profiles) and individual rationality (each player earns at least their minimax value). See <span class="citation">Osborne (<a href="references.html#ref-osborne2004">2004, Chapter 14</a>)</span> for the formal proof.</p>
 </div>
 </div>
-<div id="implementation-in-r-5" class="section level2" number="8.3">
+<div class="section level2" id="implementation-in-r-5" number="8.3">
 <h2>
-<span class="header-section-number">8.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#implementation-in-r-5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#implementation-in-r-5"><i class="fas fa-link"></i></a>
 </h2>
-<div id="stage-game-setup-and-grim-trigger-analysis" class="section level3" number="8.3.1">
+<div class="section level3" id="stage-game-setup-and-grim-trigger-analysis" number="8.3.1">
 <h3>
-<span class="header-section-number">8.3.1</span> Stage game setup and Grim Trigger analysis<a class="anchor" aria-label="anchor" href="#stage-game-setup-and-grim-trigger-analysis"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.1</span> Stage game setup and Grim Trigger analysis<a aria-label="anchor" class="anchor" href="#stage-game-setup-and-grim-trigger-analysis"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Stage game payoffs (Prisoner's Dilemma)</span></span>
@@ -293,9 +300,9 @@ R \geq (1 - \delta) T + \delta P \quad \Longleftrightarrow \quad \delta \geq \fr
 <span>            <span class="va">delta_star</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Critical discount factor (Grim Trigger): delta* = 0.5000</code></pre>
 </div>
-<div id="payoff-comparison-across-discount-factors" class="section level3" number="8.3.2">
+<div class="section level3" id="payoff-comparison-across-discount-factors" number="8.3.2">
 <h3>
-<span class="header-section-number">8.3.2</span> Payoff comparison across discount factors<a class="anchor" aria-label="anchor" href="#payoff-comparison-across-discount-factors"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.2</span> Payoff comparison across discount factors<a aria-label="anchor" class="anchor" href="#payoff-comparison-across-discount-factors"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compare cooperation vs deviation payoffs for a range of delta</span></span>
@@ -323,9 +330,9 @@ R \geq (1 - \delta) T + \delta P \quad \Longleftrightarrow \quad \delta \geq \fr
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">*</span> <span class="va">T_payoff</span> <span class="op">+</span> <span class="fl">0.7</span> <span class="op">*</span> <span class="va">P_payoff</span>, <span class="fl">2</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Deviation payoff at delta = 0.7: 2.2</code></pre>
 </div>
-<div id="folk-theorem-payoff-region" class="section level3" number="8.3.3">
+<div class="section level3" id="folk-theorem-payoff-region" number="8.3.3">
 <h3>
-<span class="header-section-number">8.3.3</span> Folk theorem payoff region<a class="anchor" aria-label="anchor" href="#folk-theorem-payoff-region"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.3</span> Folk theorem payoff region<a aria-label="anchor" class="anchor" href="#folk-theorem-payoff-region"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># All pure-strategy payoff profiles in the stage game</span></span>
@@ -355,9 +362,9 @@ R \geq (1 - \delta) T + \delta P \quad \Longleftrightarrow \quad \delta \geq \fr
 <pre><code>#&gt; 
 #&gt; Minimax payoffs: v1 = 1, v2 = 1</code></pre>
 </div>
-<div id="publication-figure-folk-theorem-payoff-region" class="section level3" number="8.3.4">
+<div class="section level3" id="publication-figure-folk-theorem-payoff-region" number="8.3.4">
 <h3>
-<span class="header-section-number">8.3.4</span> Publication figure: folk theorem payoff region<a class="anchor" aria-label="anchor" href="#publication-figure-folk-theorem-payoff-region"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.4</span> Publication figure: folk theorem payoff region<a aria-label="anchor" class="anchor" href="#publication-figure-folk-theorem-payoff-region"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convex hull of feasible payoffs</span></span>
@@ -445,8 +452,8 @@ R \geq (1 - \delta) T + \delta P \quad \Longleftrightarrow \quad \delta \geq \fr
 <span></span>
 <span><span class="va">p_folk</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:folk-theorem"></span>
-<img src="07-repeated-games_files/figure-html/folk-theorem-1.png" alt="The set of achievable payoffs under the folk theorem for the Prisoner's Dilemma. The outer polygon (light fill) shows the feasible set --- the convex hull of stage-game payoff profiles. The shaded interior region represents payoff pairs that are both feasible and individually rational (each player earns at least their minimax payoff of 1). Any point in the shaded region can be sustained as a subgame-perfect equilibrium for sufficiently high discount factor." width="80%"><p class="caption">
+<span id="fig:folk-theorem" style="display:block;"></span>
+<img alt="The set of achievable payoffs under the folk theorem for the Prisoner's Dilemma. The outer polygon (light fill) shows the feasible set --- the convex hull of stage-game payoff profiles. The shaded interior region represents payoff pairs that are both feasible and individually rational (each player earns at least their minimax payoff of 1). Any point in the shaded region can be sustained as a subgame-perfect equilibrium for sufficiently high discount factor." src="07-repeated-games_files/figure-html/folk-theorem-1.png" width="80%"/><p class="caption">
 Figure 8.1: The set of achievable payoffs under the folk theorem for the Prisoner’s Dilemma. The outer polygon (light fill) shows the feasible set — the convex hull of stage-game payoff profiles. The shaded interior region represents payoff pairs that are both feasible and individually rational (each player earns at least their minimax payoff of 1). Any point in the shaded region can be sustained as a subgame-perfect equilibrium for sufficiently high discount factor.
 </p>
 </div>
@@ -454,9 +461,9 @@ Figure 8.1: The set of achievable payoffs under the folk theorem for the Prisone
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_folk</span>, <span class="st">"folk-theorem-region"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-6" class="section level2" number="8.4">
+<div class="section level2" id="worked-example-6" number="8.4">
 <h2>
-<span class="header-section-number">8.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-6"><i class="fas fa-link"></i></a>
 </h2>
 <p>We verify step by step that Grim Trigger sustains cooperation in the infinitely repeated Prisoner’s Dilemma when <span class="math inline">\(\delta = 0.6\)</span>.</p>
 <p><strong>Step 1: Define the stage game.</strong> The payoffs are <span class="math inline">\(T = 5\)</span>, <span class="math inline">\(R = 3\)</span>, <span class="math inline">\(P = 1\)</span>, <span class="math inline">\(S = 0\)</span> as defined above.</p>
@@ -956,53 +963,53 @@ Figure 8.1: The set of achievable payoffs under the folk theorem for the Prisone
   height: 0px !important;
 }
 </style>
-<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<div class="inline-table"><table class="gt_table" data-quarto-bootstrap="false" data-quarto-disable-processing="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="2" class="gt_heading gt_title gt_font_normal" style>Grim Trigger Equilibrium Verification</td>
-    </tr>
+<td class="gt_heading gt_title gt_font_normal" colspan="2" style="">Grim Trigger Equilibrium Verification</td>
+</tr>
 <tr class="gt_heading">
-<td colspan="2" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>Infinitely Repeated Prisoner's Dilemma</td>
-    </tr>
+<td class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" colspan="2" style="">Infinitely Repeated Prisoner's Dilemma</td>
+</tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Parameter">Parameter</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Value">Value</th>
-    </tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" colspan="1" id="Parameter" rowspan="1" scope="col">Parameter</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" colspan="1" id="Value" rowspan="1" scope="col">Value</th>
+</tr>
 </thead>
 <tbody class="gt_table_body">
 <tr>
-<td headers="Parameter" class="gt_row gt_left">Discount factor (delta)</td>
-<td headers="Value" class="gt_row gt_left">0.6</td>
+<td class="gt_row gt_left" headers="Parameter">Discount factor (delta)</td>
+<td class="gt_row gt_left" headers="Value">0.6</td>
 </tr>
 <tr>
-<td headers="Parameter" class="gt_row gt_left">Critical threshold (delta*)</td>
-<td headers="Value" class="gt_row gt_left">0.5000</td>
+<td class="gt_row gt_left" headers="Parameter">Critical threshold (delta*)</td>
+<td class="gt_row gt_left" headers="Value">0.5000</td>
 </tr>
 <tr>
-<td headers="Parameter" class="gt_row gt_left">Cooperation payoff (V_C)</td>
-<td headers="Value" class="gt_row gt_left">3.0</td>
+<td class="gt_row gt_left" headers="Parameter">Cooperation payoff (V_C)</td>
+<td class="gt_row gt_left" headers="Value">3.0</td>
 </tr>
 <tr>
-<td headers="Parameter" class="gt_row gt_left">Deviation payoff (V_D)</td>
-<td headers="Value" class="gt_row gt_left">2.6</td>
+<td class="gt_row gt_left" headers="Parameter">Deviation payoff (V_D)</td>
+<td class="gt_row gt_left" headers="Value">2.6</td>
 </tr>
 <tr>
-<td headers="Parameter" class="gt_row gt_left">Equilibrium?</td>
-<td headers="Value" class="gt_row gt_left">Yes</td>
+<td class="gt_row gt_left" headers="Parameter">Equilibrium?</td>
+<td class="gt_row gt_left" headers="Value">Yes</td>
 </tr>
 </tbody>
 </table></div>
 </div>
-<div id="comparing-grim-trigger-and-tit-for-tat" class="section level3" number="8.4.1">
+<div class="section level3" id="comparing-grim-trigger-and-tit-for-tat" number="8.4.1">
 <h3>
-<span class="header-section-number">8.4.1</span> Comparing Grim Trigger and Tit-for-Tat<a class="anchor" aria-label="anchor" href="#comparing-grim-trigger-and-tit-for-tat"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.4.1</span> Comparing Grim Trigger and Tit-for-Tat<a aria-label="anchor" class="anchor" href="#comparing-grim-trigger-and-tit-for-tat"><i class="fas fa-link"></i></a>
 </h3>
 <p>Grim Trigger sustains cooperation through the harshest possible punishment: permanent defection. Tit-for-Tat, by contrast, punishes for only one period and then forgives. This makes TFT more robust in noisy environments (where actions are sometimes misperceived) but requires a higher discount factor to sustain cooperation against deliberate deviation. In <span class="citation">Axelrod (<a href="references.html#ref-axelrod1981">1981</a>)</span>’s tournament, TFT’s combination of niceness (never defect first), retaliation (punish defection), forgiveness (return to cooperation), and clarity (simple to understand) proved devastatingly effective. We simulate the tournament in detail in <a href="sec-axelrod-tournament.html#sec-axelrod-tournament">18</a>.</p>
 </div>
 </div>
-<div id="extensions-6" class="section level2" number="8.5">
+<div class="section level2" id="extensions-6" number="8.5">
 <h2>
-<span class="header-section-number">8.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-6"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -1016,8 +1023,8 @@ Figure 8.1: The set of achievable payoffs under the folk theorem for the Prisone
 </ul>
 <p>For the formal treatment of the folk theorem and its variants, see <span class="citation">Osborne (<a href="references.html#ref-osborne2004">2004, Chapter 14</a>)</span>. The discount-factor analysis of trigger strategies follows the framework in <span class="citation">Shoham &amp; Leyton-Brown (<a href="references.html#ref-shoham2009">2009</a>)</span>.</p>
 </div>
-<div id="exercises-6" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-6"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-6">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-6"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Critical discount factor.</strong> Consider a Prisoner’s Dilemma with payoffs <span class="math inline">\(T = 8\)</span>, <span class="math inline">\(R = 5\)</span>, <span class="math inline">\(P = 2\)</span>, <span class="math inline">\(S = 0\)</span>. Compute the critical discount factor <span class="math inline">\(\delta^*\)</span> for Grim Trigger to sustain cooperation. Verify your answer in R by computing <span class="math inline">\(V_C\)</span> and <span class="math inline">\(V_D\)</span> at <span class="math inline">\(\delta = \delta^*\)</span>.</p></li>
@@ -1027,16 +1034,14 @@ Figure 8.1: The set of achievable payoffs under the folk theorem for the Prisone
 <li><p><strong>Simulation.</strong> Simulate 1000 rounds of the infinitely repeated PD (with a continuation probability of <span class="math inline">\(\delta = 0.95\)</span> each round) for two Grim Trigger players and two TFT players. Compare their average per-round payoffs and plot the cumulative payoff trajectories.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -1055,64 +1060,15 @@ Figure 8.1: The set of achievable payoffs under the folk theorem for the Prisone
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-bayesian-games.html"><span class="header-section-number">7</span> Bayesian Games</a></div>
 <div class="next"><a href="sec-cooperative-gt.html"><span class="header-section-number">9</span> Cooperative Game Theory</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-repeated-games"><span class="header-section-number">8</span> Repeated Games</a></li>
 <li><a class="nav-link" href="#learning-objectives-6">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-6"><span class="header-section-number">8.1</span> Motivation</a></li>
@@ -1139,29 +1095,23 @@ Figure 8.1: The set of achievable payoffs under the folk theorem for the Prisone
 <li><a class="nav-link" href="#extensions-6"><span class="header-section-number">8.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-6">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/07-repeated-games.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/07-repeated-games.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/07-repeated-games.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/07-repeated-games.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

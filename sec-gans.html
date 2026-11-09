@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 30 GANs as Minimax Games | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Generative adversarial networks through the lens of game theory: the minimax formulation, Nash equilibrium, mode collapse, and a 1D distribution-matching implementation in base R.  Learning...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 30 GANs as Minimax Games | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-gans.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Generative adversarial networks through the lens of game theory: the minimax formulation, Nash equilibrium, mode collapse, and a 1D distribution-matching implementation in base R.  Learning...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 30 GANs as Minimax Games | Strategy in R">
-<meta name="twitter:description" content="Generative adversarial networks through the lens of game theory: the minimax formulation, Nash equilibrium, mode collapse, and a 1D distribution-matching implementation in base R.  Learning...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 30 GANs as Minimax Games | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Generative adversarial networks through the lens of game theory: the minimax formulation, Nash equilibrium, mode collapse, and a 1D distribution-matching implementation in base R.  Learning..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 30 GANs as Minimax Games | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-gans.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Generative adversarial networks through the lens of game theory: the minimax formulation, Nash equilibrium, mode collapse, and a 1D distribution-matching implementation in base R.  Learning..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 30 GANs as Minimax Games | Strategy in R" name="twitter:title"/>
+<meta content="Generative adversarial networks through the lens of game theory: the minimax formulation, Nash equilibrium, mode collapse, and a 1D distribution-matching implementation in base R.  Learning..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 30 GANs as Minimax Games | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-gans" class="section level1" number="30">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-gans" number="30">
 <h1>
-<span class="header-section-number">30</span> GANs as Minimax Games<a class="anchor" aria-label="anchor" href="#sec-gans"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">30</span> GANs as Minimax Games<a aria-label="anchor" class="anchor" href="#sec-gans"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-gans.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-gans.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Generative adversarial networks through the lens of game theory: the minimax formulation, Nash equilibrium, mode collapse, and a 1D distribution-matching implementation in base R.</p>
 </blockquote>
-<div id="learning-objectives-28" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-28"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-28">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-28"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Formulate GAN training as a two-player zero-sum minimax game.</li>
@@ -183,20 +190,20 @@
 <li>Diagnose mode collapse as a game-theoretic failure mode.</li>
 </ul>
 </div>
-<div id="motivation-28" class="section level2" number="30.1">
+<div class="section level2" id="motivation-28" number="30.1">
 <h2>
-<span class="header-section-number">30.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-28"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-28"><i class="fas fa-link"></i></a>
 </h2>
 <p>Generative Adversarial Networks (GANs) are one of the most striking applications of game theory in modern machine learning. Introduced by <span class="citation">Goodfellow et al. (<a href="references.html#ref-goodfellow2014">2014</a>)</span>, a GAN pits two neural networks against each other: a <strong>generator</strong> that tries to produce realistic data and a <strong>discriminator</strong> that tries to distinguish real data from fakes. This adversarial dynamic is precisely a two-player zero-sum game, and the solution concept is Nash equilibrium.</p>
 <p>Understanding GANs through the lens of game theory illuminates why they work, why they are difficult to train, and why phenomena like mode collapse occur. In this chapter, we strip away the neural network machinery and implement the core game-theoretic dynamics in base R using a 1D distribution-matching problem.</p>
 </div>
-<div id="theory-28" class="section level2" number="30.2">
+<div class="section level2" id="theory-28" number="30.2">
 <h2>
-<span class="header-section-number">30.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-28"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-28"><i class="fas fa-link"></i></a>
 </h2>
-<div id="the-minimax-formulation" class="section level3" number="30.2.1">
+<div class="section level3" id="the-minimax-formulation" number="30.2.1">
 <h3>
-<span class="header-section-number">30.2.1</span> The minimax formulation<a class="anchor" aria-label="anchor" href="#the-minimax-formulation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.2.1</span> The minimax formulation<a aria-label="anchor" class="anchor" href="#the-minimax-formulation"><i class="fas fa-link"></i></a>
 </h3>
 <p>The GAN objective is a minimax game between a generator <span class="math inline">\(G\)</span> and a discriminator <span class="math inline">\(D\)</span>:</p>
 <p><span class="math display" id="eq:gan-objective">\[\begin{equation}
@@ -211,9 +218,9 @@
 <strong>Generator’s goal</strong>: Minimize <span class="math inline">\(V\)</span> — fool the discriminator by producing samples indistinguishable from real data.</li>
 </ul>
 </div>
-<div id="nash-equilibrium-of-the-gan-game" class="section level3" number="30.2.2">
+<div class="section level3" id="nash-equilibrium-of-the-gan-game" number="30.2.2">
 <h3>
-<span class="header-section-number">30.2.2</span> Nash equilibrium of the GAN game<a class="anchor" aria-label="anchor" href="#nash-equilibrium-of-the-gan-game"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.2.2</span> Nash equilibrium of the GAN game<a aria-label="anchor" class="anchor" href="#nash-equilibrium-of-the-gan-game"><i class="fas fa-link"></i></a>
 </h3>
 <p><span class="citation">Goodfellow et al. (<a href="references.html#ref-goodfellow2014">2014</a>)</span> showed that the unique Nash equilibrium of this game satisfies:</p>
 <ol style="list-style-type: decimal">
@@ -224,9 +231,9 @@
 </ol>
 <p>At equilibrium, the generator produces perfect samples and the discriminator is reduced to random guessing. The game value at equilibrium is <span class="math inline">\(V^* = -\log 4\)</span>.</p>
 </div>
-<div id="optimal-discriminator" class="section level3" number="30.2.3">
+<div class="section level3" id="optimal-discriminator" number="30.2.3">
 <h3>
-<span class="header-section-number">30.2.3</span> Optimal discriminator<a class="anchor" aria-label="anchor" href="#optimal-discriminator"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.2.3</span> Optimal discriminator<a aria-label="anchor" class="anchor" href="#optimal-discriminator"><i class="fas fa-link"></i></a>
 </h3>
 <p>For a fixed generator, the optimal discriminator is:</p>
 <p><span class="math display" id="eq:optimal-discriminator">\[\begin{equation}
@@ -235,22 +242,22 @@ D^*(x) = \frac{p_{\text{data}}(x)}{p_{\text{data}}(x) + p_G(x)}
 \end{equation}\]</span></p>
 <p>When <span class="math inline">\(p_G = p_{\text{data}}\)</span>, this gives <span class="math inline">\(D^*(x) = 1/2\)</span> everywhere — the equilibrium condition.</p>
 </div>
-<div id="mode-collapse" class="section level3" number="30.2.4">
+<div class="section level3" id="mode-collapse" number="30.2.4">
 <h3>
-<span class="header-section-number">30.2.4</span> Mode collapse<a class="anchor" aria-label="anchor" href="#mode-collapse"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.2.4</span> Mode collapse<a aria-label="anchor" class="anchor" href="#mode-collapse"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Mode collapse</strong> occurs when the generator learns to produce samples from only a subset of the modes in the data distribution. In game-theoretic terms, this is a failure to reach the true Nash equilibrium. The generator “overfits” to fooling the current discriminator rather than matching the full data distribution.</p>
 <p>This happens because GAN training uses alternating gradient updates (similar to fictitious play), which need not converge in all games. The generator may cycle between modes rather than covering them all simultaneously.</p>
 </div>
 </div>
-<div id="sec-gans-impl" class="section level2" number="30.3">
+<div class="section level2" id="sec-gans-impl" number="30.3">
 <h2>
-<span class="header-section-number">30.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-gans-impl"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-gans-impl"><i class="fas fa-link"></i></a>
 </h2>
 <p>We implement a simplified 1D GAN where both the generator and discriminator are parameterized as simple functions rather than neural networks. The generator maps noise to a location-scale family, and the discriminator is a logistic function over a grid.</p>
-<div id="target-and-generator-distributions" class="section level3" number="30.3.1">
+<div class="section level3" id="target-and-generator-distributions" number="30.3.1">
 <h3>
-<span class="header-section-number">30.3.1</span> Target and generator distributions<a class="anchor" aria-label="anchor" href="#target-and-generator-distributions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.3.1</span> Target and generator distributions<a aria-label="anchor" class="anchor" href="#target-and-generator-distributions"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb799"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Target: mixture of two Gaussians</span></span>
@@ -272,9 +279,9 @@ D^*(x) = \frac{p_{\text{data}}(x)}{p_{\text{data}}(x) + p_G(x)}
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="va">mu</span>, sd <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="discriminator-on-a-grid" class="section level3" number="30.3.2">
+<div class="section level3" id="discriminator-on-a-grid" number="30.3.2">
 <h3>
-<span class="header-section-number">30.3.2</span> Discriminator on a grid<a class="anchor" aria-label="anchor" href="#discriminator-on-a-grid"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.3.2</span> Discriminator on a grid<a aria-label="anchor" class="anchor" href="#discriminator-on-a-grid"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb800"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Discriminator: logistic function evaluated on grid bins</span></span>
@@ -285,9 +292,9 @@ D^*(x) = \frac{p_{\text{data}}(x)}{p_{\text{data}}(x) + p_G(x)}
 <span>  <span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">logits</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="training-loop" class="section level3" number="30.3.3">
+<div class="section level3" id="training-loop" number="30.3.3">
 <h3>
-<span class="header-section-number">30.3.3</span> Training loop<a class="anchor" aria-label="anchor" href="#training-loop"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.3.3</span> Training loop<a aria-label="anchor" class="anchor" href="#training-loop"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb801"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -377,9 +384,9 @@ D^*(x) = \frac{p_{\text{data}}(x)}{p_{\text{data}}(x) + p_G(x)}
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="figure-1-generator-distribution-evolution" class="section level3" number="30.3.4">
+<div class="section level3" id="figure-1-generator-distribution-evolution" number="30.3.4">
 <h3>
-<span class="header-section-number">30.3.4</span> Figure 1: Generator distribution evolution<a class="anchor" aria-label="anchor" href="#figure-1-generator-distribution-evolution"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.3.4</span> Figure 1: Generator distribution evolution<a aria-label="anchor" class="anchor" href="#figure-1-generator-distribution-evolution"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb802"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">target_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_grid</span>, density <span class="op">=</span> <span class="fu">target_density</span><span class="op">(</span><span class="va">x_grid</span><span class="op">)</span><span class="op">)</span></span>
@@ -406,17 +413,17 @@ D^*(x) = \frac{p_{\text{data}}(x)}{p_{\text{data}}(x) + p_G(x)}
 <span></span>
 <span><span class="va">p_evolution</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:gan-evolution"></span>
-<img src="29-gans-as-minmax_files/figure-html/gan-evolution-1.png" alt="Evolution of the generator distribution during GAN training. The single Gaussian generator shifts and reshapes to approximate the bimodal target distribution. By epoch 300, the generator has moved toward one of the two target modes --- illustrating how a unimodal generator is fundamentally limited." width="80%"><p class="caption">
+<span id="fig:gan-evolution" style="display:block;"></span>
+<img alt="Evolution of the generator distribution during GAN training. The single Gaussian generator shifts and reshapes to approximate the bimodal target distribution. By epoch 300, the generator has moved toward one of the two target modes --- illustrating how a unimodal generator is fundamentally limited." src="29-gans-as-minmax_files/figure-html/gan-evolution-1.png" width="80%"/><p class="caption">
 Figure 30.1: Evolution of the generator distribution during GAN training. The single Gaussian generator shifts and reshapes to approximate the bimodal target distribution. By epoch 300, the generator has moved toward one of the two target modes — illustrating how a unimodal generator is fundamentally limited.
 </p>
 </div>
 <div class="sourceCode" id="cb803"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_evolution</span>, <span class="st">"gan-distribution-evolution"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="figure-2-discriminator-accuracy" class="section level3" number="30.3.5">
+<div class="section level3" id="figure-2-discriminator-accuracy" number="30.3.5">
 <h3>
-<span class="header-section-number">30.3.5</span> Figure 2: Discriminator accuracy<a class="anchor" aria-label="anchor" href="#figure-2-discriminator-accuracy"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.3.5</span> Figure 2: Discriminator accuracy<a aria-label="anchor" class="anchor" href="#figure-2-discriminator-accuracy"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb804"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">d_long</span> <span class="op">&lt;-</span> <span class="va">history</span> <span class="op">|&gt;</span></span>
@@ -439,8 +446,8 @@ Figure 30.1: Evolution of the generator distribution during GAN training. The si
 <span></span>
 <span><span class="va">p_disc</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:gan-discriminator"></span>
-<img src="29-gans-as-minmax_files/figure-html/gan-discriminator-1.png" alt="Discriminator accuracy on real and fake samples over training. As the generator improves, the discriminator's ability to identify fake samples decreases, approaching the Nash equilibrium prediction of 50% accuracy on both." width="80%"><p class="caption">
+<span id="fig:gan-discriminator" style="display:block;"></span>
+<img alt="Discriminator accuracy on real and fake samples over training. As the generator improves, the discriminator's ability to identify fake samples decreases, approaching the Nash equilibrium prediction of 50% accuracy on both." src="29-gans-as-minmax_files/figure-html/gan-discriminator-1.png" width="80%"/><p class="caption">
 Figure 30.2: Discriminator accuracy on real and fake samples over training. As the generator improves, the discriminator’s ability to identify fake samples decreases, approaching the Nash equilibrium prediction of 50% accuracy on both.
 </p>
 </div>
@@ -448,9 +455,9 @@ Figure 30.2: Discriminator accuracy on real and fake samples over training. As t
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_disc</span>, <span class="st">"gan-discriminator-accuracy"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">4.5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-26" class="section level2" number="30.4">
+<div class="section level2" id="worked-example-26" number="30.4">
 <h2>
-<span class="header-section-number">30.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-26"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-26"><i class="fas fa-link"></i></a>
 </h2>
 <p>We trace the game-theoretic dynamics step by step.</p>
 <div class="sourceCode" id="cb806"><pre class="downlit sourceCode r">
@@ -515,9 +522,9 @@ Figure 30.2: Discriminator accuracy on real and fake samples over training. As t
 <pre><code>#&gt;   dynamics would converge to covering both modes.</code></pre>
 <p><strong>Key insight.</strong> The GAN game’s Nash equilibrium at <span class="math inline">\(p_G = p_{\text{data}}\)</span> is only achievable when the generator has sufficient capacity to represent the data distribution. When capacity is limited (as with our single Gaussian), the generator plays the best response it can — concentrating on one mode. This mirrors bounded rationality in game theory: players optimize within their constraints, and the resulting equilibrium may differ from the theoretical ideal.</p>
 </div>
-<div id="extensions-28" class="section level2" number="30.5">
+<div class="section level2" id="extensions-28" number="30.5">
 <h2>
-<span class="header-section-number">30.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-28"><i class="fas fa-link"></i></a>
+<span class="header-section-number">30.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-28"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -531,8 +538,8 @@ Figure 30.2: Discriminator accuracy on real and fake samples over training. As t
 </ul>
 <p>For the foundational GAN paper, see <span class="citation">Goodfellow et al. (<a href="references.html#ref-goodfellow2014">2014</a>)</span>.</p>
 </div>
-<div id="exercises-28" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-28"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-28">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-28"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Richer generator.</strong> Replace the single-Gaussian generator with a two-component mixture: <span class="math inline">\(G(z) = w \cdot N(\mu_1, \sigma_1) + (1-w) \cdot N(\mu_2, \sigma_2)\)</span> with parameters <span class="math inline">\((w, \mu_1, \mu_2, \sigma_1, \sigma_2)\)</span>. Can this generator avoid mode collapse on the bimodal target? Plot the final distribution.</p></li>
@@ -540,16 +547,14 @@ Figure 30.2: Discriminator accuracy on real and fake samples over training. As t
 <li><p><strong>Non-saturating loss.</strong> The original GAN objective can saturate when the generator is poor (<span class="math inline">\(D(G(z)) \approx 0\)</span>). Implement the non-saturating alternative where the generator maximizes <span class="math inline">\(\mathbb{E}[\log D(G(z))]\)</span> instead of minimizing <span class="math inline">\(\mathbb{E}[\log(1 - D(G(z)))]\)</span>. Compare training curves.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -568,64 +573,15 @@ Figure 30.2: Discriminator accuracy on real and fake samples over training. As t
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-cfr.html"><span class="header-section-number">29</span> Counterfactual Regret Minimization and Poker</a></div>
 <div class="next"><a href="sec-llm-agents.html"><span class="header-section-number">31</span> LLM Agents and Strategic Reasoning</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-gans"><span class="header-section-number">30</span> GANs as Minimax Games</a></li>
 <li><a class="nav-link" href="#learning-objectives-28">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-28"><span class="header-section-number">30.1</span> Motivation</a></li>
@@ -650,29 +606,23 @@ Figure 30.2: Discriminator accuracy on real and fake samples over training. As t
 <li><a class="nav-link" href="#extensions-28"><span class="header-section-number">30.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-28">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/29-gans-as-minmax.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/29-gans-as-minmax.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/29-gans-as-minmax.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/29-gans-as-minmax.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

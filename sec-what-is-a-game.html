@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 2 What is a Game? | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Players, actions, payoffs, and information — the four building blocks that turn any strategic situation into a formal game. This chapter introduces the modeling stance of game theory, walks...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 2 What is a Game? | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-what-is-a-game.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Players, actions, payoffs, and information — the four building blocks that turn any strategic situation into a formal game. This chapter introduces the modeling stance of game theory, walks...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 2 What is a Game? | Strategy in R">
-<meta name="twitter:description" content="Players, actions, payoffs, and information — the four building blocks that turn any strategic situation into a formal game. This chapter introduces the modeling stance of game theory, walks...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 2 What is a Game? | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Players, actions, payoffs, and information — the four building blocks that turn any strategic situation into a formal game. This chapter introduces the modeling stance of game theory, walks..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 2 What is a Game? | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-what-is-a-game.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Players, actions, payoffs, and information — the four building blocks that turn any strategic situation into a formal game. This chapter introduces the modeling stance of game theory, walks..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 2 What is a Game? | Strategy in R" name="twitter:title"/>
+<meta content="Players, actions, payoffs, and information — the four building blocks that turn any strategic situation into a formal game. This chapter introduces the modeling stance of game theory, walks..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 2 What is a Game? | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-what-is-a-game" class="section level1" number="2">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-what-is-a-game" number="2">
 <h1>
-<span class="header-section-number">2</span> What is a Game?<a class="anchor" aria-label="anchor" href="#sec-what-is-a-game"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">2</span> What is a Game?<a aria-label="anchor" class="anchor" href="#sec-what-is-a-game"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-what-is-a-game.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-what-is-a-game.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Players, actions, payoffs, and information — the four building blocks that turn any strategic situation into a formal game. This chapter introduces the modeling stance of game theory, walks through canonical examples such as the Prisoner’s Dilemma, coordination, and zero-sum games, and implements a reusable payoff-matrix visualization in R.</p>
 </blockquote>
-<div id="learning-objectives" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives"><i class="fas fa-link"></i></a>
 </h2>
 <p>After completing this chapter you will be able to:</p>
 <ul>
@@ -185,22 +192,22 @@
 <li>Distinguish between zero-sum, coordination, and social-dilemma games by inspecting their payoff structure.</li>
 </ul>
 </div>
-<div id="motivation" class="section level2" number="2.1">
+<div class="section level2" id="motivation" number="2.1">
 <h2>
-<span class="header-section-number">2.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation"><i class="fas fa-link"></i></a>
 </h2>
 <p>Imagine two coffee shops that open on the same street. Each owner must set a price without knowing the competitor’s choice. The profit of each shop depends not only on its own price but also on the price set by the other. This mutual dependence is the hallmark of a <em>strategic interaction</em>: the outcome for any one participant is shaped by the choices of all participants together.</p>
 <p>Situations like this arise everywhere — in economics, politics, biology, computer science, and everyday life. Firms compete on pricing and advertising; countries negotiate treaties; bacteria evolve resistance; autonomous vehicles coordinate at intersections. What unites these disparate settings is a common logical structure that can be captured by a single word: <em>game</em>.</p>
 <p>Game theory provides a precise mathematical language for reasoning about strategic interactions. It was launched by <span class="citation">Neumann &amp; Morgenstern (<a href="references.html#ref-von-neumann1944">1944</a>)</span>, who demonstrated that parlour games, market competition, and military tactics all share the same formal skeleton. A few years later, <span class="citation">Nash (<a href="references.html#ref-nash1950">1950</a>)</span> showed that every finite game possesses at least one equilibrium — a combination of strategies from which no player wants to deviate unilaterally. These two contributions created a discipline that now spans the social sciences, biology, and artificial intelligence.</p>
 <p>This chapter lays the foundation for everything that follows. Before we can solve games, simulate tournaments, or train learning agents, we need a clear vocabulary for describing what a game <em>is</em>.</p>
 </div>
-<div id="theory" class="section level2" number="2.2">
+<div class="section level2" id="theory" number="2.2">
 <h2>
-<span class="header-section-number">2.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory"><i class="fas fa-link"></i></a>
 </h2>
-<div id="the-four-building-blocks" class="section level3" number="2.2.1">
+<div class="section level3" id="the-four-building-blocks" number="2.2.1">
 <h3>
-<span class="header-section-number">2.2.1</span> The four building blocks<a class="anchor" aria-label="anchor" href="#the-four-building-blocks"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.2.1</span> The four building blocks<a aria-label="anchor" class="anchor" href="#the-four-building-blocks"><i class="fas fa-link"></i></a>
 </h3>
 <p>Following <span class="citation">Osborne (<a href="references.html#ref-osborne2004">2004</a>)</span>, a game in <em>strategic form</em> is defined by four elements:</p>
 <ol style="list-style-type: decimal">
@@ -211,15 +218,15 @@
 </ol>
 <p>A compact way to represent a two-player simultaneous game is the <em>payoff matrix</em> (also called the <em>normal form</em>). Each row corresponds to an action of Player 1, each column to an action of Player 2, and each cell contains a pair <span class="math inline">\((u_1, u_2)\)</span> of payoffs. We study this representation in depth in <a href="sec-normal-form.html#sec-normal-form">3</a>.</p>
 </div>
-<div id="what-makes-a-situation-a-game" class="section level3" number="2.2.2">
+<div class="section level3" id="what-makes-a-situation-a-game" number="2.2.2">
 <h3>
-<span class="header-section-number">2.2.2</span> What makes a situation a “game”?<a class="anchor" aria-label="anchor" href="#what-makes-a-situation-a-game"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.2.2</span> What makes a situation a “game”?<a aria-label="anchor" class="anchor" href="#what-makes-a-situation-a-game"><i class="fas fa-link"></i></a>
 </h3>
 <p>Not every decision problem is a game. A hiker choosing a trail based on weather forecasts faces uncertainty, but the weather does not “respond” to the hiker’s choice. A game requires at least two purposeful agents whose payoffs are mutually dependent. This <em>interdependence</em> is the key criterion: if the best action for one player depends on the action chosen by another, the situation is strategic and thus a game <span class="citation">(<a href="references.html#ref-shoham2009">Shoham &amp; Leyton-Brown, 2009</a>)</span>.</p>
 </div>
-<div id="three-canonical-examples" class="section level3" number="2.2.3">
+<div class="section level3" id="three-canonical-examples" number="2.2.3">
 <h3>
-<span class="header-section-number">2.2.3</span> Three canonical examples<a class="anchor" aria-label="anchor" href="#three-canonical-examples"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.2.3</span> Three canonical examples<a aria-label="anchor" class="anchor" href="#three-canonical-examples"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>The Prisoner’s Dilemma.</strong> Two suspects are interrogated separately. Each can <em>Cooperate</em> (stay silent) or <em>Defect</em> (betray the other). Mutual cooperation yields a moderate reward for both, mutual defection yields a poor outcome for both, and unilateral defection gives the defector a high payoff at the cooperator’s expense. The tragedy is that each player has a dominant incentive to defect, even though mutual cooperation would leave both better off. This game is central to the study of cooperation and is revisited in <a href="sec-repeated-games.html#sec-repeated-games">8</a> and <a href="sec-axelrod-tournament.html#sec-axelrod-tournament">18</a>. The payoff structure is:</p>
 <div class="inline-table"><table class="table table-sm">
@@ -283,9 +290,9 @@
 </table></div>
 </div>
 </div>
-<div id="implementation-in-r" class="section level2" number="2.3">
+<div class="section level2" id="implementation-in-r" number="2.3">
 <h2>
-<span class="header-section-number">2.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#implementation-in-r"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#implementation-in-r"><i class="fas fa-link"></i></a>
 </h2>
 <p>We now build an R function to create and visualize any 2x2 payoff matrix. The function returns a tidy data frame suitable for plotting with <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -352,15 +359,15 @@
 <span></span>
 <span><span class="va">p_heatmap</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:payoff-heatmap"></span>
-<img src="01-what-is-a-game_files/figure-html/payoff-heatmap-1.png" alt="Payoff matrices for three canonical 2x2 games. Cell colour encodes Player 1's payoff using a diverging Okabe-Ito-inspired palette; each cell displays both players' payoffs as an ordered pair." width="80%"><p class="caption">
+<span id="fig:payoff-heatmap" style="display:block;"></span>
+<img alt="Payoff matrices for three canonical 2x2 games. Cell colour encodes Player 1's payoff using a diverging Okabe-Ito-inspired palette; each cell displays both players' payoffs as an ordered pair." src="01-what-is-a-game_files/figure-html/payoff-heatmap-1.png" width="80%"/><p class="caption">
 Figure 2.1: Payoff matrices for three canonical 2x2 games. Cell colour encodes Player 1’s payoff using a diverging Okabe-Ito-inspired palette; each cell displays both players’ payoffs as an ordered pair.
 </p>
 </div>
 </div>
-<div id="worked-example" class="section level2" number="2.4">
+<div class="section level2" id="worked-example" number="2.4">
 <h2>
-<span class="header-section-number">2.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let us walk through the Prisoner’s Dilemma step by step to cement the vocabulary.</p>
 <p><strong>Step 1 — Identify the players.</strong> There are two players: Suspect 1 and Suspect 2.</p>
@@ -826,42 +833,42 @@ Figure 2.1: Payoff matrices for three canonical 2x2 games. Cell colour encodes P
   height: 0px !important;
 }
 </style>
-<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<div class="inline-table"><table class="gt_table" data-quarto-bootstrap="false" data-quarto-disable-processing="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Prisoner's Dilemma Payoffs</td>
-    </tr>
+<td class="gt_heading gt_title gt_font_normal gt_bottom_border" colspan="4" style="">Prisoner's Dilemma Payoffs</td>
+</tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Player-1">Player 1</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Player-2">Player 2</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Payoff-1">Payoff 1</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Payoff-2">Payoff 2</th>
-    </tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Player-1" rowspan="1" scope="col">Player 1</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Player-2" rowspan="1" scope="col">Player 2</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Payoff-1" rowspan="1" scope="col">Payoff 1</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Payoff-2" rowspan="1" scope="col">Payoff 2</th>
+</tr>
 </thead>
 <tbody class="gt_table_body">
 <tr>
-<td headers="Player 1" class="gt_row gt_center">Cooperate</td>
-<td headers="Player 2" class="gt_row gt_center">Cooperate</td>
-<td headers="Payoff 1" class="gt_row gt_center">3</td>
-<td headers="Payoff 2" class="gt_row gt_center">3</td>
+<td class="gt_row gt_center" headers="Player 1">Cooperate</td>
+<td class="gt_row gt_center" headers="Player 2">Cooperate</td>
+<td class="gt_row gt_center" headers="Payoff 1">3</td>
+<td class="gt_row gt_center" headers="Payoff 2">3</td>
 </tr>
 <tr>
-<td headers="Player 1" class="gt_row gt_center">Cooperate</td>
-<td headers="Player 2" class="gt_row gt_center">Defect</td>
-<td headers="Payoff 1" class="gt_row gt_center">0</td>
-<td headers="Payoff 2" class="gt_row gt_center">5</td>
+<td class="gt_row gt_center" headers="Player 1">Cooperate</td>
+<td class="gt_row gt_center" headers="Player 2">Defect</td>
+<td class="gt_row gt_center" headers="Payoff 1">0</td>
+<td class="gt_row gt_center" headers="Payoff 2">5</td>
 </tr>
 <tr>
-<td headers="Player 1" class="gt_row gt_center">Defect</td>
-<td headers="Player 2" class="gt_row gt_center">Cooperate</td>
-<td headers="Payoff 1" class="gt_row gt_center">5</td>
-<td headers="Payoff 2" class="gt_row gt_center">0</td>
+<td class="gt_row gt_center" headers="Player 1">Defect</td>
+<td class="gt_row gt_center" headers="Player 2">Cooperate</td>
+<td class="gt_row gt_center" headers="Payoff 1">5</td>
+<td class="gt_row gt_center" headers="Payoff 2">0</td>
 </tr>
 <tr>
-<td headers="Player 1" class="gt_row gt_center">Defect</td>
-<td headers="Player 2" class="gt_row gt_center">Defect</td>
-<td headers="Payoff 1" class="gt_row gt_center">1</td>
-<td headers="Payoff 2" class="gt_row gt_center">1</td>
+<td class="gt_row gt_center" headers="Player 1">Defect</td>
+<td class="gt_row gt_center" headers="Player 2">Defect</td>
+<td class="gt_row gt_center" headers="Payoff 1">1</td>
+<td class="gt_row gt_center" headers="Payoff 2">1</td>
 </tr>
 </tbody>
 </table></div>
@@ -869,9 +876,9 @@ Figure 2.1: Payoff matrices for three canonical 2x2 games. Cell colour encodes P
 <p><strong>Step 4 — Check for dominance.</strong> Regardless of what Player 2 does, Player 1 earns more by defecting (5 &gt; 3 when Player 2 cooperates; 1 &gt; 0 when Player 2 defects). Defect is a <em>dominant strategy</em> for Player 1. By symmetry, the same holds for Player 2.</p>
 <p><strong>Step 5 — Identify the outcome.</strong> Both players defect, yielding payoffs (1, 1). This is the unique Nash equilibrium, yet both players would prefer mutual cooperation at (3, 3). The gap between individual rationality and collective welfare is what makes the Prisoner’s Dilemma so compelling — and why mechanisms for sustaining cooperation, from repeated interaction <span class="citation">(<a href="references.html#ref-axelrod1981">Axelrod, 1981</a>)</span> to enforceable contracts, are among the central concerns of game theory.</p>
 </div>
-<div id="extensions" class="section level2" number="2.5">
+<div class="section level2" id="extensions" number="2.5">
 <h2>
-<span class="header-section-number">2.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions"><i class="fas fa-link"></i></a>
 </h2>
 <p>The four-element definition introduced here is deliberately minimal. Real-world strategic situations often involve richer structure:</p>
 <ul>
@@ -888,8 +895,8 @@ Figure 2.1: Payoff matrices for three canonical 2x2 games. Cell colour encodes P
 </ul>
 <p>The compact representation we built in R — the <code>make_payoff_df()</code> function and heatmap visualization — will be extended in <a href="sec-normal-form.html#sec-normal-form">3</a> where we study dominance, best responses, and iterated elimination of dominated strategies.</p>
 </div>
-<div id="exercises" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Identifying game elements.</strong> Consider an intersection where two autonomous vehicles arrive simultaneously. Each can <em>Go</em> or <em>Yield</em>. If both go, they crash (payoff -5 each). If both yield, they waste time (payoff 0 each). If one goes and the other yields, the goer saves time (payoff 3) and the yielder waits (payoff 1). Write down the four elements (players, actions, payoffs, information) and construct the 2x2 payoff matrix. What type of game is this (zero-sum, coordination, or social dilemma)?</p></li>
@@ -899,16 +906,14 @@ Figure 2.1: Payoff matrices for three canonical 2x2 games. Cell colour encodes P
 <li><p><strong>Reading the literature.</strong> Read the first two pages of <span class="citation">Nash (<a href="references.html#ref-nash1950">1950</a>)</span>. In your own words, state Nash’s definition of an equilibrium point. How does it relate to the concept of a dominant-strategy outcome in the Prisoner’s Dilemma?</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -927,64 +932,15 @@ Figure 2.1: Payoff matrices for three canonical 2x2 games. Cell colour encodes P
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-introduction.html"><span class="header-section-number">1</span> Introduction: Why Strategy in R?</a></div>
 <div class="next"><a href="sec-normal-form.html"><span class="header-section-number">3</span> Normal-Form Games</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-what-is-a-game"><span class="header-section-number">2</span> What is a Game?</a></li>
 <li><a class="nav-link" href="#learning-objectives">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation"><span class="header-section-number">2.1</span> Motivation</a></li>
@@ -1000,29 +956,23 @@ Figure 2.1: Payoff matrices for three canonical 2x2 games. Cell colour encodes P
 <li><a class="nav-link" href="#extensions"><span class="header-section-number">2.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/01-what-is-a-game.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/01-what-is-a-game.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/01-what-is-a-game.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/01-what-is-a-game.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

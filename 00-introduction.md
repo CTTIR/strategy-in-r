@@ -1,6 +1,7 @@
 # Introduction: Why Strategy in R? {#sec-introduction}
 
 > Why study strategic interaction computationally, and why R is the right tool for the job.
+
 ## The computational turn in game theory
 
 Game theory began as a branch of mathematics. Von Neumann and Morgenstern [-@von-neumann1944] laid the foundations; Nash [-@nash1950] proved that every finite game has an equilibrium. For decades, the field advanced primarily through theorems and proofs.

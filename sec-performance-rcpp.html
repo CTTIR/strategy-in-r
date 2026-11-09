@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 23 Performance Optimization | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Profiling R code, vectorization strategies, memory-efficient history storage, and when to consider Rcpp — demonstrated on game-theory simulations.  Learning objectives Profile R code using...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 23 Performance Optimization | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-performance-rcpp.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Profiling R code, vectorization strategies, memory-efficient history storage, and when to consider Rcpp — demonstrated on game-theory simulations.  Learning objectives Profile R code using...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 23 Performance Optimization | Strategy in R">
-<meta name="twitter:description" content="Profiling R code, vectorization strategies, memory-efficient history storage, and when to consider Rcpp — demonstrated on game-theory simulations.  Learning objectives Profile R code using...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 23 Performance Optimization | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Profiling R code, vectorization strategies, memory-efficient history storage, and when to consider Rcpp — demonstrated on game-theory simulations.  Learning objectives Profile R code using..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 23 Performance Optimization | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-performance-rcpp.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Profiling R code, vectorization strategies, memory-efficient history storage, and when to consider Rcpp — demonstrated on game-theory simulations.  Learning objectives Profile R code using..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 23 Performance Optimization | Strategy in R" name="twitter:title"/>
+<meta content="Profiling R code, vectorization strategies, memory-efficient history storage, and when to consider Rcpp — demonstrated on game-theory simulations.  Learning objectives Profile R code using..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 23 Performance Optimization | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-performance-rcpp" class="section level1" number="23">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-performance-rcpp" number="23">
 <h1>
-<span class="header-section-number">23</span> Performance Optimization<a class="anchor" aria-label="anchor" href="#sec-performance-rcpp"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">23</span> Performance Optimization<a aria-label="anchor" class="anchor" href="#sec-performance-rcpp"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-performance-rcpp.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-performance-rcpp.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Profiling R code, vectorization strategies, memory-efficient history storage, and when to consider Rcpp — demonstrated on game-theory simulations.</p>
 </blockquote>
-<div id="learning-objectives-21" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-21"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-21">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-21"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Profile R code using <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code> and manual benchmarking to identify bottlenecks.</li>
@@ -183,26 +190,26 @@
 <li>Recognize when Rcpp would provide further speedups and describe the conceptual approach.</li>
 </ul>
 </div>
-<div id="motivation-21" class="section level2" number="23.1">
+<div class="section level2" id="motivation-21" number="23.1">
 <h2>
-<span class="header-section-number">23.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-21"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-21"><i class="fas fa-link"></i></a>
 </h2>
 <p>A single run of the Axelrod tournament (<a href="sec-axelrod-tournament.html#sec-axelrod-tournament">18</a>) with eight strategies and 200 rounds finishes in under a second. But scale the problem — 100 strategies, 1000 rounds, spatial grids of 10,000 agents, evolutionary dynamics over 500 generations — and naive R code can take hours. The difference between a simulation that runs in 30 seconds and one that runs in 30 minutes is often not a better algorithm, but better use of R’s strengths.</p>
 <p>R is slow when you fight it: growing vectors with <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>, appending rows with <code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code>, nested loops over scalar operations. R is fast when you work with it: pre-allocated matrices, vectorized arithmetic, and functions that call optimized C code under the hood. In this chapter, we profile a game-theory simulation, identify the bottlenecks, and eliminate them.</p>
 </div>
-<div id="theory-21" class="section level2" number="23.2">
+<div class="section level2" id="theory-21" number="23.2">
 <h2>
-<span class="header-section-number">23.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-21"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-21"><i class="fas fa-link"></i></a>
 </h2>
-<div id="why-r-loops-are-slow" class="section level3" number="23.2.1">
+<div class="section level3" id="why-r-loops-are-slow" number="23.2.1">
 <h3>
-<span class="header-section-number">23.2.1</span> Why R loops are slow<a class="anchor" aria-label="anchor" href="#why-r-loops-are-slow"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.2.1</span> Why R loops are slow<a aria-label="anchor" class="anchor" href="#why-r-loops-are-slow"><i class="fas fa-link"></i></a>
 </h3>
 <p>R is an interpreted language with dynamic typing. Each iteration of a <code>for</code> loop involves type checking, memory allocation, and function dispatch. A loop that runs <span class="math inline">\(n\)</span> times incurs this overhead <span class="math inline">\(n\)</span> times. Vectorized operations like <code>A %*% x</code> delegate the loop to compiled C or Fortran code, paying the overhead once and executing the loop at native speed.</p>
 </div>
-<div id="three-levels-of-optimization" class="section level3" number="23.2.2">
+<div class="section level3" id="three-levels-of-optimization" number="23.2.2">
 <h3>
-<span class="header-section-number">23.2.2</span> Three levels of optimization<a class="anchor" aria-label="anchor" href="#three-levels-of-optimization"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.2.2</span> Three levels of optimization<a aria-label="anchor" class="anchor" href="#three-levels-of-optimization"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li>
@@ -213,9 +220,9 @@
 <strong>Compiled code (Rcpp)</strong>: For algorithms that cannot be vectorized — complex conditional logic, recursive data structures, sequential dependencies — Rcpp lets you write inner loops in C++ while keeping the R interface. This is the tool of last resort, not the first.</li>
 </ol>
 </div>
-<div id="the-profiling-workflow" class="section level3" number="23.2.3">
+<div class="section level3" id="the-profiling-workflow" number="23.2.3">
 <h3>
-<span class="header-section-number">23.2.3</span> The profiling workflow<a class="anchor" aria-label="anchor" href="#the-profiling-workflow"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.2.3</span> The profiling workflow<a aria-label="anchor" class="anchor" href="#the-profiling-workflow"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li>
@@ -229,13 +236,13 @@
 </ol>
 </div>
 </div>
-<div id="sec-performance-implementation" class="section level2" number="23.3">
+<div class="section level2" id="sec-performance-implementation" number="23.3">
 <h2>
-<span class="header-section-number">23.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-performance-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-performance-implementation"><i class="fas fa-link"></i></a>
 </h2>
-<div id="the-baseline-loop-based-spatial-pd" class="section level3" number="23.3.1">
+<div class="section level3" id="the-baseline-loop-based-spatial-pd" number="23.3.1">
 <h3>
-<span class="header-section-number">23.3.1</span> The baseline: loop-based spatial PD<a class="anchor" aria-label="anchor" href="#the-baseline-loop-based-spatial-pd"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.3.1</span> The baseline: loop-based spatial PD<a aria-label="anchor" class="anchor" href="#the-baseline-loop-based-spatial-pd"><i class="fas fa-link"></i></a>
 </h3>
 <p>We implement a simplified spatial Prisoner’s Dilemma on a grid, similar to <a href="sec-spatial-pd.html#sec-spatial-pd">19</a>. This is our baseline for optimization.</p>
 <div class="sourceCode" id="cb627"><pre class="downlit sourceCode r">
@@ -299,9 +306,9 @@
 <span>  <span class="va">coop_history</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="the-optimized-version-vectorized-spatial-pd" class="section level3" number="23.3.2">
+<div class="section level3" id="the-optimized-version-vectorized-spatial-pd" number="23.3.2">
 <h3>
-<span class="header-section-number">23.3.2</span> The optimized version: vectorized spatial PD<a class="anchor" aria-label="anchor" href="#the-optimized-version-vectorized-spatial-pd"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.3.2</span> The optimized version: vectorized spatial PD<a aria-label="anchor" class="anchor" href="#the-optimized-version-vectorized-spatial-pd"><i class="fas fa-link"></i></a>
 </h3>
 <p>The key insight is that summing neighbor cooperators is a <strong>convolution</strong> — shifting the grid in each direction and adding. We replace the inner double loops with matrix shifts.</p>
 <div class="sourceCode" id="cb628"><pre class="downlit sourceCode r">
@@ -349,9 +356,9 @@
 <span>  <span class="va">coop_history</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="benchmarking-the-two-implementations" class="section level3" number="23.3.3">
+<div class="section level3" id="benchmarking-the-two-implementations" number="23.3.3">
 <h3>
-<span class="header-section-number">23.3.3</span> Benchmarking the two implementations<a class="anchor" aria-label="anchor" href="#benchmarking-the-two-implementations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.3.3</span> Benchmarking the two implementations<a aria-label="anchor" class="anchor" href="#benchmarking-the-two-implementations"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb629"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Manual benchmarking function</span></span>
@@ -371,17 +378,17 @@
 <span><span class="va">time_vec</span>  <span class="op">&lt;-</span> <span class="fu">benchmark_fn</span><span class="op">(</span><span class="va">spatial_pd_vectorized</span>, n <span class="op">=</span> <span class="fl">30</span>, rounds <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  Loop-based:  %.3f s (sd: %.3f)\n"</span>, <span class="va">time_loop</span><span class="op">$</span><span class="va">mean</span>, <span class="va">time_loop</span><span class="op">$</span><span class="va">sd</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>#&gt;   Loop-based:  0.227 s (sd: 0.018)</code></pre>
+<pre><code>#&gt;   Loop-based:  0.238 s (sd: 0.019)</code></pre>
 <div class="sourceCode" id="cb633"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  Vectorized:  %.3f s (sd: %.3f)\n"</span>, <span class="va">time_vec</span><span class="op">$</span><span class="va">mean</span>, <span class="va">time_vec</span><span class="op">$</span><span class="va">sd</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   Vectorized:  0.015 s (sd: 0.010)</code></pre>
 <div class="sourceCode" id="cb635"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  Speedup:     %.1fx\n"</span>, <span class="va">time_loop</span><span class="op">$</span><span class="va">mean</span> <span class="op">/</span> <span class="va">time_vec</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>#&gt;   Speedup:     15.1x</code></pre>
+<pre><code>#&gt;   Speedup:     15.5x</code></pre>
 </div>
-<div id="verifying-correctness" class="section level3" number="23.3.4">
+<div class="section level3" id="verifying-correctness" number="23.3.4">
 <h3>
-<span class="header-section-number">23.3.4</span> Verifying correctness<a class="anchor" aria-label="anchor" href="#verifying-correctness"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.3.4</span> Verifying correctness<a aria-label="anchor" class="anchor" href="#verifying-correctness"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb637"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -398,9 +405,9 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  All equal: %s\n"</span>, <span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="va">result_loop</span>, <span class="va">result_vec</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   All equal: TRUE</code></pre>
 </div>
-<div id="visualizing-the-benchmark" class="section level3" number="23.3.5">
+<div class="section level3" id="visualizing-the-benchmark" number="23.3.5">
 <h3>
-<span class="header-section-number">23.3.5</span> Visualizing the benchmark<a class="anchor" aria-label="anchor" href="#visualizing-the-benchmark"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.3.5</span> Visualizing the benchmark<a aria-label="anchor" class="anchor" href="#visualizing-the-benchmark"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb643"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bench_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
@@ -428,17 +435,17 @@
 <span></span>
 <span><span class="va">p_bench</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:performance-comparison"></span>
-<img src="22-performance-rcpp_files/figure-html/performance-comparison-1.png" alt="Execution time comparison for the spatial Prisoner's Dilemma simulation. Vectorized matrix operations eliminate the inner double loops, achieving a substantial speedup over the naive loop-based implementation." width="80%"><p class="caption">
+<span id="fig:performance-comparison" style="display:block;"></span>
+<img alt="Execution time comparison for the spatial Prisoner's Dilemma simulation. Vectorized matrix operations eliminate the inner double loops, achieving a substantial speedup over the naive loop-based implementation." src="22-performance-rcpp_files/figure-html/performance-comparison-1.png" width="80%"/><p class="caption">
 Figure 23.1: Execution time comparison for the spatial Prisoner’s Dilemma simulation. Vectorized matrix operations eliminate the inner double loops, achieving a substantial speedup over the naive loop-based implementation.
 </p>
 </div>
 <div class="sourceCode" id="cb644"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_bench</span>, <span class="st">"performance-comparison"</span>, width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="scaling-behavior" class="section level3" number="23.3.6">
+<div class="section level3" id="scaling-behavior" number="23.3.6">
 <h3>
-<span class="header-section-number">23.3.6</span> Scaling behavior<a class="anchor" aria-label="anchor" href="#scaling-behavior"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.3.6</span> Scaling behavior<a aria-label="anchor" class="anchor" href="#scaling-behavior"><i class="fas fa-link"></i></a>
 </h3>
 <p>How does each implementation scale with grid size?</p>
 <div class="sourceCode" id="cb645"><pre class="downlit sourceCode r">
@@ -478,8 +485,8 @@ Figure 23.1: Execution time comparison for the spatial Prisoner’s Dilemma simu
 <span></span>
 <span><span class="va">p_scaling</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:performance-scaling"></span>
-<img src="22-performance-rcpp_files/figure-html/performance-scaling-1.png" alt="Scaling behavior of loop-based vs vectorized spatial PD as grid size increases (fixed at 20 rounds). Both scale roughly quadratically in the number of cells (as expected for a grid simulation), but the vectorized version maintains a consistent advantage. The log-log plot reveals parallel scaling slopes with a constant multiplicative gap." width="80%"><p class="caption">
+<span id="fig:performance-scaling" style="display:block;"></span>
+<img alt="Scaling behavior of loop-based vs vectorized spatial PD as grid size increases (fixed at 20 rounds). Both scale roughly quadratically in the number of cells (as expected for a grid simulation), but the vectorized version maintains a consistent advantage. The log-log plot reveals parallel scaling slopes with a constant multiplicative gap." src="22-performance-rcpp_files/figure-html/performance-scaling-1.png" width="80%"/><p class="caption">
 Figure 23.2: Scaling behavior of loop-based vs vectorized spatial PD as grid size increases (fixed at 20 rounds). Both scale roughly quadratically in the number of cells (as expected for a grid simulation), but the vectorized version maintains a consistent advantage. The log-log plot reveals parallel scaling slopes with a constant multiplicative gap.
 </p>
 </div>
@@ -487,14 +494,14 @@ Figure 23.2: Scaling behavior of loop-based vs vectorized spatial PD as grid siz
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_scaling</span>, <span class="st">"performance-scaling"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-19" class="section level2" number="23.4">
+<div class="section level2" id="worked-example-19" number="23.4">
 <h2>
-<span class="header-section-number">23.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-19"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-19"><i class="fas fa-link"></i></a>
 </h2>
 <p>We optimize the spatial PD simulation step by step, measuring the impact of each change.</p>
-<div id="step-1-profile-the-baseline" class="section level3" number="23.4.1">
+<div class="section level3" id="step-1-profile-the-baseline" number="23.4.1">
 <h3>
-<span class="header-section-number">23.4.1</span> Step 1: Profile the baseline<a class="anchor" aria-label="anchor" href="#step-1-profile-the-baseline"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.4.1</span> Step 1: Profile the baseline<a aria-label="anchor" class="anchor" href="#step-1-profile-the-baseline"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb647"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Profiling the loop-based implementation (40x40, 20 rounds):\n\n"</span><span class="op">)</span></span></code></pre></div>
@@ -505,7 +512,7 @@ Figure 23.2: Scaling behavior of loop-based vs vectorized spatial PD as grid siz
 <span>  <span class="va">result_full</span> <span class="op">&lt;-</span> <span class="fu">spatial_pd_loop</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">40</span>, rounds <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  Total elapsed time: %.3f s\n"</span>, <span class="va">t_full</span><span class="op">[</span><span class="st">"elapsed"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>#&gt;   Total elapsed time: 0.160 s</code></pre>
+<pre><code>#&gt;   Total elapsed time: 0.162 s</code></pre>
 <div class="sourceCode" id="cb651"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"  Bottleneck: nested loops over all cells and neighbors for payoff computation.\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   Bottleneck: nested loops over all cells and neighbors for payoff computation.</code></pre>
@@ -516,9 +523,9 @@ Figure 23.2: Scaling behavior of loop-based vs vectorized spatial PD as grid siz
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"  Over 20 rounds: 128,000 individual loop iterations.\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   Over 20 rounds: 128,000 individual loop iterations.</code></pre>
 </div>
-<div id="step-2-vectorize-payoff-computation" class="section level3" number="23.4.2">
+<div class="section level3" id="step-2-vectorize-payoff-computation" number="23.4.2">
 <h3>
-<span class="header-section-number">23.4.2</span> Step 2: Vectorize payoff computation<a class="anchor" aria-label="anchor" href="#step-2-vectorize-payoff-computation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.4.2</span> Step 2: Vectorize payoff computation<a aria-label="anchor" class="anchor" href="#step-2-vectorize-payoff-computation"><i class="fas fa-link"></i></a>
 </h3>
 <p>The key rewrite replaces the inner double loop with four matrix-shift operations.</p>
 <div class="sourceCode" id="cb657"><pre class="downlit sourceCode r">
@@ -528,14 +535,14 @@ Figure 23.2: Scaling behavior of loop-based vs vectorized spatial PD as grid siz
 <pre><code>#&gt;   Vectorized time:  0.007 s</code></pre>
 <div class="sourceCode" id="cb659"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  Loop-based time:  %.3f s\n"</span>, <span class="va">t_full</span><span class="op">[</span><span class="st">"elapsed"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>#&gt;   Loop-based time:  0.160 s</code></pre>
+<pre><code>#&gt;   Loop-based time:  0.162 s</code></pre>
 <div class="sourceCode" id="cb661"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  Speedup:          %.1fx\n"</span>, <span class="va">t_full</span><span class="op">[</span><span class="st">"elapsed"</span><span class="op">]</span> <span class="op">/</span> <span class="va">t_vec</span><span class="op">[</span><span class="st">"elapsed"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>#&gt;   Speedup:          22.9x</code></pre>
+<pre><code>#&gt;   Speedup:          23.1x</code></pre>
 </div>
-<div id="step-3-memory-pre-allocation-matters" class="section level3" number="23.4.3">
+<div class="section level3" id="step-3-memory-pre-allocation-matters" number="23.4.3">
 <h3>
-<span class="header-section-number">23.4.3</span> Step 3: Memory pre-allocation matters<a class="anchor" aria-label="anchor" href="#step-3-memory-pre-allocation-matters"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.4.3</span> Step 3: Memory pre-allocation matters<a aria-label="anchor" class="anchor" href="#step-3-memory-pre-allocation-matters"><i class="fas fa-link"></i></a>
 </h3>
 <p>A common anti-pattern in R is growing a data frame row by row. We demonstrate the cost.</p>
 <div class="sourceCode" id="cb663"><pre class="downlit sourceCode r">
@@ -581,14 +588,14 @@ Figure 23.2: Scaling behavior of loop-based vs vectorized spatial PD as grid siz
 <span>              <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma</a></span><span class="op">(</span><span class="va">prealloc_df</span><span class="op">$</span><span class="va">n</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>, <span class="va">prealloc_df</span><span class="op">$</span><span class="va">grow</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">prealloc_df</span><span class="op">$</span><span class="va">prealloc</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">sp</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <pre><code>#&gt;   1,000     0.0040    0.0020      2x
-#&gt;   5,000     0.0180    0.0000      Infx
-#&gt;   10,000    0.0670    0.0010      67x
-#&gt;   20,000    0.2440    0.0010      244x</code></pre>
+#&gt;   5,000     0.0190    0.0000      Infx
+#&gt;   10,000    0.0740    0.0010      74x
+#&gt;   20,000    0.2870    0.0010      287x</code></pre>
 <p>The growing vector copies the entire vector on each append, producing <span class="math inline">\(O(n^2)\)</span> total work. Pre-allocation is <span class="math inline">\(O(n)\)</span>.</p>
 </div>
-<div id="when-to-consider-rcpp" class="section level3" number="23.4.4">
+<div class="section level3" id="when-to-consider-rcpp" number="23.4.4">
 <h3>
-<span class="header-section-number">23.4.4</span> When to consider Rcpp<a class="anchor" aria-label="anchor" href="#when-to-consider-rcpp"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.4.4</span> When to consider Rcpp<a aria-label="anchor" class="anchor" href="#when-to-consider-rcpp"><i class="fas fa-link"></i></a>
 </h3>
 <p>For the spatial PD, vectorization delivered a large speedup because the core operation — summing neighbor states — is naturally expressed as matrix arithmetic. But some algorithms resist vectorization:</p>
 <ul>
@@ -603,9 +610,9 @@ Figure 23.2: Scaling behavior of loop-based vs vectorized spatial PD as grid siz
 <p>The decision rule is simple: <strong>vectorize first, Rcpp second</strong>. If the bottleneck can be expressed as matrix operations, do that. Only reach for Rcpp when it cannot.</p>
 </div>
 </div>
-<div id="extensions-21" class="section level2" number="23.5">
+<div class="section level2" id="extensions-21" number="23.5">
 <h2>
-<span class="header-section-number">23.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-21"><i class="fas fa-link"></i></a>
+<span class="header-section-number">23.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-21"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -618,8 +625,8 @@ Figure 23.2: Scaling behavior of loop-based vs vectorized spatial PD as grid siz
 <strong>Profiling tools</strong>: <code><a href="https://rdrr.io/r/utils/Rprof.html">Rprof()</a></code> provides sampling-based profiling, and <code>profvis::profvis()</code> offers interactive flame-graph visualizations for identifying hotspots.</li>
 </ul>
 </div>
-<div id="exercises-21" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-21"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-21">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-21"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Vectorize the tournament.</strong> The <code>run_tournament()</code> function in <code>R/axelrod.R</code> uses nested loops over strategy pairs. Each match is independent, so the outer loop is embarrassingly parallel. Write a version that stores results in a pre-allocated matrix and measure the speedup.</p></li>
@@ -627,18 +634,14 @@ Figure 23.2: Scaling behavior of loop-based vs vectorized spatial PD as grid siz
 <li><p><strong>Identify the crossover.</strong> Find the grid size <span class="math inline">\(n\)</span> at which the vectorized version becomes faster than the loop-based version. Plot both timing curves and mark the crossover point.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
-
-
-
 <div class="chapter-nav">
 <div class="prev"><a href="sec-network-games.html"><span class="header-section-number">22</span> Games on Networks</a></div>
 <div class="next"><a href="sec-ml-foundations.html"><span class="header-section-number">24</span> Machine Learning Foundations for Game Theory</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-performance-rcpp"><span class="header-section-number">23</span> Performance Optimization</a></li>
 <li><a class="nav-link" href="#learning-objectives-21">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-21"><span class="header-section-number">23.1</span> Motivation</a></li>
@@ -670,23 +673,21 @@ Figure 23.2: Scaling behavior of loop-based vs vectorized spatial PD as grid siz
 <li><a class="nav-link" href="#extensions-21"><span class="header-section-number">23.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-21">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/22-performance-rcpp.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/22-performance-rcpp.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/22-performance-rcpp.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/22-performance-rcpp.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -705,75 +706,18 @@ Figure 23.2: Scaling behavior of loop-based vs vectorized spatial PD as grid siz
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  
-
-  
-
 </div>
- <!-- .container -->
-
+<!-- .container -->
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

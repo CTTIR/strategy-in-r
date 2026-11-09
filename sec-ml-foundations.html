@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 24 Machine Learning Foundations for Game Theory | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Supervised learning as a game against nature, regret minimization and regret matching, feature engineering for game-theoretic data, and cross-validation for strategic predictions.  Learning...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 24 Machine Learning Foundations for Game Theory | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-ml-foundations.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Supervised learning as a game against nature, regret minimization and regret matching, feature engineering for game-theoretic data, and cross-validation for strategic predictions.  Learning...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 24 Machine Learning Foundations for Game Theory | Strategy in R">
-<meta name="twitter:description" content="Supervised learning as a game against nature, regret minimization and regret matching, feature engineering for game-theoretic data, and cross-validation for strategic predictions.  Learning...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 24 Machine Learning Foundations for Game Theory | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Supervised learning as a game against nature, regret minimization and regret matching, feature engineering for game-theoretic data, and cross-validation for strategic predictions.  Learning..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 24 Machine Learning Foundations for Game Theory | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-ml-foundations.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Supervised learning as a game against nature, regret minimization and regret matching, feature engineering for game-theoretic data, and cross-validation for strategic predictions.  Learning..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 24 Machine Learning Foundations for Game Theory | Strategy in R" name="twitter:title"/>
+<meta content="Supervised learning as a game against nature, regret minimization and regret matching, feature engineering for game-theoretic data, and cross-validation for strategic predictions.  Learning..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 24 Machine Learning Foundations for Game Theory | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-ml-foundations" class="section level1" number="24">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-ml-foundations" number="24">
 <h1>
-<span class="header-section-number">24</span> Machine Learning Foundations for Game Theory<a class="anchor" aria-label="anchor" href="#sec-ml-foundations"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">24</span> Machine Learning Foundations for Game Theory<a aria-label="anchor" class="anchor" href="#sec-ml-foundations"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-ml-foundations.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-ml-foundations.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Supervised learning as a game against nature, regret minimization and regret matching, feature engineering for game-theoretic data, and cross-validation for strategic predictions.</p>
 </blockquote>
-<div id="learning-objectives-22" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-22"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-22">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-22"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Frame supervised learning as a two-player game between a learner and nature.</li>
@@ -183,20 +190,20 @@
 <li>Apply cross-validation to evaluate predictive models of strategic behavior.</li>
 </ul>
 </div>
-<div id="motivation-22" class="section level2" number="24.1">
+<div class="section level2" id="motivation-22" number="24.1">
 <h2>
-<span class="header-section-number">24.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-22"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-22"><i class="fas fa-link"></i></a>
 </h2>
 <p>Machine learning and game theory share a deep intellectual kinship. At its core, supervised learning is a minimax problem: a learner selects a hypothesis to minimize worst-case loss, while “nature” (the data-generating process) selects inputs that expose the learner’s weaknesses. This adversarial framing is not merely a metaphor — it is the foundation of online learning theory and connects directly to regret minimization, a concept central to modern algorithmic game theory.</p>
 <p>This chapter bridges the two fields. We show how regret matching — a simple no-regret algorithm — converges to Nash equilibrium in two-player zero-sum games, then pivot to practical ML tools (logistic regression, cross-validation) applied to game-theoretic prediction tasks. The goal is to equip the reader with ML techniques that will appear throughout the remaining chapters on reinforcement learning, self-play, and counterfactual regret minimization.</p>
 </div>
-<div id="theory-22" class="section level2" number="24.2">
+<div class="section level2" id="theory-22" number="24.2">
 <h2>
-<span class="header-section-number">24.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-22"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-22"><i class="fas fa-link"></i></a>
 </h2>
-<div id="supervised-learning-as-a-game" class="section level3" number="24.2.1">
+<div class="section level3" id="supervised-learning-as-a-game" number="24.2.1">
 <h3>
-<span class="header-section-number">24.2.1</span> Supervised learning as a game<a class="anchor" aria-label="anchor" href="#supervised-learning-as-a-game"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.2.1</span> Supervised learning as a game<a aria-label="anchor" class="anchor" href="#supervised-learning-as-a-game"><i class="fas fa-link"></i></a>
 </h3>
 <p>In the <strong>statistical learning</strong> framework, a learner observes training data <span class="math inline">\(\{(x_i, y_i)\}_{i=1}^n\)</span> drawn from an unknown distribution <span class="math inline">\(\mathcal{D}\)</span> and selects a hypothesis <span class="math inline">\(h\)</span> from a class <span class="math inline">\(\mathcal{H}\)</span> to minimize expected loss:</p>
 <p><span class="math display" id="eq:erm">\[\begin{equation}
@@ -205,9 +212,9 @@
 \end{equation}\]</span></p>
 <p>This has a natural game-theoretic interpretation. The learner is Player 1, choosing <span class="math inline">\(h\)</span>. Nature is Player 2, choosing <span class="math inline">\((x, y)\)</span>. The loss function <span class="math inline">\(\ell\)</span> is the payoff matrix — the learner minimizes it, nature maximizes it. The minimax theorem guarantees that in this zero-sum formulation, optimal learning strategies exist.</p>
 </div>
-<div id="online-learning-and-regret" class="section level3" number="24.2.2">
+<div class="section level3" id="online-learning-and-regret" number="24.2.2">
 <h3>
-<span class="header-section-number">24.2.2</span> Online learning and regret<a class="anchor" aria-label="anchor" href="#online-learning-and-regret"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.2.2</span> Online learning and regret<a aria-label="anchor" class="anchor" href="#online-learning-and-regret"><i class="fas fa-link"></i></a>
 </h3>
 <p>In <strong>online learning</strong>, decisions are made sequentially. At each round <span class="math inline">\(t\)</span>, the learner chooses an action <span class="math inline">\(a_t\)</span> from a set <span class="math inline">\(\mathcal{A}\)</span>, then observes the loss vector <span class="math inline">\(\ell_t(a)\)</span> for all actions. The <strong>cumulative regret</strong> of not having played action <span class="math inline">\(a\)</span> is:</p>
 <p><span class="math display" id="eq:regret">\[\begin{equation}
@@ -216,9 +223,9 @@ R_T(a) = \sum_{t=1}^{T} \ell_t(a_t) - \sum_{t=1}^{T} \ell_t(a)
 \end{equation}\]</span></p>
 <p>A <strong>no-regret</strong> algorithm ensures that <span class="math inline">\(\max_a R_T(a) / T \to 0\)</span> as <span class="math inline">\(T \to \infty\)</span>. The celebrated connection to game theory is: if both players in a zero-sum game use no-regret algorithms, their time-averaged strategies converge to a Nash equilibrium <span class="citation">(<a href="references.html#ref-cesa-bianchi2006">Cesa-Bianchi &amp; Lugosi, 2006</a>)</span>.</p>
 </div>
-<div id="regret-matching" class="section level3" number="24.2.3">
+<div class="section level3" id="regret-matching" number="24.2.3">
 <h3>
-<span class="header-section-number">24.2.3</span> Regret matching<a class="anchor" aria-label="anchor" href="#regret-matching"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.2.3</span> Regret matching<a aria-label="anchor" class="anchor" href="#regret-matching"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Regret matching</strong> <span class="citation">(<a href="references.html#ref-hart2000">Hart &amp; Mas-Colell, 2000</a>)</span> is one of the simplest no-regret algorithms. At each round, the player computes cumulative regret for each action and plays proportionally to positive regrets:</p>
 <p><span class="math display" id="eq:regret-matching">\[\begin{equation}
@@ -230,9 +237,9 @@ R_t^+(a) \,/\, \sum_{a'} R_t^+(a') &amp; \text{if } \sum_{a'} R_t^+(a') &gt; 0 \
 \end{equation}\]</span></p>
 <p>where <span class="math inline">\(R_t^+(a) = \max(0, R_t(a))\)</span>. This algorithm is the building block of <strong>counterfactual regret minimization</strong> (CFR), covered in <a href="sec-cfr.html#sec-cfr">29</a>.</p>
 </div>
-<div id="feature-representation-for-game-theoretic-data" class="section level3" number="24.2.4">
+<div class="section level3" id="feature-representation-for-game-theoretic-data" number="24.2.4">
 <h3>
-<span class="header-section-number">24.2.4</span> Feature representation for game-theoretic data<a class="anchor" aria-label="anchor" href="#feature-representation-for-game-theoretic-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.2.4</span> Feature representation for game-theoretic data<a aria-label="anchor" class="anchor" href="#feature-representation-for-game-theoretic-data"><i class="fas fa-link"></i></a>
 </h3>
 <p>When applying ML to strategic settings, feature engineering matters. Common features include:</p>
 <ul>
@@ -245,13 +252,13 @@ R_t^+(a) \,/\, \sum_{a'} R_t^+(a') &amp; \text{if } \sum_{a'} R_t^+(a') &gt; 0 \
 </ul>
 </div>
 </div>
-<div id="sec-ml-foundations-impl" class="section level2" number="24.3">
+<div class="section level2" id="sec-ml-foundations-impl" number="24.3">
 <h2>
-<span class="header-section-number">24.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-ml-foundations-impl"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-ml-foundations-impl"><i class="fas fa-link"></i></a>
 </h2>
-<div id="regret-matching-for-rock-paper-scissors" class="section level3" number="24.3.1">
+<div class="section level3" id="regret-matching-for-rock-paper-scissors" number="24.3.1">
 <h3>
-<span class="header-section-number">24.3.1</span> Regret matching for Rock-Paper-Scissors<a class="anchor" aria-label="anchor" href="#regret-matching-for-rock-paper-scissors"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.3.1</span> Regret matching for Rock-Paper-Scissors<a aria-label="anchor" class="anchor" href="#regret-matching-for-rock-paper-scissors"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb669"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">regret_matching</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n_iterations</span> <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span> <span class="op">{</span></span>
@@ -329,8 +336,8 @@ R_t^+(a) \,/\, \sum_{a'} R_t^+(a') &amp; \text{if } \sum_{a'} R_t^+(a') &gt; 0 \
 <span></span>
 <span><span class="va">p_regret</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:regret-convergence"></span>
-<img src="23-ml-foundations-for-gt_files/figure-html/regret-convergence-1.png" alt="Regret matching convergence in Rock-Paper-Scissors. Player 1's time-averaged strategy converges toward the Nash equilibrium of (1/3, 1/3, 1/3) for each action." width="80%"><p class="caption">
+<span id="fig:regret-convergence" style="display:block;"></span>
+<img alt="Regret matching convergence in Rock-Paper-Scissors. Player 1's time-averaged strategy converges toward the Nash equilibrium of (1/3, 1/3, 1/3) for each action." src="23-ml-foundations-for-gt_files/figure-html/regret-convergence-1.png" width="80%"/><p class="caption">
 Figure 24.1: Regret matching convergence in Rock-Paper-Scissors. Player 1’s time-averaged strategy converges toward the Nash equilibrium of (1/3, 1/3, 1/3) for each action.
 </p>
 </div>
@@ -353,9 +360,9 @@ Figure 24.1: Regret matching convergence in Rock-Paper-Scissors. Player 1’s ti
 <pre><code>#&gt;     Rock    Paper Scissors 
 #&gt;    0.336    0.321    0.343</code></pre>
 </div>
-<div id="decision-boundary-visualization" class="section level3" number="24.3.2">
+<div class="section level3" id="decision-boundary-visualization" number="24.3.2">
 <h3>
-<span class="header-section-number">24.3.2</span> Decision boundary visualization<a class="anchor" aria-label="anchor" href="#decision-boundary-visualization"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.3.2</span> Decision boundary visualization<a aria-label="anchor" class="anchor" href="#decision-boundary-visualization"><i class="fas fa-link"></i></a>
 </h3>
 <p>To illustrate supervised learning in a game-theoretic context, consider a binary classification task: given two features derived from game play, predict an outcome. We fit a logistic regression model using <code>glm</code> and visualize the decision boundary.</p>
 <div class="sourceCode" id="cb681"><pre class="downlit sourceCode r">
@@ -401,8 +408,8 @@ Figure 24.1: Regret matching convergence in Rock-Paper-Scissors. Player 1’s ti
 <span></span>
 <span><span class="va">p_boundary</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:decision-boundary"></span>
-<img src="23-ml-foundations-for-gt_files/figure-html/decision-boundary-1.png" alt="Decision boundary for predicting cooperation. The logistic regression separates cooperators (orange) from defectors (blue) based on the opponent's historical cooperation rate and normalized round number." width="80%"><p class="caption">
+<span id="fig:decision-boundary" style="display:block;"></span>
+<img alt="Decision boundary for predicting cooperation. The logistic regression separates cooperators (orange) from defectors (blue) based on the opponent's historical cooperation rate and normalized round number." src="23-ml-foundations-for-gt_files/figure-html/decision-boundary-1.png" width="80%"/><p class="caption">
 Figure 24.2: Decision boundary for predicting cooperation. The logistic regression separates cooperators (orange) from defectors (blue) based on the opponent’s historical cooperation rate and normalized round number.
 </p>
 </div>
@@ -410,13 +417,13 @@ Figure 24.2: Decision boundary for predicting cooperation. The logistic regressi
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_boundary</span>, <span class="st">"decision-boundary-cooperation"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-20" class="section level2" number="24.4">
+<div class="section level2" id="worked-example-20" number="24.4">
 <h2>
-<span class="header-section-number">24.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-20"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-20"><i class="fas fa-link"></i></a>
 </h2>
-<div id="predicting-cooperation-in-the-iterated-prisoners-dilemma" class="section level3" number="24.4.1">
+<div class="section level3" id="predicting-cooperation-in-the-iterated-prisoners-dilemma" number="24.4.1">
 <h3>
-<span class="header-section-number">24.4.1</span> Predicting cooperation in the iterated Prisoner’s Dilemma<a class="anchor" aria-label="anchor" href="#predicting-cooperation-in-the-iterated-prisoners-dilemma"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.4.1</span> Predicting cooperation in the iterated Prisoner’s Dilemma<a aria-label="anchor" class="anchor" href="#predicting-cooperation-in-the-iterated-prisoners-dilemma"><i class="fas fa-link"></i></a>
 </h3>
 <p>We simulate an iterated Prisoner’s Dilemma and use logistic regression to predict whether a player cooperates on a given round, based on observable features.</p>
 <div class="sourceCode" id="cb684"><pre class="downlit sourceCode r">
@@ -508,9 +515,9 @@ Figure 24.2: Decision boundary for predicting cooperation. The logistic regressi
 <p>The opponent’s recent cooperation rate is the strongest predictor — consistent with tit-for-tat-like dynamics. Cross-validation by pair (rather than by round) prevents data leakage from correlated within-pair observations, a critical methodological point when applying ML to repeated games.</p>
 </div>
 </div>
-<div id="extensions-22" class="section level2" number="24.5">
+<div class="section level2" id="extensions-22" number="24.5">
 <h2>
-<span class="header-section-number">24.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-22"><i class="fas fa-link"></i></a>
+<span class="header-section-number">24.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-22"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -523,8 +530,8 @@ Figure 24.2: Decision boundary for predicting cooperation. The logistic regressi
 <strong>Feature engineering</strong> for strategic data is an active research area: deep learning approaches learn features automatically, but interpretable features (cooperation rates, payoff summaries) remain valuable for analysis.</li>
 </ul>
 </div>
-<div id="exercises-22" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-22"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-22">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-22"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Regret matching in Prisoner’s Dilemma.</strong> Implement regret matching for the one-shot Prisoner’s Dilemma with payoffs <span class="math inline">\(T = 5, R = 3, P = 1, S = 0\)</span>. To what strategy profile does the average play converge? Explain why this differs from RPS.</p></li>
@@ -532,16 +539,14 @@ Figure 24.2: Decision boundary for predicting cooperation. The logistic regressi
 <li><p><strong>Window size sensitivity.</strong> In the worked example, features use a 3-round sliding window. Repeat the analysis with window sizes of 1, 5, 10, and 20. Plot cross-validation accuracy versus window size and explain the trade-off between responsiveness and stability.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -560,64 +565,15 @@ Figure 24.2: Decision boundary for predicting cooperation. The logistic regressi
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-performance-rcpp.html"><span class="header-section-number">23</span> Performance Optimization</a></div>
 <div class="next"><a href="sec-reinforcement-learning.html"><span class="header-section-number">25</span> Reinforcement Learning Foundations</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-ml-foundations"><span class="header-section-number">24</span> Machine Learning Foundations for Game Theory</a></li>
 <li><a class="nav-link" href="#learning-objectives-22">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-22"><span class="header-section-number">24.1</span> Motivation</a></li>
@@ -641,29 +597,23 @@ Figure 24.2: Decision boundary for predicting cooperation. The logistic regressi
 <li><a class="nav-link" href="#extensions-22"><span class="header-section-number">24.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-22">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/23-ml-foundations-for-gt.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/23-ml-foundations-for-gt.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/23-ml-foundations-for-gt.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/23-ml-foundations-for-gt.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

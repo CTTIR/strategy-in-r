@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 39 Fairness in Machine Learning | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Fairness definitions, impossibility results, and the accuracy-fairness trade-off implemented as a multi-stakeholder game.  Learning objectives Define demographic parity, equalized odds, and...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 39 Fairness in Machine Learning | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-fairness-ml.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Fairness definitions, impossibility results, and the accuracy-fairness trade-off implemented as a multi-stakeholder game.  Learning objectives Define demographic parity, equalized odds, and...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 39 Fairness in Machine Learning | Strategy in R">
-<meta name="twitter:description" content="Fairness definitions, impossibility results, and the accuracy-fairness trade-off implemented as a multi-stakeholder game.  Learning objectives Define demographic parity, equalized odds, and...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 39 Fairness in Machine Learning | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Fairness definitions, impossibility results, and the accuracy-fairness trade-off implemented as a multi-stakeholder game.  Learning objectives Define demographic parity, equalized odds, and..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 39 Fairness in Machine Learning | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-fairness-ml.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Fairness definitions, impossibility results, and the accuracy-fairness trade-off implemented as a multi-stakeholder game.  Learning objectives Define demographic parity, equalized odds, and..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 39 Fairness in Machine Learning | Strategy in R" name="twitter:title"/>
+<meta content="Fairness definitions, impossibility results, and the accuracy-fairness trade-off implemented as a multi-stakeholder game.  Learning objectives Define demographic parity, equalized odds, and..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 39 Fairness in Machine Learning | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-fairness-ml" class="section level1" number="39">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-fairness-ml" number="39">
 <h1>
-<span class="header-section-number">39</span> Fairness in Machine Learning<a class="anchor" aria-label="anchor" href="#sec-fairness-ml"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">39</span> Fairness in Machine Learning<a aria-label="anchor" class="anchor" href="#sec-fairness-ml"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-fairness-ml.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-fairness-ml.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Fairness definitions, impossibility results, and the accuracy-fairness trade-off implemented as a multi-stakeholder game.</p>
 </blockquote>
-<div id="learning-objectives-37" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-37"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-37">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-37"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Define demographic parity, equalized odds, and calibration as formal fairness criteria.</li>
@@ -183,20 +190,20 @@
 <li>Visualize the accuracy-fairness trade-off frontier and ROC curves across demographic groups.</li>
 </ul>
 </div>
-<div id="motivation-37" class="section level2" number="39.1">
+<div class="section level2" id="motivation-37" number="39.1">
 <h2>
-<span class="header-section-number">39.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-37"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-37"><i class="fas fa-link"></i></a>
 </h2>
 <p>A bank builds a model to approve or deny loan applications. The model is accurate on average, but closer inspection reveals that it approves 80% of applications from group A and only 55% from group B, even among equally qualified applicants. Is the model unfair?</p>
 <p>The answer depends on which notion of fairness we adopt — and a striking impossibility result shows that no classifier can satisfy all reasonable fairness criteria at once. This tension mirrors the game-theoretic trade-offs studied in <a href="sec-ethics-frameworks.html#sec-ethics-frameworks">38</a>: different stakeholders (applicants from each group, the bank, regulators) have conflicting objectives, and the system designer must navigate a multi-objective optimization problem.</p>
 </div>
-<div id="theory-37" class="section level2" number="39.2">
+<div class="section level2" id="theory-37" number="39.2">
 <h2>
-<span class="header-section-number">39.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-37"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-37"><i class="fas fa-link"></i></a>
 </h2>
-<div id="fairness-definitions" class="section level3" number="39.2.1">
+<div class="section level3" id="fairness-definitions" number="39.2.1">
 <h3>
-<span class="header-section-number">39.2.1</span> Fairness definitions<a class="anchor" aria-label="anchor" href="#fairness-definitions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.2.1</span> Fairness definitions<a aria-label="anchor" class="anchor" href="#fairness-definitions"><i class="fas fa-link"></i></a>
 </h3>
 <p>Let <span class="math inline">\(Y \in \{0, 1\}\)</span> be the true outcome, <span class="math inline">\(\hat{Y}\)</span> the classifier’s prediction, and <span class="math inline">\(G \in \{A, B\}\)</span> a sensitive group attribute.</p>
 <div class="rmdnote">
@@ -224,9 +231,9 @@ P(Y = 1 \mid \hat{p} = p, G = A) = P(Y = 1 \mid \hat{p} = p, G = B) = p
 \end{equation}\]</span></p>
 </div>
 </div>
-<div id="the-impossibility-theorem" class="section level3" number="39.2.2">
+<div class="section level3" id="the-impossibility-theorem" number="39.2.2">
 <h3>
-<span class="header-section-number">39.2.2</span> The impossibility theorem<a class="anchor" aria-label="anchor" href="#the-impossibility-theorem"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.2.2</span> The impossibility theorem<a aria-label="anchor" class="anchor" href="#the-impossibility-theorem"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdtip">
 <p><strong>Theorem: Impossibility of Simultaneous Fairness</strong></p>
@@ -234,9 +241,9 @@ P(Y = 1 \mid \hat{p} = p, G = A) = P(Y = 1 \mid \hat{p} = p, G = B) = p
 </div>
 <p>This impossibility result is analogous to Arrow’s theorem in social choice: no single system can satisfy all desirable properties. The designer must choose which fairness criterion to prioritize — a normative decision that cannot be resolved by data alone.</p>
 </div>
-<div id="fairness-as-a-multi-stakeholder-game" class="section level3" number="39.2.3">
+<div class="section level3" id="fairness-as-a-multi-stakeholder-game" number="39.2.3">
 <h3>
-<span class="header-section-number">39.2.3</span> Fairness as a multi-stakeholder game<a class="anchor" aria-label="anchor" href="#fairness-as-a-multi-stakeholder-game"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.2.3</span> Fairness as a multi-stakeholder game<a aria-label="anchor" class="anchor" href="#fairness-as-a-multi-stakeholder-game"><i class="fas fa-link"></i></a>
 </h3>
 <p>We can frame fairness as a game between stakeholders:</p>
 <ul>
@@ -250,13 +257,13 @@ P(Y = 1 \mid \hat{p} = p, G = A) = P(Y = 1 \mid \hat{p} = p, G = B) = p
 <p>The Pareto frontier of this game traces out the achievable accuracy-fairness trade-offs. Moving along the frontier involves sacrificing accuracy for fairness or vice versa.</p>
 </div>
 </div>
-<div id="sec-fairness-implementation" class="section level2" number="39.3">
+<div class="section level2" id="sec-fairness-implementation" number="39.3">
 <h2>
-<span class="header-section-number">39.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-fairness-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-fairness-implementation"><i class="fas fa-link"></i></a>
 </h2>
-<div id="simulating-loan-data" class="section level3" number="39.3.1">
+<div class="section level3" id="simulating-loan-data" number="39.3.1">
 <h3>
-<span class="header-section-number">39.3.1</span> Simulating loan data<a class="anchor" aria-label="anchor" href="#simulating-loan-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.3.1</span> Simulating loan data<a aria-label="anchor" class="anchor" href="#simulating-loan-data"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -286,9 +293,9 @@ P(Y = 1 \mid \hat{p} = p, G = A) = P(Y = 1 \mid \hat{p} = p, G = B) = p
 #&gt; 1 A         0.594  1017
 #&gt; 2 B         0.397   983</code></pre>
 </div>
-<div id="unconstrained-logistic-regression" class="section level3" number="39.3.2">
+<div class="section level3" id="unconstrained-logistic-regression" number="39.3.2">
 <h3>
-<span class="header-section-number">39.3.2</span> Unconstrained logistic regression<a class="anchor" aria-label="anchor" href="#unconstrained-logistic-regression"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.3.2</span> Unconstrained logistic regression<a aria-label="anchor" class="anchor" href="#unconstrained-logistic-regression"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standard logistic regression (no fairness constraint)</span></span>
@@ -314,9 +321,9 @@ P(Y = 1 \mid \hat{p} = p, G = A) = P(Y = 1 \mid \hat{p} = p, G = B) = p
 #&gt; 1 A           0.486
 #&gt; 2 B           0.485</code></pre>
 </div>
-<div id="fairness-penalized-logistic-regression" class="section level3" number="39.3.3">
+<div class="section level3" id="fairness-penalized-logistic-regression" number="39.3.3">
 <h3>
-<span class="header-section-number">39.3.3</span> Fairness-penalized logistic regression<a class="anchor" aria-label="anchor" href="#fairness-penalized-logistic-regression"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.3.3</span> Fairness-penalized logistic regression<a aria-label="anchor" class="anchor" href="#fairness-penalized-logistic-regression"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Logistic regression with demographic parity penalty</span></span>
@@ -387,9 +394,9 @@ P(Y = 1 \mid \hat{p} = p, G = A) = P(Y = 1 \mid \hat{p} = p, G = B) = p
 #&gt; 6   10      0.724 0.00782 
 #&gt; 7   20      0.724 0.00782</code></pre>
 </div>
-<div id="roc-curves-by-group" class="section level3" number="39.3.4">
+<div class="section level3" id="roc-curves-by-group" number="39.3.4">
 <h3>
-<span class="header-section-number">39.3.4</span> ROC curves by group<a class="anchor" aria-label="anchor" href="#roc-curves-by-group"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.3.4</span> ROC curves by group<a aria-label="anchor" class="anchor" href="#roc-curves-by-group"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute ROC data for a given probability vector</span></span>
@@ -437,17 +444,17 @@ P(Y = 1 \mid \hat{p} = p, G = A) = P(Y = 1 \mid \hat{p} = p, G = B) = p
 <span></span>
 <span><span class="va">p1</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:roc-curves"></span>
-<img src="38-fairness-in-ml_files/figure-html/roc-curves-1.png" alt="ROC curves for the unconstrained (dashed) and fairness-penalized (solid) classifiers, separated by demographic group. The fairness-penalized model reduces the gap between groups at the cost of overall accuracy." width="80%"><p class="caption">
+<span id="fig:roc-curves" style="display:block;"></span>
+<img alt="ROC curves for the unconstrained (dashed) and fairness-penalized (solid) classifiers, separated by demographic group. The fairness-penalized model reduces the gap between groups at the cost of overall accuracy." src="38-fairness-in-ml_files/figure-html/roc-curves-1.png" width="80%"/><p class="caption">
 Figure 39.1: ROC curves for the unconstrained (dashed) and fairness-penalized (solid) classifiers, separated by demographic group. The fairness-penalized model reduces the gap between groups at the cost of overall accuracy.
 </p>
 </div>
 <div class="sourceCode" id="cb1119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p1</span>, <span class="st">"fairness-roc-curves"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="accuracy-fairness-trade-off-frontier" class="section level3" number="39.3.5">
+<div class="section level3" id="accuracy-fairness-trade-off-frontier" number="39.3.5">
 <h3>
-<span class="header-section-number">39.3.5</span> Accuracy-fairness trade-off frontier<a class="anchor" aria-label="anchor" href="#accuracy-fairness-trade-off-frontier"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.3.5</span> Accuracy-fairness trade-off frontier<a aria-label="anchor" class="anchor" href="#accuracy-fairness-trade-off-frontier"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">fair_results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dp_gap</span>, y <span class="op">=</span> <span class="va">accuracy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -466,8 +473,8 @@ Figure 39.1: ROC curves for the unconstrained (dashed) and fairness-penalized (s
 <span></span>
 <span><span class="va">p2</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:tradeoff-frontier"></span>
-<img src="38-fairness-in-ml_files/figure-html/tradeoff-frontier-1.png" alt="Accuracy versus demographic parity gap across penalty strengths. Increasing the fairness penalty (lambda) reduces the gap between group acceptance rates but decreases overall accuracy. The frontier traces out the achievable trade-offs." width="80%"><p class="caption">
+<span id="fig:tradeoff-frontier" style="display:block;"></span>
+<img alt="Accuracy versus demographic parity gap across penalty strengths. Increasing the fairness penalty (lambda) reduces the gap between group acceptance rates but decreases overall accuracy. The frontier traces out the achievable trade-offs." src="38-fairness-in-ml_files/figure-html/tradeoff-frontier-1.png" width="80%"/><p class="caption">
 Figure 39.2: Accuracy versus demographic parity gap across penalty strengths. Increasing the fairness penalty (lambda) reduces the gap between group acceptance rates but decreases overall accuracy. The frontier traces out the achievable trade-offs.
 </p>
 </div>
@@ -475,9 +482,9 @@ Figure 39.2: Accuracy versus demographic parity gap across penalty strengths. In
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p2</span>, <span class="st">"fairness-tradeoff-frontier"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-35" class="section level2" number="39.4">
+<div class="section level2" id="worked-example-35" number="39.4">
 <h2>
-<span class="header-section-number">39.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-35"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-35"><i class="fas fa-link"></i></a>
 </h2>
 <p>We walk through a concrete loan-approval scenario with two demographic groups.</p>
 <p><strong>Step 1 — Data.</strong> We simulated 2,000 loan applications. Group A has a higher base rate of repayment (the latent variable includes a group-correlated shift of <span class="math inline">\(\pm 0.4\)</span>). This difference in base rates is what triggers the impossibility theorem.</p>
@@ -522,9 +529,9 @@ Figure 39.2: Accuracy versus demographic parity gap across penalty strengths. In
 #&gt; Accuracy drop: 0.733 -&gt; 0.725</code></pre>
 <p><strong>Step 3 — Interpretation.</strong> The fairness-penalized model reduces the acceptance-rate gap at the cost of overall accuracy. This is not a deficiency of the method — it is a fundamental consequence of the impossibility theorem. When base rates differ, closing the demographic parity gap necessarily introduces some prediction errors.</p>
 </div>
-<div id="extensions-37" class="section level2" number="39.5">
+<div class="section level2" id="extensions-37" number="39.5">
 <h2>
-<span class="header-section-number">39.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-37"><i class="fas fa-link"></i></a>
+<span class="header-section-number">39.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-37"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -536,8 +543,8 @@ Figure 39.2: Accuracy versus demographic parity gap across penalty strengths. In
 <li>The ethical frameworks from <a href="sec-ethics-frameworks.html#sec-ethics-frameworks">38</a> apply directly: the utilitarian view favours overall accuracy, the Rawlsian view favours equalizing outcomes for the worst-off group.</li>
 </ul>
 </div>
-<div id="exercises-37" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-37"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-37">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-37"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Equalized odds penalty.</strong> Modify the <code>fair_logistic()</code> function to penalize the difference in true positive rates between groups instead of the difference in acceptance rates. How does the accuracy-fairness frontier change?</p></li>
@@ -545,16 +552,14 @@ Figure 39.2: Accuracy versus demographic parity gap across penalty strengths. In
 <li><p><strong>Threshold adjustment.</strong> Instead of retraining, implement a post-processing approach: keep the unconstrained model but use different classification thresholds for each group to achieve demographic parity. Compare the accuracy of this approach to the penalty-based method at the same fairness level.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -573,64 +578,15 @@ Figure 39.2: Accuracy versus demographic parity gap across penalty strengths. In
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-ethics-frameworks.html"><span class="header-section-number">38</span> Ethical Frameworks for Strategic AI</a></div>
 <div class="next"><a href="sec-ai-alignment.html"><span class="header-section-number">40</span> AI Alignment as a Game</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-fairness-ml"><span class="header-section-number">39</span> Fairness in Machine Learning</a></li>
 <li><a class="nav-link" href="#learning-objectives-37">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-37"><span class="header-section-number">39.1</span> Motivation</a></li>
@@ -654,29 +610,23 @@ Figure 39.2: Accuracy versus demographic parity gap across penalty strengths. In
 <li><a class="nav-link" href="#extensions-37"><span class="header-section-number">39.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-37">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/38-fairness-in-ml.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/38-fairness-in-ml.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/38-fairness-in-ml.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/38-fairness-in-ml.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

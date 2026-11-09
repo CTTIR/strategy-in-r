@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 42 The Future of Strategy | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Emerging frontiers in strategic AI: computational complexity, multi-agent foundation models, and responsible deployment.  Learning objectives Identify the major open problems at the intersection...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 42 The Future of Strategy | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-future.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Emerging frontiers in strategic AI: computational complexity, multi-agent foundation models, and responsible deployment.  Learning objectives Identify the major open problems at the intersection...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 42 The Future of Strategy | Strategy in R">
-<meta name="twitter:description" content="Emerging frontiers in strategic AI: computational complexity, multi-agent foundation models, and responsible deployment.  Learning objectives Identify the major open problems at the intersection...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 42 The Future of Strategy | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Emerging frontiers in strategic AI: computational complexity, multi-agent foundation models, and responsible deployment.  Learning objectives Identify the major open problems at the intersection..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 42 The Future of Strategy | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-future.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Emerging frontiers in strategic AI: computational complexity, multi-agent foundation models, and responsible deployment.  Learning objectives Identify the major open problems at the intersection..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 42 The Future of Strategy | Strategy in R" name="twitter:title"/>
+<meta content="Emerging frontiers in strategic AI: computational complexity, multi-agent foundation models, and responsible deployment.  Learning objectives Identify the major open problems at the intersection..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 42 The Future of Strategy | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-future" class="section level1" number="42">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-future" number="42">
 <h1>
-<span class="header-section-number">42</span> The Future of Strategy<a class="anchor" aria-label="anchor" href="#sec-future"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">42</span> The Future of Strategy<a aria-label="anchor" class="anchor" href="#sec-future"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-future.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-future.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Emerging frontiers in strategic AI: computational complexity, multi-agent foundation models, and responsible deployment.</p>
 </blockquote>
-<div id="learning-objectives-40" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-40"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-40">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-40"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Identify the major open problems at the intersection of game theory and AI.</li>
@@ -183,20 +190,20 @@
 <li>Articulate principles for responsible deployment of strategic AI systems.</li>
 </ul>
 </div>
-<div id="motivation-40" class="section level2" number="42.1">
+<div class="section level2" id="motivation-40" number="42.1">
 <h2>
-<span class="header-section-number">42.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-40"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-40"><i class="fas fa-link"></i></a>
 </h2>
 <p>This book has covered four decades of ideas — from Nash equilibrium to multi-agent reinforcement learning, from mechanism design to cooperative AI. But the field is accelerating. Foundation models are being deployed in multi-agent settings, AI systems negotiate on behalf of humans, and algorithmic decision-makers interact in markets, infrastructure, and governance.</p>
 <p>This capstone chapter surveys the frontier: what has been solved, what remains open, and what practitioners should consider as they build the next generation of strategic AI systems.</p>
 </div>
-<div id="theory-40" class="section level2" number="42.2">
+<div class="section level2" id="theory-40" number="42.2">
 <h2>
-<span class="header-section-number">42.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-40"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-40"><i class="fas fa-link"></i></a>
 </h2>
-<div id="computational-complexity-of-game-solving" class="section level3" number="42.2.1">
+<div class="section level3" id="computational-complexity-of-game-solving" number="42.2.1">
 <h3>
-<span class="header-section-number">42.2.1</span> Computational complexity of game solving<a class="anchor" aria-label="anchor" href="#computational-complexity-of-game-solving"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.2.1</span> Computational complexity of game solving<a aria-label="anchor" class="anchor" href="#computational-complexity-of-game-solving"><i class="fas fa-link"></i></a>
 </h3>
 <p>Not all games are equally hard to solve. The computational complexity of finding equilibria varies dramatically with the game’s structure.</p>
 <div class="rmdnote">
@@ -214,17 +221,17 @@
 </div>
 <p>These complexity results have practical implications: for large games, exact equilibrium computation is infeasible, and practitioners must rely on approximation algorithms, learning dynamics, or structural simplifications.</p>
 </div>
-<div id="emerging-frontiers" class="section level3" number="42.2.2">
+<div class="section level3" id="emerging-frontiers" number="42.2.2">
 <h3>
-<span class="header-section-number">42.2.2</span> Emerging frontiers<a class="anchor" aria-label="anchor" href="#emerging-frontiers"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.2.2</span> Emerging frontiers<a aria-label="anchor" class="anchor" href="#emerging-frontiers"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Multi-agent foundation models.</strong> Large language models are increasingly deployed in multi-agent settings — negotiation, debate, collaborative problem-solving. The game-theoretic properties of these interactions (equilibrium selection, emergent cooperation, strategic manipulation) are largely unexplored.</p>
 <p><strong>AI negotiation.</strong> Automated negotiation systems already operate in e-commerce, resource allocation, and diplomacy simulations. A key open question is whether foundation-model negotiators converge to game-theoretically rational strategies or exhibit systematic biases.</p>
 <p><strong>AI governance.</strong> As AI systems make decisions with societal impact, governance frameworks must account for strategic interactions between AI developers, deployers, regulators, and affected populations. Mechanism design (<a href="sec-mechanism-design.html#sec-mechanism-design">33</a>) provides the theoretical foundation.</p>
 </div>
-<div id="open-problems-in-marl" class="section level3" number="42.2.3">
+<div class="section level3" id="open-problems-in-marl" number="42.2.3">
 <h3>
-<span class="header-section-number">42.2.3</span> Open problems in MARL<a class="anchor" aria-label="anchor" href="#open-problems-in-marl"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.2.3</span> Open problems in MARL<a aria-label="anchor" class="anchor" href="#open-problems-in-marl"><i class="fas fa-link"></i></a>
 </h3>
 <p>Multi-agent reinforcement learning faces several unsolved challenges:</p>
 <ol style="list-style-type: decimal">
@@ -240,9 +247,9 @@
 <strong>Safety and alignment.</strong> Ensuring that learned policies satisfy safety constraints in multi-agent settings is an open problem connecting to <a href="sec-ai-alignment.html#sec-ai-alignment">40</a>.</li>
 </ol>
 </div>
-<div id="responsible-deployment" class="section level3" number="42.2.4">
+<div class="section level3" id="responsible-deployment" number="42.2.4">
 <h3>
-<span class="header-section-number">42.2.4</span> Responsible deployment<a class="anchor" aria-label="anchor" href="#responsible-deployment"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.2.4</span> Responsible deployment<a aria-label="anchor" class="anchor" href="#responsible-deployment"><i class="fas fa-link"></i></a>
 </h3>
 <p>Deploying strategic AI systems requires attention to:</p>
 <ul>
@@ -257,13 +264,13 @@
 </ul>
 </div>
 </div>
-<div id="sec-future-implementation" class="section level2" number="42.3">
+<div class="section level2" id="sec-future-implementation" number="42.3">
 <h2>
-<span class="header-section-number">42.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-future-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-future-implementation"><i class="fas fa-link"></i></a>
 </h2>
-<div id="complexity-landscape-of-game-theory-problems" class="section level3" number="42.3.1">
+<div class="section level3" id="complexity-landscape-of-game-theory-problems" number="42.3.1">
 <h3>
-<span class="header-section-number">42.3.1</span> Complexity landscape of game-theory problems<a class="anchor" aria-label="anchor" href="#complexity-landscape-of-game-theory-problems"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.3.1</span> Complexity landscape of game-theory problems<a aria-label="anchor" class="anchor" href="#complexity-landscape-of-game-theory-problems"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Taxonomy of game-theory problems with complexity classifications</span></span>
@@ -310,17 +317,17 @@
 <span></span>
 <span><span class="va">p1</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:complexity-landscape"></span>
-<img src="41-future-of-strategy_files/figure-html/complexity-landscape-1.png" alt="Computational complexity landscape of game-theory problems covered in this book. Horizontal axis represents game size (number of players/actions), vertical axis represents solution difficulty. Problems are coloured by complexity class: P (polynomial), PPAD (believed hard), NP-hard, EXPTIME, and open problems." width="80%"><p class="caption">
+<span id="fig:complexity-landscape" style="display:block;"></span>
+<img alt="Computational complexity landscape of game-theory problems covered in this book. Horizontal axis represents game size (number of players/actions), vertical axis represents solution difficulty. Problems are coloured by complexity class: P (polynomial), PPAD (believed hard), NP-hard, EXPTIME, and open problems." src="41-future-of-strategy_files/figure-html/complexity-landscape-1.png" width="80%"/><p class="caption">
 Figure 42.1: Computational complexity landscape of game-theory problems covered in this book. Horizontal axis represents game size (number of players/actions), vertical axis represents solution difficulty. Problems are coloured by complexity class: P (polynomial), PPAD (believed hard), NP-hard, EXPTIME, and open problems.
 </p>
 </div>
 <div class="sourceCode" id="cb1197"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p1</span>, <span class="st">"future-complexity-landscape"</span>, width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="timeline-of-game-theory-and-ai-convergence" class="section level3" number="42.3.2">
+<div class="section level3" id="timeline-of-game-theory-and-ai-convergence" number="42.3.2">
 <h3>
-<span class="header-section-number">42.3.2</span> Timeline of game theory and AI convergence<a class="anchor" aria-label="anchor" href="#timeline-of-game-theory-and-ai-convergence"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.3.2</span> Timeline of game theory and AI convergence<a aria-label="anchor" class="anchor" href="#timeline-of-game-theory-and-ai-convergence"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1198"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">milestones</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
@@ -393,8 +400,8 @@ Figure 42.1: Computational complexity landscape of game-theory problems covered 
 <span></span>
 <span><span class="va">p2</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:timeline"></span>
-<img src="41-future-of-strategy_files/figure-html/timeline-1.png" alt="Key milestones in the convergence of game theory and AI. Early milestones (left) are foundational theoretical results; recent milestones (right) represent AI systems that achieve or surpass human performance in strategic games." width="80%"><p class="caption">
+<span id="fig:timeline" style="display:block;"></span>
+<img alt="Key milestones in the convergence of game theory and AI. Early milestones (left) are foundational theoretical results; recent milestones (right) represent AI systems that achieve or surpass human performance in strategic games." src="41-future-of-strategy_files/figure-html/timeline-1.png" width="80%"/><p class="caption">
 Figure 42.2: Key milestones in the convergence of game theory and AI. Early milestones (left) are foundational theoretical results; recent milestones (right) represent AI systems that achieve or surpass human performance in strategic games.
 </p>
 </div>
@@ -402,9 +409,9 @@ Figure 42.2: Key milestones in the convergence of game theory and AI. Early mile
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p2</span>, <span class="st">"future-timeline"</span>, width <span class="op">=</span> <span class="fl">9</span>, height <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-38" class="section level2" number="42.4">
+<div class="section level2" id="worked-example-38" number="42.4">
 <h2>
-<span class="header-section-number">42.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-38"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-38"><i class="fas fa-link"></i></a>
 </h2>
 <p>We summarize the taxonomy of games, solution concepts, and computational complexity encountered throughout this book.</p>
 <div class="sourceCode" id="cb1201"><pre class="downlit sourceCode r">
@@ -910,150 +917,150 @@ Figure 42.2: Key milestones in the convergence of game theory and AI. Early mile
   height: 0px !important;
 }
 </style>
-<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<div class="inline-table"><table class="gt_table" data-quarto-bootstrap="false" data-quarto-disable-processing="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Taxonomy of Strategic Interactions</td>
-    </tr>
+<td class="gt_heading gt_title gt_font_normal gt_bottom_border" colspan="4" style="">Taxonomy of Strategic Interactions</td>
+</tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="game_type">Game Type</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="solution_concept">Solution Concept</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="complexity">Complexity</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="players">Players</th>
-    </tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" colspan="1" id="game_type" rowspan="1" scope="col">Game Type</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" colspan="1" id="solution_concept" rowspan="1" scope="col">Solution Concept</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" colspan="1" id="complexity" rowspan="1" scope="col">Complexity</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" colspan="1" id="players" rowspan="1" scope="col">Players</th>
+</tr>
 </thead>
 <tbody class="gt_table_body">
 <tr class="gt_group_heading_row">
-<th colspan="4" class="gt_group_heading" scope="colgroup" id="Foundations">Foundations</th>
-    </tr>
+<th class="gt_group_heading" colspan="4" id="Foundations" scope="colgroup">Foundations</th>
+</tr>
 <tr class="gt_row_group_first">
-<td headers="Foundations  game_type" class="gt_row gt_left">Normal form (2P)</td>
-<td headers="Foundations  solution_concept" class="gt_row gt_left">Nash eq.</td>
-<td headers="Foundations  complexity" class="gt_row gt_left">PPAD</td>
-<td headers="Foundations  players" class="gt_row gt_left">2</td>
+<td class="gt_row gt_left" headers="Foundations game_type">Normal form (2P)</td>
+<td class="gt_row gt_left" headers="Foundations solution_concept">Nash eq.</td>
+<td class="gt_row gt_left" headers="Foundations complexity">PPAD</td>
+<td class="gt_row gt_left" headers="Foundations players">2</td>
 </tr>
 <tr>
-<td headers="Foundations  game_type" class="gt_row gt_left">Zero-sum</td>
-<td headers="Foundations  solution_concept" class="gt_row gt_left">Minimax</td>
-<td headers="Foundations  complexity" class="gt_row gt_left">P</td>
-<td headers="Foundations  players" class="gt_row gt_left">2</td>
+<td class="gt_row gt_left" headers="Foundations game_type">Zero-sum</td>
+<td class="gt_row gt_left" headers="Foundations solution_concept">Minimax</td>
+<td class="gt_row gt_left" headers="Foundations complexity">P</td>
+<td class="gt_row gt_left" headers="Foundations players">2</td>
 </tr>
 <tr>
-<td headers="Foundations  game_type" class="gt_row gt_left">Potential games</td>
-<td headers="Foundations  solution_concept" class="gt_row gt_left">Pure Nash</td>
-<td headers="Foundations  complexity" class="gt_row gt_left">P (if exists)</td>
-<td headers="Foundations  players" class="gt_row gt_left">N</td>
+<td class="gt_row gt_left" headers="Foundations game_type">Potential games</td>
+<td class="gt_row gt_left" headers="Foundations solution_concept">Pure Nash</td>
+<td class="gt_row gt_left" headers="Foundations complexity">P (if exists)</td>
+<td class="gt_row gt_left" headers="Foundations players">N</td>
 </tr>
 <tr>
-<td headers="Foundations  game_type" class="gt_row gt_left">Cooperative</td>
-<td headers="Foundations  solution_concept" class="gt_row gt_left">Shapley value</td>
-<td headers="Foundations  complexity" class="gt_row gt_left">P</td>
-<td headers="Foundations  players" class="gt_row gt_left">N</td>
+<td class="gt_row gt_left" headers="Foundations game_type">Cooperative</td>
+<td class="gt_row gt_left" headers="Foundations solution_concept">Shapley value</td>
+<td class="gt_row gt_left" headers="Foundations complexity">P</td>
+<td class="gt_row gt_left" headers="Foundations players">N</td>
 </tr>
 <tr class="gt_group_heading_row">
-<th colspan="4" class="gt_group_heading" scope="colgroup" id="Dynamic Games">Dynamic Games</th>
-    </tr>
+<th class="gt_group_heading" colspan="4" id="Dynamic Games" scope="colgroup">Dynamic Games</th>
+</tr>
 <tr class="gt_row_group_first">
-<td headers="Dynamic Games  game_type" class="gt_row gt_left">Extensive form</td>
-<td headers="Dynamic Games  solution_concept" class="gt_row gt_left">SPE / backward ind.</td>
-<td headers="Dynamic Games  complexity" class="gt_row gt_left">P (perf. info)</td>
-<td headers="Dynamic Games  players" class="gt_row gt_left">2+</td>
+<td class="gt_row gt_left" headers="Dynamic Games game_type">Extensive form</td>
+<td class="gt_row gt_left" headers="Dynamic Games solution_concept">SPE / backward ind.</td>
+<td class="gt_row gt_left" headers="Dynamic Games complexity">P (perf. info)</td>
+<td class="gt_row gt_left" headers="Dynamic Games players">2+</td>
 </tr>
 <tr>
-<td headers="Dynamic Games  game_type" class="gt_row gt_left">Repeated games</td>
-<td headers="Dynamic Games  solution_concept" class="gt_row gt_left">Folk theorem</td>
-<td headers="Dynamic Games  complexity" class="gt_row gt_left">Depends</td>
-<td headers="Dynamic Games  players" class="gt_row gt_left">2+</td>
+<td class="gt_row gt_left" headers="Dynamic Games game_type">Repeated games</td>
+<td class="gt_row gt_left" headers="Dynamic Games solution_concept">Folk theorem</td>
+<td class="gt_row gt_left" headers="Dynamic Games complexity">Depends</td>
+<td class="gt_row gt_left" headers="Dynamic Games players">2+</td>
 </tr>
 <tr>
-<td headers="Dynamic Games  game_type" class="gt_row gt_left">Stochastic games</td>
-<td headers="Dynamic Games  solution_concept" class="gt_row gt_left">Markov perfect</td>
-<td headers="Dynamic Games  complexity" class="gt_row gt_left">NP-hard (general)</td>
-<td headers="Dynamic Games  players" class="gt_row gt_left">2+</td>
+<td class="gt_row gt_left" headers="Dynamic Games game_type">Stochastic games</td>
+<td class="gt_row gt_left" headers="Dynamic Games solution_concept">Markov perfect</td>
+<td class="gt_row gt_left" headers="Dynamic Games complexity">NP-hard (general)</td>
+<td class="gt_row gt_left" headers="Dynamic Games players">2+</td>
 </tr>
 <tr class="gt_group_heading_row">
-<th colspan="4" class="gt_group_heading" scope="colgroup" id="Tic. &amp;amp; Info.">Tic. &amp; Info.</th>
-    </tr>
+<th class="gt_group_heading" colspan="4" id="Tic. &amp;amp; Info." scope="colgroup">Tic. &amp; Info.</th>
+</tr>
 <tr class="gt_row_group_first">
-<td headers="Tic. &amp; Info.  game_type" class="gt_row gt_left">Bayesian games</td>
-<td headers="Tic. &amp; Info.  solution_concept" class="gt_row gt_left">BNE</td>
-<td headers="Tic. &amp; Info.  complexity" class="gt_row gt_left">PPAD</td>
-<td headers="Tic. &amp; Info.  players" class="gt_row gt_left">2+</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. game_type">Bayesian games</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. solution_concept">BNE</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. complexity">PPAD</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. players">2+</td>
 </tr>
 <tr>
-<td headers="Tic. &amp; Info.  game_type" class="gt_row gt_left">Mechanism design</td>
-<td headers="Tic. &amp; Info.  solution_concept" class="gt_row gt_left">DSIC / BIC</td>
-<td headers="Tic. &amp; Info.  complexity" class="gt_row gt_left">NP-hard (optimal)</td>
-<td headers="Tic. &amp; Info.  players" class="gt_row gt_left">N+1</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. game_type">Mechanism design</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. solution_concept">DSIC / BIC</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. complexity">NP-hard (optimal)</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. players">N+1</td>
 </tr>
 <tr>
-<td headers="Tic. &amp; Info.  game_type" class="gt_row gt_left">Auctions</td>
-<td headers="Tic. &amp; Info.  solution_concept" class="gt_row gt_left">Dominant strategy</td>
-<td headers="Tic. &amp; Info.  complexity" class="gt_row gt_left">P (single-item)</td>
-<td headers="Tic. &amp; Info.  players" class="gt_row gt_left">N+1</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. game_type">Auctions</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. solution_concept">Dominant strategy</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. complexity">P (single-item)</td>
+<td class="gt_row gt_left" headers="Tic. &amp; Info. players">N+1</td>
 </tr>
 <tr class="gt_group_heading_row">
-<th colspan="4" class="gt_group_heading" scope="colgroup" id="Multi-Agent">Multi-Agent</th>
-    </tr>
+<th class="gt_group_heading" colspan="4" id="Multi-Agent" scope="colgroup">Multi-Agent</th>
+</tr>
 <tr class="gt_row_group_first">
-<td headers="Multi-Agent  game_type" class="gt_row gt_left">MARL</td>
-<td headers="Multi-Agent  solution_concept" class="gt_row gt_left">Convergence</td>
-<td headers="Multi-Agent  complexity" class="gt_row gt_left">No guarantee</td>
-<td headers="Multi-Agent  players" class="gt_row gt_left">N</td>
+<td class="gt_row gt_left" headers="Multi-Agent game_type">MARL</td>
+<td class="gt_row gt_left" headers="Multi-Agent solution_concept">Convergence</td>
+<td class="gt_row gt_left" headers="Multi-Agent complexity">No guarantee</td>
+<td class="gt_row gt_left" headers="Multi-Agent players">N</td>
 </tr>
 <tr>
-<td headers="Multi-Agent  game_type" class="gt_row gt_left">Evolutionary</td>
-<td headers="Multi-Agent  solution_concept" class="gt_row gt_left">ESS</td>
-<td headers="Multi-Agent  complexity" class="gt_row gt_left">P (2x2)</td>
-<td headers="Multi-Agent  players" class="gt_row gt_left">Large</td>
+<td class="gt_row gt_left" headers="Multi-Agent game_type">Evolutionary</td>
+<td class="gt_row gt_left" headers="Multi-Agent solution_concept">ESS</td>
+<td class="gt_row gt_left" headers="Multi-Agent complexity">P (2x2)</td>
+<td class="gt_row gt_left" headers="Multi-Agent players">Large</td>
 </tr>
 <tr>
-<td headers="Multi-Agent  game_type" class="gt_row gt_left">Mean-field</td>
-<td headers="Multi-Agent  solution_concept" class="gt_row gt_left">MFE</td>
-<td headers="Multi-Agent  complexity" class="gt_row gt_left">Open</td>
-<td headers="Multi-Agent  players" class="gt_row gt_left">Continuum</td>
+<td class="gt_row gt_left" headers="Multi-Agent game_type">Mean-field</td>
+<td class="gt_row gt_left" headers="Multi-Agent solution_concept">MFE</td>
+<td class="gt_row gt_left" headers="Multi-Agent complexity">Open</td>
+<td class="gt_row gt_left" headers="Multi-Agent players">Continuum</td>
 </tr>
 <tr class="gt_group_heading_row">
-<th colspan="4" class="gt_group_heading" scope="colgroup" id="Advanced">Advanced</th>
-    </tr>
+<th class="gt_group_heading" colspan="4" id="Advanced" scope="colgroup">Advanced</th>
+</tr>
 <tr class="gt_row_group_first">
-<td headers="Advanced  game_type" class="gt_row gt_left">Network games</td>
-<td headers="Advanced  solution_concept" class="gt_row gt_left">Network Nash</td>
-<td headers="Advanced  complexity" class="gt_row gt_left">PPAD (general)</td>
-<td headers="Advanced  players" class="gt_row gt_left">N (network)</td>
+<td class="gt_row gt_left" headers="Advanced game_type">Network games</td>
+<td class="gt_row gt_left" headers="Advanced solution_concept">Network Nash</td>
+<td class="gt_row gt_left" headers="Advanced complexity">PPAD (general)</td>
+<td class="gt_row gt_left" headers="Advanced players">N (network)</td>
 </tr>
 <tr>
-<td headers="Advanced  game_type" class="gt_row gt_left">Matching markets</td>
-<td headers="Advanced  solution_concept" class="gt_row gt_left">Stable matching</td>
-<td headers="Advanced  complexity" class="gt_row gt_left">P (Gale-Shapley)</td>
-<td headers="Advanced  players" class="gt_row gt_left">2 sides</td>
+<td class="gt_row gt_left" headers="Advanced game_type">Matching markets</td>
+<td class="gt_row gt_left" headers="Advanced solution_concept">Stable matching</td>
+<td class="gt_row gt_left" headers="Advanced complexity">P (Gale-Shapley)</td>
+<td class="gt_row gt_left" headers="Advanced players">2 sides</td>
 </tr>
 <tr>
-<td headers="Advanced  game_type" class="gt_row gt_left">Bargaining</td>
-<td headers="Advanced  solution_concept" class="gt_row gt_left">Nash bargaining</td>
-<td headers="Advanced  complexity" class="gt_row gt_left">P (2P)</td>
-<td headers="Advanced  players" class="gt_row gt_left">2</td>
+<td class="gt_row gt_left" headers="Advanced game_type">Bargaining</td>
+<td class="gt_row gt_left" headers="Advanced solution_concept">Nash bargaining</td>
+<td class="gt_row gt_left" headers="Advanced complexity">P (2P)</td>
+<td class="gt_row gt_left" headers="Advanced players">2</td>
 </tr>
 <tr class="gt_group_heading_row">
-<th colspan="4" class="gt_group_heading" scope="colgroup" id="Ethics">Ethics</th>
-    </tr>
+<th class="gt_group_heading" colspan="4" id="Ethics" scope="colgroup">Ethics</th>
+</tr>
 <tr class="gt_row_group_first">
-<td headers="Ethics  game_type" class="gt_row gt_left">Social welfare</td>
-<td headers="Ethics  solution_concept" class="gt_row gt_left">SWF optimum</td>
-<td headers="Ethics  complexity" class="gt_row gt_left">Varies</td>
-<td headers="Ethics  players" class="gt_row gt_left">N</td>
+<td class="gt_row gt_left" headers="Ethics game_type">Social welfare</td>
+<td class="gt_row gt_left" headers="Ethics solution_concept">SWF optimum</td>
+<td class="gt_row gt_left" headers="Ethics complexity">Varies</td>
+<td class="gt_row gt_left" headers="Ethics players">N</td>
 </tr>
 <tr>
-<td headers="Ethics  game_type" class="gt_row gt_left">Fairness games</td>
-<td headers="Ethics  solution_concept" class="gt_row gt_left">Constrained opt.</td>
-<td headers="Ethics  complexity" class="gt_row gt_left">NP-hard</td>
-<td headers="Ethics  players" class="gt_row gt_left">N + regulator</td>
+<td class="gt_row gt_left" headers="Ethics game_type">Fairness games</td>
+<td class="gt_row gt_left" headers="Ethics solution_concept">Constrained opt.</td>
+<td class="gt_row gt_left" headers="Ethics complexity">NP-hard</td>
+<td class="gt_row gt_left" headers="Ethics players">N + regulator</td>
 </tr>
 <tr>
-<td headers="Ethics  game_type" class="gt_row gt_left">Alignment games</td>
-<td headers="Ethics  solution_concept" class="gt_row gt_left">Program eq.</td>
-<td headers="Ethics  complexity" class="gt_row gt_left">Open</td>
-<td headers="Ethics  players" class="gt_row gt_left">2</td>
+<td class="gt_row gt_left" headers="Ethics game_type">Alignment games</td>
+<td class="gt_row gt_left" headers="Ethics solution_concept">Program eq.</td>
+<td class="gt_row gt_left" headers="Ethics complexity">Open</td>
+<td class="gt_row gt_left" headers="Ethics players">2</td>
 </tr>
 </tbody>
 </table></div>
@@ -1103,9 +1110,9 @@ Figure 42.2: Key milestones in the convergence of game theory and AI. Early mile
 <p><strong>Reflection.</strong> The taxonomy reveals a striking pattern: the most practically important games are often the hardest to solve. Two-player zero-sum games (poker, competitive pricing) have polynomial-time solutions, but general-sum games with incomplete information — which describe most real-world strategic interactions — are computationally intractable in the worst case.</p>
 <p>This complexity gap explains why heuristic methods (MARL, evolutionary dynamics, learned strategies) dominate in practice, and why the theoretical guarantees from classical game theory serve primarily as benchmarks and design principles rather than as implementable algorithms for large-scale systems.</p>
 </div>
-<div id="extensions-40" class="section level2" number="42.5">
+<div class="section level2" id="extensions-40" number="42.5">
 <h2>
-<span class="header-section-number">42.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-40"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-40"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -1118,8 +1125,8 @@ Figure 42.2: Key milestones in the convergence of game theory and AI. Early mile
 <strong>Mechanism design for AI.</strong> As AI systems participate in markets and governance, designing mechanisms that remain incentive-compatible when some participants are AI agents is a frontier research area.</li>
 </ul>
 </div>
-<div id="exercises-40" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-40"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-40">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-40"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Complexity classification.</strong> For each of the following, state whether finding a Nash equilibrium is in P, PPAD-complete, or NP-hard: (a) a 2-player zero-sum game, (b) a 3-player general-sum game, (c) a 2-player general-sum game where we require the equilibrium to maximize social welfare. Briefly justify each answer.</p></li>
@@ -1127,18 +1134,14 @@ Figure 42.2: Key milestones in the convergence of game theory and AI. Early mile
 <li><p><strong>Book reflection.</strong> Pick any two chapters from different parts of this book. Describe a real-world scenario where both solution concepts would apply simultaneously (e.g., a repeated Bayesian game on a network). What additional challenges arise from combining the two frameworks?</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
-
-
-
 <div class="chapter-nav">
 <div class="prev"><a href="sec-cooperative-ai.html"><span class="header-section-number">41</span> Cooperative AI</a></div>
 <div class="next"><a href="sec-r-refresher.html"><span class="header-section-number">A</span> R Refresher</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-future"><span class="header-section-number">42</span> The Future of Strategy</a></li>
 <li><a class="nav-link" href="#learning-objectives-40">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-40"><span class="header-section-number">42.1</span> Motivation</a></li>
@@ -1160,23 +1163,21 @@ Figure 42.2: Key milestones in the convergence of game theory and AI. Early mile
 <li><a class="nav-link" href="#extensions-40"><span class="header-section-number">42.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-40">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/41-future-of-strategy.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/41-future-of-strategy.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/41-future-of-strategy.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/41-future-of-strategy.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -1195,75 +1196,18 @@ Figure 42.2: Key milestones in the convergence of game theory and AI. Early mile
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  
-
-  
-
 </div>
- <!-- .container -->
-
+<!-- .container -->
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

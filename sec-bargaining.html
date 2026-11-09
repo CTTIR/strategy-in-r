@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 35 Bargaining Theory | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Nash bargaining and ultimatum games — axiomatic solutions, alternating-offers models, and computational implementations in R.  Learning objectives State the four axioms of the Nash bargaining...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 35 Bargaining Theory | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-bargaining.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Nash bargaining and ultimatum games — axiomatic solutions, alternating-offers models, and computational implementations in R.  Learning objectives State the four axioms of the Nash bargaining...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 35 Bargaining Theory | Strategy in R">
-<meta name="twitter:description" content="Nash bargaining and ultimatum games — axiomatic solutions, alternating-offers models, and computational implementations in R.  Learning objectives State the four axioms of the Nash bargaining...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 35 Bargaining Theory | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Nash bargaining and ultimatum games — axiomatic solutions, alternating-offers models, and computational implementations in R.  Learning objectives State the four axioms of the Nash bargaining..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 35 Bargaining Theory | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-bargaining.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Nash bargaining and ultimatum games — axiomatic solutions, alternating-offers models, and computational implementations in R.  Learning objectives State the four axioms of the Nash bargaining..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 35 Bargaining Theory | Strategy in R" name="twitter:title"/>
+<meta content="Nash bargaining and ultimatum games — axiomatic solutions, alternating-offers models, and computational implementations in R.  Learning objectives State the four axioms of the Nash bargaining..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 35 Bargaining Theory | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-bargaining" class="section level1" number="35">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-bargaining" number="35">
 <h1>
-<span class="header-section-number">35</span> Bargaining Theory<a class="anchor" aria-label="anchor" href="#sec-bargaining"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">35</span> Bargaining Theory<a aria-label="anchor" class="anchor" href="#sec-bargaining"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-bargaining.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-bargaining.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Nash bargaining and ultimatum games — axiomatic solutions, alternating-offers models, and computational implementations in R.</p>
 </blockquote>
-<div id="learning-objectives-33" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-33"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-33">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-33"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>State the four axioms of the Nash bargaining solution and derive the solution as the maximizer of the Nash product.</li>
@@ -183,26 +190,26 @@
 <li>Visualize feasible bargaining sets, Nash product contours, and equilibrium shares as functions of patience.</li>
 </ul>
 </div>
-<div id="motivation-33" class="section level2" number="35.1">
+<div class="section level2" id="motivation-33" number="35.1">
 <h2>
-<span class="header-section-number">35.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-33"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-33"><i class="fas fa-link"></i></a>
 </h2>
 <p>A union and a firm sit across the negotiating table. The union wants higher wages; the firm wants lower labor costs. Both prefer a deal to a strike, but each wants the deal tilted in their favor. How should they split the surplus?</p>
 <p>This question arises whenever two parties must agree on how to divide gains from trade: merger negotiations, international treaties, or even splitting a dinner bill. Game theory provides two foundational approaches. The <strong>Nash bargaining solution</strong> uses axioms to identify a unique fair division. The <strong>Rubinstein alternating-offers model</strong> derives the same outcome from a non-cooperative bargaining protocol where impatience drives agreement.</p>
 </div>
-<div id="theory-33" class="section level2" number="35.2">
+<div class="section level2" id="theory-33" number="35.2">
 <h2>
-<span class="header-section-number">35.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-33"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-33"><i class="fas fa-link"></i></a>
 </h2>
-<div id="the-bargaining-problem" class="section level3" number="35.2.1">
+<div class="section level3" id="the-bargaining-problem" number="35.2.1">
 <h3>
-<span class="header-section-number">35.2.1</span> The bargaining problem<a class="anchor" aria-label="anchor" href="#the-bargaining-problem"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.2.1</span> The bargaining problem<a aria-label="anchor" class="anchor" href="#the-bargaining-problem"><i class="fas fa-link"></i></a>
 </h3>
 <p>A <strong>bargaining problem</strong> is a pair <span class="math inline">\((S, d)\)</span> where <span class="math inline">\(S \subset \mathbb{R}^2\)</span> is a compact, convex set of feasible payoff pairs and <span class="math inline">\(d = (d_1, d_2) \in S\)</span> is the <strong>disagreement point</strong> — the payoffs each player receives if no agreement is reached. The set of individually rational outcomes is <span class="math inline">\(\{(u_1, u_2) \in S : u_1 \geq d_1, u_2 \geq d_2\}\)</span>.</p>
 </div>
-<div id="nash-bargaining-solution" class="section level3" number="35.2.2">
+<div class="section level3" id="nash-bargaining-solution" number="35.2.2">
 <h3>
-<span class="header-section-number">35.2.2</span> Nash bargaining solution<a class="anchor" aria-label="anchor" href="#nash-bargaining-solution"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.2.2</span> Nash bargaining solution<a aria-label="anchor" class="anchor" href="#nash-bargaining-solution"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdnote">
 <p><strong>Definition: Nash Bargaining Solution</strong></p>
@@ -226,9 +233,9 @@
 </ol>
 <p>For a linear frontier <span class="math inline">\(u_1 + u_2 = v\)</span> with disagreement point <span class="math inline">\((0, 0)\)</span>, the Nash bargaining solution gives each player <span class="math inline">\(v / 2\)</span> — an equal split.</p>
 </div>
-<div id="asymmetric-nash-bargaining" class="section level3" number="35.2.3">
+<div class="section level3" id="asymmetric-nash-bargaining" number="35.2.3">
 <h3>
-<span class="header-section-number">35.2.3</span> Asymmetric Nash bargaining<a class="anchor" aria-label="anchor" href="#asymmetric-nash-bargaining"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.2.3</span> Asymmetric Nash bargaining<a aria-label="anchor" class="anchor" href="#asymmetric-nash-bargaining"><i class="fas fa-link"></i></a>
 </h3>
 <p>When players have different bargaining powers <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(1 - \alpha\)</span> (with <span class="math inline">\(\alpha \in (0, 1)\)</span>), the <strong>asymmetric Nash bargaining solution</strong> maximizes the generalized Nash product:</p>
 <p><span class="math display" id="eq:asymmetric-nash">\[\begin{equation}
@@ -236,9 +243,9 @@
 \tag{35.2}
 \end{equation}\]</span></p>
 </div>
-<div id="rubinstein-alternating-offers-model" class="section level3" number="35.2.4">
+<div class="section level3" id="rubinstein-alternating-offers-model" number="35.2.4">
 <h3>
-<span class="header-section-number">35.2.4</span> Rubinstein alternating-offers model<a class="anchor" aria-label="anchor" href="#rubinstein-alternating-offers-model"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.2.4</span> Rubinstein alternating-offers model<a aria-label="anchor" class="anchor" href="#rubinstein-alternating-offers-model"><i class="fas fa-link"></i></a>
 </h3>
 <p>Rubinstein <span class="citation">(<a href="references.html#ref-rubinstein1982">1982</a>)</span> modeled bargaining as a sequential game. Two players take turns proposing how to split a surplus of size 1. Player 1 proposes in odd periods, Player 2 in even periods. Each player has a discount factor <span class="math inline">\(\delta_i \in (0, 1)\)</span> — waiting is costly.</p>
 <div class="rmdtip">
@@ -253,13 +260,13 @@ x_1^* = \frac{1 - \delta_2}{1 - \delta_1 \delta_2}
 <p>The intuition is that a more patient player (higher <span class="math inline">\(\delta\)</span>) obtains a larger share because they can credibly wait longer. The first-mover advantage shrinks as both players become more patient.</p>
 </div>
 </div>
-<div id="sec-bargaining-implementation" class="section level2" number="35.3">
+<div class="section level2" id="sec-bargaining-implementation" number="35.3">
 <h2>
-<span class="header-section-number">35.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-bargaining-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-bargaining-implementation"><i class="fas fa-link"></i></a>
 </h2>
-<div id="nash-bargaining-solution-computation" class="section level3" number="35.3.1">
+<div class="section level3" id="nash-bargaining-solution-computation" number="35.3.1">
 <h3>
-<span class="header-section-number">35.3.1</span> Nash bargaining solution computation<a class="anchor" aria-label="anchor" href="#nash-bargaining-solution-computation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.3.1</span> Nash bargaining solution computation<a aria-label="anchor" class="anchor" href="#nash-bargaining-solution-computation"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb983"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nash_bargaining</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">frontier_fn</span>, <span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, <span class="va">alpha</span> <span class="op">=</span> <span class="fl">0.5</span>,</span>
@@ -298,9 +305,9 @@ x_1^* = \frac{1 - \delta_2}{1 - \delta_1 \delta_2}
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Nash product: %.4f\n"</span>, <span class="va">result</span><span class="op">$</span><span class="va">nash_product</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Nash product: 3.5000</code></pre>
 </div>
-<div id="nash-bargaining-visualization" class="section level3" number="35.3.2">
+<div class="section level3" id="nash-bargaining-visualization" number="35.3.2">
 <h3>
-<span class="header-section-number">35.3.2</span> Nash bargaining visualization<a class="anchor" aria-label="anchor" href="#nash-bargaining-visualization"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.3.2</span> Nash bargaining visualization<a aria-label="anchor" class="anchor" href="#nash-bargaining-visualization"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb987"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Concave frontier: u2 = sqrt(100 - u1^2) (quarter-circle, radius 10)</span></span>
@@ -340,17 +347,17 @@ x_1^* = \frac{1 - \delta_2}{1 - \delta_1 \delta_2}
 <span></span>
 <span><span class="va">p_nash</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:nash-bargaining"></span>
-<img src="34-bargaining_files/figure-html/nash-bargaining-1.png" alt="Nash bargaining solution for a concave feasible frontier. The orange curve marks the Pareto frontier. Grey contours show the Nash product. The red point is the Nash bargaining solution and the black point is the disagreement outcome." width="80%"><p class="caption">
+<span id="fig:nash-bargaining" style="display:block;"></span>
+<img alt="Nash bargaining solution for a concave feasible frontier. The orange curve marks the Pareto frontier. Grey contours show the Nash product. The red point is the Nash bargaining solution and the black point is the disagreement outcome." src="34-bargaining_files/figure-html/nash-bargaining-1.png" width="80%"/><p class="caption">
 Figure 35.1: Nash bargaining solution for a concave feasible frontier. The orange curve marks the Pareto frontier. Grey contours show the Nash product. The red point is the Nash bargaining solution and the black point is the disagreement outcome.
 </p>
 </div>
 <div class="sourceCode" id="cb988"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_nash</span>, <span class="st">"nash-bargaining-solution"</span>, width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="rubinstein-alternating-offers-model-1" class="section level3" number="35.3.3">
+<div class="section level3" id="rubinstein-alternating-offers-model-1" number="35.3.3">
 <h3>
-<span class="header-section-number">35.3.3</span> Rubinstein alternating-offers model<a class="anchor" aria-label="anchor" href="#rubinstein-alternating-offers-model-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.3.3</span> Rubinstein alternating-offers model<a aria-label="anchor" class="anchor" href="#rubinstein-alternating-offers-model-1"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb989"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rubinstein_equilibrium</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">delta1</span>, <span class="va">delta2</span><span class="op">)</span> <span class="op">{</span></span>
@@ -371,9 +378,9 @@ Figure 35.1: Nash bargaining solution for a concave feasible frontier. The orang
 <span>            <span class="va">eq_asym</span><span class="op">$</span><span class="va">share1</span>, <span class="va">eq_asym</span><span class="op">$</span><span class="va">share2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Asymmetric (d1=0.95, d2=0.8): Player 1 gets 0.8333, Player 2 gets 0.1667</code></pre>
 </div>
-<div id="rubinstein-equilibrium-shares-by-discount-factor" class="section level3" number="35.3.4">
+<div class="section level3" id="rubinstein-equilibrium-shares-by-discount-factor" number="35.3.4">
 <h3>
-<span class="header-section-number">35.3.4</span> Rubinstein equilibrium shares by discount factor<a class="anchor" aria-label="anchor" href="#rubinstein-equilibrium-shares-by-discount-factor"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.3.4</span> Rubinstein equilibrium shares by discount factor<a aria-label="anchor" class="anchor" href="#rubinstein-equilibrium-shares-by-discount-factor"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb993"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">delta2_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.99</span>, length.out <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
@@ -405,8 +412,8 @@ Figure 35.1: Nash bargaining solution for a concave feasible frontier. The orang
 <span></span>
 <span><span class="va">p_rub</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:rubinstein-shares"></span>
-<img src="34-bargaining_files/figure-html/rubinstein-shares-1.png" alt="Rubinstein equilibrium share of Player 1 as a function of Player 2's discount factor, for three values of Player 1's discount factor. More patient players (higher delta) receive a larger share." width="80%"><p class="caption">
+<span id="fig:rubinstein-shares" style="display:block;"></span>
+<img alt="Rubinstein equilibrium share of Player 1 as a function of Player 2's discount factor, for three values of Player 1's discount factor. More patient players (higher delta) receive a larger share." src="34-bargaining_files/figure-html/rubinstein-shares-1.png" width="80%"/><p class="caption">
 Figure 35.2: Rubinstein equilibrium share of Player 1 as a function of Player 2’s discount factor, for three values of Player 1’s discount factor. More patient players (higher delta) receive a larger share.
 </p>
 </div>
@@ -414,13 +421,13 @@ Figure 35.2: Rubinstein equilibrium share of Player 1 as a function of Player 2�
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_rub</span>, <span class="st">"rubinstein-shares"</span>, width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">4.5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-31" class="section level2" number="35.4">
+<div class="section level2" id="worked-example-31" number="35.4">
 <h2>
-<span class="header-section-number">35.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-31"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-31"><i class="fas fa-link"></i></a>
 </h2>
-<div id="labor-management-negotiation" class="section level3" number="35.4.1">
+<div class="section level3" id="labor-management-negotiation" number="35.4.1">
 <h3>
-<span class="header-section-number">35.4.1</span> Labor-management negotiation<a class="anchor" aria-label="anchor" href="#labor-management-negotiation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.4.1</span> Labor-management negotiation<a aria-label="anchor" class="anchor" href="#labor-management-negotiation"><i class="fas fa-link"></i></a>
 </h3>
 <p>A firm and its union bargain over how to split a surplus of $10 million generated by a new contract. If negotiations fail, the firm earns $2 million from replacement workers and the union’s members earn $1 million from outside options. The union’s bargaining power is <span class="math inline">\(\alpha = 0.6\)</span> due to strong labor laws.</p>
 <p><strong>Step 1: Set up the bargaining problem.</strong></p>
@@ -482,9 +489,9 @@ u_u^* = d_u + \alpha(V - d_f - d_u), \quad u_f^* = d_f + (1-\alpha)(V - d_f - d_
 <p>The more patient firm (lower discount rate) captures a larger share, consistent with the Rubinstein insight that patience is power in bargaining.</p>
 </div>
 </div>
-<div id="extensions-33" class="section level2" number="35.5">
+<div class="section level2" id="extensions-33" number="35.5">
 <h2>
-<span class="header-section-number">35.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-33"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-33"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -497,8 +504,8 @@ u_u^* = d_u + \alpha(V - d_f - d_u), \quad u_f^* = d_f + (1-\alpha)(V - d_f - d_
 <strong>Behavioral bargaining</strong> — ultimatum game experiments consistently show that proposers offer 40–50% rather than the minimal amount predicted by backward induction, suggesting fairness norms matter.</li>
 </ul>
 </div>
-<div id="exercises-33" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-33"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-33">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-33"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Asymmetric Nash bargaining.</strong> Two countries negotiate over fishing rights with a frontier given by <span class="math inline">\(u_2 = 12 - 1.5 u_1\)</span> and disagreement point <span class="math inline">\((1, 1)\)</span>. Country 1 has bargaining power <span class="math inline">\(\alpha = 0.4\)</span>. Compute the Nash bargaining solution analytically and verify it with the <code>nash_bargaining()</code> function. How does the solution change if <span class="math inline">\(\alpha = 0.7\)</span>?</p></li>
@@ -506,16 +513,14 @@ u_u^* = d_u + \alpha(V - d_f - d_u), \quad u_f^* = d_f + (1-\alpha)(V - d_f - d_
 <li><p><strong>Ultimatum game.</strong> The ultimatum game is a Rubinstein model with one round: Player 1 proposes a split and Player 2 accepts or rejects. Show analytically that the SPE has Player 1 offering the minimal acceptable amount. Then simulate 1,000 ultimatum games where Player 2 rejects offers below a threshold drawn uniformly from <span class="math inline">\([0, 0.5]\)</span>. Plot the proposer’s expected payoff as a function of the offer.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -534,64 +539,15 @@ u_u^* = d_u + \alpha(V - d_f - d_u), \quad u_f^* = d_f + (1-\alpha)(V - d_f - d_
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-matching-markets.html"><span class="header-section-number">34</span> Matching Markets</a></div>
 <div class="next"><a href="sec-conflict-cooperation.html"><span class="header-section-number">36</span> Conflict and Cooperation Models</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-bargaining"><span class="header-section-number">35</span> Bargaining Theory</a></li>
 <li><a class="nav-link" href="#learning-objectives-33">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-33"><span class="header-section-number">35.1</span> Motivation</a></li>
@@ -617,29 +573,23 @@ u_u^* = d_u + \alpha(V - d_f - d_u), \quad u_f^* = d_f + (1-\alpha)(V - d_f - d_
 <li><a class="nav-link" href="#extensions-33"><span class="header-section-number">35.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-33">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/34-bargaining.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/34-bargaining.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/34-bargaining.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/34-bargaining.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

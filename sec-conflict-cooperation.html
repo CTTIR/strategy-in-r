@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 36 Conflict and Cooperation Models | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Applying game theory to international relations and social dilemmas — Chicken, Stag Hunt, Schelling focal points, and arms race dynamics.  Learning objectives Formulate the Chicken game and Stag...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 36 Conflict and Cooperation Models | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-conflict-cooperation.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Applying game theory to international relations and social dilemmas — Chicken, Stag Hunt, Schelling focal points, and arms race dynamics.  Learning objectives Formulate the Chicken game and Stag...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 36 Conflict and Cooperation Models | Strategy in R">
-<meta name="twitter:description" content="Applying game theory to international relations and social dilemmas — Chicken, Stag Hunt, Schelling focal points, and arms race dynamics.  Learning objectives Formulate the Chicken game and Stag...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 36 Conflict and Cooperation Models | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Applying game theory to international relations and social dilemmas — Chicken, Stag Hunt, Schelling focal points, and arms race dynamics.  Learning objectives Formulate the Chicken game and Stag..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 36 Conflict and Cooperation Models | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-conflict-cooperation.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Applying game theory to international relations and social dilemmas — Chicken, Stag Hunt, Schelling focal points, and arms race dynamics.  Learning objectives Formulate the Chicken game and Stag..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 36 Conflict and Cooperation Models | Strategy in R" name="twitter:title"/>
+<meta content="Applying game theory to international relations and social dilemmas — Chicken, Stag Hunt, Schelling focal points, and arms race dynamics.  Learning objectives Formulate the Chicken game and Stag..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 36 Conflict and Cooperation Models | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-conflict-cooperation" class="section level1" number="36">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-conflict-cooperation" number="36">
 <h1>
-<span class="header-section-number">36</span> Conflict and Cooperation Models<a class="anchor" aria-label="anchor" href="#sec-conflict-cooperation"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">36</span> Conflict and Cooperation Models<a aria-label="anchor" class="anchor" href="#sec-conflict-cooperation"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-conflict-cooperation.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-conflict-cooperation.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Applying game theory to international relations and social dilemmas — Chicken, Stag Hunt, Schelling focal points, and arms race dynamics.</p>
 </blockquote>
-<div id="learning-objectives-34" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-34"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-34">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-34"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Formulate the Chicken game and Stag Hunt as strategic-form games, and identify their Nash equilibria.</li>
@@ -183,23 +190,23 @@
 <li>Simulate cooperation and defection dynamics under varying risk-dominance conditions in R.</li>
 </ul>
 </div>
-<div id="motivation-34" class="section level2" number="36.1">
+<div class="section level2" id="motivation-34" number="36.1">
 <h2>
-<span class="header-section-number">36.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-34"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-34"><i class="fas fa-link"></i></a>
 </h2>
 <p>In October 1962, the United States and the Soviet Union stood at the brink of nuclear war during the Cuban Missile Crisis. Each side could escalate (hold firm) or back down (accommodate). Mutual escalation risked catastrophe; mutual accommodation preserved the status quo. But each side preferred the other to back down first.</p>
 <p>This scenario has the structure of the <strong>Chicken game</strong>, one of several canonical models that game theory uses to study conflict and cooperation. Alongside <strong>Stag Hunt</strong> (coordination under risk) and the <strong>iterated Prisoner’s Dilemma</strong> (arms races), these models illuminate when cooperation emerges, when it collapses, and what institutional features sustain it.</p>
 </div>
-<div id="theory-34" class="section level2" number="36.2">
+<div class="section level2" id="theory-34" number="36.2">
 <h2>
-<span class="header-section-number">36.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-34"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-34"><i class="fas fa-link"></i></a>
 </h2>
-<div id="the-chicken-game" class="section level3" number="36.2.1">
+<div class="section level3" id="the-chicken-game" number="36.2.1">
 <h3>
-<span class="header-section-number">36.2.1</span> The Chicken game<a class="anchor" aria-label="anchor" href="#the-chicken-game"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.2.1</span> The Chicken game<a aria-label="anchor" class="anchor" href="#the-chicken-game"><i class="fas fa-link"></i></a>
 </h3>
 <p>In Chicken, two players simultaneously choose to Swerve (cooperate) or Drive Straight (defect). The payoff structure is:</p>
-<div class="inline-table"><table id="tbl-chicken" class="table table-sm">
+<div class="inline-table"><table class="table table-sm" id="tbl-chicken">
 <caption>Chicken game payoff matrix</caption>
 <thead><tr class="header">
 <th align="left"></th>
@@ -221,12 +228,12 @@
 </table></div>
 <p>Mutual defection (Straight, Straight) is the worst outcome for both — a “crash.” The game has <strong>two pure-strategy Nash equilibria</strong>: (Swerve, Straight) and (Straight, Swerve), plus a mixed equilibrium. Unlike the Prisoner’s Dilemma, mutual defection is <em>not</em> an equilibrium.</p>
 </div>
-<div id="stag-hunt" class="section level3" number="36.2.2">
+<div class="section level3" id="stag-hunt" number="36.2.2">
 <h3>
-<span class="header-section-number">36.2.2</span> Stag Hunt<a class="anchor" aria-label="anchor" href="#stag-hunt"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.2.2</span> Stag Hunt<a aria-label="anchor" class="anchor" href="#stag-hunt"><i class="fas fa-link"></i></a>
 </h3>
 <p>In Stag Hunt, two hunters choose to hunt Stag (cooperate) or hunt Hare (defect). Hunting stag requires coordination; a lone stag hunter gets nothing.</p>
-<div class="inline-table"><table id="tbl-stag-hunt" class="table table-sm">
+<div class="inline-table"><table class="table table-sm" id="tbl-stag-hunt">
 <caption>Stag Hunt payoff matrix</caption>
 <thead><tr class="header">
 <th align="left"></th>
@@ -255,26 +262,26 @@
 \]</span></p>
 </div>
 </div>
-<div id="schelling-focal-points" class="section level3" number="36.2.3">
+<div class="section level3" id="schelling-focal-points" number="36.2.3">
 <h3>
-<span class="header-section-number">36.2.3</span> Schelling focal points<a class="anchor" aria-label="anchor" href="#schelling-focal-points"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.2.3</span> Schelling focal points<a aria-label="anchor" class="anchor" href="#schelling-focal-points"><i class="fas fa-link"></i></a>
 </h3>
 <p>Schelling <span class="citation">(<a href="references.html#ref-schelling1960">1960</a>)</span> observed that players often coordinate successfully by choosing options that are culturally or contextually prominent — <strong>focal points</strong>. When asked to meet in New York without specifying a location, most people choose Grand Central Station at noon. Focal points operate outside the formal game structure but resolve the equilibrium selection problem in practice.</p>
 </div>
-<div id="arms-race-as-iterated-prisoners-dilemma" class="section level3" number="36.2.4">
+<div class="section level3" id="arms-race-as-iterated-prisoners-dilemma" number="36.2.4">
 <h3>
-<span class="header-section-number">36.2.4</span> Arms race as iterated Prisoner’s Dilemma<a class="anchor" aria-label="anchor" href="#arms-race-as-iterated-prisoners-dilemma"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.2.4</span> Arms race as iterated Prisoner’s Dilemma<a aria-label="anchor" class="anchor" href="#arms-race-as-iterated-prisoners-dilemma"><i class="fas fa-link"></i></a>
 </h3>
 <p>An arms race between two nations can be modeled as a repeated Prisoner’s Dilemma. In each period, each nation chooses to Arm (defect) or Disarm (cooperate). The stage-game payoffs reflect that mutual disarmament is efficient, but each side has a unilateral incentive to arm. Over many rounds, strategies like Tit-for-Tat can sustain cooperation, but sufficiently hawkish strategies or finite horizons can trigger arms races.</p>
 </div>
 </div>
-<div id="sec-conflict-implementation" class="section level2" number="36.3">
+<div class="section level2" id="sec-conflict-implementation" number="36.3">
 <h2>
-<span class="header-section-number">36.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-conflict-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-conflict-implementation"><i class="fas fa-link"></i></a>
 </h2>
-<div id="stag-hunt-dynamics-under-varying-risk-dominance" class="section level3" number="36.3.1">
+<div class="section level3" id="stag-hunt-dynamics-under-varying-risk-dominance" number="36.3.1">
 <h3>
-<span class="header-section-number">36.3.1</span> Stag Hunt dynamics under varying risk dominance<a class="anchor" aria-label="anchor" href="#stag-hunt-dynamics-under-varying-risk-dominance"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.3.1</span> Stag Hunt dynamics under varying risk dominance<a aria-label="anchor" class="anchor" href="#stag-hunt-dynamics-under-varying-risk-dominance"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1012"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulate_stag_hunt</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c_val</span>, <span class="va">d_val</span>, <span class="va">n_pop</span> <span class="op">=</span> <span class="fl">100</span>,</span>
@@ -313,9 +320,9 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Populations starting below p* converge to (Hare, Hare).\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Populations starting below p* converge to (Hare, Hare).</code></pre>
 </div>
-<div id="phase-diagram-cooperation-vs.-defection-basins" class="section level3" number="36.3.2">
+<div class="section level3" id="phase-diagram-cooperation-vs.-defection-basins" number="36.3.2">
 <h3>
-<span class="header-section-number">36.3.2</span> Phase diagram: cooperation vs. defection basins<a class="anchor" aria-label="anchor" href="#phase-diagram-cooperation-vs.-defection-basins"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.3.2</span> Phase diagram: cooperation vs. defection basins<a aria-label="anchor" class="anchor" href="#phase-diagram-cooperation-vs.-defection-basins"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1018"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Three regimes: vary d (safe payoff) to shift risk dominance</span></span>
@@ -348,17 +355,17 @@
 <span></span>
 <span><span class="va">p_phase</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:stag-hunt-basins"></span>
-<img src="35-conflict-cooperation_files/figure-html/stag-hunt-basins-1.png" alt="Phase diagram of Stag Hunt replicator dynamics under three risk-dominance regimes. Each curve is one trajectory starting from a different initial proportion of Stag hunters. The dashed line marks the mixed-NE threshold separating the basins of attraction." width="80%"><p class="caption">
+<span id="fig:stag-hunt-basins" style="display:block;"></span>
+<img alt="Phase diagram of Stag Hunt replicator dynamics under three risk-dominance regimes. Each curve is one trajectory starting from a different initial proportion of Stag hunters. The dashed line marks the mixed-NE threshold separating the basins of attraction." src="35-conflict-cooperation_files/figure-html/stag-hunt-basins-1.png" width="80%"/><p class="caption">
 Figure 36.1: Phase diagram of Stag Hunt replicator dynamics under three risk-dominance regimes. Each curve is one trajectory starting from a different initial proportion of Stag hunters. The dashed line marks the mixed-NE threshold separating the basins of attraction.
 </p>
 </div>
 <div class="sourceCode" id="cb1019"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_phase</span>, <span class="st">"stag-hunt-basins"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="arms-race-simulation" class="section level3" number="36.3.3">
+<div class="section level3" id="arms-race-simulation" number="36.3.3">
 <h3>
-<span class="header-section-number">36.3.3</span> Arms race simulation<a class="anchor" aria-label="anchor" href="#arms-race-simulation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.3.3</span> Arms race simulation<a aria-label="anchor" class="anchor" href="#arms-race-simulation"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1020"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulate_arms_race</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">strategy1</span>, <span class="va">strategy2</span>, <span class="va">n_rounds</span> <span class="op">=</span> <span class="fl">50</span>,</span>
@@ -420,8 +427,8 @@ Figure 36.1: Phase diagram of Stag Hunt replicator dynamics under three risk-dom
 <span></span>
 <span><span class="va">p_arms</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:arms-race"></span>
-<img src="35-conflict-cooperation_files/figure-html/arms-race-1.png" alt="Cumulative payoffs over 50 rounds of an arms race (iterated PD) under four strategy matchups. Tit-for-Tat sustains cooperation, while Always Defect locks both sides into low payoffs." width="80%"><p class="caption">
+<span id="fig:arms-race" style="display:block;"></span>
+<img alt="Cumulative payoffs over 50 rounds of an arms race (iterated PD) under four strategy matchups. Tit-for-Tat sustains cooperation, while Always Defect locks both sides into low payoffs." src="35-conflict-cooperation_files/figure-html/arms-race-1.png" width="80%"/><p class="caption">
 Figure 36.2: Cumulative payoffs over 50 rounds of an arms race (iterated PD) under four strategy matchups. Tit-for-Tat sustains cooperation, while Always Defect locks both sides into low payoffs.
 </p>
 </div>
@@ -429,13 +436,13 @@ Figure 36.2: Cumulative payoffs over 50 rounds of an arms race (iterated PD) und
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_arms</span>, <span class="st">"arms-race-dynamics"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-32" class="section level2" number="36.4">
+<div class="section level2" id="worked-example-32" number="36.4">
 <h2>
-<span class="header-section-number">36.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-32"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-32"><i class="fas fa-link"></i></a>
 </h2>
-<div id="cuban-missile-crisis-as-a-chicken-game" class="section level3" number="36.4.1">
+<div class="section level3" id="cuban-missile-crisis-as-a-chicken-game" number="36.4.1">
 <h3>
-<span class="header-section-number">36.4.1</span> Cuban Missile Crisis as a Chicken game<a class="anchor" aria-label="anchor" href="#cuban-missile-crisis-as-a-chicken-game"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.4.1</span> Cuban Missile Crisis as a Chicken game<a aria-label="anchor" class="anchor" href="#cuban-missile-crisis-as-a-chicken-game"><i class="fas fa-link"></i></a>
 </h3>
 <p>In October 1962, the US and USSR faced a standoff over Soviet missiles in Cuba. We model this as a Chicken game with the following interpretation:</p>
 <ul>
@@ -507,9 +514,9 @@ Figure 36.2: Cumulative payoffs over 50 rounds of an arms race (iterated PD) und
 <p><strong>Step 3: Commitment and credibility.</strong> In practice, the crisis was resolved because the US committed to a naval blockade (a costly signal of resolve) while offering a face-saving exit: a secret agreement to remove Jupiter missiles from Turkey. This transformed the game by changing the perceived payoffs — making “Hold Firm” more credible for the US while reducing the USSR’s cost of backing down.</p>
 </div>
 </div>
-<div id="extensions-34" class="section level2" number="36.5">
+<div class="section level2" id="extensions-34" number="36.5">
 <h2>
-<span class="header-section-number">36.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-34"><i class="fas fa-link"></i></a>
+<span class="header-section-number">36.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-34"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -522,8 +529,8 @@ Figure 36.2: Cumulative payoffs over 50 rounds of an arms race (iterated PD) und
 <strong>Network effects</strong> on coordination games are covered in <a href="sec-network-games.html#sec-network-games">22</a>, where Stag Hunt dynamics depend on the structure of social connections.</li>
 </ul>
 </div>
-<div id="exercises-34" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-34"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-34">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-34"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Risk dominance in Stag Hunt.</strong> Modify the Stag Hunt payoffs so that the mixed-NE threshold is <span class="math inline">\(p^* = 0.5\)</span> instead of <span class="math inline">\(0.75\)</span>. What values of <span class="math inline">\((a, b, c, d)\)</span> achieve this? Simulate the replicator dynamics and verify that the basins of attraction are now equal in size.</p></li>
@@ -531,16 +538,14 @@ Figure 36.2: Cumulative payoffs over 50 rounds of an arms race (iterated PD) und
 <li><p><strong>Arms race tournament.</strong> Implement a round-robin tournament among four strategies: Always Cooperate, Always Defect, Tit-for-Tat, and Grim Trigger. Each pair plays 100 rounds of the iterated PD. Compute total payoffs for each strategy and rank them. Which strategy wins? Does this match Axelrod’s tournament results?</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -559,64 +564,15 @@ Figure 36.2: Cumulative payoffs over 50 rounds of an arms race (iterated PD) und
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-bargaining.html"><span class="header-section-number">35</span> Bargaining Theory</a></div>
 <div class="next"><a href="sec-case-studies.html"><span class="header-section-number">37</span> Empirical Case Studies</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-conflict-cooperation"><span class="header-section-number">36</span> Conflict and Cooperation Models</a></li>
 <li><a class="nav-link" href="#learning-objectives-34">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-34"><span class="header-section-number">36.1</span> Motivation</a></li>
@@ -641,29 +597,23 @@ Figure 36.2: Cumulative payoffs over 50 rounds of an arms race (iterated PD) und
 <li><a class="nav-link" href="#extensions-34"><span class="header-section-number">36.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-34">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/35-conflict-cooperation.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/35-conflict-cooperation.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/35-conflict-cooperation.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/35-conflict-cooperation.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

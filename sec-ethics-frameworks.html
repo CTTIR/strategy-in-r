@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 38 Ethical Frameworks for Strategic AI | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Consequentialism, deontology, and virtue ethics applied to AI decisions, with formal social welfare functions for resource allocation.  Learning objectives Distinguish consequentialist,...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 38 Ethical Frameworks for Strategic AI | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-ethics-frameworks.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Consequentialism, deontology, and virtue ethics applied to AI decisions, with formal social welfare functions for resource allocation.  Learning objectives Distinguish consequentialist,...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 38 Ethical Frameworks for Strategic AI | Strategy in R">
-<meta name="twitter:description" content="Consequentialism, deontology, and virtue ethics applied to AI decisions, with formal social welfare functions for resource allocation.  Learning objectives Distinguish consequentialist,...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 38 Ethical Frameworks for Strategic AI | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Consequentialism, deontology, and virtue ethics applied to AI decisions, with formal social welfare functions for resource allocation.  Learning objectives Distinguish consequentialist,..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 38 Ethical Frameworks for Strategic AI | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-ethics-frameworks.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Consequentialism, deontology, and virtue ethics applied to AI decisions, with formal social welfare functions for resource allocation.  Learning objectives Distinguish consequentialist,..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 38 Ethical Frameworks for Strategic AI | Strategy in R" name="twitter:title"/>
+<meta content="Consequentialism, deontology, and virtue ethics applied to AI decisions, with formal social welfare functions for resource allocation.  Learning objectives Distinguish consequentialist,..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 38 Ethical Frameworks for Strategic AI | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-ethics-frameworks" class="section level1" number="38">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-ethics-frameworks" number="38">
 <h1>
-<span class="header-section-number">38</span> Ethical Frameworks for Strategic AI<a class="anchor" aria-label="anchor" href="#sec-ethics-frameworks"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">38</span> Ethical Frameworks for Strategic AI<a aria-label="anchor" class="anchor" href="#sec-ethics-frameworks"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-ethics-frameworks.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-ethics-frameworks.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Consequentialism, deontology, and virtue ethics applied to AI decisions, with formal social welfare functions for resource allocation.</p>
 </blockquote>
-<div id="learning-objectives-36" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-36"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-36">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-36"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Distinguish consequentialist, deontological, and virtue-ethics perspectives on strategic AI decisions.</li>
@@ -183,28 +190,28 @@
 <li>Identify Pareto-efficient allocations and locate welfare-maximizing points on the Pareto frontier.</li>
 </ul>
 </div>
-<div id="motivation-36" class="section level2" number="38.1">
+<div class="section level2" id="motivation-36" number="38.1">
 <h2>
-<span class="header-section-number">38.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-36"><i class="fas fa-link"></i></a>
+<span class="header-section-number">38.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-36"><i class="fas fa-link"></i></a>
 </h2>
 <p>An autonomous system must allocate a scarce resource — say, bandwidth, computing capacity, or medical supplies — among multiple agents. A purely strategic analysis tells us what equilibrium outcomes look like, but it says nothing about which equilibrium is <em>desirable</em>. Should we maximize total benefit (utilitarianism)? Protect the worst-off agent (Rawlsian maximin)? Find a balanced compromise (Nash bargaining)?</p>
 <p>These questions are not merely philosophical. Every multi-agent system that resolves conflicts among stakeholders implicitly embeds an ethical framework in its objective function. Making the framework explicit allows designers to reason about trade-offs, justify choices, and audit outcomes.</p>
 </div>
-<div id="theory-36" class="section level2" number="38.2">
+<div class="section level2" id="theory-36" number="38.2">
 <h2>
-<span class="header-section-number">38.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-36"><i class="fas fa-link"></i></a>
+<span class="header-section-number">38.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-36"><i class="fas fa-link"></i></a>
 </h2>
-<div id="three-ethical-lenses" class="section level3" number="38.2.1">
+<div class="section level3" id="three-ethical-lenses" number="38.2.1">
 <h3>
-<span class="header-section-number">38.2.1</span> Three ethical lenses<a class="anchor" aria-label="anchor" href="#three-ethical-lenses"><i class="fas fa-link"></i></a>
+<span class="header-section-number">38.2.1</span> Three ethical lenses<a aria-label="anchor" class="anchor" href="#three-ethical-lenses"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Consequentialism</strong> evaluates actions by their outcomes. In a game-theoretic setting, the most common consequentialist criterion is <em>utilitarianism</em>: choose the outcome that maximizes the sum of payoffs across all agents.</p>
 <p><strong>Deontology</strong> evaluates actions by whether they conform to rules or duties, regardless of consequences. In mechanism design this corresponds to <em>constraints</em> — for example, requiring that no agent is made worse off than their outside option (individual rationality) or that the mechanism treats agents symmetrically.</p>
 <p><strong>Virtue ethics</strong> asks what a well-functioning agent <em>would</em> do. In AI alignment, this maps to designing agents that exhibit desirable dispositions — honesty, fairness, cooperativeness — as stable character traits rather than case-by-case calculations.</p>
 </div>
-<div id="social-welfare-functions" class="section level3" number="38.2.2">
+<div class="section level3" id="social-welfare-functions" number="38.2.2">
 <h3>
-<span class="header-section-number">38.2.2</span> Social welfare functions<a class="anchor" aria-label="anchor" href="#social-welfare-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">38.2.2</span> Social welfare functions<a aria-label="anchor" class="anchor" href="#social-welfare-functions"><i class="fas fa-link"></i></a>
 </h3>
 <p>Given <span class="math inline">\(n\)</span> agents with utilities <span class="math inline">\(u_1, u_2, \ldots, u_n\)</span> over an allocation <span class="math inline">\(x\)</span>, we define three standard social welfare functions (SWFs):</p>
 <p><strong>Utilitarian SWF</strong> — maximize total welfare:
@@ -227,16 +234,16 @@ W_N(x) = \prod_{i=1}^{n} u_i(x)
 <p>An allocation <span class="math inline">\(x\)</span> is <strong>Pareto efficient</strong> if there is no alternative <span class="math inline">\(x'\)</span> such that <span class="math inline">\(u_i(x') \geq u_i(x)\)</span> for all <span class="math inline">\(i\)</span> with strict inequality for at least one. All three SWF optima lie on the Pareto frontier, but they generally select different points.</p>
 </div>
 </div>
-<div id="impossibility-and-trade-offs" class="section level3" number="38.2.3">
+<div class="section level3" id="impossibility-and-trade-offs" number="38.2.3">
 <h3>
-<span class="header-section-number">38.2.3</span> Impossibility and trade-offs<a class="anchor" aria-label="anchor" href="#impossibility-and-trade-offs"><i class="fas fa-link"></i></a>
+<span class="header-section-number">38.2.3</span> Impossibility and trade-offs<a aria-label="anchor" class="anchor" href="#impossibility-and-trade-offs"><i class="fas fa-link"></i></a>
 </h3>
 <p>Arrow’s impossibility theorem and its descendants show that no social welfare function can satisfy all desirable axioms simultaneously. In practice, the choice of SWF reflects a value judgement about how to weigh efficiency against equity. Utilitarianism favours efficiency, the Rawlsian criterion favours equity, and the Nash criterion offers a middle ground that is scale-invariant and satisfies the axioms of Nash bargaining.</p>
 </div>
 </div>
-<div id="sec-ethics-implementation" class="section level2" number="38.3">
+<div class="section level2" id="sec-ethics-implementation" number="38.3">
 <h2>
-<span class="header-section-number">38.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-ethics-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">38.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-ethics-implementation"><i class="fas fa-link"></i></a>
 </h2>
 <p>We consider a resource allocation problem: divide a budget <span class="math inline">\(B = 100\)</span> among three agents whose utilities are concave functions of their share.</p>
 <div class="sourceCode" id="cb1084"><pre class="downlit sourceCode r">
@@ -265,9 +272,9 @@ W_N(x) = \prod_{i=1}^{n} u_i(x)
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">utils</span> <span class="op">&lt;=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/prod.html">prod</a></span><span class="op">(</span><span class="va">utils</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div id="grid-search-over-allocations" class="section level3" number="38.3.1">
+<div class="section level3" id="grid-search-over-allocations" number="38.3.1">
 <h3>
-<span class="header-section-number">38.3.1</span> Grid search over allocations<a class="anchor" aria-label="anchor" href="#grid-search-over-allocations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">38.3.1</span> Grid search over allocations<a aria-label="anchor" class="anchor" href="#grid-search-over-allocations"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1085"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate feasible allocations on a grid (x1 + x2 + x3 = budget)</span></span>
@@ -306,9 +313,9 @@ W_N(x) = \prod_{i=1}^{n} u_i(x)
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Nash optimum:        x ="</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">opt_nash</span><span class="op">$</span><span class="va">x1</span>, <span class="va">opt_nash</span><span class="op">$</span><span class="va">x2</span>, <span class="va">opt_nash</span><span class="op">$</span><span class="va">x3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Nash optimum:        x = 18 32 50</code></pre>
 </div>
-<div id="pareto-frontier-with-welfare-optima" class="section level3" number="38.3.2">
+<div class="section level3" id="pareto-frontier-with-welfare-optima" number="38.3.2">
 <h3>
-<span class="header-section-number">38.3.2</span> Pareto frontier with welfare optima<a class="anchor" aria-label="anchor" href="#pareto-frontier-with-welfare-optima"><i class="fas fa-link"></i></a>
+<span class="header-section-number">38.3.2</span> Pareto frontier with welfare optima<a aria-label="anchor" class="anchor" href="#pareto-frontier-with-welfare-optima"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1091"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Identify Pareto-efficient allocations (no other allocation dominates)</span></span>
@@ -351,17 +358,17 @@ W_N(x) = \prod_{i=1}^{n} u_i(x)
 <span></span>
 <span><span class="va">p1</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:pareto-frontier-plot"></span>
-<img src="37-ethics-frameworks_files/figure-html/pareto-frontier-plot-1.png" alt="Pareto frontier projected onto agents 1 and 2 utility space. The utilitarian (orange), Rawlsian (blue), and Nash (green) optima select different points on the frontier, reflecting different equity-efficiency trade-offs." width="80%"><p class="caption">
+<span id="fig:pareto-frontier-plot" style="display:block;"></span>
+<img alt="Pareto frontier projected onto agents 1 and 2 utility space. The utilitarian (orange), Rawlsian (blue), and Nash (green) optima select different points on the frontier, reflecting different equity-efficiency trade-offs." src="37-ethics-frameworks_files/figure-html/pareto-frontier-plot-1.png" width="80%"/><p class="caption">
 Figure 38.1: Pareto frontier projected onto agents 1 and 2 utility space. The utilitarian (orange), Rawlsian (blue), and Nash (green) optima select different points on the frontier, reflecting different equity-efficiency trade-offs.
 </p>
 </div>
 <div class="sourceCode" id="cb1093"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p1</span>, <span class="st">"ethics-pareto-frontier"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="welfare-comparison-across-methods" class="section level3" number="38.3.3">
+<div class="section level3" id="welfare-comparison-across-methods" number="38.3.3">
 <h3>
-<span class="header-section-number">38.3.3</span> Welfare comparison across methods<a class="anchor" aria-label="anchor" href="#welfare-comparison-across-methods"><i class="fas fa-link"></i></a>
+<span class="header-section-number">38.3.3</span> Welfare comparison across methods<a aria-label="anchor" class="anchor" href="#welfare-comparison-across-methods"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1094"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="va">optima_points</span> <span class="op">|&gt;</span></span>
@@ -387,8 +394,8 @@ Figure 38.1: Pareto frontier projected onto agents 1 and 2 utility space. The ut
 <span></span>
 <span><span class="va">p2</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:welfare-comparison"></span>
-<img src="37-ethics-frameworks_files/figure-html/welfare-comparison-1.png" alt="Individual agent utilities under each welfare criterion. The utilitarian optimum concentrates resources on the agent with highest marginal utility (agent 3), while the Rawlsian criterion equalizes utilities across agents." width="80%"><p class="caption">
+<span id="fig:welfare-comparison" style="display:block;"></span>
+<img alt="Individual agent utilities under each welfare criterion. The utilitarian optimum concentrates resources on the agent with highest marginal utility (agent 3), while the Rawlsian criterion equalizes utilities across agents." src="37-ethics-frameworks_files/figure-html/welfare-comparison-1.png" width="80%"/><p class="caption">
 Figure 33.1: Individual agent utilities under each welfare criterion. The utilitarian optimum concentrates resources on the agent with highest marginal utility (agent 3), while the Rawlsian criterion equalizes utilities across agents.
 </p>
 </div>
@@ -396,9 +403,9 @@ Figure 33.1: Individual agent utilities under each welfare criterion. The utilit
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p2</span>, <span class="st">"ethics-welfare-comparison"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-34" class="section level2" number="38.4">
+<div class="section level2" id="worked-example-34" number="38.4">
 <h2>
-<span class="header-section-number">38.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-34"><i class="fas fa-link"></i></a>
+<span class="header-section-number">38.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-34"><i class="fas fa-link"></i></a>
 </h2>
 <p>Consider three agents sharing a budget of <span class="math inline">\(B = 100\)</span> with utility functions <span class="math inline">\(u_i(x_i) = x_i^{\alpha_i}\)</span> where <span class="math inline">\(\alpha_1 = 0.3\)</span>, <span class="math inline">\(\alpha_2 = 0.5\)</span>, and <span class="math inline">\(\alpha_3 = 0.8\)</span>. Agent 3 has the highest elasticity — each additional unit of resource generates more utility for agent 3 than for the others.</p>
 <p><strong>Step 1 — Utilitarian optimum.</strong> The utilitarian criterion maximizes <span class="math inline">\(\sum u_i\)</span>. Because agent 3’s marginal utility decreases most slowly (<span class="math inline">\(\alpha_3 = 0.8\)</span>), the utilitarian solution allocates the most resources to agent 3.</p>
@@ -441,9 +448,9 @@ Figure 33.1: Individual agent utilities under each welfare criterion. The utilit
 <p><strong>Step 3 — Nash optimum.</strong> The Nash product criterion finds a middle ground. It is the unique allocation satisfying the axioms of symmetry, Pareto efficiency, independence of irrelevant alternatives, and scale invariance from Nash’s bargaining theory.</p>
 <p><strong>Interpretation.</strong> The three criteria represent genuine ethical disagreements. A designer choosing among them is making a normative choice: how much inequality is acceptable in exchange for higher total welfare? There is no objectively correct answer, but formalizing the alternatives allows transparent discussion and principled selection.</p>
 </div>
-<div id="extensions-36" class="section level2" number="38.5">
+<div class="section level2" id="extensions-36" number="38.5">
 <h2>
-<span class="header-section-number">38.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-36"><i class="fas fa-link"></i></a>
+<span class="header-section-number">38.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-36"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -455,8 +462,8 @@ Figure 33.1: Individual agent utilities under each welfare criterion. The utilit
 <li>For philosophical foundations, see <span class="citation">Sen (<a href="references.html#ref-sen1999">1999</a>)</span> and <span class="citation">Rawls (<a href="references.html#ref-rawls1971">1971</a>)</span>. For the game-theoretic connection, <span class="citation">Moulin (<a href="references.html#ref-moulin2004">2004</a>)</span> provides an axiomatic treatment of fair division.</li>
 </ul>
 </div>
-<div id="exercises-36" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-36"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-36">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-36"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Weighted utilitarianism.</strong> Modify the grid search to maximize <span class="math inline">\(W(x) = 2 u_1(x) + u_2(x) + u_3(x)\)</span>, giving agent 1 double weight. How does the optimal allocation change compared to equal-weight utilitarianism? Plot the result on the Pareto frontier.</p></li>
@@ -464,16 +471,14 @@ Figure 33.1: Individual agent utilities under each welfare criterion. The utilit
 <li><p><strong>Leximin refinement.</strong> The Rawlsian criterion only considers the worst-off agent. Implement the <em>leximin</em> refinement, which first maximizes the minimum utility, then (among allocations achieving this maximum) maximizes the second-lowest utility, and so on. Does leximin ever differ from plain maximin in the three-agent example?</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -492,64 +497,15 @@ Figure 33.1: Individual agent utilities under each welfare criterion. The utilit
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-case-studies.html"><span class="header-section-number">37</span> Empirical Case Studies</a></div>
 <div class="next"><a href="sec-fairness-ml.html"><span class="header-section-number">39</span> Fairness in Machine Learning</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-ethics-frameworks"><span class="header-section-number">38</span> Ethical Frameworks for Strategic AI</a></li>
 <li><a class="nav-link" href="#learning-objectives-36">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-36"><span class="header-section-number">38.1</span> Motivation</a></li>
@@ -571,29 +527,23 @@ Figure 33.1: Individual agent utilities under each welfare criterion. The utilit
 <li><a class="nav-link" href="#extensions-36"><span class="header-section-number">38.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-36">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/37-ethics-frameworks.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/37-ethics-frameworks.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/37-ethics-frameworks.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/37-ethics-frameworks.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

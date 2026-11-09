@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 5 Mixed Strategies and the Indifference Principle | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Why rational players sometimes randomize, how the indifference principle pins down mixing probabilities, and how to compute and visualize mixed-strategy Nash equilibria in R.  Learning objectives...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 5 Mixed Strategies and the Indifference Principle | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-mixed-strategies.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Why rational players sometimes randomize, how the indifference principle pins down mixing probabilities, and how to compute and visualize mixed-strategy Nash equilibria in R.  Learning objectives...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 5 Mixed Strategies and the Indifference Principle | Strategy in R">
-<meta name="twitter:description" content="Why rational players sometimes randomize, how the indifference principle pins down mixing probabilities, and how to compute and visualize mixed-strategy Nash equilibria in R.  Learning objectives...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 5 Mixed Strategies and the Indifference Principle | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Why rational players sometimes randomize, how the indifference principle pins down mixing probabilities, and how to compute and visualize mixed-strategy Nash equilibria in R.  Learning objectives..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 5 Mixed Strategies and the Indifference Principle | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-mixed-strategies.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Why rational players sometimes randomize, how the indifference principle pins down mixing probabilities, and how to compute and visualize mixed-strategy Nash equilibria in R.  Learning objectives..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 5 Mixed Strategies and the Indifference Principle | Strategy in R" name="twitter:title"/>
+<meta content="Why rational players sometimes randomize, how the indifference principle pins down mixing probabilities, and how to compute and visualize mixed-strategy Nash equilibria in R.  Learning objectives..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 5 Mixed Strategies and the Indifference Principle | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-mixed-strategies" class="section level1" number="5">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-mixed-strategies" number="5">
 <h1>
-<span class="header-section-number">5</span> Mixed Strategies and the Indifference Principle<a class="anchor" aria-label="anchor" href="#sec-mixed-strategies"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">5</span> Mixed Strategies and the Indifference Principle<a aria-label="anchor" class="anchor" href="#sec-mixed-strategies"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-mixed-strategies.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-mixed-strategies.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Why rational players sometimes randomize, how the indifference principle pins down mixing probabilities, and how to compute and visualize mixed-strategy Nash equilibria in R.</p>
 </blockquote>
-<div id="learning-objectives-3" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-3"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-3">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-3"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Explain why pure-strategy equilibria sometimes fail to exist and why randomization resolves the problem.</li>
@@ -183,21 +190,21 @@
 <li>Visualize expected payoffs as a function of mixing probability and identify the indifference point graphically.</li>
 </ul>
 </div>
-<div id="motivation-3" class="section level2" number="5.1">
+<div class="section level2" id="motivation-3" number="5.1">
 <h2>
-<span class="header-section-number">5.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-3"><i class="fas fa-link"></i></a>
 </h2>
 <p>Not every strategic situation has a stable deterministic outcome. Consider a penalty kick in football. The striker chooses left or right; the goalkeeper dives left or right. If the goalkeeper could predict the striker’s choice, she would always save the shot. If the striker could predict the goalkeeper, he would always score. Any predictable pattern is exploitable, so both players must be unpredictable — they must <em>randomize</em>.</p>
 <p>This is not a peculiarity of sports. Firms randomizing the timing of sales, tax authorities choosing which returns to audit, and poker players blending bluffs with genuine bets all face the same logic. Whenever the interests of the players are sufficiently opposed that no pure-strategy profile is self-enforcing (see <a href="sec-nash-equilibrium.html#sec-nash-equilibrium">4</a>), stability requires mixing.</p>
 <p>The profound insight of <span class="citation">Nash (<a href="references.html#ref-nash1950">1950</a>)</span> is that this resolution is always available: every finite game possesses at least one Nash equilibrium when players are allowed to randomize. This chapter develops the theory behind that guarantee, introduces the <em>indifference principle</em> that makes mixed equilibria tractable, and implements the computations in R.</p>
 </div>
-<div id="theory-3" class="section level2" number="5.2">
+<div class="section level2" id="theory-3" number="5.2">
 <h2>
-<span class="header-section-number">5.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-3"><i class="fas fa-link"></i></a>
 </h2>
-<div id="mixed-strategies-defined" class="section level3" number="5.2.1">
+<div class="section level3" id="mixed-strategies-defined" number="5.2.1">
 <h3>
-<span class="header-section-number">5.2.1</span> Mixed strategies defined<a class="anchor" aria-label="anchor" href="#mixed-strategies-defined"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.1</span> Mixed strategies defined<a aria-label="anchor" class="anchor" href="#mixed-strategies-defined"><i class="fas fa-link"></i></a>
 </h3>
 <p>In a normal-form game (<a href="sec-normal-form.html#sec-normal-form">3</a>), a <strong>pure strategy</strong> is a definite choice of action. A <strong>mixed strategy</strong> <span class="math inline">\(\sigma_i\)</span> for player <span class="math inline">\(i\)</span> is a probability distribution over <span class="math inline">\(i\)</span>’s action set <span class="math inline">\(A_i\)</span>. We write <span class="math inline">\(\sigma_i(a_i)\)</span> for the probability that player <span class="math inline">\(i\)</span> plays action <span class="math inline">\(a_i\)</span>, with <span class="math inline">\(\sigma_i(a_i) \geq 0\)</span> for all <span class="math inline">\(a_i\)</span> and <span class="math inline">\(\sum_{a_i \in A_i} \sigma_i(a_i) = 1\)</span>.</p>
 <p>The <strong>support</strong> of a mixed strategy is the set of actions played with positive probability:</p>
@@ -206,9 +213,9 @@
 \]</span></p>
 <p>A pure strategy is a degenerate mixed strategy whose support contains a single action.</p>
 </div>
-<div id="expected-payoffs-under-mixing" class="section level3" number="5.2.2">
+<div class="section level3" id="expected-payoffs-under-mixing" number="5.2.2">
 <h3>
-<span class="header-section-number">5.2.2</span> Expected payoffs under mixing<a class="anchor" aria-label="anchor" href="#expected-payoffs-under-mixing"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.2</span> Expected payoffs under mixing<a aria-label="anchor" class="anchor" href="#expected-payoffs-under-mixing"><i class="fas fa-link"></i></a>
 </h3>
 <p>When both players use mixed strategies <span class="math inline">\(\sigma_1\)</span> and <span class="math inline">\(\sigma_2\)</span> in a two-player game, player <span class="math inline">\(i\)</span>’s expected payoff is:</p>
 <p><span class="math display" id="eq:expected-payoff-mixed">\[\begin{equation}
@@ -221,9 +228,9 @@ U_1(p, q) = p\,q\,a_{11} + p\,(1-q)\,a_{12} + (1-p)\,q\,a_{21} + (1-p)\,(1-q)\,a
 \]</span></p>
 <p>where <span class="math inline">\(a_{ij}\)</span> are the entries of Player 1’s payoff matrix.</p>
 </div>
-<div id="the-indifference-principle" class="section level3" number="5.2.3">
+<div class="section level3" id="the-indifference-principle" number="5.2.3">
 <h3>
-<span class="header-section-number">5.2.3</span> The indifference principle<a class="anchor" aria-label="anchor" href="#the-indifference-principle"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.3</span> The indifference principle<a aria-label="anchor" class="anchor" href="#the-indifference-principle"><i class="fas fa-link"></i></a>
 </h3>
 <p>The key to computing mixed equilibria is a simple but initially counter-intuitive observation.</p>
 <div class="rmdnote">
@@ -232,9 +239,9 @@ U_1(p, q) = p\,q\,a_{11} + p\,(1-q)\,a_{12} + (1-p)\,q\,a_{21} + (1-p)\,(1-q)\,a
 </div>
 <p>This has a striking implication: player <span class="math inline">\(i\)</span>’s equilibrium mixing probability is determined not by <span class="math inline">\(i\)</span>’s own payoffs, but by the <em>opponent’s</em> payoffs. Player <span class="math inline">\(i\)</span> mixes in exactly the proportions needed to keep the opponent from exploiting a deviation.</p>
 </div>
-<div id="computing-mixed-ne-in-2x2-games" class="section level3" number="5.2.4">
+<div class="section level3" id="computing-mixed-ne-in-2x2-games" number="5.2.4">
 <h3>
-<span class="header-section-number">5.2.4</span> Computing mixed NE in 2x2 games<a class="anchor" aria-label="anchor" href="#computing-mixed-ne-in-2x2-games"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.4</span> Computing mixed NE in 2x2 games<a aria-label="anchor" class="anchor" href="#computing-mixed-ne-in-2x2-games"><i class="fas fa-link"></i></a>
 </h3>
 <p>Consider a 2x2 game with Player 1’s payoff matrix <span class="math inline">\(A\)</span> and Player 2’s payoff matrix <span class="math inline">\(B\)</span>. Player 2 mixes with probability <span class="math inline">\(q\)</span> on column 1. Player 1 is indifferent between their two rows when:</p>
 <p><span class="math display">\[
@@ -252,9 +259,9 @@ p^* = \frac{b_{22} - b_{12}}{b_{11} - b_{21} - b_{12} + b_{22}}
 \end{equation}\]</span></p>
 <p>A mixed NE exists when both <span class="math inline">\(p^*\)</span> and <span class="math inline">\(q^*\)</span> fall in <span class="math inline">\([0, 1]\)</span>.</p>
 </div>
-<div id="nashs-existence-theorem" class="section level3" number="5.2.5">
+<div class="section level3" id="nashs-existence-theorem" number="5.2.5">
 <h3>
-<span class="header-section-number">5.2.5</span> Nash’s existence theorem<a class="anchor" aria-label="anchor" href="#nashs-existence-theorem"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.5</span> Nash’s existence theorem<a aria-label="anchor" class="anchor" href="#nashs-existence-theorem"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdtip">
 <p><strong>Theorem: Existence of Nash Equilibrium</strong></p>
@@ -263,13 +270,13 @@ p^* = \frac{b_{22} - b_{12}}{b_{11} - b_{21} - b_{12} + b_{22}}
 <p>The proof relies on Kakutani’s fixed-point theorem applied to the best-response correspondences. The importance of this result cannot be overstated: it guarantees that for any well-defined finite game, at least one self-enforcing outcome exists. Without mixed strategies, many natural games (Matching Pennies, Rock-Paper-Scissors) would have no equilibrium at all.</p>
 </div>
 </div>
-<div id="implementation-in-r-2" class="section level2" number="5.3">
+<div class="section level2" id="implementation-in-r-2" number="5.3">
 <h2>
-<span class="header-section-number">5.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#implementation-in-r-2"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#implementation-in-r-2"><i class="fas fa-link"></i></a>
 </h2>
-<div id="computing-mixed-equilibria-with-solve_2x2_mixed_nash" class="section level3" number="5.3.1">
+<div class="section level3" id="computing-mixed-equilibria-with-solve_2x2_mixed_nash" number="5.3.1">
 <h3>
-<span class="header-section-number">5.3.1</span> Computing mixed equilibria with <code>solve_2x2_mixed_nash()</code><a class="anchor" aria-label="anchor" href="#computing-mixed-equilibria-with-solve_2x2_mixed_nash"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.3.1</span> Computing mixed equilibria with <code>solve_2x2_mixed_nash()</code><a aria-label="anchor" class="anchor" href="#computing-mixed-equilibria-with-solve_2x2_mixed_nash"><i class="fas fa-link"></i></a>
 </h3>
 <p>The function <code>solve_2x2_mixed_nash()</code> from <code>R/solvers.R</code> implements <a href="sec-mixed-strategies.html#eq:q-star">(5.2)</a> and <a href="sec-mixed-strategies.html#eq:p-star">(5.3)</a> directly.</p>
 <div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
@@ -319,9 +326,9 @@ p^* = \frac{b_{22} - b_{12}}{b_{11} - b_{21} - b_{12} + b_{22}}
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Player 1 expected payoff at mixed NE: %.2f\n"</span>, <span class="va">eu_mixed</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Player 1 expected payoff at mixed NE: 0.00</code></pre>
 </div>
-<div id="visualizing-the-indifference-point" class="section level3" number="5.3.2">
+<div class="section level3" id="visualizing-the-indifference-point" number="5.3.2">
 <h3>
-<span class="header-section-number">5.3.2</span> Visualizing the indifference point<a class="anchor" aria-label="anchor" href="#visualizing-the-indifference-point"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.3.2</span> Visualizing the indifference point<a aria-label="anchor" class="anchor" href="#visualizing-the-indifference-point"><i class="fas fa-link"></i></a>
 </h3>
 <p>The figure below plots Player 1’s expected payoff from each pure action as Player 2 varies <span class="math inline">\(q\)</span>, the probability of playing Heads. At the indifference point <span class="math inline">\(q^* = 0.5\)</span>, both actions yield the same expected payoff, so Player 1 is willing to mix.</p>
 <div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
@@ -364,8 +371,8 @@ p^* = \frac{b_{22} - b_{12}}{b_{11} - b_{21} - b_{12} + b_{22}}
 <span></span>
 <span><span class="va">p_indiff</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:indifference"></span>
-<img src="04-mixed-strategies_files/figure-html/indifference-1.png" alt="Player 1's expected payoff from each pure action as a function of Player 2's mixing probability $q$ in Matching Pennies. The lines cross at $q^* = 0.5$, the indifference point where Player 1 is willing to randomize." width="80%"><p class="caption">
+<span id="fig:indifference" style="display:block;"></span>
+<img alt="Player 1's expected payoff from each pure action as a function of Player 2's mixing probability $q$ in Matching Pennies. The lines cross at $q^* = 0.5$, the indifference point where Player 1 is willing to randomize." src="04-mixed-strategies_files/figure-html/indifference-1.png" width="80%"/><p class="caption">
 Figure 5.1: Player 1’s expected payoff from each pure action as a function of Player 2’s mixing probability <span class="math inline">\(q\)</span> in Matching Pennies. The lines cross at <span class="math inline">\(q^* = 0.5\)</span>, the indifference point where Player 1 is willing to randomize.
 </p>
 </div>
@@ -374,13 +381,13 @@ Figure 5.1: Player 1’s expected payoff from each pure action as a function of 
 <p>When <span class="math inline">\(q &lt; 0.5\)</span>, Player 2 plays Tails more often, so Player 1 prefers Tails (the orange line is above). When <span class="math inline">\(q &gt; 0.5\)</span>, Player 1 prefers Heads (blue line is above). Only at <span class="math inline">\(q^* = 0.5\)</span> is Player 1 genuinely indifferent and therefore willing to randomize. The same logic, applied from Player 2’s perspective, pins down <span class="math inline">\(p^* = 0.5\)</span>.</p>
 </div>
 </div>
-<div id="worked-example-3" class="section level2" number="5.4">
+<div class="section level2" id="worked-example-3" number="5.4">
 <h2>
-<span class="header-section-number">5.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-3"><i class="fas fa-link"></i></a>
 </h2>
-<div id="matching-pennies-step-by-step" class="section level3" number="5.4.1">
+<div class="section level3" id="matching-pennies-step-by-step" number="5.4.1">
 <h3>
-<span class="header-section-number">5.4.1</span> Matching Pennies: step-by-step<a class="anchor" aria-label="anchor" href="#matching-pennies-step-by-step"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.4.1</span> Matching Pennies: step-by-step<a aria-label="anchor" class="anchor" href="#matching-pennies-step-by-step"><i class="fas fa-link"></i></a>
 </h3>
 <p>Two children play Matching Pennies. Each simultaneously shows a coin Heads or Tails. Player 1 (the Matcher) wins if the coins match; Player 2 (the Mismatcher) wins if they differ. The payoff matrices are as defined above.</p>
 <p><strong>Step 1: Check for pure-strategy NE.</strong> For any pure-strategy profile, one player can profitably deviate. At (Heads, Heads), Player 2 switches to Tails. At (Heads, Tails), Player 1 switches to Tails. No profile is a mutual best response, so no pure NE exists.</p>
@@ -418,9 +425,9 @@ p \cdot (-1) + (1 - p) \cdot 1 = p \cdot 1 + (1 - p) \cdot (-1)
 <p><strong>Step 4: Interpret.</strong> The equilibrium has a natural interpretation: each player must be maximally unpredictable. Any bias — say, playing Heads 60% of the time — would be exploited by the opponent. The mixed NE is the only self-enforcing outcome, consistent with Nash’s existence theorem.</p>
 </div>
 </div>
-<div id="extensions-3" class="section level2" number="5.5">
+<div class="section level2" id="extensions-3" number="5.5">
 <h2>
-<span class="header-section-number">5.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-3"><i class="fas fa-link"></i></a>
 </h2>
 <p>Mixed strategies appear throughout the remainder of this book and in virtually every branch of applied game theory:</p>
 <ul>
@@ -432,8 +439,8 @@ p \cdot (-1) + (1 - p) \cdot 1 = p \cdot 1 + (1 - p) \cdot (-1)
 </ul>
 <p>For a thorough treatment of mixed strategies and their properties, consult <span class="citation">Osborne (<a href="references.html#ref-osborne2004">2004</a>)</span> (Chapter 4).</p>
 </div>
-<div id="exercises-3" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-3"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-3">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-3"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Asymmetric Matching Pennies.</strong> Consider a variant where Player 1 receives a payoff of 3 (instead of 1) when both play Heads, while all other payoffs remain the same as standard Matching Pennies. Set up the payoff matrices, compute the mixed NE by hand using the indifference principle, and verify with <code>solve_2x2_mixed_nash()</code>. How does the asymmetry affect Player 2’s mixing probability? Explain the intuition.</p></li>
@@ -443,16 +450,14 @@ p \cdot (-1) + (1 - p) \cdot 1 = p \cdot 1 + (1 - p) \cdot (-1)
 <li><p><strong>Comparative statics.</strong> In a 2x2 game with payoff matrices <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, suppose we increase <span class="math inline">\(a_{11}\)</span> (Player 1’s payoff when both play action 1) while holding all other entries fixed. Using <a href="sec-mixed-strategies.html#eq:q-star">(5.2)</a>, determine what happens to <span class="math inline">\(q^*\)</span>. Does it increase, decrease, or stay the same? Explain why this result is consistent with the indifference principle — and why it surprises many students.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -471,64 +476,15 @@ p \cdot (-1) + (1 - p) \cdot 1 = p \cdot 1 + (1 - p) \cdot (-1)
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-nash-equilibrium.html"><span class="header-section-number">4</span> Nash Equilibrium</a></div>
 <div class="next"><a href="sec-extensive-form.html"><span class="header-section-number">6</span> Extensive-Form Games</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-mixed-strategies"><span class="header-section-number">5</span> Mixed Strategies and the Indifference Principle</a></li>
 <li><a class="nav-link" href="#learning-objectives-3">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-3"><span class="header-section-number">5.1</span> Motivation</a></li>
@@ -553,29 +509,23 @@ p \cdot (-1) + (1 - p) \cdot 1 = p \cdot 1 + (1 - p) \cdot (-1)
 <li><a class="nav-link" href="#extensions-3"><span class="header-section-number">5.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-3">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/04-mixed-strategies.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/04-mixed-strategies.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/04-mixed-strategies.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/04-mixed-strategies.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

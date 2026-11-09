@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 6 Extensive-Form Games | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Game trees, backward induction, and subgame perfect equilibrium — the tools for analyzing sequential strategic interaction where timing and information matter.  Learning objectives Represent...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 6 Extensive-Form Games | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-extensive-form.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Game trees, backward induction, and subgame perfect equilibrium — the tools for analyzing sequential strategic interaction where timing and information matter.  Learning objectives Represent...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 6 Extensive-Form Games | Strategy in R">
-<meta name="twitter:description" content="Game trees, backward induction, and subgame perfect equilibrium — the tools for analyzing sequential strategic interaction where timing and information matter.  Learning objectives Represent...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 6 Extensive-Form Games | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Game trees, backward induction, and subgame perfect equilibrium — the tools for analyzing sequential strategic interaction where timing and information matter.  Learning objectives Represent..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 6 Extensive-Form Games | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-extensive-form.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Game trees, backward induction, and subgame perfect equilibrium — the tools for analyzing sequential strategic interaction where timing and information matter.  Learning objectives Represent..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 6 Extensive-Form Games | Strategy in R" name="twitter:title"/>
+<meta content="Game trees, backward induction, and subgame perfect equilibrium — the tools for analyzing sequential strategic interaction where timing and information matter.  Learning objectives Represent..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 6 Extensive-Form Games | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-extensive-form" class="section level1" number="6">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-extensive-form" number="6">
 <h1>
-<span class="header-section-number">6</span> Extensive-Form Games<a class="anchor" aria-label="anchor" href="#sec-extensive-form"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">6</span> Extensive-Form Games<a aria-label="anchor" class="anchor" href="#sec-extensive-form"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-extensive-form.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-extensive-form.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Game trees, backward induction, and subgame perfect equilibrium — the tools for analyzing sequential strategic interaction where timing and information matter.</p>
 </blockquote>
-<div id="learning-objectives-4" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-4"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-4">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-4"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Represent sequential games as game trees with nodes, branches, and information sets.</li>
@@ -184,21 +191,21 @@
 <li>Implement backward induction in R and visualize game trees with ggplot2.</li>
 </ul>
 </div>
-<div id="motivation-4" class="section level2" number="6.1">
+<div class="section level2" id="motivation-4" number="6.1">
 <h2>
-<span class="header-section-number">6.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-4"><i class="fas fa-link"></i></a>
 </h2>
 <p>The normal-form games introduced in <a href="sec-normal-form.html#sec-normal-form">3</a> assume that players choose their strategies simultaneously, without observing each other’s actions. Many real-world interactions, however, unfold over time. A firm decides whether to enter a market <em>after</em> observing an incumbent’s investment in capacity. A prosecutor makes a plea offer <em>before</em> the defendant decides whether to accept it. A chess player moves <em>in response</em> to an opponent’s prior move.</p>
 <p>When the sequence of moves matters, we need a richer representation than a payoff matrix. The <strong>extensive form</strong> models games as trees, where each node represents a decision point, each branch represents an available action, and the tree’s structure encodes who moves when and what they know at the time of their decision. This representation, introduced by <span class="citation">Neumann &amp; Morgenstern (<a href="references.html#ref-von-neumann1944">1944</a>)</span> and refined by Kuhn (1953), is the standard framework for analyzing sequential strategic interaction.</p>
 <p>The key payoff of moving to the extensive form is a sharper solution concept. As we saw in <a href="sec-nash-equilibrium.html#sec-nash-equilibrium">4</a>, Nash equilibrium can sustain outcomes based on threats that a player would never actually carry out. Backward induction — reasoning from the end of the game back to the beginning — eliminates such non-credible threats and leads to <strong>subgame perfect equilibrium</strong> (SPE), a refinement that requires rational play in every subgame, not just on the equilibrium path.</p>
 </div>
-<div id="theory-4" class="section level2" number="6.2">
+<div class="section level2" id="theory-4" number="6.2">
 <h2>
-<span class="header-section-number">6.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-4"><i class="fas fa-link"></i></a>
 </h2>
-<div id="game-trees" class="section level3" number="6.2.1">
+<div class="section level3" id="game-trees" number="6.2.1">
 <h3>
-<span class="header-section-number">6.2.1</span> Game trees<a class="anchor" aria-label="anchor" href="#game-trees"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.2.1</span> Game trees<a aria-label="anchor" class="anchor" href="#game-trees"><i class="fas fa-link"></i></a>
 </h3>
 <p>An <strong>extensive-form game</strong> consists of:</p>
 <ol style="list-style-type: decimal">
@@ -214,16 +221,16 @@
 </ol>
 <p>A game has <strong>perfect information</strong> if every information set contains exactly one node — that is, each player knows exactly where they are in the tree when they move. Chess, tic-tac-toe, and the entry deterrence game below are all games of perfect information. When an information set contains multiple nodes, the player faces <strong>imperfect information</strong> about prior moves; this connects to the analysis of Bayesian games in <a href="sec-bayesian-games.html#sec-bayesian-games">7</a>.</p>
 </div>
-<div id="strategies-in-extensive-form-vs.-normal-form" class="section level3" number="6.2.2">
+<div class="section level3" id="strategies-in-extensive-form-vs.-normal-form" number="6.2.2">
 <h3>
-<span class="header-section-number">6.2.2</span> Strategies in extensive form vs. normal form<a class="anchor" aria-label="anchor" href="#strategies-in-extensive-form-vs.-normal-form"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.2.2</span> Strategies in extensive form vs. normal form<a aria-label="anchor" class="anchor" href="#strategies-in-extensive-form-vs.-normal-form"><i class="fas fa-link"></i></a>
 </h3>
 <p>A <strong>strategy</strong> in the extensive form is a complete contingent plan: it specifies an action at <em>every</em> information set where the player might be called to move, including those that the strategy itself makes unreachable. This is a subtle but important distinction from the normal form. Two extensive-form strategies that differ only at unreachable information sets map to the same normal-form strategy but can have different implications for subgame perfection.</p>
 <p>Any extensive-form game can be converted to a normal-form game (see <a href="sec-normal-form.html#sec-normal-form">3</a>) by enumerating all strategy combinations and computing the resulting payoffs. However, this conversion discards the sequential structure, and Nash equilibria of the normal form may include strategy profiles sustained by non-credible threats.</p>
 </div>
-<div id="backward-induction" class="section level3" number="6.2.3">
+<div class="section level3" id="backward-induction" number="6.2.3">
 <h3>
-<span class="header-section-number">6.2.3</span> Backward induction<a class="anchor" aria-label="anchor" href="#backward-induction"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.2.3</span> Backward induction<a aria-label="anchor" class="anchor" href="#backward-induction"><i class="fas fa-link"></i></a>
 </h3>
 <p>For finite games of perfect information, <strong>backward induction</strong> provides a constructive algorithm for finding rational play:</p>
 <ol style="list-style-type: decimal">
@@ -237,9 +244,9 @@
 <p>Every finite game of perfect information has at least one subgame perfect equilibrium in pure strategies, which can be found by backward induction <span class="citation">(<a href="references.html#ref-osborne2004">Osborne, 2004, Chapter 5</a>)</span>.</p>
 </div>
 </div>
-<div id="subgame-perfect-equilibrium" class="section level3" number="6.2.4">
+<div class="section level3" id="subgame-perfect-equilibrium" number="6.2.4">
 <h3>
-<span class="header-section-number">6.2.4</span> Subgame perfect equilibrium<a class="anchor" aria-label="anchor" href="#subgame-perfect-equilibrium"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.2.4</span> Subgame perfect equilibrium<a aria-label="anchor" class="anchor" href="#subgame-perfect-equilibrium"><i class="fas fa-link"></i></a>
 </h3>
 <p>A <strong>subgame</strong> of an extensive-form game is any subtree that (i) begins at a singleton information set, (ii) contains all successors of its root node, and (iii) does not break any information set.</p>
 <div class="rmdnote">
@@ -249,14 +256,14 @@
 <p>Every SPE is a Nash equilibrium, but not every Nash equilibrium is subgame perfect. The additional requirement of rationality in <em>every</em> subgame rules out strategies that rely on non-credible threats — actions a player would not actually carry out if called upon to do so. This refinement is the central contribution of Selten (1965) and is fundamental to the analysis of sequential games throughout this book.</p>
 </div>
 </div>
-<div id="implementation-in-r-3" class="section level2" number="6.3">
+<div class="section level2" id="implementation-in-r-3" number="6.3">
 <h2>
-<span class="header-section-number">6.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#implementation-in-r-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#implementation-in-r-3"><i class="fas fa-link"></i></a>
 </h2>
 <p>We implement the entry deterrence game — a classic example from industrial organization — as a game tree using ggplot2, then solve it by backward induction.</p>
-<div id="defining-the-game-tree" class="section level3" number="6.3.1">
+<div class="section level3" id="defining-the-game-tree" number="6.3.1">
 <h3>
-<span class="header-section-number">6.3.1</span> Defining the game tree<a class="anchor" aria-label="anchor" href="#defining-the-game-tree"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3.1</span> Defining the game tree<a aria-label="anchor" class="anchor" href="#defining-the-game-tree"><i class="fas fa-link"></i></a>
 </h3>
 <p>Consider an <strong>entry deterrence game</strong> with two players:</p>
 <ul>
@@ -287,9 +294,9 @@
 <span>  action  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Enter"</span>, <span class="st">"Stay Out"</span>, <span class="st">"Accommodate"</span>, <span class="st">"Fight"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="drawing-the-game-tree" class="section level3" number="6.3.2">
+<div class="section level3" id="drawing-the-game-tree" number="6.3.2">
 <h3>
-<span class="header-section-number">6.3.2</span> Drawing the game tree<a class="anchor" aria-label="anchor" href="#drawing-the-game-tree"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3.2</span> Drawing the game tree<a aria-label="anchor" class="anchor" href="#drawing-the-game-tree"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Backward induction result: at the incumbent's node, Accommodate (2,1)</span></span>
@@ -364,17 +371,17 @@
 <span></span>
 <span><span class="va">p_tree</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:entry-deterrence-tree"></span>
-<img src="05-extensive-form_files/figure-html/entry-deterrence-tree-1.png" alt="Entry deterrence game solved by backward induction. Bold edges show the subgame perfect equilibrium path: the entrant enters and the incumbent accommodates. The struck-through branch (Fight) represents a non-credible threat." width="80%"><p class="caption">
+<span id="fig:entry-deterrence-tree" style="display:block;"></span>
+<img alt="Entry deterrence game solved by backward induction. Bold edges show the subgame perfect equilibrium path: the entrant enters and the incumbent accommodates. The struck-through branch (Fight) represents a non-credible threat." src="05-extensive-form_files/figure-html/entry-deterrence-tree-1.png" width="80%"/><p class="caption">
 Figure 6.1: Entry deterrence game solved by backward induction. Bold edges show the subgame perfect equilibrium path: the entrant enters and the incumbent accommodates. The struck-through branch (Fight) represents a non-credible threat.
 </p>
 </div>
 <div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_tree</span>, <span class="st">"entry-deterrence-backward-induction"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="backward-induction-algorithm" class="section level3" number="6.3.3">
+<div class="section level3" id="backward-induction-algorithm" number="6.3.3">
 <h3>
-<span class="header-section-number">6.3.3</span> Backward induction algorithm<a class="anchor" aria-label="anchor" href="#backward-induction-algorithm"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3.3</span> Backward induction algorithm<a aria-label="anchor" class="anchor" href="#backward-induction-algorithm"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># A general backward induction solver for binary game trees</span></span>
@@ -435,9 +442,9 @@ Figure 6.1: Entry deterrence game solved by backward induction. Bold edges show 
 #&gt;   Player 2 chooses: Accommodate</code></pre>
 </div>
 </div>
-<div id="worked-example-4" class="section level2" number="6.4">
+<div class="section level2" id="worked-example-4" number="6.4">
 <h2>
-<span class="header-section-number">6.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-4"><i class="fas fa-link"></i></a>
 </h2>
 <p>We now trace through the entry deterrence game step by step to see exactly how backward induction eliminates non-credible threats.</p>
 <p><strong>Step 1: Identify the last decision node.</strong> The incumbent’s node is reached only if the entrant enters. At this node, the incumbent has two choices:</p>
@@ -503,9 +510,9 @@ Figure 6.1: Entry deterrence game solved by backward induction. Bold edges show 
 #&gt;   (Stay Out, Fight) -&gt; payoffs (0, 3)</code></pre>
 <p>The normal form reveals <strong>two</strong> Nash equilibria: (Enter, Accommodate) and (Stay Out, Fight). The second equilibrium involves the incumbent <em>threatening</em> to fight if entry occurs — a threat that deters the entrant. But we showed above that this threat is non-credible: if the incumbent actually had to carry it out, they would prefer to accommodate. Subgame perfection eliminates (Stay Out, Fight), leaving only (Enter, Accommodate) as the unique SPE. This is the power of backward induction as a refinement of Nash equilibrium.</p>
 </div>
-<div id="extensions-4" class="section level2" number="6.5">
+<div class="section level2" id="extensions-4" number="6.5">
 <h2>
-<span class="header-section-number">6.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-4"><i class="fas fa-link"></i></a>
 </h2>
 <p>The extensive form opens several directions explored later in this book:</p>
 <ul>
@@ -520,8 +527,8 @@ Figure 6.1: Entry deterrence game solved by backward induction. Bold edges show 
 </ul>
 <p>For the foundational treatment of extensive-form games and backward induction, see <span class="citation">Neumann &amp; Morgenstern (<a href="references.html#ref-von-neumann1944">1944</a>)</span> and <span class="citation">Osborne (<a href="references.html#ref-osborne2004">2004</a>)</span> (Chapters 5–7). The entry deterrence example follows the tradition of Selten’s chain-store paradox, which demonstrates the power of subgame perfection for eliminating non-credible threats in sequential games.</p>
 </div>
-<div id="exercises-4" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-4"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-4">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-4"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Ultimatum game.</strong> Consider a simplified ultimatum game where Player 1 proposes a split of 10 units, choosing either Fair (5, 5) or Greedy (8, 2). Player 2 then accepts or rejects; rejection gives both zero. Draw the game tree, find all Nash equilibria in the normal form, and identify the subgame perfect equilibrium using backward induction. Which Nash equilibria are eliminated by subgame perfection?</p></li>
@@ -531,16 +538,14 @@ Figure 6.1: Entry deterrence game solved by backward induction. Bold edges show 
 <li><p><strong>Centipede game.</strong> Two players alternate for 4 rounds, each choosing to <strong>Stop</strong> (ending the game) or <strong>Continue</strong> (passing to the other player). At round <span class="math inline">\(k\)</span>, stopping gives the stopper <span class="math inline">\(k\)</span> and the other player <span class="math inline">\(0\)</span>. If both continue for all 4 rounds, each receives 3. What does backward induction predict? Implement this in R by extending <code>backward_induction()</code> to handle a 4-node sequential game. Discuss why human behaviour in laboratory experiments typically departs from the backward-induction prediction.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -559,64 +564,15 @@ Figure 6.1: Entry deterrence game solved by backward induction. Bold edges show 
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-mixed-strategies.html"><span class="header-section-number">5</span> Mixed Strategies and the Indifference Principle</a></div>
 <div class="next"><a href="sec-bayesian-games.html"><span class="header-section-number">7</span> Bayesian Games</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-extensive-form"><span class="header-section-number">6</span> Extensive-Form Games</a></li>
 <li><a class="nav-link" href="#learning-objectives-4">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-4"><span class="header-section-number">6.1</span> Motivation</a></li>
@@ -639,29 +595,23 @@ Figure 6.1: Entry deterrence game solved by backward induction. Bold edges show 
 <li><a class="nav-link" href="#extensions-4"><span class="header-section-number">6.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-4">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/05-extensive-form.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/05-extensive-form.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/05-extensive-form.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/05-extensive-form.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

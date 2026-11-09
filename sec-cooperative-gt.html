@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 9 Cooperative Game Theory | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="An introduction to cooperative game theory with transferable utility. Covers the characteristic function, the core, and the Shapley value with computational examples in R, including a worked...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 9 Cooperative Game Theory | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-cooperative-gt.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="An introduction to cooperative game theory with transferable utility. Covers the characteristic function, the core, and the Shapley value with computational examples in R, including a worked...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 9 Cooperative Game Theory | Strategy in R">
-<meta name="twitter:description" content="An introduction to cooperative game theory with transferable utility. Covers the characteristic function, the core, and the Shapley value with computational examples in R, including a worked...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 9 Cooperative Game Theory | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="An introduction to cooperative game theory with transferable utility. Covers the characteristic function, the core, and the Shapley value with computational examples in R, including a worked..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 9 Cooperative Game Theory | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-cooperative-gt.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="An introduction to cooperative game theory with transferable utility. Covers the characteristic function, the core, and the Shapley value with computational examples in R, including a worked..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 9 Cooperative Game Theory | Strategy in R" name="twitter:title"/>
+<meta content="An introduction to cooperative game theory with transferable utility. Covers the characteristic function, the core, and the Shapley value with computational examples in R, including a worked..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 9 Cooperative Game Theory | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-cooperative-gt" class="section level1" number="9">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-cooperative-gt" number="9">
 <h1>
-<span class="header-section-number">9</span> Cooperative Game Theory<a class="anchor" aria-label="anchor" href="#sec-cooperative-gt"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">9</span> Cooperative Game Theory<a aria-label="anchor" class="anchor" href="#sec-cooperative-gt"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-cooperative-gt.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-cooperative-gt.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>An introduction to cooperative game theory with transferable utility. Covers the characteristic function, the core, and the Shapley value with computational examples in R, including a worked cost-sharing problem for three municipalities.</p>
 </blockquote>
-<div id="learning-objectives-7" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-7"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-7">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-7"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Define a transferable-utility (TU) game using its characteristic function and explain how it differs from non-cooperative models.</li>
@@ -183,21 +190,21 @@
 <li>Apply cooperative game theory to practical cost-sharing and voting-power problems.</li>
 </ul>
 </div>
-<div id="motivation-7" class="section level2" number="9.1">
+<div class="section level2" id="motivation-7" number="9.1">
 <h2>
-<span class="header-section-number">9.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-7"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-7"><i class="fas fa-link"></i></a>
 </h2>
 <p>Non-cooperative game theory, as developed in <a href="sec-nash-equilibrium.html#sec-nash-equilibrium">4</a> and preceding chapters, models strategic interaction by focusing on individual players’ strategies and the equilibria that emerge. But many real-world situations are better described by asking which <strong>coalitions</strong> can form and how the resulting surplus should be divided. When three municipalities consider building a shared water treatment plant, the key questions are not about individual strategic moves but about which subsets of towns benefit from cooperating and how the cost savings should be split.</p>
 <p>Cooperative game theory, whose foundations were laid by <span class="citation">Neumann &amp; Morgenstern (<a href="references.html#ref-von-neumann1944">1944</a>)</span>, takes coalitions as the primitive unit of analysis. Instead of specifying each player’s strategy set, a cooperative game specifies the <strong>worth</strong> (or value) that each possible coalition can generate. The central solution concepts — the <strong>core</strong> and the <strong>Shapley value</strong> — then determine which divisions of the total payoff are stable against defection and which are uniquely fair.</p>
 <p>This chapter focuses on <strong>transferable-utility (TU) games</strong>, where utility can be freely redistributed among coalition members (e.g., via monetary side payments). We introduce the characteristic function, define stability and fairness concepts, and implement everything computationally in R. For R packages that automate many of these calculations, see <a href="sec-coopgame-package.html#sec-coopgame-package">12</a> and <a href="sec-gametheory-package.html#sec-gametheory-package">11</a>.</p>
 </div>
-<div id="theory-7" class="section level2" number="9.2">
+<div class="section level2" id="theory-7" number="9.2">
 <h2>
-<span class="header-section-number">9.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-7"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-7"><i class="fas fa-link"></i></a>
 </h2>
-<div id="characteristic-function-games" class="section level3" number="9.2.1">
+<div class="section level3" id="characteristic-function-games" number="9.2.1">
 <h3>
-<span class="header-section-number">9.2.1</span> Characteristic function games<a class="anchor" aria-label="anchor" href="#characteristic-function-games"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.2.1</span> Characteristic function games<a aria-label="anchor" class="anchor" href="#characteristic-function-games"><i class="fas fa-link"></i></a>
 </h3>
 <p>A <strong>TU cooperative game</strong> is a pair <span class="math inline">\((N, v)\)</span> where:</p>
 <ul>
@@ -208,9 +215,9 @@
 </ul>
 <p>The value <span class="math inline">\(v(S)\)</span> represents the total payoff that members of <span class="math inline">\(S\)</span> can guarantee themselves by cooperating, regardless of what players outside <span class="math inline">\(S\)</span> do. A game is <strong>superadditive</strong> if <span class="math inline">\(v(S \cup T) \geq v(S) + v(T)\)</span> for all disjoint <span class="math inline">\(S, T \subseteq N\)</span>, meaning that merging coalitions never destroys value.</p>
 </div>
-<div id="imputations" class="section level3" number="9.2.2">
+<div class="section level3" id="imputations" number="9.2.2">
 <h3>
-<span class="header-section-number">9.2.2</span> Imputations<a class="anchor" aria-label="anchor" href="#imputations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.2.2</span> Imputations<a aria-label="anchor" class="anchor" href="#imputations"><i class="fas fa-link"></i></a>
 </h3>
 <p>An <strong>imputation</strong> is a payoff vector <span class="math inline">\(x = (x_1, \ldots, x_n)\)</span> satisfying:</p>
 <ol style="list-style-type: decimal">
@@ -221,9 +228,9 @@
 </ol>
 <p>Efficiency requires that the grand coalition’s total value is fully distributed. Individual rationality ensures no player receives less than they could obtain alone.</p>
 </div>
-<div id="the-core" class="section level3" number="9.2.3">
+<div class="section level3" id="the-core" number="9.2.3">
 <h3>
-<span class="header-section-number">9.2.3</span> The core<a class="anchor" aria-label="anchor" href="#the-core"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.2.3</span> The core<a aria-label="anchor" class="anchor" href="#the-core"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdnote">
 <p><strong>Definition: The Core</strong></p>
@@ -235,9 +242,9 @@
 </div>
 <p>An allocation in the core is <strong>stable</strong> in the sense that no subset of players can do better by breaking away from the grand coalition. The core may be empty (some games have no stable allocation), a single point, or a convex polytope.</p>
 </div>
-<div id="the-shapley-value" class="section level3" number="9.2.4">
+<div class="section level3" id="the-shapley-value" number="9.2.4">
 <h3>
-<span class="header-section-number">9.2.4</span> The Shapley value<a class="anchor" aria-label="anchor" href="#the-shapley-value"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.2.4</span> The Shapley value<a aria-label="anchor" class="anchor" href="#the-shapley-value"><i class="fas fa-link"></i></a>
 </h3>
 <p>While the core captures stability, it does not provide a unique solution. The <strong>Shapley value</strong> provides a unique allocation based on fairness axioms.</p>
 <div class="rmdtip">
@@ -252,13 +259,13 @@
 <p>As <span class="citation">Osborne (<a href="references.html#ref-osborne2004">2004, Chapter 18</a>)</span> emphasizes, the Shapley value can be interpreted as the expected marginal contribution of a player when players join the coalition in a uniformly random order.</p>
 </div>
 </div>
-<div id="implementation-in-r-6" class="section level2" number="9.3">
+<div class="section level2" id="implementation-in-r-6" number="9.3">
 <h2>
-<span class="header-section-number">9.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#implementation-in-r-6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#implementation-in-r-6"><i class="fas fa-link"></i></a>
 </h2>
-<div id="defining-a-cooperative-game" class="section level3" number="9.3.1">
+<div class="section level3" id="defining-a-cooperative-game" number="9.3.1">
 <h3>
-<span class="header-section-number">9.3.1</span> Defining a cooperative game<a class="anchor" aria-label="anchor" href="#defining-a-cooperative-game"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.3.1</span> Defining a cooperative game<a aria-label="anchor" class="anchor" href="#defining-a-cooperative-game"><i class="fas fa-link"></i></a>
 </h3>
 <p>We consider a three-player cost-sharing game. Three municipalities (A, B, C) can build a water treatment plant individually or in coalition. The costs are:</p>
 <div class="inline-table"><table class="table table-sm">
@@ -343,9 +350,9 @@
 #&gt;   v({B, C}) = 40
 #&gt;   v({A, B, C}) = 60</code></pre>
 </div>
-<div id="computing-the-shapley-value" class="section level3" number="9.3.2">
+<div class="section level3" id="computing-the-shapley-value" number="9.3.2">
 <h3>
-<span class="header-section-number">9.3.2</span> Computing the Shapley value<a class="anchor" aria-label="anchor" href="#computing-the-shapley-value"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.3.2</span> Computing the Shapley value<a aria-label="anchor" class="anchor" href="#computing-the-shapley-value"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Permutation generator (no external dependencies)</span></span>
@@ -404,9 +411,9 @@
 <pre><code>#&gt; 
 #&gt; Sum of Shapley values: 60.0000 (should equal v(N) = 60)</code></pre>
 </div>
-<div id="checking-the-core" class="section level3" number="9.3.3">
+<div class="section level3" id="checking-the-core" number="9.3.3">
 <h3>
-<span class="header-section-number">9.3.3</span> Checking the core<a class="anchor" aria-label="anchor" href="#checking-the-core"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.3.3</span> Checking the core<a aria-label="anchor" class="anchor" href="#checking-the-core"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># An allocation is in the core if it satisfies all coalition constraints</span></span>
@@ -471,9 +478,9 @@
 #&gt;   x(A + C) = 40.00 &gt;= v({A, C}) = 40 : satisfied
 #&gt;   x(B + C) = 40.00 &gt;= v({B, C}) = 40 : satisfied</code></pre>
 </div>
-<div id="publication-figure-shapley-value-comparison" class="section level3" number="9.3.4">
+<div class="section level3" id="publication-figure-shapley-value-comparison" number="9.3.4">
 <h3>
-<span class="header-section-number">9.3.4</span> Publication figure: Shapley value comparison<a class="anchor" aria-label="anchor" href="#publication-figure-shapley-value-comparison"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.3.4</span> Publication figure: Shapley value comparison<a aria-label="anchor" class="anchor" href="#publication-figure-shapley-value-comparison"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">shapley_df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
@@ -495,17 +502,17 @@
 <span></span>
 <span><span class="va">p_shapley</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:shapley-values"></span>
-<img src="08-cooperative-gt_files/figure-html/shapley-values-1.png" alt="Shapley values for the three-player water treatment cost-sharing game. Each bar represents a municipality's fair share of the total cost savings (60 units) based on average marginal contributions across all coalition formation orders. The Shapley value assigns equal shares (20 each) due to the symmetric structure of pair-wise savings in this game." width="80%"><p class="caption">
+<span id="fig:shapley-values" style="display:block;"></span>
+<img alt="Shapley values for the three-player water treatment cost-sharing game. Each bar represents a municipality's fair share of the total cost savings (60 units) based on average marginal contributions across all coalition formation orders. The Shapley value assigns equal shares (20 each) due to the symmetric structure of pair-wise savings in this game." src="08-cooperative-gt_files/figure-html/shapley-values-1.png" width="80%"/><p class="caption">
 Figure 9.1: Shapley values for the three-player water treatment cost-sharing game. Each bar represents a municipality’s fair share of the total cost savings (60 units) based on average marginal contributions across all coalition formation orders. The Shapley value assigns equal shares (20 each) due to the symmetric structure of pair-wise savings in this game.
 </p>
 </div>
 <div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_shapley</span>, <span class="st">"shapley-values-3player"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="marginal-contributions-table" class="section level3" number="9.3.5">
+<div class="section level3" id="marginal-contributions-table" number="9.3.5">
 <h3>
-<span class="header-section-number">9.3.5</span> Marginal contributions table<a class="anchor" aria-label="anchor" href="#marginal-contributions-table"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.3.5</span> Marginal contributions table<a aria-label="anchor" class="anchor" href="#marginal-contributions-table"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Show marginal contributions in each ordering</span></span>
@@ -985,80 +992,80 @@ Figure 9.1: Shapley values for the three-player water treatment cost-sharing gam
   height: 0px !important;
 }
 </style>
-<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<div class="inline-table"><table class="gt_table" data-quarto-bootstrap="false" data-quarto-disable-processing="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="5" class="gt_heading gt_title gt_font_normal" style>Marginal Contributions by Player Ordering</td>
-    </tr>
+<td class="gt_heading gt_title gt_font_normal" colspan="5" style="">Marginal Contributions by Player Ordering</td>
+</tr>
 <tr class="gt_heading">
-<td colspan="5" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>Each row shows one permutation and the marginal contribution of each player when joining in that order</td>
-    </tr>
+<td class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" colspan="5" style="">Each row shows one permutation and the marginal contribution of each player when joining in that order</td>
+</tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="a::stub"></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="ordering">Ordering</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="mc_A">MC(A)</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="mc_B">MC(B)</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="mc_C">MC(C)</th>
-    </tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" colspan="1" id="a::stub" rowspan="1" scope="col"></th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" colspan="1" id="ordering" rowspan="1" scope="col">Ordering</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="mc_A" rowspan="1" scope="col">MC(A)</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="mc_B" rowspan="1" scope="col">MC(B)</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="mc_C" rowspan="1" scope="col">MC(C)</th>
+</tr>
 </thead>
 <tbody class="gt_table_body">
 <tr>
-<th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub"></th>
-<td headers="stub_1_1 ordering" class="gt_row gt_left">A -&gt; B -&gt; C</td>
-<td headers="stub_1_1 mc_A" class="gt_row gt_center">0</td>
-<td headers="stub_1_1 mc_B" class="gt_row gt_center">40</td>
-<td headers="stub_1_1 mc_C" class="gt_row gt_center">20</td>
+<th class="gt_row gt_left gt_stub" id="stub_1_1" scope="row"></th>
+<td class="gt_row gt_left" headers="stub_1_1 ordering">A -&gt; B -&gt; C</td>
+<td class="gt_row gt_center" headers="stub_1_1 mc_A">0</td>
+<td class="gt_row gt_center" headers="stub_1_1 mc_B">40</td>
+<td class="gt_row gt_center" headers="stub_1_1 mc_C">20</td>
 </tr>
 <tr>
-<th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub"></th>
-<td headers="stub_1_2 ordering" class="gt_row gt_left">A -&gt; C -&gt; B</td>
-<td headers="stub_1_2 mc_A" class="gt_row gt_center">0</td>
-<td headers="stub_1_2 mc_B" class="gt_row gt_center">20</td>
-<td headers="stub_1_2 mc_C" class="gt_row gt_center">40</td>
+<th class="gt_row gt_left gt_stub" id="stub_1_2" scope="row"></th>
+<td class="gt_row gt_left" headers="stub_1_2 ordering">A -&gt; C -&gt; B</td>
+<td class="gt_row gt_center" headers="stub_1_2 mc_A">0</td>
+<td class="gt_row gt_center" headers="stub_1_2 mc_B">20</td>
+<td class="gt_row gt_center" headers="stub_1_2 mc_C">40</td>
 </tr>
 <tr>
-<th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub"></th>
-<td headers="stub_1_3 ordering" class="gt_row gt_left">B -&gt; A -&gt; C</td>
-<td headers="stub_1_3 mc_A" class="gt_row gt_center">40</td>
-<td headers="stub_1_3 mc_B" class="gt_row gt_center">0</td>
-<td headers="stub_1_3 mc_C" class="gt_row gt_center">20</td>
+<th class="gt_row gt_left gt_stub" id="stub_1_3" scope="row"></th>
+<td class="gt_row gt_left" headers="stub_1_3 ordering">B -&gt; A -&gt; C</td>
+<td class="gt_row gt_center" headers="stub_1_3 mc_A">40</td>
+<td class="gt_row gt_center" headers="stub_1_3 mc_B">0</td>
+<td class="gt_row gt_center" headers="stub_1_3 mc_C">20</td>
 </tr>
 <tr>
-<th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub"></th>
-<td headers="stub_1_4 ordering" class="gt_row gt_left">B -&gt; C -&gt; A</td>
-<td headers="stub_1_4 mc_A" class="gt_row gt_center">20</td>
-<td headers="stub_1_4 mc_B" class="gt_row gt_center">0</td>
-<td headers="stub_1_4 mc_C" class="gt_row gt_center">40</td>
+<th class="gt_row gt_left gt_stub" id="stub_1_4" scope="row"></th>
+<td class="gt_row gt_left" headers="stub_1_4 ordering">B -&gt; C -&gt; A</td>
+<td class="gt_row gt_center" headers="stub_1_4 mc_A">20</td>
+<td class="gt_row gt_center" headers="stub_1_4 mc_B">0</td>
+<td class="gt_row gt_center" headers="stub_1_4 mc_C">40</td>
 </tr>
 <tr>
-<th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub"></th>
-<td headers="stub_1_5 ordering" class="gt_row gt_left">C -&gt; A -&gt; B</td>
-<td headers="stub_1_5 mc_A" class="gt_row gt_center">40</td>
-<td headers="stub_1_5 mc_B" class="gt_row gt_center">20</td>
-<td headers="stub_1_5 mc_C" class="gt_row gt_center">0</td>
+<th class="gt_row gt_left gt_stub" id="stub_1_5" scope="row"></th>
+<td class="gt_row gt_left" headers="stub_1_5 ordering">C -&gt; A -&gt; B</td>
+<td class="gt_row gt_center" headers="stub_1_5 mc_A">40</td>
+<td class="gt_row gt_center" headers="stub_1_5 mc_B">20</td>
+<td class="gt_row gt_center" headers="stub_1_5 mc_C">0</td>
 </tr>
 <tr>
-<th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub"></th>
-<td headers="stub_1_6 ordering" class="gt_row gt_left">C -&gt; B -&gt; A</td>
-<td headers="stub_1_6 mc_A" class="gt_row gt_center">20</td>
-<td headers="stub_1_6 mc_B" class="gt_row gt_center">40</td>
-<td headers="stub_1_6 mc_C" class="gt_row gt_center">0</td>
+<th class="gt_row gt_left gt_stub" id="stub_1_6" scope="row"></th>
+<td class="gt_row gt_left" headers="stub_1_6 ordering">C -&gt; B -&gt; A</td>
+<td class="gt_row gt_center" headers="stub_1_6 mc_A">20</td>
+<td class="gt_row gt_center" headers="stub_1_6 mc_B">40</td>
+<td class="gt_row gt_center" headers="stub_1_6 mc_C">0</td>
 </tr>
 <tr>
-<th id="grand_summary_stub_1" scope="row" class="gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">Average</th>
-<td headers="grand_summary_stub_1 ordering" class="gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
-<td headers="grand_summary_stub_1 mc_A" class="gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">20.00</td>
-<td headers="grand_summary_stub_1 mc_B" class="gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">20.00</td>
-<td headers="grand_summary_stub_1 mc_C" class="gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">20.00</td>
+<th class="gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" id="grand_summary_stub_1" scope="row">Average</th>
+<td class="gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" headers="grand_summary_stub_1 ordering">—</td>
+<td class="gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" headers="grand_summary_stub_1 mc_A">20.00</td>
+<td class="gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" headers="grand_summary_stub_1 mc_B">20.00</td>
+<td class="gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" headers="grand_summary_stub_1 mc_C">20.00</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 </div>
 </div>
-<div id="worked-example-7" class="section level2" number="9.4">
+<div class="section level2" id="worked-example-7" number="9.4">
 <h2>
-<span class="header-section-number">9.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-7"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-7"><i class="fas fa-link"></i></a>
 </h2>
 <p>We walk through the Shapley value calculation for municipality A in the water treatment cost-sharing game.</p>
 <p><strong>Step 1: List all permutations.</strong> With three players, there are <span class="math inline">\(3! = 6\)</span> orderings.</p>
@@ -1563,45 +1570,45 @@ Figure 9.1: Shapley values for the three-player water treatment cost-sharing gam
   height: 0px !important;
 }
 </style>
-<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<div class="inline-table"><table class="gt_table" data-quarto-bootstrap="false" data-quarto-disable-processing="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Final Cost Allocation via Shapley Value</td>
-    </tr>
+<td class="gt_heading gt_title gt_font_normal gt_bottom_border" colspan="4" style="">Final Cost Allocation via Shapley Value</td>
+</tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Municipality">Municipality</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Stand-alone-cost">Stand-alone cost</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Shapley-share-of-savings">Shapley share of savings</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Cost-after-sharing">Cost after sharing</th>
-    </tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Municipality" rowspan="1" scope="col">Municipality</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Stand-alone-cost" rowspan="1" scope="col">Stand-alone cost</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Shapley-share-of-savings" rowspan="1" scope="col">Shapley share of savings</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" colspan="1" id="Cost-after-sharing" rowspan="1" scope="col">Cost after sharing</th>
+</tr>
 </thead>
 <tbody class="gt_table_body">
 <tr>
-<td headers="Municipality" class="gt_row gt_center">A</td>
-<td headers="Stand-alone cost" class="gt_row gt_center">100</td>
-<td headers="Shapley share of savings" class="gt_row gt_center">20.0</td>
-<td headers="Cost after sharing" class="gt_row gt_center">80.0</td>
+<td class="gt_row gt_center" headers="Municipality">A</td>
+<td class="gt_row gt_center" headers="Stand-alone cost">100</td>
+<td class="gt_row gt_center" headers="Shapley share of savings">20.0</td>
+<td class="gt_row gt_center" headers="Cost after sharing">80.0</td>
 </tr>
 <tr>
-<td headers="Municipality" class="gt_row gt_center">B</td>
-<td headers="Stand-alone cost" class="gt_row gt_center">140</td>
-<td headers="Shapley share of savings" class="gt_row gt_center">20.0</td>
-<td headers="Cost after sharing" class="gt_row gt_center">120.0</td>
+<td class="gt_row gt_center" headers="Municipality">B</td>
+<td class="gt_row gt_center" headers="Stand-alone cost">140</td>
+<td class="gt_row gt_center" headers="Shapley share of savings">20.0</td>
+<td class="gt_row gt_center" headers="Cost after sharing">120.0</td>
 </tr>
 <tr>
-<td headers="Municipality" class="gt_row gt_center">C</td>
-<td headers="Stand-alone cost" class="gt_row gt_center">120</td>
-<td headers="Shapley share of savings" class="gt_row gt_center">20.0</td>
-<td headers="Cost after sharing" class="gt_row gt_center">100.0</td>
+<td class="gt_row gt_center" headers="Municipality">C</td>
+<td class="gt_row gt_center" headers="Stand-alone cost">120</td>
+<td class="gt_row gt_center" headers="Shapley share of savings">20.0</td>
+<td class="gt_row gt_center" headers="Cost after sharing">100.0</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <p><strong>Step 5: Interpret.</strong> Each municipality saves 20 units from cooperation. Municipality A’s cost drops from 100 to 80, B’s from 140 to 120, and C’s from 120 to 100. The Shapley value splits the 60 units of savings equally because the game’s structure treats all pair-wise coalitions symmetrically. In an asymmetric game — say, where {A,B} saves more than {A,C} — the Shapley value would allocate more savings to the players whose participation creates more value.</p>
 </div>
-<div id="extensions-7" class="section level2" number="9.5">
+<div class="section level2" id="extensions-7" number="9.5">
 <h2>
-<span class="header-section-number">9.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-7"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-7"><i class="fas fa-link"></i></a>
 </h2>
 <p>Cooperative game theory extends in several important directions:</p>
 <ul>
@@ -1616,8 +1623,8 @@ Figure 9.1: Shapley values for the three-player water treatment cost-sharing gam
 </ul>
 <p>For the mathematical foundations of cooperative game theory, see <span class="citation">Neumann &amp; Morgenstern (<a href="references.html#ref-von-neumann1944">1944</a>)</span> and <span class="citation">Osborne (<a href="references.html#ref-osborne2004">2004, Chapters 16–18</a>)</span>. A computational perspective is given in <span class="citation">Shoham &amp; Leyton-Brown (<a href="references.html#ref-shoham2009">2009</a>)</span>.</p>
 </div>
-<div id="exercises-7" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-7"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-7">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-7"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Asymmetric savings.</strong> Modify the water treatment game so that <span class="math inline">\(v(\{A,B\}) = 50\)</span>, <span class="math inline">\(v(\{A,C\}) = 30\)</span>, <span class="math inline">\(v(\{B,C\}) = 40\)</span>, and <span class="math inline">\(v(\{A,B,C\}) = 80\)</span>. Compute the Shapley value for each player. Which municipality benefits most from cooperation?</p></li>
@@ -1627,18 +1634,14 @@ Figure 9.1: Shapley values for the three-player water treatment cost-sharing gam
 <li><p><strong>Scaling to larger games.</strong> Implement a Monte Carlo approximation of the Shapley value that samples <span class="math inline">\(K\)</span> random permutations instead of enumerating all <span class="math inline">\(n!\)</span>. Test it on a 10-player game where <span class="math inline">\(v(S) = |S|^2\)</span> and compare the approximation error for <span class="math inline">\(K = 100\)</span>, <span class="math inline">\(K = 1000\)</span>, and <span class="math inline">\(K = 10000\)</span>.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
-
-
-
 <div class="chapter-nav">
 <div class="prev"><a href="sec-repeated-games.html"><span class="header-section-number">8</span> Repeated Games</a></div>
 <div class="next"><a href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment for Strategic Computation</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-cooperative-gt"><span class="header-section-number">9</span> Cooperative Game Theory</a></li>
 <li><a class="nav-link" href="#learning-objectives-7">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-7"><span class="header-section-number">9.1</span> Motivation</a></li>
@@ -1663,23 +1666,21 @@ Figure 9.1: Shapley values for the three-player water treatment cost-sharing gam
 <li><a class="nav-link" href="#extensions-7"><span class="header-section-number">9.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-7">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/08-cooperative-gt.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/08-cooperative-gt.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/08-cooperative-gt.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/08-cooperative-gt.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -1698,75 +1699,18 @@ Figure 9.1: Shapley values for the three-player water treatment cost-sharing gam
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  
-
-  
-
 </div>
- <!-- .container -->
-
+<!-- .container -->
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

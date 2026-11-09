@@ -1,0 +1,287 @@
+[
+  {
+    "file": "strategy-in-r.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-ess.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-auctions.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-network-games.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-multi-agent-rl.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-cfr.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/colophon.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/how-to-use-this-book-1.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-gtree-package.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/acknowledgments.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-fairness-ml.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-llm-agents.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-probability.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/notation.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-what-is-a-game.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-case-studies.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/about-the-author.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-glossary.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-performance-rcpp.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-reinforcement-learning.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-monte-carlo.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-bargaining.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-future.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-coopgame-package.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-ai-alignment.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-mechanism-design.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/impressum.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-cooperative-gt.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-custom-solvers.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-extensive-form.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-introduction.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-replicator-dynamics.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-spatial-pd.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-r-environment.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-agent-based-models.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-conflict-cooperation.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-axelrod-tournament.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-matching-markets.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-linear-algebra.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-cooperative-ai.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-solutions.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-nash-equilibrium.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-normal-form.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-mixed-strategies.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-nashpy-reticulate.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/citing-this-guide-1.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/index.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/references.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-gans.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-bayesian-games.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-self-play.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-q-learning.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-gametheory-package.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-repeated-games.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-ethics-frameworks.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-ml-foundations.epub",
+    "status": 0,
+    "output": ""
+  },
+  {
+    "file": "downloads/chapters/sec-r-refresher.epub",
+    "status": 0,
+    "output": ""
+  }
+]

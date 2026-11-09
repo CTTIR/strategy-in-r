@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>B Linear Algebra Essentials | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Vectors, matrices, eigenvalues, and the linear algebra used throughout this book. This appendix reviews the linear algebra that appears most often in game theory. The focus is on concepts rather...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="B Linear Algebra Essentials | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-linear-algebra.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Vectors, matrices, eigenvalues, and the linear algebra used throughout this book. This appendix reviews the linear algebra that appears most often in game theory. The focus is on concepts rather...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="B Linear Algebra Essentials | Strategy in R">
-<meta name="twitter:description" content="Vectors, matrices, eigenvalues, and the linear algebra used throughout this book. This appendix reviews the linear algebra that appears most often in game theory. The focus is on concepts rather...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="B Linear Algebra Essentials | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Vectors, matrices, eigenvalues, and the linear algebra used throughout this book. This appendix reviews the linear algebra that appears most often in game theory. The focus is on concepts rather..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="B Linear Algebra Essentials | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-linear-algebra.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Vectors, matrices, eigenvalues, and the linear algebra used throughout this book. This appendix reviews the linear algebra that appears most often in game theory. The focus is on concepts rather..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="B Linear Algebra Essentials | Strategy in R" name="twitter:title"/>
+<meta content="Vectors, matrices, eigenvalues, and the linear algebra used throughout this book. This appendix reviews the linear algebra that appears most often in game theory. The focus is on concepts rather..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="B Linear Algebra Essentials | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,23 +168,22 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-linear-algebra" class="section level1" number="44">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-linear-algebra" number="44">
 <h1>
-<span class="header-section-number">B</span> Linear Algebra Essentials<a class="anchor" aria-label="anchor" href="#sec-linear-algebra"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">B</span> Linear Algebra Essentials<a aria-label="anchor" class="anchor" href="#sec-linear-algebra"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-linear-algebra.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-linear-algebra.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Vectors, matrices, eigenvalues, and the linear algebra used throughout this book.</p>
 </blockquote>
 <p>This appendix reviews the linear algebra that appears most often in game theory. The focus is on concepts rather than proofs, with R implementations alongside each topic. For a thorough mathematical treatment, see <span class="citation">Strang (<a href="references.html#ref-strang2023">2023</a>)</span>.</p>
-<div id="vectors-and-vector-operations" class="section level2" number="44.1">
+<div class="section level2" id="vectors-and-vector-operations" number="44.1">
 <h2>
-<span class="header-section-number">B.1</span> Vectors and vector operations<a class="anchor" aria-label="anchor" href="#vectors-and-vector-operations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.1</span> Vectors and vector operations<a aria-label="anchor" class="anchor" href="#vectors-and-vector-operations"><i class="fas fa-link"></i></a>
 </h2>
 <p>A vector in <span class="math inline">\(\mathbb{R}^n\)</span> is an ordered list of <span class="math inline">\(n\)</span> real numbers. In game theory, vectors represent strategy profiles, probability distributions over actions, and payoff allocations.</p>
 <div class="sourceCode" id="cb1297"><pre class="downlit sourceCode r">
@@ -205,14 +212,14 @@
 <pre><code>#&gt; [1] 5.1</code></pre>
 <p>The <strong>dot product</strong> <span class="math inline">\(\mathbf{x} \cdot \mathbf{y} = \sum_{i} x_i y_i\)</span> appears whenever we compute expected payoffs: if <span class="math inline">\(\mathbf{p}\)</span> is a probability vector and <span class="math inline">\(\mathbf{u}\)</span> is a payoff vector, then <span class="math inline">\(\mathbf{p} \cdot \mathbf{u}\)</span> is the expected payoff.</p>
 </div>
-<div id="matrices-1" class="section level2" number="44.2">
+<div class="section level2" id="matrices-1" number="44.2">
 <h2>
-<span class="header-section-number">B.2</span> Matrices<a class="anchor" aria-label="anchor" href="#matrices-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.2</span> Matrices<a aria-label="anchor" class="anchor" href="#matrices-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>A matrix <span class="math inline">\(A \in \mathbb{R}^{m \times n}\)</span> is a rectangular array of numbers. In game theory, the primary use is the payoff matrix of a normal-form game.</p>
-<div id="matrix-arithmetic-in-r" class="section level3" number="44.2.1">
+<div class="section level3" id="matrix-arithmetic-in-r" number="44.2.1">
 <h3>
-<span class="header-section-number">B.2.1</span> Matrix arithmetic in R<a class="anchor" aria-label="anchor" href="#matrix-arithmetic-in-r"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.2.1</span> Matrix arithmetic in R<a aria-label="anchor" class="anchor" href="#matrix-arithmetic-in-r"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1307"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -241,9 +248,9 @@
 #&gt; [1,]    3    5
 #&gt; [2,]    0    1</code></pre>
 </div>
-<div id="key-matrix-operations" class="section level3" number="44.2.2">
+<div class="section level3" id="key-matrix-operations" number="44.2.2">
 <h3>
-<span class="header-section-number">B.2.2</span> Key matrix operations<a class="anchor" aria-label="anchor" href="#key-matrix-operations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.2.2</span> Key matrix operations<a aria-label="anchor" class="anchor" href="#key-matrix-operations"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1315"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -265,14 +272,14 @@
 #&gt; [2,] -0.0000000000000000278    1</code></pre>
 </div>
 </div>
-<div id="systems-of-linear-equations" class="section level2" number="44.3">
+<div class="section level2" id="systems-of-linear-equations" number="44.3">
 <h2>
-<span class="header-section-number">B.3</span> Systems of linear equations<a class="anchor" aria-label="anchor" href="#systems-of-linear-equations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.3</span> Systems of linear equations<a aria-label="anchor" class="anchor" href="#systems-of-linear-equations"><i class="fas fa-link"></i></a>
 </h2>
 <p>Many game-theoretic computations reduce to solving a system <span class="math inline">\(A\mathbf{x} = \mathbf{b}\)</span>. For example, finding a mixed Nash equilibrium in a 2x2 game requires solving the indifference equations (see <a href="sec-mixed-strategies.html#sec-mixed-strategies">5</a>).</p>
-<div id="solving-amathbfx-mathbfb" class="section level3" number="44.3.1">
+<div class="section level3" id="solving-amathbfx-mathbfb" number="44.3.1">
 <h3>
-<span class="header-section-number">B.3.1</span> Solving <span class="math inline">\(A\mathbf{x} = \mathbf{b}\)</span><a class="anchor" aria-label="anchor" href="#solving-amathbfx-mathbfb"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.3.1</span> Solving <span class="math inline">\(A\mathbf{x} = \mathbf{b}\)</span><a aria-label="anchor" class="anchor" href="#solving-amathbfx-mathbfb"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1321"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># System: 2x + y = 5, x + 3y = 7</span></span>
@@ -289,9 +296,9 @@
 #&gt; [1,]    5
 #&gt; [2,]    7</code></pre>
 </div>
-<div id="application-mixed-nash-equilibrium" class="section level3" number="44.3.2">
+<div class="section level3" id="application-mixed-nash-equilibrium" number="44.3.2">
 <h3>
-<span class="header-section-number">B.3.2</span> Application: mixed Nash equilibrium<a class="anchor" aria-label="anchor" href="#application-mixed-nash-equilibrium"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.3.2</span> Application: mixed Nash equilibrium<a aria-label="anchor" class="anchor" href="#application-mixed-nash-equilibrium"><i class="fas fa-link"></i></a>
 </h3>
 <p>In a 2x2 game, finding the mixed Nash equilibrium reduces to making each player indifferent between their pure strategies. If Player 2 mixes with probability <span class="math inline">\(q\)</span> on the first action, Player 1’s indifference condition is:</p>
 <p><span class="math display">\[
@@ -311,9 +318,9 @@ a_{11} q + a_{12}(1-q) = a_{21} q + a_{22}(1-q)
 <pre><code>#&gt; [1] -1</code></pre>
 </div>
 </div>
-<div id="eigenvalues-and-eigenvectors" class="section level2" number="44.4">
+<div class="section level2" id="eigenvalues-and-eigenvectors" number="44.4">
 <h2>
-<span class="header-section-number">B.4</span> Eigenvalues and eigenvectors<a class="anchor" aria-label="anchor" href="#eigenvalues-and-eigenvectors"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.4</span> Eigenvalues and eigenvectors<a aria-label="anchor" class="anchor" href="#eigenvalues-and-eigenvectors"><i class="fas fa-link"></i></a>
 </h2>
 <p>An eigenvector <span class="math inline">\(\mathbf{v}\)</span> of a square matrix <span class="math inline">\(A\)</span> satisfies <span class="math inline">\(A\mathbf{v} = \lambda \mathbf{v}\)</span> for some scalar <span class="math inline">\(\lambda\)</span> (the eigenvalue). Eigenvalues appear in several places in this book:</p>
 <ul>
@@ -344,9 +351,9 @@ a_{11} q + a_{12}(1-q) = a_{21} q + a_{22}(1-q)
 <div class="sourceCode" id="cb1333"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lambda_1</span> <span class="op">*</span> <span class="va">v_1</span></span></code></pre></div>
 <pre><code>#&gt; [1] 3.54 3.54</code></pre>
-<div id="stability-and-the-jacobian" class="section level3" number="44.4.1">
+<div class="section level3" id="stability-and-the-jacobian" number="44.4.1">
 <h3>
-<span class="header-section-number">B.4.1</span> Stability and the Jacobian<a class="anchor" aria-label="anchor" href="#stability-and-the-jacobian"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.4.1</span> Stability and the Jacobian<a aria-label="anchor" class="anchor" href="#stability-and-the-jacobian"><i class="fas fa-link"></i></a>
 </h3>
 <p>For a dynamical system <span class="math inline">\(\dot{\mathbf{x}} = f(\mathbf{x})\)</span>, a fixed point <span class="math inline">\(\mathbf{x}^*\)</span> is <strong>stable</strong> if all eigenvalues of the Jacobian matrix <span class="math inline">\(J = \partial f / \partial \mathbf{x}\)</span> evaluated at <span class="math inline">\(\mathbf{x}^*\)</span> have negative real parts.</p>
 <div class="sourceCode" id="cb1335"><pre class="downlit sourceCode r">
@@ -362,9 +369,9 @@ a_{11} q + a_{12}(1-q) = a_{21} q + a_{22}(1-q)
 <pre><code>#&gt; [1] TRUE</code></pre>
 </div>
 </div>
-<div id="positive-definite-matrices" class="section level2" number="44.5">
+<div class="section level2" id="positive-definite-matrices" number="44.5">
 <h2>
-<span class="header-section-number">B.5</span> Positive definite matrices<a class="anchor" aria-label="anchor" href="#positive-definite-matrices"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.5</span> Positive definite matrices<a aria-label="anchor" class="anchor" href="#positive-definite-matrices"><i class="fas fa-link"></i></a>
 </h2>
 <p>A symmetric matrix <span class="math inline">\(A\)</span> is <strong>positive definite</strong> if <span class="math inline">\(\mathbf{x}^T A \mathbf{x} &gt; 0\)</span> for all nonzero <span class="math inline">\(\mathbf{x}\)</span>. Equivalently, all eigenvalues are positive. Positive definiteness arises in quadratic payoff functions and in verifying second-order conditions for optimisation problems.</p>
 <div class="sourceCode" id="cb1339"><pre class="downlit sourceCode r">
@@ -383,13 +390,13 @@ a_{11} q + a_{12}(1-q) = a_{21} q + a_{22}(1-q)
 #&gt; [1,]    2 0.50
 #&gt; [2,]    0 1.66</code></pre>
 </div>
-<div id="convex-sets-and-the-simplex" class="section level2" number="44.6">
+<div class="section level2" id="convex-sets-and-the-simplex" number="44.6">
 <h2>
-<span class="header-section-number">B.6</span> Convex sets and the simplex<a class="anchor" aria-label="anchor" href="#convex-sets-and-the-simplex"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.6</span> Convex sets and the simplex<a aria-label="anchor" class="anchor" href="#convex-sets-and-the-simplex"><i class="fas fa-link"></i></a>
 </h2>
-<div id="the-probability-simplex" class="section level3" number="44.6.1">
+<div class="section level3" id="the-probability-simplex" number="44.6.1">
 <h3>
-<span class="header-section-number">B.6.1</span> The probability simplex<a class="anchor" aria-label="anchor" href="#the-probability-simplex"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.6.1</span> The probability simplex<a aria-label="anchor" class="anchor" href="#the-probability-simplex"><i class="fas fa-link"></i></a>
 </h3>
 <p>A <strong>mixed strategy</strong> is a probability distribution over pure strategies. The set of all such distributions forms the <strong>(probability) simplex</strong>:</p>
 <p><span class="math display">\[
@@ -408,9 +415,9 @@ a_{11} q + a_{12}(1-q) = a_{21} q + a_{22}(1-q)
 <code class="sourceCode R"><span><span class="fu">is_mixed_strategy</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.6</span>, <span class="op">-</span><span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; [1] FALSE</code></pre>
 </div>
-<div id="convex-sets-and-convex-combinations" class="section level3" number="44.6.2">
+<div class="section level3" id="convex-sets-and-convex-combinations" number="44.6.2">
 <h3>
-<span class="header-section-number">B.6.2</span> Convex sets and convex combinations<a class="anchor" aria-label="anchor" href="#convex-sets-and-convex-combinations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.6.2</span> Convex sets and convex combinations<a aria-label="anchor" class="anchor" href="#convex-sets-and-convex-combinations"><i class="fas fa-link"></i></a>
 </h3>
 <p>A set <span class="math inline">\(C\)</span> is <strong>convex</strong> if for any two points <span class="math inline">\(\mathbf{x}, \mathbf{y} \in C\)</span> and any <span class="math inline">\(\lambda \in [0, 1]\)</span>, the point <span class="math inline">\(\lambda \mathbf{x} + (1 - \lambda) \mathbf{y}\)</span> is also in <span class="math inline">\(C\)</span>. Important convex sets in game theory include:</p>
 <ul>
@@ -431,9 +438,9 @@ a_{11} q + a_{12}(1-q) = a_{21} q + a_{22}(1-q)
 <code class="sourceCode R"><span><span class="fu">is_mixed_strategy</span><span class="op">(</span><span class="va">p_mix</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; [1] TRUE</code></pre>
 </div>
-<div id="the-support-of-a-mixed-strategy" class="section level3" number="44.6.3">
+<div class="section level3" id="the-support-of-a-mixed-strategy" number="44.6.3">
 <h3>
-<span class="header-section-number">B.6.3</span> The support of a mixed strategy<a class="anchor" aria-label="anchor" href="#the-support-of-a-mixed-strategy"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.6.3</span> The support of a mixed strategy<a aria-label="anchor" class="anchor" href="#the-support-of-a-mixed-strategy"><i class="fas fa-link"></i></a>
 </h3>
 <p>The <strong>support</strong> of a mixed strategy <span class="math inline">\(\mathbf{p}\)</span> is the set of pure strategies that receive positive probability: <span class="math inline">\(\text{supp}(\mathbf{p}) = \{i : p_i &gt; 0\}\)</span>. In a Nash equilibrium, every pure strategy in the support must yield the same expected payoff (the indifference principle from <a href="sec-mixed-strategies.html#sec-mixed-strategies">5</a>).</p>
 <div class="sourceCode" id="cb1353"><pre class="downlit sourceCode r">
@@ -448,19 +455,19 @@ a_{11} q + a_{12}(1-q) = a_{21} q + a_{22}(1-q)
 <pre><code>#&gt; [1] 1 2 3 4</code></pre>
 </div>
 </div>
-<div id="matrix-decompositions" class="section level2" number="44.7">
+<div class="section level2" id="matrix-decompositions" number="44.7">
 <h2>
-<span class="header-section-number">B.7</span> Matrix decompositions<a class="anchor" aria-label="anchor" href="#matrix-decompositions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.7</span> Matrix decompositions<a aria-label="anchor" class="anchor" href="#matrix-decompositions"><i class="fas fa-link"></i></a>
 </h2>
-<div id="lu-decomposition" class="section level3" number="44.7.1">
+<div class="section level3" id="lu-decomposition" number="44.7.1">
 <h3>
-<span class="header-section-number">B.7.1</span> LU decomposition<a class="anchor" aria-label="anchor" href="#lu-decomposition"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.7.1</span> LU decomposition<a aria-label="anchor" class="anchor" href="#lu-decomposition"><i class="fas fa-link"></i></a>
 </h3>
 <p>R does not expose LU decomposition directly in base, but <code><a href="https://rdrr.io/r/base/solve.html">solve()</a></code> uses it internally. For most game-theoretic applications, <code><a href="https://rdrr.io/r/base/solve.html">solve()</a></code> suffices.</p>
 </div>
-<div id="singular-value-decomposition-svd" class="section level3" number="44.7.2">
+<div class="section level3" id="singular-value-decomposition-svd" number="44.7.2">
 <h3>
-<span class="header-section-number">B.7.2</span> Singular value decomposition (SVD)<a class="anchor" aria-label="anchor" href="#singular-value-decomposition-svd"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.7.2</span> Singular value decomposition (SVD)<a aria-label="anchor" class="anchor" href="#singular-value-decomposition-svd"><i class="fas fa-link"></i></a>
 </h3>
 <p>The SVD decomposes any <span class="math inline">\(m \times n\)</span> matrix as <span class="math inline">\(A = U \Sigma V^T\)</span>. It is useful for low-rank approximations and for diagnosing near-singular payoff matrices.</p>
 <div class="sourceCode" id="cb1357"><pre class="downlit sourceCode r">
@@ -477,11 +484,11 @@ a_{11} q + a_{12}(1-q) = a_{21} q + a_{22}(1-q)
 #&gt; [2,]    4    5    6</code></pre>
 </div>
 </div>
-<div id="summary-of-r-linear-algebra-functions" class="section level2" number="44.8">
+<div class="section level2" id="summary-of-r-linear-algebra-functions" number="44.8">
 <h2>
-<span class="header-section-number">B.8</span> Summary of R linear algebra functions<a class="anchor" aria-label="anchor" href="#summary-of-r-linear-algebra-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">B.8</span> Summary of R linear algebra functions<a aria-label="anchor" class="anchor" href="#summary-of-r-linear-algebra-functions"><i class="fas fa-link"></i></a>
 </h2>
-<div class="inline-table"><table id="tbl-linalg-functions" class="table table-sm">
+<div class="inline-table"><table class="table table-sm" id="tbl-linalg-functions">
 <caption>R functions for linear algebra</caption>
 <thead><tr class="header">
 <th align="left">Task</th>
@@ -550,11 +557,10 @@ a_{11} q + a_{12}(1-q) = a_{21} q + a_{22}(1-q)
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -573,64 +579,15 @@ a_{11} q + a_{12}(1-q) = a_{21} q + a_{22}(1-q)
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-r-refresher.html"><span class="header-section-number">A</span> R Refresher</a></div>
 <div class="next"><a href="sec-probability.html"><span class="header-section-number">C</span> Probability Essentials</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-linear-algebra"><span class="header-section-number">B</span> Linear Algebra Essentials</a></li>
 <li><a class="nav-link" href="#vectors-and-vector-operations"><span class="header-section-number">B.1</span> Vectors and vector operations</a></li>
 <li>
@@ -664,29 +621,23 @@ a_{11} q + a_{12}(1-q) = a_{21} q + a_{22}(1-q)
 </li>
 <li><a class="nav-link" href="#summary-of-r-linear-algebra-functions"><span class="header-section-number">B.8</span> Summary of R linear algebra functions</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/B-linear-algebra.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/B-linear-algebra.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/B-linear-algebra.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/B-linear-algebra.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

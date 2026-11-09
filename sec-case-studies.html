@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 37 Empirical Case Studies | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Real-world applications of game theory analyzed with R — spectrum auctions, kidney exchange, and Braess’s paradox in traffic routing.  Learning objectives Model an FCC-style spectrum auction as a...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 37 Empirical Case Studies | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-case-studies.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Real-world applications of game theory analyzed with R — spectrum auctions, kidney exchange, and Braess’s paradox in traffic routing.  Learning objectives Model an FCC-style spectrum auction as a...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 37 Empirical Case Studies | Strategy in R">
-<meta name="twitter:description" content="Real-world applications of game theory analyzed with R — spectrum auctions, kidney exchange, and Braess’s paradox in traffic routing.  Learning objectives Model an FCC-style spectrum auction as a...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 37 Empirical Case Studies | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Real-world applications of game theory analyzed with R — spectrum auctions, kidney exchange, and Braess’s paradox in traffic routing.  Learning objectives Model an FCC-style spectrum auction as a..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 37 Empirical Case Studies | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-case-studies.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Real-world applications of game theory analyzed with R — spectrum auctions, kidney exchange, and Braess’s paradox in traffic routing.  Learning objectives Model an FCC-style spectrum auction as a..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 37 Empirical Case Studies | Strategy in R" name="twitter:title"/>
+<meta content="Real-world applications of game theory analyzed with R — spectrum auctions, kidney exchange, and Braess’s paradox in traffic routing.  Learning objectives Model an FCC-style spectrum auction as a..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 37 Empirical Case Studies | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-case-studies" class="section level1" number="37">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-case-studies" number="37">
 <h1>
-<span class="header-section-number">37</span> Empirical Case Studies<a class="anchor" aria-label="anchor" href="#sec-case-studies"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">37</span> Empirical Case Studies<a aria-label="anchor" class="anchor" href="#sec-case-studies"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-case-studies.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-case-studies.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Real-world applications of game theory analyzed with R — spectrum auctions, kidney exchange, and Braess’s paradox in traffic routing.</p>
 </blockquote>
-<div id="learning-objectives-35" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-35"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-35">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-35"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Model an FCC-style spectrum auction as a multi-unit sealed-bid simulation and analyze revenue outcomes.</li>
@@ -183,34 +190,34 @@
 <li>Visualize network structures and compare equilibrium outcomes with socially optimal flows.</li>
 </ul>
 </div>
-<div id="motivation-35" class="section level2" number="37.1">
+<div class="section level2" id="motivation-35" number="37.1">
 <h2>
-<span class="header-section-number">37.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-35"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-35"><i class="fas fa-link"></i></a>
 </h2>
 <p>Game theory is not merely an abstract discipline — it has reshaped multi-billion-dollar markets and saved thousands of lives. The FCC’s spectrum auctions raised over $200 billion by applying auction theory. Kidney exchange programs, designed using matching theory, enable thousands of transplants annually that would otherwise be impossible. And traffic engineers have discovered, counterintuitively, that adding roads can <em>increase</em> total travel time — a phenomenon predicted by game-theoretic models.</p>
 <p>This chapter applies computational game theory to three landmark case studies, demonstrating how the tools developed throughout this book operate in practice.</p>
 </div>
-<div id="theory-35" class="section level2" number="37.2">
+<div class="section level2" id="theory-35" number="37.2">
 <h2>
-<span class="header-section-number">37.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-35"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-35"><i class="fas fa-link"></i></a>
 </h2>
-<div id="spectrum-auctions" class="section level3" number="37.2.1">
+<div class="section level3" id="spectrum-auctions" number="37.2.1">
 <h3>
-<span class="header-section-number">37.2.1</span> Spectrum auctions<a class="anchor" aria-label="anchor" href="#spectrum-auctions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.2.1</span> Spectrum auctions<a aria-label="anchor" class="anchor" href="#spectrum-auctions"><i class="fas fa-link"></i></a>
 </h3>
 <p>The FCC allocates wireless spectrum licenses through <strong>simultaneous ascending auctions</strong>. Multiple licenses are sold concurrently; bidders submit bids in rounds, prices rise, and bidders can switch across licenses. The design aims to achieve an <strong>efficient allocation</strong> — licenses go to firms that value them most — while generating revenue for the government.</p>
 <p>We simplify this to a <strong>multi-unit sealed-bid auction</strong> where <span class="math inline">\(n\)</span> bidders submit bids for <span class="math inline">\(k\)</span> identical licenses, and the <span class="math inline">\(k\)</span> highest bidders win at the <span class="math inline">\((k+1)\)</span>-th highest bid (a Vickrey-style rule that incentivizes truthful bidding).</p>
 </div>
-<div id="kidney-exchange" class="section level3" number="37.2.2">
+<div class="section level3" id="kidney-exchange" number="37.2.2">
 <h3>
-<span class="header-section-number">37.2.2</span> Kidney exchange<a class="anchor" aria-label="anchor" href="#kidney-exchange"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.2.2</span> Kidney exchange<a aria-label="anchor" class="anchor" href="#kidney-exchange"><i class="fas fa-link"></i></a>
 </h3>
 <p>A patient needing a kidney often has a willing but biologically incompatible donor. <strong>Kidney exchange</strong> matches incompatible patient-donor pairs: if Patient A’s donor is compatible with Patient B, and Patient B’s donor is compatible with Patient A, a <strong>pairwise exchange</strong> can save both lives.</p>
 <p>The problem maps to a <strong>directed graph</strong> where nodes are patient-donor pairs and edges indicate compatibility. A matching is a set of disjoint cycles (typically of length 2 or 3) that maximizes the number of transplants. This is equivalent to a <strong>maximum weight matching</strong> problem.</p>
 </div>
-<div id="braesss-paradox" class="section level3" number="37.2.3">
+<div class="section level3" id="braesss-paradox" number="37.2.3">
 <h3>
-<span class="header-section-number">37.2.3</span> Braess’s paradox<a class="anchor" aria-label="anchor" href="#braesss-paradox"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.2.3</span> Braess’s paradox<a aria-label="anchor" class="anchor" href="#braesss-paradox"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdnote">
 <p><strong>Definition: Braess’s Paradox</strong></p>
@@ -225,13 +232,13 @@
 <p>With 4,000 drivers, the Wardrop equilibrium splits traffic equally: 2,000 on each route, total time 65 per driver. Now add a zero-cost road <span class="math inline">\(A \to B\)</span>. A third route <span class="math inline">\(O \to A \to B \to D\)</span> becomes available, and the new equilibrium has all 4,000 drivers using this route — total time 80. The added road made everyone worse off.</p>
 </div>
 </div>
-<div id="sec-cases-implementation" class="section level2" number="37.3">
+<div class="section level2" id="sec-cases-implementation" number="37.3">
 <h2>
-<span class="header-section-number">37.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-cases-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-cases-implementation"><i class="fas fa-link"></i></a>
 </h2>
-<div id="spectrum-auction-simulation" class="section level3" number="37.3.1">
+<div class="section level3" id="spectrum-auction-simulation" number="37.3.1">
 <h3>
-<span class="header-section-number">37.3.1</span> Spectrum auction simulation<a class="anchor" aria-label="anchor" href="#spectrum-auction-simulation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.3.1</span> Spectrum auction simulation<a aria-label="anchor" class="anchor" href="#spectrum-auction-simulation"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1038"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulate_spectrum_auction</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n_bidders</span>, <span class="va">n_licenses</span>, <span class="va">n_sims</span> <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">{</span></span>
@@ -261,9 +268,9 @@
 <span>            <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">auction_results</span><span class="op">$</span><span class="va">price</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Mean clearing price: $63.9</code></pre>
 </div>
-<div id="kidney-exchange-matching" class="section level3" number="37.3.2">
+<div class="section level3" id="kidney-exchange-matching" number="37.3.2">
 <h3>
-<span class="header-section-number">37.3.2</span> Kidney exchange matching<a class="anchor" aria-label="anchor" href="#kidney-exchange-matching"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.3.2</span> Kidney exchange matching<a aria-label="anchor" class="anchor" href="#kidney-exchange-matching"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1044"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">build_compatibility_graph</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n_pairs</span>, <span class="va">compatibility_prob</span> <span class="op">=</span> <span class="fl">0.15</span>,</span>
@@ -336,9 +343,9 @@
 <span>            <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">matching</span><span class="op">$</span><span class="va">matches</span><span class="op">)</span>, <span class="va">matching</span><span class="op">$</span><span class="va">n_matched</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Pairwise exchanges found: 0 (saving 0 patients)</code></pre>
 </div>
-<div id="kidney-exchange-network-visualization" class="section level3" number="37.3.3">
+<div class="section level3" id="kidney-exchange-network-visualization" number="37.3.3">
 <h3>
-<span class="header-section-number">37.3.3</span> Kidney exchange network visualization<a class="anchor" aria-label="anchor" href="#kidney-exchange-network-visualization"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.3.3</span> Kidney exchange network visualization<a aria-label="anchor" class="anchor" href="#kidney-exchange-network-visualization"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1048"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Layout nodes in a circle</span></span>
@@ -395,17 +402,17 @@
 <span></span>
 <span><span class="va">p_kidney</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:kidney-exchange-plot"></span>
-<img src="36-empirical-case-studies_files/figure-html/kidney-exchange-plot-1.png" alt="Kidney exchange compatibility network. Nodes represent incompatible patient-donor pairs (coloured by patient blood type). Edges show potential donations. Highlighted thick edges are matched pairwise exchanges." width="80%"><p class="caption">
+<span id="fig:kidney-exchange-plot" style="display:block;"></span>
+<img alt="Kidney exchange compatibility network. Nodes represent incompatible patient-donor pairs (coloured by patient blood type). Edges show potential donations. Highlighted thick edges are matched pairwise exchanges." src="36-empirical-case-studies_files/figure-html/kidney-exchange-plot-1.png" width="80%"/><p class="caption">
 Figure 37.1: Kidney exchange compatibility network. Nodes represent incompatible patient-donor pairs (coloured by patient blood type). Edges show potential donations. Highlighted thick edges are matched pairwise exchanges.
 </p>
 </div>
 <div class="sourceCode" id="cb1049"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_kidney</span>, <span class="st">"kidney-exchange-network"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="braesss-paradox-1" class="section level3" number="37.3.4">
+<div class="section level3" id="braesss-paradox-1" number="37.3.4">
 <h3>
-<span class="header-section-number">37.3.4</span> Braess’s paradox<a class="anchor" aria-label="anchor" href="#braesss-paradox-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.3.4</span> Braess’s paradox<a aria-label="anchor" class="anchor" href="#braesss-paradox-1"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1050"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">braess_network</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n_drivers</span> <span class="op">=</span> <span class="fl">4000</span>, <span class="va">has_shortcut</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
@@ -505,9 +512,9 @@ Figure 37.1: Kidney exchange compatibility network. Nodes represent incompatible
 <pre><code>#&gt; 
 #&gt; Braess's paradox: adding the shortcut increased travel time by 23%</code></pre>
 </div>
-<div id="braesss-paradox-visualization" class="section level3" number="37.3.5">
+<div class="section level3" id="braesss-paradox-visualization" number="37.3.5">
 <h3>
-<span class="header-section-number">37.3.5</span> Braess’s paradox visualization<a class="anchor" aria-label="anchor" href="#braesss-paradox-visualization"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.3.5</span> Braess’s paradox visualization<a aria-label="anchor" class="anchor" href="#braesss-paradox-visualization"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1070"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">braess_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
@@ -537,8 +544,8 @@ Figure 37.1: Kidney exchange compatibility network. Nodes represent incompatible
 <span></span>
 <span><span class="va">p_braess</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:braess-paradox-plot"></span>
-<img src="36-empirical-case-studies_files/figure-html/braess-paradox-plot-1.png" alt="Total travel time in the 4-node network under three scenarios. Adding a shortcut road increases total travel time at the selfish (Wardrop) equilibrium compared to the original network — Braess's paradox. A social planner can do better by controlling route assignments." width="80%"><p class="caption">
+<span id="fig:braess-paradox-plot" style="display:block;"></span>
+<img alt="Total travel time in the 4-node network under three scenarios. Adding a shortcut road increases total travel time at the selfish (Wardrop) equilibrium compared to the original network — Braess's paradox. A social planner can do better by controlling route assignments." src="36-empirical-case-studies_files/figure-html/braess-paradox-plot-1.png" width="80%"/><p class="caption">
 Figure 37.2: Total travel time in the 4-node network under three scenarios. Adding a shortcut road increases total travel time at the selfish (Wardrop) equilibrium compared to the original network — Braess’s paradox. A social planner can do better by controlling route assignments.
 </p>
 </div>
@@ -546,13 +553,13 @@ Figure 37.2: Total travel time in the 4-node network under three scenarios. Addi
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_braess</span>, <span class="st">"braess-paradox"</span>, width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">4.5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-33" class="section level2" number="37.4">
+<div class="section level2" id="worked-example-33" number="37.4">
 <h2>
-<span class="header-section-number">37.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-33"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-33"><i class="fas fa-link"></i></a>
 </h2>
-<div id="braesss-paradox-with-a-4-node-network" class="section level3" number="37.4.1">
+<div class="section level3" id="braesss-paradox-with-a-4-node-network" number="37.4.1">
 <h3>
-<span class="header-section-number">37.4.1</span> Braess’s paradox with a 4-node network<a class="anchor" aria-label="anchor" href="#braesss-paradox-with-a-4-node-network"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.4.1</span> Braess’s paradox with a 4-node network<a aria-label="anchor" class="anchor" href="#braesss-paradox-with-a-4-node-network"><i class="fas fa-link"></i></a>
 </h3>
 <p>Consider 4,000 commuters traveling from <span class="math inline">\(O\)</span> to <span class="math inline">\(D\)</span> through nodes <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. Edge costs: <span class="math inline">\(c_{OA}(x) = x/100\)</span>, <span class="math inline">\(c_{AD} = 45\)</span>, <span class="math inline">\(c_{OB} = 45\)</span>, <span class="math inline">\(c_{BD}(x) = x/100\)</span>.</p>
 <div class="sourceCode" id="cb1072"><pre class="downlit sourceCode r">
@@ -583,9 +590,9 @@ Figure 37.2: Total travel time in the 4-node network under three scenarios. Addi
 <p>The gap between the Wardrop equilibrium and the social optimum is the <strong>price of anarchy</strong>. Cities can close this gap using congestion pricing, or by removing the paradox-inducing road – as Seoul did when it demolished the Cheonggyecheon Expressway in 2003 and traffic improved.</p>
 </div>
 </div>
-<div id="extensions-35" class="section level2" number="37.5">
+<div class="section level2" id="extensions-35" number="37.5">
 <h2>
-<span class="header-section-number">37.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-35"><i class="fas fa-link"></i></a>
+<span class="header-section-number">37.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-35"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -598,8 +605,8 @@ Figure 37.2: Total travel time in the 4-node network under three scenarios. Addi
 <strong>Mechanism design</strong> (<a href="sec-mechanism-design.html#sec-mechanism-design">33</a>) provides the theoretical foundation for designing auctions and matching markets that achieve desired social outcomes.</li>
 </ul>
 </div>
-<div id="exercises-35" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-35"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-35">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-35"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Auction revenue and competition.</strong> Using <code>simulate_spectrum_auction()</code>, plot mean revenue as a function of the number of bidders (from 5 to 30) for <span class="math inline">\(k = 3\)</span> licenses. How does revenue scale? Derive the expected revenue analytically for the Vickrey auction with uniform valuations and compare.</p></li>
@@ -607,18 +614,14 @@ Figure 37.2: Total travel time in the 4-node network under three scenarios. Addi
 <li><p><strong>Braess with tolls.</strong> Suppose a social planner can impose a toll <span class="math inline">\(\tau\)</span> on the shortcut road <span class="math inline">\(A \to B\)</span>. Find the value of <span class="math inline">\(\tau\)</span> that makes the Wardrop equilibrium coincide with the social optimum (i.e., the Pigouvian toll). Implement the computation in R and verify that the resulting travel times equal the social optimum from the worked example.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
-
-
-
 <div class="chapter-nav">
 <div class="prev"><a href="sec-conflict-cooperation.html"><span class="header-section-number">36</span> Conflict and Cooperation Models</a></div>
 <div class="next"><a href="sec-ethics-frameworks.html"><span class="header-section-number">38</span> Ethical Frameworks for Strategic AI</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-case-studies"><span class="header-section-number">37</span> Empirical Case Studies</a></li>
 <li><a class="nav-link" href="#learning-objectives-35">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-35"><span class="header-section-number">37.1</span> Motivation</a></li>
@@ -644,23 +647,21 @@ Figure 37.2: Total travel time in the 4-node network under three scenarios. Addi
 <li><a class="nav-link" href="#extensions-35"><span class="header-section-number">37.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-35">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/36-empirical-case-studies.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/36-empirical-case-studies.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/36-empirical-case-studies.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/36-empirical-case-studies.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -679,75 +680,18 @@ Figure 37.2: Total travel time in the 4-node network under three scenarios. Addi
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  
-
-  
-
 </div>
- <!-- .container -->
-
+<!-- .container -->
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

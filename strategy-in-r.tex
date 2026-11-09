@@ -427,8 +427,9 @@ VCG & Vickrey--Clarke--Groves mechanism \\
 
 \begin{quote}
 Why study strategic interaction computationally, and why R is the right tool for the job.
-\#\# The computational turn in game theory
 \end{quote}
+
+\section{The computational turn in game theory}\label{the-computational-turn-in-game-theory}
 
 Game theory began as a branch of mathematics. Von Neumann and Morgenstern (\citeproc{ref-von-neumann1944}{1944}) laid the foundations; Nash (\citeproc{ref-nash1950}{1950}) proved that every finite game has an equilibrium. For decades, the field advanced primarily through theorems and proofs.
 
@@ -6293,20 +6294,20 @@ How does backward induction perform as the game tree grows? We generate random t
 \toprule
 Depth & Branching & Terminal Nodes & Time (ms) \\ 
 \midrule\addlinespace[2.5pt]
-2 & 2 & 4 & 0.00 \\ 
+2 & 2 & 4 & 1.00 \\ 
 3 & 2 & 8 & 0.00 \\ 
-4 & 2 & 16 & 1.00 \\ 
-5 & 2 & 32 & 0.00 \\ 
+4 & 2 & 16 & 0.00 \\ 
+5 & 2 & 32 & 1.00 \\ 
 6 & 2 & 64 & 1.00 \\ 
 7 & 2 & 128 & 2.00 \\ 
-8 & 2 & 256 & 3.00 \\ 
-2 & 3 & 9 & 0.00 \\ 
+8 & 2 & 256 & 4.00 \\ 
+2 & 3 & 9 & 1.00 \\ 
 3 & 3 & 27 & 0.00 \\ 
 4 & 3 & 81 & 1.00 \\ 
 5 & 3 & 243 & 2.00 \\ 
-6 & 3 & 729 & 6.00 \\ 
-7 & 3 & 2,187 & 17.00 \\ 
-8 & 3 & 6,561 & 52.00 \\ 
+6 & 3 & 729 & 7.00 \\ 
+7 & 3 & 2,187 & 18.00 \\ 
+8 & 3 & 6,561 & 58.00 \\ 
 \bottomrule
 \end{tabular*}
 \end{table}
@@ -11222,7 +11223,7 @@ The key insight is that summing neighbor cooperators is a \textbf{convolution} -
 \end{Shaded}
 
 \begin{verbatim}
-#>   Loop-based:  0.220 s (sd: 0.017)
+#>   Loop-based:  0.238 s (sd: 0.019)
 \end{verbatim}
 
 \begin{Shaded}
@@ -11242,7 +11243,7 @@ The key insight is that summing neighbor cooperators is a \textbf{convolution} -
 \end{Shaded}
 
 \begin{verbatim}
-#>   Speedup:     15.1x
+#>   Speedup:     15.4x
 \end{verbatim}
 
 \subsection{Verifying correctness}\label{verifying-correctness}
@@ -11414,7 +11415,7 @@ We optimize the spatial PD simulation step by step, measuring the impact of each
 \end{Shaded}
 
 \begin{verbatim}
-#>   Total elapsed time: 0.158 s
+#>   Total elapsed time: 0.162 s
 \end{verbatim}
 
 \begin{Shaded}
@@ -11470,7 +11471,7 @@ The key rewrite replaces the inner double loop with four matrix-shift operations
 \end{Shaded}
 
 \begin{verbatim}
-#>   Loop-based time:  0.158 s
+#>   Loop-based time:  0.162 s
 \end{verbatim}
 
 \begin{Shaded}
@@ -11480,7 +11481,7 @@ The key rewrite replaces the inner double loop with four matrix-shift operations
 \end{Shaded}
 
 \begin{verbatim}
-#>   Speedup:          26.3x
+#>   Speedup:          27.0x
 \end{verbatim}
 
 \subsection{Step 3: Memory pre-allocation matters}\label{step-3-memory-pre-allocation-matters}
@@ -11548,10 +11549,10 @@ A common anti-pattern in R is growing a data frame row by row. We demonstrate th
 \end{Shaded}
 
 \begin{verbatim}
-#>   1,000     0.0050    0.0030      2x
-#>   5,000     0.0180    0.0000      Infx
-#>   10,000    0.0620    0.0000      Infx
-#>   20,000    0.2330    0.0010      233x
+#>   1,000     0.0040    0.0030      1x
+#>   5,000     0.0200    0.0000      Infx
+#>   10,000    0.0730    0.0010      73x
+#>   20,000    0.2890    0.0010      289x
 \end{verbatim}
 
 The growing vector copies the entire vector on each append, producing \(O(n^2)\) total work. Pre-allocation is \(O(n)\).
@@ -22980,7 +22981,7 @@ was verified against its DOI, arXiv ID, or ISBN.
 \end{verbatim}
 
 \begin{verbatim}
-#>   Commit:   8f8f482
+#>   Commit:   9f33db8
 \end{verbatim}
 
 LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via Ollama/\texttt{ollamar}) was used for copyediting, formatting, and scaffolding tasks only --- see Acknowledgments.
@@ -22989,43 +22990,44 @@ LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via O
 \addcontentsline{toc}{section}{Session info}
 
 \begin{verbatim}
-#> R version 4.6.2 (2026-10-29)
-#> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 26.04.1 LTS
+#> - Session info ---------------------------------------------------------------
+#>  setting  value
+#>  version  R version 4.6.2 (2026-10-29)
+#>  os       Ubuntu 26.04.1 LTS
+#>  system   x86_64, linux-gnu
+#>  ui       X11
+#>  language (EN)
+#>  collate  C.UTF-8
+#>  ctype    C.UTF-8
+#>  tz       UTC
+#>  date     2026-11-09
+#>  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
+#>  quarto   NA
 #> 
-#> Matrix products: default
-#> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
-#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.32.so;  LAPACK version 3.12.0
+#> - Packages -------------------------------------------------------------------
+#>  ! package   * version date (UTC) lib source
+#>  P dplyr     * 1.2.1   2026-04-03 [?] RSPM
+#>  P forcats   * 1.0.1   2025-09-25 [?] RSPM
+#>  P ggplot2   * 4.0.3   2026-04-22 [?] RSPM
+#>  P glue      * 1.8.1   2026-04-17 [?] RSPM
+#>  P gt        * 1.3.0   2026-01-22 [?] RSPM
+#>  P here      * 1.0.2   2025-09-15 [?] RSPM
+#>  P lubridate * 1.9.5   2026-02-04 [?] RSPM
+#>  P purrr     * 1.2.2   2026-04-10 [?] RSPM
+#>  P readr     * 2.2.0   2026-02-19 [?] RSPM
+#>  P scales    * 1.4.0   2025-04-24 [?] RSPM
+#>  P stringr   * 1.6.0   2025-11-04 [?] RSPM
+#>  P tibble    * 3.3.1   2026-01-11 [?] RSPM
+#>  P tidyr     * 1.3.2   2025-12-19 [?] RSPM
+#>  P tidyverse * 2.0.0   2023-02-22 [?] RSPM
 #> 
-#> locale:
-#>  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
-#>  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
-#>  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
-#> [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+#>  [1] /home/runner/work/strategy-in-r/strategy-in-r/renv/library/linux-ubuntu-resolute/R-4.6/x86_64-pc-linux-gnu
+#>  [2] /home/runner/.cache/R/renv/sandbox/linux-ubuntu-resolute/R-4.6/x86_64-pc-linux-gnu/d8a3278e
 #> 
-#> time zone: UTC
-#> tzcode source: system (glibc)
+#>  * -- Packages attached to the search path.
+#>  P -- Loaded and on-disk path mismatch.
 #> 
-#> attached base packages:
-#> [1] stats     graphics  grDevices datasets  utils     methods   base     
-#> 
-#> other attached packages:
-#>  [1] scales_1.4.0    gt_1.3.0        glue_1.8.1      here_1.0.2     
-#>  [5] lubridate_1.9.5 forcats_1.0.1   stringr_1.6.0   dplyr_1.2.1    
-#>  [9] purrr_1.2.2     readr_2.2.0     tidyr_1.3.2     tibble_3.3.1   
-#> [13] ggplot2_4.0.3   tidyverse_2.0.0
-#> 
-#> loaded via a namespace (and not attached):
-#>  [1] gtable_0.3.6       compiler_4.6.2     renv_1.2.2         tidyselect_1.2.1  
-#>  [5] xml2_1.5.2         fastmap_1.2.0      yaml_2.3.12        R6_2.6.1          
-#>  [9] generics_0.1.4     knitr_1.51         bookdown_0.48      rprojroot_2.1.1   
-#> [13] pillar_1.11.1      RColorBrewer_1.1-3 tzdb_0.5.0         rlang_1.2.0       
-#> [17] stringi_1.8.7      xfun_0.62          fs_2.1.0           S7_0.2.2          
-#> [21] otel_0.3.0         timechange_0.4.0   cli_3.6.6          withr_3.0.2       
-#> [25] magrittr_2.0.5     digest_0.6.39      grid_4.6.2         hms_1.1.4         
-#> [29] lifecycle_1.0.5    vctrs_0.7.3        evaluate_1.0.5     farver_2.1.2      
-#> [33] codetools_0.2-20   rmarkdown_2.31     htmltools_0.5.9    tools_4.6.2       
-#> [37] pkgconfig_2.0.3
+#> ------------------------------------------------------------------------------
 \end{verbatim}
 
 \chapter*{Citing this Guide}\label{citing-this-guide-1}

@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 40 AI Alignment as a Game | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Principal-agent models, signaling games, and Bayesian trust dynamics for reasoning about AI alignment.  Learning objectives Model AI alignment as a principal-agent problem with information...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 40 AI Alignment as a Game | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-ai-alignment.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Principal-agent models, signaling games, and Bayesian trust dynamics for reasoning about AI alignment.  Learning objectives Model AI alignment as a principal-agent problem with information...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 40 AI Alignment as a Game | Strategy in R">
-<meta name="twitter:description" content="Principal-agent models, signaling games, and Bayesian trust dynamics for reasoning about AI alignment.  Learning objectives Model AI alignment as a principal-agent problem with information...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 40 AI Alignment as a Game | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Principal-agent models, signaling games, and Bayesian trust dynamics for reasoning about AI alignment.  Learning objectives Model AI alignment as a principal-agent problem with information..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 40 AI Alignment as a Game | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-ai-alignment.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Principal-agent models, signaling games, and Bayesian trust dynamics for reasoning about AI alignment.  Learning objectives Model AI alignment as a principal-agent problem with information..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 40 AI Alignment as a Game | Strategy in R" name="twitter:title"/>
+<meta content="Principal-agent models, signaling games, and Bayesian trust dynamics for reasoning about AI alignment.  Learning objectives Model AI alignment as a principal-agent problem with information..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 40 AI Alignment as a Game | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-ai-alignment" class="section level1" number="40">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-ai-alignment" number="40">
 <h1>
-<span class="header-section-number">40</span> AI Alignment as a Game<a class="anchor" aria-label="anchor" href="#sec-ai-alignment"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">40</span> AI Alignment as a Game<a aria-label="anchor" class="anchor" href="#sec-ai-alignment"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-ai-alignment.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-ai-alignment.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Principal-agent models, signaling games, and Bayesian trust dynamics for reasoning about AI alignment.</p>
 </blockquote>
-<div id="learning-objectives-38" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-38"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-38">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-38"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Model AI alignment as a principal-agent problem with information asymmetry.</li>
@@ -183,20 +190,20 @@
 <li>Analyze how different AI strategies (honest, deceptive, corrigible) affect trust dynamics.</li>
 </ul>
 </div>
-<div id="motivation-38" class="section level2" number="40.1">
+<div class="section level2" id="motivation-38" number="40.1">
 <h2>
-<span class="header-section-number">40.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-38"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-38"><i class="fas fa-link"></i></a>
 </h2>
 <p>A company deploys an AI assistant that can perform tasks autonomously. The human operator (the principal) cannot directly observe the AI’s internal reasoning or verify whether the AI pursued the intended objective or an alternative one. The AI (the agent) may have capabilities the human cannot fully evaluate — it might solve a task correctly, but via a method that generalizes poorly or has unintended side effects.</p>
 <p>This information asymmetry is the core of the alignment problem, and it maps naturally onto the principal-agent models from economics. Game theory provides tools to analyze when honest behaviour is incentive-compatible, when monitoring is cost-effective, and how trust can be built over repeated interactions.</p>
 </div>
-<div id="theory-38" class="section level2" number="40.2">
+<div class="section level2" id="theory-38" number="40.2">
 <h2>
-<span class="header-section-number">40.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-38"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-38"><i class="fas fa-link"></i></a>
 </h2>
-<div id="principal-agent-framework" class="section level3" number="40.2.1">
+<div class="section level3" id="principal-agent-framework" number="40.2.1">
 <h3>
-<span class="header-section-number">40.2.1</span> Principal-agent framework<a class="anchor" aria-label="anchor" href="#principal-agent-framework"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.2.1</span> Principal-agent framework<a aria-label="anchor" class="anchor" href="#principal-agent-framework"><i class="fas fa-link"></i></a>
 </h3>
 <p>In the standard principal-agent model:</p>
 <ul>
@@ -208,9 +215,9 @@
 <strong>Adverse selection</strong> arises because the agent’s type (aligned vs. misaligned) is private information.</li>
 </ul>
 </div>
-<div id="signaling-game" class="section level3" number="40.2.2">
+<div class="section level3" id="signaling-game" number="40.2.2">
 <h3>
-<span class="header-section-number">40.2.2</span> Signaling game<a class="anchor" aria-label="anchor" href="#signaling-game"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.2.2</span> Signaling game<a aria-label="anchor" class="anchor" href="#signaling-game"><i class="fas fa-link"></i></a>
 </h3>
 <p>We model a one-shot interaction as a signaling game:</p>
 <ol style="list-style-type: decimal">
@@ -257,9 +264,9 @@
 </div>
 <p>A <strong>separating equilibrium</strong> exists when aligned and misaligned types send different signals, allowing the human to correctly infer the type. A <strong>pooling equilibrium</strong> exists when both types send the same signal, leaving the human with only the prior.</p>
 </div>
-<div id="corrigibility-in-repeated-games" class="section level3" number="40.2.3">
+<div class="section level3" id="corrigibility-in-repeated-games" number="40.2.3">
 <h3>
-<span class="header-section-number">40.2.3</span> Corrigibility in repeated games<a class="anchor" aria-label="anchor" href="#corrigibility-in-repeated-games"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.2.3</span> Corrigibility in repeated games<a aria-label="anchor" class="anchor" href="#corrigibility-in-repeated-games"><i class="fas fa-link"></i></a>
 </h3>
 <p>In a repeated interaction, the AI builds a <em>reputation</em>. A corrigible AI — one that defers to human oversight and accepts corrections — sacrifices short-run autonomy for long-run trust. We model this using Bayesian updating: the human’s belief about alignment evolves as evidence accumulates.</p>
 <p>Let <span class="math inline">\(\pi_t\)</span> denote the human’s belief that the AI is aligned at time <span class="math inline">\(t\)</span>. After observing action <span class="math inline">\(a_t\)</span>, the belief updates via Bayes’ rule:</p>
@@ -269,13 +276,13 @@
 \end{equation}\]</span></p>
 </div>
 </div>
-<div id="sec-alignment-implementation" class="section level2" number="40.3">
+<div class="section level2" id="sec-alignment-implementation" number="40.3">
 <h2>
-<span class="header-section-number">40.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-alignment-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-alignment-implementation"><i class="fas fa-link"></i></a>
 </h2>
-<div id="signaling-game-payoffs" class="section level3" number="40.3.1">
+<div class="section level3" id="signaling-game-payoffs" number="40.3.1">
 <h3>
-<span class="header-section-number">40.3.1</span> Signaling game payoffs<a class="anchor" aria-label="anchor" href="#signaling-game-payoffs"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.3.1</span> Signaling game payoffs<a aria-label="anchor" class="anchor" href="#signaling-game-payoffs"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Payoff structure</span></span>
@@ -303,9 +310,9 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Misaligned AI payoffs:"</span>, <span class="va">ai_misaligned_payoffs</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Misaligned AI payoffs: 4 0</code></pre>
 </div>
-<div id="equilibrium-analysis" class="section level3" number="40.3.2">
+<div class="section level3" id="equilibrium-analysis" number="40.3.2">
 <h3>
-<span class="header-section-number">40.3.2</span> Equilibrium analysis<a class="anchor" aria-label="anchor" href="#equilibrium-analysis"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.3.2</span> Equilibrium analysis<a aria-label="anchor" class="anchor" href="#equilibrium-analysis"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1139"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Human trusts if expected payoff from trusting &gt; 0:</span></span>
@@ -323,9 +330,9 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Pooling equilibrium: Human trusts iff prior pi &gt;"</span>, <span class="va">pi_threshold</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; Pooling equilibrium: Human trusts iff prior pi &gt; 0.4</code></pre>
 </div>
-<div id="signaling-game-tree-visualization" class="section level3" number="40.3.3">
+<div class="section level3" id="signaling-game-tree-visualization" number="40.3.3">
 <h3>
-<span class="header-section-number">40.3.3</span> Signaling game tree visualization<a class="anchor" aria-label="anchor" href="#signaling-game-tree-visualization"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.3.3</span> Signaling game tree visualization<a aria-label="anchor" class="anchor" href="#signaling-game-tree-visualization"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Build game tree as a data frame of nodes and edges</span></span>
@@ -382,17 +389,17 @@
 <span></span>
 <span><span class="va">p1</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:signaling-tree"></span>
-<img src="39-ai-alignment-as-game_files/figure-html/signaling-tree-1.png" alt="Signaling game between a human principal and AI agent. Nature draws the AI's type (aligned with probability pi, misaligned with 1-pi). The AI sends a signal, and the human decides whether to trust. Payoffs are shown as (Human, AI) pairs at terminal nodes." width="80%"><p class="caption">
+<span id="fig:signaling-tree" style="display:block;"></span>
+<img alt="Signaling game between a human principal and AI agent. Nature draws the AI's type (aligned with probability pi, misaligned with 1-pi). The AI sends a signal, and the human decides whether to trust. Payoffs are shown as (Human, AI) pairs at terminal nodes." src="39-ai-alignment-as-game_files/figure-html/signaling-tree-1.png" width="80%"/><p class="caption">
 Figure 40.1: Signaling game between a human principal and AI agent. Nature draws the AI’s type (aligned with probability pi, misaligned with 1-pi). The AI sends a signal, and the human decides whether to trust. Payoffs are shown as (Human, AI) pairs at terminal nodes.
 </p>
 </div>
 <div class="sourceCode" id="cb1146"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p1</span>, <span class="st">"alignment-signaling-tree"</span>, width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="trust-dynamics-with-bayesian-updating" class="section level3" number="40.3.4">
+<div class="section level3" id="trust-dynamics-with-bayesian-updating" number="40.3.4">
 <h3>
-<span class="header-section-number">40.3.4</span> Trust dynamics with Bayesian updating<a class="anchor" aria-label="anchor" href="#trust-dynamics-with-bayesian-updating"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.3.4</span> Trust dynamics with Bayesian updating<a aria-label="anchor" class="anchor" href="#trust-dynamics-with-bayesian-updating"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Simulate repeated interactions under different AI strategies</span></span>
@@ -466,8 +473,8 @@ Figure 40.1: Signaling game between a human principal and AI agent. Nature draws
 <span></span>
 <span><span class="va">p2</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:trust-dynamics-plot"></span>
-<img src="39-ai-alignment-as-game_files/figure-html/trust-dynamics-plot-1.png" alt="Trust dynamics (posterior belief in alignment) over 30 interactions under three AI strategies. The honest aligned AI rapidly earns trust, the corrigible aligned AI builds trust more slowly but reliably, and the deceptive misaligned AI can fool the human when its deceptive capability is high." width="80%"><p class="caption">
+<span id="fig:trust-dynamics-plot" style="display:block;"></span>
+<img alt="Trust dynamics (posterior belief in alignment) over 30 interactions under three AI strategies. The honest aligned AI rapidly earns trust, the corrigible aligned AI builds trust more slowly but reliably, and the deceptive misaligned AI can fool the human when its deceptive capability is high." src="39-ai-alignment-as-game_files/figure-html/trust-dynamics-plot-1.png" width="80%"/><p class="caption">
 Figure 40.2: Trust dynamics (posterior belief in alignment) over 30 interactions under three AI strategies. The honest aligned AI rapidly earns trust, the corrigible aligned AI builds trust more slowly but reliably, and the deceptive misaligned AI can fool the human when its deceptive capability is high.
 </p>
 </div>
@@ -475,9 +482,9 @@ Figure 40.2: Trust dynamics (posterior belief in alignment) over 30 interactions
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p2</span>, <span class="st">"alignment-trust-dynamics"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-36" class="section level2" number="40.4">
+<div class="section level2" id="worked-example-36" number="40.4">
 <h2>
-<span class="header-section-number">40.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-36"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-36"><i class="fas fa-link"></i></a>
 </h2>
 <p>We analyze a repeated trust game between a human and an AI over 30 rounds.</p>
 <div class="sourceCode" id="cb1150"><pre class="downlit sourceCode r">
@@ -522,9 +529,9 @@ Figure 40.2: Trust dynamics (posterior belief in alignment) over 30 interactions
 <p>The deceptive misaligned AI is the dangerous case. When a misaligned AI can mimic aligned behaviour with high fidelity (0.85 probability of “looking good”), it becomes nearly indistinguishable from a truly aligned agent. This demonstrates why alignment researchers emphasize the importance of <em>interpretability</em> — the human needs additional channels beyond observing outcomes to distinguish genuine alignment from sophisticated mimicry.</p>
 <p><strong>Game-theoretic insight.</strong> In a separating equilibrium, the aligned AI would choose a signal that the misaligned AI finds too costly to imitate. The difficulty is that in AI systems, the “cost” of appearing aligned may be negligible for a sufficiently capable misaligned agent, undermining the separating equilibrium.</p>
 </div>
-<div id="extensions-38" class="section level2" number="40.5">
+<div class="section level2" id="extensions-38" number="40.5">
 <h2>
-<span class="header-section-number">40.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-38"><i class="fas fa-link"></i></a>
+<span class="header-section-number">40.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-38"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -537,8 +544,8 @@ Figure 40.2: Trust dynamics (posterior belief in alignment) over 30 interactions
 <strong>Mechanism design for AI oversight</strong> uses the tools from <a href="sec-mechanism-design.html#sec-mechanism-design">33</a> to design monitoring schemes that incentivize truthful capability reporting.</li>
 </ul>
 </div>
-<div id="exercises-38" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-38"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-38">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-38"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Varying the prior.</strong> Re-run the trust dynamics simulation with initial priors of <span class="math inline">\(\pi_0 \in \{0.2, 0.5, 0.8\}\)</span>. How does the prior affect the number of rounds needed to cross the trust threshold for the honest aligned strategy?</p></li>
@@ -546,16 +553,14 @@ Figure 40.2: Trust dynamics (posterior belief in alignment) over 30 interactions
 <li><p><strong>Optimal deception.</strong> For the misaligned AI, what is the minimum probability of “looking good” (<span class="math inline">\(p_{\text{good}}^{\text{misaligned}}\)</span>) needed to maintain the human’s trust above the threshold for all 30 rounds? Find this value numerically by searching over the parameter.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -574,64 +579,15 @@ Figure 40.2: Trust dynamics (posterior belief in alignment) over 30 interactions
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-fairness-ml.html"><span class="header-section-number">39</span> Fairness in Machine Learning</a></div>
 <div class="next"><a href="sec-cooperative-ai.html"><span class="header-section-number">41</span> Cooperative AI</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-ai-alignment"><span class="header-section-number">40</span> AI Alignment as a Game</a></li>
 <li><a class="nav-link" href="#learning-objectives-38">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-38"><span class="header-section-number">40.1</span> Motivation</a></li>
@@ -654,29 +610,23 @@ Figure 40.2: Trust dynamics (posterior belief in alignment) over 30 interactions
 <li><a class="nav-link" href="#extensions-38"><span class="header-section-number">40.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-38">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/39-ai-alignment-as-game.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/39-ai-alignment-as-game.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/39-ai-alignment-as-game.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/39-ai-alignment-as-game.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>A R Refresher | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="A concise refresher on R fundamentals for readers who need a quick review. This appendix provides a quick reference for the R features used most often in this book. It is not a substitute for a...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="A R Refresher | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-r-refresher.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="A concise refresher on R fundamentals for readers who need a quick review. This appendix provides a quick reference for the R features used most often in this book. It is not a substitute for a...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A R Refresher | Strategy in R">
-<meta name="twitter:description" content="A concise refresher on R fundamentals for readers who need a quick review. This appendix provides a quick reference for the R features used most often in this book. It is not a substitute for a...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="A R Refresher | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="A concise refresher on R fundamentals for readers who need a quick review. This appendix provides a quick reference for the R features used most often in this book. It is not a substitute for a..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="A R Refresher | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-r-refresher.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="A concise refresher on R fundamentals for readers who need a quick review. This appendix provides a quick reference for the R features used most often in this book. It is not a substitute for a..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="A R Refresher | Strategy in R" name="twitter:title"/>
+<meta content="A concise refresher on R fundamentals for readers who need a quick review. This appendix provides a quick reference for the R features used most often in this book. It is not a substitute for a..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="A R Refresher | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,27 +168,26 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-r-refresher" class="section level1" number="43">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-r-refresher" number="43">
 <h1>
-<span class="header-section-number">A</span> R Refresher<a class="anchor" aria-label="anchor" href="#sec-r-refresher"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">A</span> R Refresher<a aria-label="anchor" class="anchor" href="#sec-r-refresher"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-r-refresher.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-r-refresher.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>A concise refresher on R fundamentals for readers who need a quick review.</p>
 </blockquote>
 <p>This appendix provides a quick reference for the R features used most often in this book. It is not a substitute for a full R tutorial but should be enough to remind you of the essentials. For a deeper treatment, see <span class="citation">Wickham et al. (<a href="references.html#ref-wickham2023r">2023</a>)</span>.</p>
-<div id="data-structures" class="section level2" number="43.1">
+<div class="section level2" id="data-structures" number="43.1">
 <h2>
-<span class="header-section-number">A.1</span> Data structures<a class="anchor" aria-label="anchor" href="#data-structures"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.1</span> Data structures<a aria-label="anchor" class="anchor" href="#data-structures"><i class="fas fa-link"></i></a>
 </h2>
-<div id="vectors" class="section level3" number="43.1.1">
+<div class="section level3" id="vectors" number="43.1.1">
 <h3>
-<span class="header-section-number">A.1.1</span> Vectors<a class="anchor" aria-label="anchor" href="#vectors"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.1.1</span> Vectors<a aria-label="anchor" class="anchor" href="#vectors"><i class="fas fa-link"></i></a>
 </h3>
 <p>Vectors are the fundamental data type in R. Every element must share the same type (logical, integer, double, character).</p>
 <div class="sourceCode" id="cb1216"><pre class="downlit sourceCode r">
@@ -204,9 +211,9 @@
 <code class="sourceCode R"><span><span class="va">payoffs</span> <span class="op">&gt;</span> <span class="fl">2</span></span></code></pre></div>
 <pre><code>#&gt; [1]  TRUE FALSE  TRUE FALSE</code></pre>
 </div>
-<div id="matrices" class="section level3" number="43.1.2">
+<div class="section level3" id="matrices" number="43.1.2">
 <h3>
-<span class="header-section-number">A.1.2</span> Matrices<a class="anchor" aria-label="anchor" href="#matrices"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.1.2</span> Matrices<a aria-label="anchor" class="anchor" href="#matrices"><i class="fas fa-link"></i></a>
 </h3>
 <p>Matrices are two-dimensional vectors. They are central to payoff representations throughout this book.</p>
 <div class="sourceCode" id="cb1220"><pre class="downlit sourceCode r">
@@ -237,9 +244,9 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; [1] 2</code></pre>
 </div>
-<div id="lists" class="section level3" number="43.1.3">
+<div class="section level3" id="lists" number="43.1.3">
 <h3>
-<span class="header-section-number">A.1.3</span> Lists<a class="anchor" aria-label="anchor" href="#lists"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.1.3</span> Lists<a aria-label="anchor" class="anchor" href="#lists"><i class="fas fa-link"></i></a>
 </h3>
 <p>Lists can hold elements of different types and different lengths. They are used throughout the book to bundle game components together.</p>
 <div class="sourceCode" id="cb1232"><pre class="downlit sourceCode r">
@@ -262,9 +269,9 @@
 <span><span class="va">game</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <pre><code>#&gt; [1] "Player 1" "Player 2"</code></pre>
 </div>
-<div id="data-frames-and-tibbles" class="section level3" number="43.1.4">
+<div class="section level3" id="data-frames-and-tibbles" number="43.1.4">
 <h3>
-<span class="header-section-number">A.1.4</span> Data frames and tibbles<a class="anchor" aria-label="anchor" href="#data-frames-and-tibbles"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.1.4</span> Data frames and tibbles<a aria-label="anchor" class="anchor" href="#data-frames-and-tibbles"><i class="fas fa-link"></i></a>
 </h3>
 <p>Data frames (and their tidyverse counterpart, tibbles) are the primary structure for tabular data.</p>
 <div class="sourceCode" id="cb1238"><pre class="downlit sourceCode r">
@@ -289,13 +296,13 @@
 #&gt; 2 Defect         1</code></pre>
 </div>
 </div>
-<div id="control-flow" class="section level2" number="43.2">
+<div class="section level2" id="control-flow" number="43.2">
 <h2>
-<span class="header-section-number">A.2</span> Control flow<a class="anchor" aria-label="anchor" href="#control-flow"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.2</span> Control flow<a aria-label="anchor" class="anchor" href="#control-flow"><i class="fas fa-link"></i></a>
 </h2>
-<div id="conditionals" class="section level3" number="43.2.1">
+<div class="section level3" id="conditionals" number="43.2.1">
 <h3>
-<span class="header-section-number">A.2.1</span> Conditionals<a class="anchor" aria-label="anchor" href="#conditionals"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.2.1</span> Conditionals<a aria-label="anchor" class="anchor" href="#conditionals"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1240"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
@@ -314,9 +321,9 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span>, <span class="st">"above"</span>, <span class="st">"below"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; [1] "above" "below" "above" "below"</code></pre>
 </div>
-<div id="loops" class="section level3" number="43.2.2">
+<div class="section level3" id="loops" number="43.2.2">
 <h3>
-<span class="header-section-number">A.2.2</span> Loops<a class="anchor" aria-label="anchor" href="#loops"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.2.2</span> Loops<a aria-label="anchor" class="anchor" href="#loops"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1244"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># for loop</span></span>
@@ -337,9 +344,9 @@
 <span><span class="va">count</span></span></code></pre></div>
 <pre><code>#&gt; [1] 7</code></pre>
 </div>
-<div id="the-apply-family" class="section level3" number="43.2.3">
+<div class="section level3" id="the-apply-family" number="43.2.3">
 <h3>
-<span class="header-section-number">A.2.3</span> The apply family<a class="anchor" aria-label="anchor" href="#the-apply-family"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.2.3</span> The apply family<a aria-label="anchor" class="anchor" href="#the-apply-family"><i class="fas fa-link"></i></a>
 </h3>
 <p>The <code>apply</code> functions replace explicit loops with concise functional calls.</p>
 <div class="sourceCode" id="cb1248"><pre class="downlit sourceCode r">
@@ -372,13 +379,13 @@
 <pre><code>#&gt; [1]  1  4  9 16 25</code></pre>
 </div>
 </div>
-<div id="functions" class="section level2" number="43.3">
+<div class="section level2" id="functions" number="43.3">
 <h2>
-<span class="header-section-number">A.3</span> Functions<a class="anchor" aria-label="anchor" href="#functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.3</span> Functions<a aria-label="anchor" class="anchor" href="#functions"><i class="fas fa-link"></i></a>
 </h2>
-<div id="defining-functions" class="section level3" number="43.3.1">
+<div class="section level3" id="defining-functions" number="43.3.1">
 <h3>
-<span class="header-section-number">A.3.1</span> Defining functions<a class="anchor" aria-label="anchor" href="#defining-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.3.1</span> Defining functions<a aria-label="anchor" class="anchor" href="#defining-functions"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1258"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># A function that computes expected payoff</span></span>
@@ -399,9 +406,9 @@
 <code class="sourceCode R"><span><span class="fu">greet</span><span class="op">(</span><span class="st">"Bob"</span>, greeting <span class="op">=</span> <span class="st">"Hi"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; [1] "Hi Bob"</code></pre>
 </div>
-<div id="closures-and-environments" class="section level3" number="43.3.2">
+<div class="section level3" id="closures-and-environments" number="43.3.2">
 <h3>
-<span class="header-section-number">A.3.2</span> Closures and environments<a class="anchor" aria-label="anchor" href="#closures-and-environments"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.3.2</span> Closures and environments<a aria-label="anchor" class="anchor" href="#closures-and-environments"><i class="fas fa-link"></i></a>
 </h3>
 <p>A closure is a function that captures variables from its enclosing environment. This pattern is useful for creating parameterised game constructors.</p>
 <div class="sourceCode" id="cb1264"><pre class="downlit sourceCode r">
@@ -423,9 +430,9 @@
 <span><span class="fu">discount_50</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; [1] 5.81</code></pre>
 </div>
-<div id="anonymous-functions" class="section level3" number="43.3.3">
+<div class="section level3" id="anonymous-functions" number="43.3.3">
 <h3>
-<span class="header-section-number">A.3.3</span> Anonymous functions<a class="anchor" aria-label="anchor" href="#anonymous-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.3.3</span> Anonymous functions<a aria-label="anchor" class="anchor" href="#anonymous-functions"><i class="fas fa-link"></i></a>
 </h3>
 <p>R 4.1+ supports the shorthand <code>\(x)</code> syntax for anonymous (lambda) functions.</p>
 <div class="sourceCode" id="cb1268"><pre class="downlit sourceCode r">
@@ -437,14 +444,14 @@
 <pre><code>#&gt; [1]  1  4  9 16 25</code></pre>
 </div>
 </div>
-<div id="tidyverse-basics" class="section level2" number="43.4">
+<div class="section level2" id="tidyverse-basics" number="43.4">
 <h2>
-<span class="header-section-number">A.4</span> Tidyverse basics<a class="anchor" aria-label="anchor" href="#tidyverse-basics"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.4</span> Tidyverse basics<a aria-label="anchor" class="anchor" href="#tidyverse-basics"><i class="fas fa-link"></i></a>
 </h2>
 <p>The tidyverse is a collection of packages for data wrangling and visualisation. This book uses it extensively.</p>
-<div id="the-pipe-operator" class="section level3" number="43.4.1">
+<div class="section level3" id="the-pipe-operator" number="43.4.1">
 <h3>
-<span class="header-section-number">A.4.1</span> The pipe operator<a class="anchor" aria-label="anchor" href="#the-pipe-operator"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.4.1</span> The pipe operator<a aria-label="anchor" class="anchor" href="#the-pipe-operator"><i class="fas fa-link"></i></a>
 </h3>
 <p>The pipe <code>|&gt;</code> (base R 4.1+) or <code>%&gt;%</code> (magrittr) passes the left-hand side as the first argument to the right-hand side.</p>
 <div class="sourceCode" id="cb1272"><pre class="downlit sourceCode r">
@@ -454,9 +461,9 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; [1] 9 7 4</code></pre>
 </div>
-<div id="dplyr-verbs" class="section level3" number="43.4.2">
+<div class="section level3" id="dplyr-verbs" number="43.4.2">
 <h3>
-<span class="header-section-number">A.4.2</span> dplyr verbs<a class="anchor" aria-label="anchor" href="#dplyr-verbs"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.4.2</span> dplyr verbs<a aria-label="anchor" class="anchor" href="#dplyr-verbs"><i class="fas fa-link"></i></a>
 </h3>
 <p>The five core verbs handle the vast majority of data manipulation tasks.</p>
 <div class="sourceCode" id="cb1274"><pre class="downlit sourceCode r">
@@ -526,9 +533,9 @@
 #&gt; 1 C               2           3
 #&gt; 2 D               3.67        3</code></pre>
 </div>
-<div id="pivoting" class="section level3" number="43.4.3">
+<div class="section level3" id="pivoting" number="43.4.3">
 <h3>
-<span class="header-section-number">A.4.3</span> Pivoting<a class="anchor" aria-label="anchor" href="#pivoting"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.4.3</span> Pivoting<a aria-label="anchor" class="anchor" href="#pivoting"><i class="fas fa-link"></i></a>
 </h3>
 <p>Converting between wide and long formats is essential for plotting.</p>
 <div class="sourceCode" id="cb1284"><pre class="downlit sourceCode r">
@@ -563,9 +570,9 @@
 #&gt; 5     5 D        D               1        1
 #&gt; 6     6 D        C               5        0</code></pre>
 </div>
-<div id="ggplot2-layers" class="section level3" number="43.4.4">
+<div class="section level3" id="ggplot2-layers" number="43.4.4">
 <h3>
-<span class="header-section-number">A.4.4</span> ggplot2 layers<a class="anchor" aria-label="anchor" href="#ggplot2-layers"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.4.4</span> ggplot2 layers<a aria-label="anchor" class="anchor" href="#ggplot2-layers"><i class="fas fa-link"></i></a>
 </h3>
 <p>The grammar of graphics builds plots layer by layer: data, aesthetics, geometries, and scales.</p>
 <div class="sourceCode" id="cb1288"><pre class="downlit sourceCode r">
@@ -585,16 +592,16 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Round"</span>, y <span class="op">=</span> <span class="st">"Payoff"</span>, colour <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:ggplot2-example"></span>
-<img src="A-r-refresher_files/figure-html/ggplot2-example-1.png" alt="Payoffs across six rounds of a repeated game." width="80%"><p class="caption">
+<span id="fig:ggplot2-example" style="display:block;"></span>
+<img alt="Payoffs across six rounds of a repeated game." src="A-r-refresher_files/figure-html/ggplot2-example-1.png" width="80%"/><p class="caption">
 Figure A.1: Payoffs across six rounds of a repeated game.
 </p>
 </div>
 </div>
 </div>
-<div id="useful-idioms-for-this-book" class="section level2" number="43.5">
+<div class="section level2" id="useful-idioms-for-this-book" number="43.5">
 <h2>
-<span class="header-section-number">A.5</span> Useful idioms for this book<a class="anchor" aria-label="anchor" href="#useful-idioms-for-this-book"><i class="fas fa-link"></i></a>
+<span class="header-section-number">A.5</span> Useful idioms for this book<a aria-label="anchor" class="anchor" href="#useful-idioms-for-this-book"><i class="fas fa-link"></i></a>
 </h2>
 <p>A handful of patterns recur throughout the chapters.</p>
 <div class="sourceCode" id="cb1289"><pre class="downlit sourceCode r">
@@ -629,16 +636,14 @@ Figure A.1: Payoffs across six rounds of a repeated game.
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt; [1] 49 65 25 74 18</code></pre>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -657,64 +662,15 @@ Figure A.1: Payoffs across six rounds of a repeated game.
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-future.html"><span class="header-section-number">42</span> The Future of Strategy</a></div>
 <div class="next"><a href="sec-linear-algebra.html"><span class="header-section-number">B</span> Linear Algebra Essentials</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-r-refresher"><span class="header-section-number">A</span> R Refresher</a></li>
 <li>
 <a class="nav-link" href="#data-structures"><span class="header-section-number">A.1</span> Data structures</a><ul class="nav navbar-nav">
@@ -748,29 +704,23 @@ Figure A.1: Payoffs across six rounds of a repeated game.
 </li>
 <li><a class="nav-link" href="#useful-idioms-for-this-book"><span class="header-section-number">A.5</span> Useful idioms for this book</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/A-r-refresher.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/A-r-refresher.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/A-r-refresher.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/A-r-refresher.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 11 The GameTheory Package | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="A conceptual survey of the GameTheory R package for cooperative game theory, followed by from-scratch implementations of the Shapley value, Banzhaf index, and related solution concepts using base...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 11 The GameTheory Package | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-gametheory-package.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="A conceptual survey of the GameTheory R package for cooperative game theory, followed by from-scratch implementations of the Shapley value, Banzhaf index, and related solution concepts using base...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 11 The GameTheory Package | Strategy in R">
-<meta name="twitter:description" content="A conceptual survey of the GameTheory R package for cooperative game theory, followed by from-scratch implementations of the Shapley value, Banzhaf index, and related solution concepts using base...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 11 The GameTheory Package | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="A conceptual survey of the GameTheory R package for cooperative game theory, followed by from-scratch implementations of the Shapley value, Banzhaf index, and related solution concepts using base..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 11 The GameTheory Package | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-gametheory-package.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="A conceptual survey of the GameTheory R package for cooperative game theory, followed by from-scratch implementations of the Shapley value, Banzhaf index, and related solution concepts using base..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 11 The GameTheory Package | Strategy in R" name="twitter:title"/>
+<meta content="A conceptual survey of the GameTheory R package for cooperative game theory, followed by from-scratch implementations of the Shapley value, Banzhaf index, and related solution concepts using base..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 11 The GameTheory Package | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-gametheory-package" class="section level1" number="11">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-gametheory-package" number="11">
 <h1>
-<span class="header-section-number">11</span> The GameTheory Package<a class="anchor" aria-label="anchor" href="#sec-gametheory-package"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">11</span> The GameTheory Package<a aria-label="anchor" class="anchor" href="#sec-gametheory-package"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-gametheory-package.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-gametheory-package.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>A conceptual survey of the GameTheory R package for cooperative game theory, followed by from-scratch implementations of the Shapley value, Banzhaf index, and related solution concepts using base R and tidyverse.</p>
 </blockquote>
-<div id="learning-objectives-9" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-9"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-9">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-9"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Understand the API and capabilities of the GameTheory R package for cooperative game theory.</li>
@@ -183,20 +190,20 @@
 <li>Compare computational results with closed-form analytical formulas.</li>
 </ul>
 </div>
-<div id="motivation-9" class="section level2" number="11.1">
+<div class="section level2" id="motivation-9" number="11.1">
 <h2>
-<span class="header-section-number">11.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-9"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-9"><i class="fas fa-link"></i></a>
 </h2>
 <p>Consider the United Nations Security Council, where five permanent members hold veto power and ten non-permanent members do not. How much <em>real</em> power does each member wield? Raw vote counts are misleading — a permanent member’s veto makes it far more influential than a simple headcount suggests. The <strong>Shapley value</strong>, a cornerstone of cooperative game theory, provides a principled answer: it measures each player’s average marginal contribution across all possible orderings of coalition formation.</p>
 <p>The <code>GameTheory</code> package on CRAN provides efficient, well-tested implementations of these computations. However, since it is not available in our current environment, this chapter first surveys its API conceptually and then implements equivalent functionality from scratch. Building these algorithms by hand deepens understanding of the combinatorial machinery behind cooperative solution concepts.</p>
 </div>
-<div id="theory-9" class="section level2" number="11.2">
+<div class="section level2" id="theory-9" number="11.2">
 <h2>
-<span class="header-section-number">11.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-9"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-9"><i class="fas fa-link"></i></a>
 </h2>
-<div id="cooperative-games-and-characteristic-functions" class="section level3" number="11.2.1">
+<div class="section level3" id="cooperative-games-and-characteristic-functions" number="11.2.1">
 <h3>
-<span class="header-section-number">11.2.1</span> Cooperative games and characteristic functions<a class="anchor" aria-label="anchor" href="#cooperative-games-and-characteristic-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.2.1</span> Cooperative games and characteristic functions<a aria-label="anchor" class="anchor" href="#cooperative-games-and-characteristic-functions"><i class="fas fa-link"></i></a>
 </h3>
 <p>A <strong>transferable utility (TU) cooperative game</strong> is a pair <span class="math inline">\((N, v)\)</span> where <span class="math inline">\(N = \{1, 2, \ldots, n\}\)</span> is the set of players and <span class="math inline">\(v : 2^N \to \mathbb{R}\)</span> is the <strong>characteristic function</strong> satisfying <span class="math inline">\(v(\emptyset) = 0\)</span>. The value <span class="math inline">\(v(S)\)</span> represents the total payoff that coalition <span class="math inline">\(S \subseteq N\)</span> can guarantee for itself.</p>
 <div class="rmdnote">
@@ -204,9 +211,9 @@
 <p>A <strong>weighted voting game</strong> <span class="math inline">\([q; w_1, w_2, \ldots, w_n]\)</span> has quota <span class="math inline">\(q\)</span> and player weights <span class="math inline">\(w_i\)</span>. A coalition <span class="math inline">\(S\)</span> is <strong>winning</strong> if <span class="math inline">\(\sum_{i \in S} w_i \geq q\)</span>, giving <span class="math inline">\(v(S) = 1\)</span>; otherwise <span class="math inline">\(v(S) = 0\)</span>.</p>
 </div>
 </div>
-<div id="the-shapley-value-1" class="section level3" number="11.2.2">
+<div class="section level3" id="the-shapley-value-1" number="11.2.2">
 <h3>
-<span class="header-section-number">11.2.2</span> The Shapley value<a class="anchor" aria-label="anchor" href="#the-shapley-value-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.2.2</span> The Shapley value<a aria-label="anchor" class="anchor" href="#the-shapley-value-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>The <strong>Shapley value</strong> <span class="citation">(<a href="references.html#ref-shapley1953">Shapley, 1953</a>)</span> assigns to each player <span class="math inline">\(i\)</span> a payoff <span class="math inline">\(\phi_i(v)\)</span> representing their expected marginal contribution:</p>
 <p><span class="math display" id="eq:shapley-value">\[\begin{equation}
@@ -219,9 +226,9 @@
 <p>The Shapley value is the unique allocation rule satisfying <strong>efficiency</strong> (<span class="math inline">\(\sum_i \phi_i = v(N)\)</span>), <strong>symmetry</strong>, <strong>additivity</strong>, and the <strong>null player</strong> property.</p>
 </div>
 </div>
-<div id="the-banzhaf-power-index" class="section level3" number="11.2.3">
+<div class="section level3" id="the-banzhaf-power-index" number="11.2.3">
 <h3>
-<span class="header-section-number">11.2.3</span> The Banzhaf power index<a class="anchor" aria-label="anchor" href="#the-banzhaf-power-index"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.2.3</span> The Banzhaf power index<a aria-label="anchor" class="anchor" href="#the-banzhaf-power-index"><i class="fas fa-link"></i></a>
 </h3>
 <p>The <strong>Banzhaf power index</strong> measures power by counting the number of coalitions in which a player is <strong>pivotal</strong> (turning a losing coalition into a winning one), divided by the total number of coalitions each player could join:</p>
 <p><span class="math display" id="eq:banzhaf-index">\[\begin{equation}
@@ -230,9 +237,9 @@
 \end{equation}\]</span></p>
 <p>Unlike the Shapley value, the raw Banzhaf indices do not necessarily sum to <span class="math inline">\(v(N)\)</span>. The <strong>normalized Banzhaf index</strong> divides each <span class="math inline">\(\beta_i\)</span> by <span class="math inline">\(\sum_j \beta_j\)</span>.</p>
 </div>
-<div id="the-gametheory-package-api" class="section level3" number="11.2.4">
+<div class="section level3" id="the-gametheory-package-api" number="11.2.4">
 <h3>
-<span class="header-section-number">11.2.4</span> The GameTheory package API<a class="anchor" aria-label="anchor" href="#the-gametheory-package-api"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.2.4</span> The GameTheory package API<a aria-label="anchor" class="anchor" href="#the-gametheory-package-api"><i class="fas fa-link"></i></a>
 </h3>
 <p>The <code>GameTheory</code> package provides functions including:</p>
 <ul>
@@ -250,13 +257,13 @@
 <p>Since this package is not installed, we now implement these concepts from scratch.</p>
 </div>
 </div>
-<div id="sec-gametheory-impl" class="section level2" number="11.3">
+<div class="section level2" id="sec-gametheory-impl" number="11.3">
 <h2>
-<span class="header-section-number">11.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-gametheory-impl"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-gametheory-impl"><i class="fas fa-link"></i></a>
 </h2>
-<div id="defining-a-characteristic-function" class="section level3" number="11.3.1">
+<div class="section level3" id="defining-a-characteristic-function" number="11.3.1">
 <h3>
-<span class="header-section-number">11.3.1</span> Defining a characteristic function<a class="anchor" aria-label="anchor" href="#defining-a-characteristic-function"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.3.1</span> Defining a characteristic function<a aria-label="anchor" class="anchor" href="#defining-a-characteristic-function"><i class="fas fa-link"></i></a>
 </h3>
 <p>We represent the characteristic function as a named numeric vector indexed by coalition labels. For <span class="math inline">\(n\)</span> players, there are <span class="math inline">\(2^n - 1\)</span> non-empty coalitions.</p>
 <div class="sourceCode" id="cb243"><pre class="downlit sourceCode r">
@@ -289,9 +296,9 @@
 <pre><code>#&gt;         1,2   1,3 1,2,3 
 #&gt;     0     1     1     1</code></pre>
 </div>
-<div id="computing-the-shapley-value-via-permutations" class="section level3" number="11.3.2">
+<div class="section level3" id="computing-the-shapley-value-via-permutations" number="11.3.2">
 <h3>
-<span class="header-section-number">11.3.2</span> Computing the Shapley value via permutations<a class="anchor" aria-label="anchor" href="#computing-the-shapley-value-via-permutations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.3.2</span> Computing the Shapley value via permutations<a aria-label="anchor" class="anchor" href="#computing-the-shapley-value-via-permutations"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb247"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate all permutations of n elements</span></span>
@@ -352,9 +359,9 @@
 <pre><code>#&gt; 
 #&gt; Sum of Shapley values: 1.0000 (should equal v(N) = 1)</code></pre>
 </div>
-<div id="shapley-value-via-the-analytical-formula" class="section level3" number="11.3.3">
+<div class="section level3" id="shapley-value-via-the-analytical-formula" number="11.3.3">
 <h3>
-<span class="header-section-number">11.3.3</span> Shapley value via the analytical formula<a class="anchor" aria-label="anchor" href="#shapley-value-via-the-analytical-formula"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.3.3</span> Shapley value via the analytical formula<a aria-label="anchor" class="anchor" href="#shapley-value-via-the-analytical-formula"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Shapley value using the combinatorial formula from \@ref(eq:shapley-value)</span></span>
@@ -394,9 +401,9 @@
 <pre><code>#&gt; 
 #&gt; Maximum difference from permutation method: 0</code></pre>
 </div>
-<div id="computing-the-banzhaf-power-index" class="section level3" number="11.3.4">
+<div class="section level3" id="computing-the-banzhaf-power-index" number="11.3.4">
 <h3>
-<span class="header-section-number">11.3.4</span> Computing the Banzhaf power index<a class="anchor" aria-label="anchor" href="#computing-the-banzhaf-power-index"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.3.4</span> Computing the Banzhaf power index<a aria-label="anchor" class="anchor" href="#computing-the-banzhaf-power-index"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb259"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">banzhaf_index</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">v</span>, <span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
@@ -436,9 +443,9 @@
 <pre><code>#&gt; Player 1 Player 2 Player 3 
 #&gt;      0.6      0.2      0.2</code></pre>
 </div>
-<div id="comparing-power-indices-across-coalition-structures" class="section level3" number="11.3.5">
+<div class="section level3" id="comparing-power-indices-across-coalition-structures" number="11.3.5">
 <h3>
-<span class="header-section-number">11.3.5</span> Comparing power indices across coalition structures<a class="anchor" aria-label="anchor" href="#comparing-power-indices-across-coalition-structures"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.3.5</span> Comparing power indices across coalition structures<a aria-label="anchor" class="anchor" href="#comparing-power-indices-across-coalition-structures"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">games</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
@@ -477,8 +484,8 @@
 <span>  <span class="op">)</span></span>
 <span><span class="va">p_comparison</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:shapley-comparison"></span>
-<img src="10-gametheory-package_files/figure-html/shapley-comparison-1.png" alt="Shapley values and normalized Banzhaf indices for three different weighted voting games with three players. The veto player (Player 1) commands disproportionate power relative to their weight share." width="80%"><p class="caption">
+<span id="fig:shapley-comparison" style="display:block;"></span>
+<img alt="Shapley values and normalized Banzhaf indices for three different weighted voting games with three players. The veto player (Player 1) commands disproportionate power relative to their weight share." src="10-gametheory-package_files/figure-html/shapley-comparison-1.png" width="80%"/><p class="caption">
 Figure 11.1: Shapley values and normalized Banzhaf indices for three different weighted voting games with three players. The veto player (Player 1) commands disproportionate power relative to their weight share.
 </p>
 </div>
@@ -487,13 +494,13 @@ Figure 11.1: Shapley values and normalized Banzhaf indices for three different w
 <p>As <a href="sec-gametheory-package.html#fig:shapley-comparison">11.1</a> shows, when the game is symmetric all players have equal power. As Player 1’s weight advantage grows, both the Shapley value and the Banzhaf index assign them a disproportionately larger share of power — exceeding their raw weight share. In the strong veto game <span class="math inline">\([4; 3, 1, 1]\)</span>, Player 1 is essential for every winning coalition, which both indices capture clearly.</p>
 </div>
 </div>
-<div id="worked-example-9" class="section level2" number="11.4">
+<div class="section level2" id="worked-example-9" number="11.4">
 <h2>
-<span class="header-section-number">11.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-9"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-9"><i class="fas fa-link"></i></a>
 </h2>
-<div id="a-simplified-eu-council-vote" class="section level3" number="11.4.1">
+<div class="section level3" id="a-simplified-eu-council-vote" number="11.4.1">
 <h3>
-<span class="header-section-number">11.4.1</span> A simplified EU Council vote<a class="anchor" aria-label="anchor" href="#a-simplified-eu-council-vote"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.4.1</span> A simplified EU Council vote<a aria-label="anchor" class="anchor" href="#a-simplified-eu-council-vote"><i class="fas fa-link"></i></a>
 </h3>
 <p>Consider a simplified three-country EU voting scenario: Germany (weight 4), France (weight 3), and Belgium (weight 1). A proposal passes with a quota of 5 votes.</p>
 <div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
@@ -984,40 +991,40 @@ Figure 11.1: Shapley values and normalized Banzhaf indices for three different w
   height: 0px !important;
 }
 </style>
-<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<div class="inline-table"><table class="gt_table" data-quarto-bootstrap="false" data-quarto-disable-processing="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Power analysis: [5; 4, 3, 1]</td>
-    </tr>
+<td class="gt_heading gt_title gt_font_normal gt_bottom_border" colspan="5" style="">Power analysis: [5; 4, 3, 1]</td>
+</tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Country">Country</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Weight">Weight</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Weight-share">Weight share</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Shapley-value">Shapley value</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Banzhaf-(norm.)">Banzhaf (norm.)</th>
-    </tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" colspan="1" id="Country" rowspan="1" scope="col">Country</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" colspan="1" id="Weight" rowspan="1" scope="col">Weight</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" colspan="1" id="Weight-share" rowspan="1" scope="col">Weight share</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" colspan="1" id="Shapley-value" rowspan="1" scope="col">Shapley value</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" colspan="1" id="Banzhaf-(norm.)" rowspan="1" scope="col">Banzhaf (norm.)</th>
+</tr>
 </thead>
 <tbody class="gt_table_body">
 <tr>
-<td headers="Country" class="gt_row gt_left">Germany</td>
-<td headers="Weight" class="gt_row gt_right">4</td>
-<td headers="Weight share" class="gt_row gt_right">50.0%</td>
-<td headers="Shapley value" class="gt_row gt_right">66.7%</td>
-<td headers="Banzhaf (norm.)" class="gt_row gt_right">60.0%</td>
+<td class="gt_row gt_left" headers="Country">Germany</td>
+<td class="gt_row gt_right" headers="Weight">4</td>
+<td class="gt_row gt_right" headers="Weight share">50.0%</td>
+<td class="gt_row gt_right" headers="Shapley value">66.7%</td>
+<td class="gt_row gt_right" headers="Banzhaf (norm.)">60.0%</td>
 </tr>
 <tr>
-<td headers="Country" class="gt_row gt_left">France</td>
-<td headers="Weight" class="gt_row gt_right">3</td>
-<td headers="Weight share" class="gt_row gt_right">37.5%</td>
-<td headers="Shapley value" class="gt_row gt_right">16.7%</td>
-<td headers="Banzhaf (norm.)" class="gt_row gt_right">20.0%</td>
+<td class="gt_row gt_left" headers="Country">France</td>
+<td class="gt_row gt_right" headers="Weight">3</td>
+<td class="gt_row gt_right" headers="Weight share">37.5%</td>
+<td class="gt_row gt_right" headers="Shapley value">16.7%</td>
+<td class="gt_row gt_right" headers="Banzhaf (norm.)">20.0%</td>
 </tr>
 <tr>
-<td headers="Country" class="gt_row gt_left">Belgium</td>
-<td headers="Weight" class="gt_row gt_right">1</td>
-<td headers="Weight share" class="gt_row gt_right">12.5%</td>
-<td headers="Shapley value" class="gt_row gt_right">16.7%</td>
-<td headers="Banzhaf (norm.)" class="gt_row gt_right">20.0%</td>
+<td class="gt_row gt_left" headers="Country">Belgium</td>
+<td class="gt_row gt_right" headers="Weight">1</td>
+<td class="gt_row gt_right" headers="Weight share">12.5%</td>
+<td class="gt_row gt_right" headers="Shapley value">16.7%</td>
+<td class="gt_row gt_right" headers="Banzhaf (norm.)">20.0%</td>
 </tr>
 </tbody>
 </table></div>
@@ -1060,9 +1067,9 @@ Figure 11.1: Shapley values and normalized Banzhaf indices for three different w
 <p>This confirms that Belgium is pivotal in exactly one of the six orderings (where Germany precedes Belgium and France follows), giving <span class="math inline">\(\phi_3 = 1/6 \approx 16.7\%\)</span> — notably higher than its raw weight share of <span class="math inline">\(1/8 = 12.5\%\)</span>.</p>
 </div>
 </div>
-<div id="extensions-9" class="section level2" number="11.5">
+<div class="section level2" id="extensions-9" number="11.5">
 <h2>
-<span class="header-section-number">11.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-9"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-9"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -1075,8 +1082,8 @@ Figure 11.1: Shapley values and normalized Banzhaf indices for three different w
 <strong>Non-transferable utility (NTU) games</strong> relax the assumption that utility can be freely transferred among coalition members, leading to concepts such as the NTU Shapley value.</li>
 </ul>
 </div>
-<div id="exercises-9" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-9"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-9">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-9"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Unanimity games.</strong> The unanimity game <span class="math inline">\(u_T\)</span> for coalition <span class="math inline">\(T\)</span> assigns <span class="math inline">\(v(S) = 1\)</span> if <span class="math inline">\(T \subseteq S\)</span> and <span class="math inline">\(v(S) = 0\)</span> otherwise. Prove analytically that <span class="math inline">\(\phi_i(u_T) = 1/|T|\)</span> for <span class="math inline">\(i \in T\)</span> and <span class="math inline">\(\phi_i(u_T) = 0\)</span> otherwise. Then verify your proof computationally using the <code>shapley_value()</code> function for <span class="math inline">\(T = \{1, 2\}\)</span> with <span class="math inline">\(n = 3\)</span> players.</p></li>
@@ -1084,16 +1091,14 @@ Figure 11.1: Shapley values and normalized Banzhaf indices for three different w
 <li><p><strong>Monte Carlo Shapley.</strong> For larger games, exact computation is infeasible. Write a function <code>shapley_monte_carlo(v, n, num_samples)</code> that estimates the Shapley value by randomly sampling <code>num_samples</code> permutations (using <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code>). Test it on the game <span class="math inline">\([4;\; 3, 1, 1]\)</span> and plot how the estimates converge to the exact values as <code>num_samples</code> increases from 100 to 10,000.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -1112,64 +1117,15 @@ Figure 11.1: Shapley values and normalized Banzhaf indices for three different w
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-r-environment.html"><span class="header-section-number">10</span> The R Environment for Strategic Computation</a></div>
 <div class="next"><a href="sec-coopgame-package.html"><span class="header-section-number">12</span> The CoopGame Package</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-gametheory-package"><span class="header-section-number">11</span> The GameTheory Package</a></li>
 <li><a class="nav-link" href="#learning-objectives-9">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-9"><span class="header-section-number">11.1</span> Motivation</a></li>
@@ -1196,29 +1152,23 @@ Figure 11.1: Shapley values and normalized Banzhaf indices for three different w
 <li><a class="nav-link" href="#extensions-9"><span class="header-section-number">11.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-9">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/10-gametheory-package.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/10-gametheory-package.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/10-gametheory-package.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/10-gametheory-package.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

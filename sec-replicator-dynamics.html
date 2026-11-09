@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 20 Replicator Dynamics | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="An introduction to the replicator equation — the central dynamical system of evolutionary game theory — with ODE solutions in R for Rock-Paper-Scissors and Hawk-Dove games, including simplex...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 20 Replicator Dynamics | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-replicator-dynamics.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="An introduction to the replicator equation — the central dynamical system of evolutionary game theory — with ODE solutions in R for Rock-Paper-Scissors and Hawk-Dove games, including simplex...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 20 Replicator Dynamics | Strategy in R">
-<meta name="twitter:description" content="An introduction to the replicator equation — the central dynamical system of evolutionary game theory — with ODE solutions in R for Rock-Paper-Scissors and Hawk-Dove games, including simplex...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 20 Replicator Dynamics | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="An introduction to the replicator equation — the central dynamical system of evolutionary game theory — with ODE solutions in R for Rock-Paper-Scissors and Hawk-Dove games, including simplex..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 20 Replicator Dynamics | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-replicator-dynamics.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="An introduction to the replicator equation — the central dynamical system of evolutionary game theory — with ODE solutions in R for Rock-Paper-Scissors and Hawk-Dove games, including simplex..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 20 Replicator Dynamics | Strategy in R" name="twitter:title"/>
+<meta content="An introduction to the replicator equation — the central dynamical system of evolutionary game theory — with ODE solutions in R for Rock-Paper-Scissors and Hawk-Dove games, including simplex..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 20 Replicator Dynamics | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-replicator-dynamics" class="section level1" number="20">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-replicator-dynamics" number="20">
 <h1>
-<span class="header-section-number">20</span> Replicator Dynamics<a class="anchor" aria-label="anchor" href="#sec-replicator-dynamics"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">20</span> Replicator Dynamics<a aria-label="anchor" class="anchor" href="#sec-replicator-dynamics"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-replicator-dynamics.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-replicator-dynamics.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>An introduction to the replicator equation — the central dynamical system of evolutionary game theory — with ODE solutions in R for Rock-Paper-Scissors and Hawk-Dove games, including simplex visualization.</p>
 </blockquote>
-<div id="learning-objectives-18" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-18"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-18">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-18"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>State the replicator equation and explain the biological and game-theoretic intuition behind each term.</li>
@@ -183,21 +190,21 @@
 <li>Analyze convergence to equilibrium in Hawk-Dove and cycling behavior in Rock-Paper-Scissors.</li>
 </ul>
 </div>
-<div id="motivation-18" class="section level2" number="20.1">
+<div class="section level2" id="motivation-18" number="20.1">
 <h2>
-<span class="header-section-number">20.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-18"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-18"><i class="fas fa-link"></i></a>
 </h2>
 <p>In <a href="sec-axelrod-tournament.html#sec-axelrod-tournament">18</a> and <a href="sec-spatial-pd.html#sec-spatial-pd">19</a>, we studied discrete agents making discrete choices. But many evolutionary and economic processes are better described in continuous time: strategy frequencies shift gradually as more successful types reproduce faster. How do we model this?</p>
 <p>The <strong>replicator equation</strong>, introduced by Taylor and Jonker <span class="citation">(<a href="references.html#ref-taylor1978">1978</a>)</span> and named by Schuster and Sigmund <span class="citation">(<a href="references.html#ref-schuster1983">1983</a>)</span>, provides the answer. It is the fundamental dynamical system of evolutionary game theory, describing how the frequency of each strategy in a large population changes over time as a function of its fitness relative to the population average.</p>
 <p>The replicator equation connects game theory to biology (it arises from natural selection), economics (it describes learning dynamics in large populations), and dynamical systems (it produces fixed points, limit cycles, and chaos). In this chapter, we solve it numerically in R for two classic games and visualize the resulting dynamics.</p>
 </div>
-<div id="theory-18" class="section level2" number="20.2">
+<div class="section level2" id="theory-18" number="20.2">
 <h2>
-<span class="header-section-number">20.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-18"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-18"><i class="fas fa-link"></i></a>
 </h2>
-<div id="the-replicator-equation" class="section level3" number="20.2.1">
+<div class="section level3" id="the-replicator-equation" number="20.2.1">
 <h3>
-<span class="header-section-number">20.2.1</span> The replicator equation<a class="anchor" aria-label="anchor" href="#the-replicator-equation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.2.1</span> The replicator equation<a aria-label="anchor" class="anchor" href="#the-replicator-equation"><i class="fas fa-link"></i></a>
 </h3>
 <p>Consider a large population where individuals play one of <span class="math inline">\(n\)</span> strategies. Let <span class="math inline">\(x_i\)</span> be the fraction of the population playing strategy <span class="math inline">\(i\)</span>, so <span class="math inline">\(\mathbf{x} = (x_1, \ldots, x_n)\)</span> lies on the <strong>simplex</strong> <span class="math inline">\(\Delta^{n-1} = \{ \mathbf{x} \geq 0 : \sum_i x_i = 1 \}\)</span>.</p>
 <p>The <strong>fitness</strong> of strategy <span class="math inline">\(i\)</span> against the current population is:
@@ -215,9 +222,9 @@ where <span class="math inline">\(A = (a_{ij})\)</span> is the payoff matrix. Th
 \end{equation}\]</span></p>
 <p>The interpretation is elegant: a strategy grows when its fitness exceeds the population average, and shrinks when it falls below. The rate of change is proportional to both the current frequency <span class="math inline">\(x_i\)</span> (rare strategies change slowly in absolute terms) and the fitness advantage <span class="math inline">\(f_i - \bar{f}\)</span>.</p>
 </div>
-<div id="key-properties" class="section level3" number="20.2.2">
+<div class="section level3" id="key-properties" number="20.2.2">
 <h3>
-<span class="header-section-number">20.2.2</span> Key properties<a class="anchor" aria-label="anchor" href="#key-properties"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.2.2</span> Key properties<a aria-label="anchor" class="anchor" href="#key-properties"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li>
@@ -228,9 +235,9 @@ where <span class="math inline">\(A = (a_{ij})\)</span> is the payoff matrix. Th
 <strong>Folk theorem</strong>: In two-strategy games, every ESS is an asymptotically stable rest point of the replicator dynamics, and every stable rest point is a Nash equilibrium.</li>
 </ol>
 </div>
-<div id="two-example-games" class="section level3" number="20.2.3">
+<div class="section level3" id="two-example-games" number="20.2.3">
 <h3>
-<span class="header-section-number">20.2.3</span> Two example games<a class="anchor" aria-label="anchor" href="#two-example-games"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.2.3</span> Two example games<a aria-label="anchor" class="anchor" href="#two-example-games"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Rock-Paper-Scissors (RPS).</strong> The payoff matrix is:</p>
 <p><span class="math display">\[
@@ -244,13 +251,13 @@ A_{\text{HD}} = \begin{pmatrix} (V - C)/2 &amp; V \\ 0 &amp; V/2 \end{pmatrix} =
 <p>The interior equilibrium is at <span class="math inline">\(x_H^* = V/C = 0.5\)</span>. This is an ESS and the replicator dynamics converge to it from any interior initial condition.</p>
 </div>
 </div>
-<div id="sec-replicator-implementation" class="section level2" number="20.3">
+<div class="section level2" id="sec-replicator-implementation" number="20.3">
 <h2>
-<span class="header-section-number">20.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#sec-replicator-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#sec-replicator-implementation"><i class="fas fa-link"></i></a>
 </h2>
-<div id="solving-with-run_replicator" class="section level3" number="20.3.1">
+<div class="section level3" id="solving-with-run_replicator" number="20.3.1">
 <h3>
-<span class="header-section-number">20.3.1</span> Solving with <code>run_replicator()</code><a class="anchor" aria-label="anchor" href="#solving-with-run_replicator"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.3.1</span> Solving with <code>run_replicator()</code><a aria-label="anchor" class="anchor" href="#solving-with-run_replicator"><i class="fas fa-link"></i></a>
 </h3>
 <p>The helper function <code>run_replicator()</code> (defined in <code>R/replicator.R</code>) wraps <code><a href="https://rdrr.io/pkg/deSolve/man/ode.html">deSolve::ode()</a></code> to integrate the replicator equation. It takes a payoff matrix, initial frequencies, and a time grid, returning a data frame of strategy frequencies over time.</p>
 <div class="sourceCode" id="cb533"><pre class="downlit sourceCode r">
@@ -261,9 +268,9 @@ A_{\text{HD}} = \begin{pmatrix} (V - C)/2 &amp; V \\ 0 &amp; V/2 \end{pmatrix} =
 <span><span class="va">A_hd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span>,</span>
 <span>                   <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="simplex-coordinate-transform" class="section level3" number="20.3.2">
+<div class="section level3" id="simplex-coordinate-transform" number="20.3.2">
 <h3>
-<span class="header-section-number">20.3.2</span> Simplex coordinate transform<a class="anchor" aria-label="anchor" href="#simplex-coordinate-transform"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.3.2</span> Simplex coordinate transform<a aria-label="anchor" class="anchor" href="#simplex-coordinate-transform"><i class="fas fa-link"></i></a>
 </h3>
 <p>To plot three-strategy dynamics on a two-dimensional ternary diagram, we project from the simplex to Cartesian coordinates using the standard transform:</p>
 <div class="sourceCode" id="cb534"><pre class="downlit sourceCode r">
@@ -274,9 +281,9 @@ A_{\text{HD}} = \begin{pmatrix} (V - C)/2 &amp; V \\ 0 &amp; V/2 \end{pmatrix} =
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="running-rps-dynamics-from-multiple-initial-conditions" class="section level3" number="20.3.3">
+<div class="section level3" id="running-rps-dynamics-from-multiple-initial-conditions" number="20.3.3">
 <h3>
-<span class="header-section-number">20.3.3</span> Running RPS dynamics from multiple initial conditions<a class="anchor" aria-label="anchor" href="#running-rps-dynamics-from-multiple-initial-conditions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.3.3</span> Running RPS dynamics from multiple initial conditions<a aria-label="anchor" class="anchor" href="#running-rps-dynamics-from-multiple-initial-conditions"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb535"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -295,9 +302,9 @@ A_{\text{HD}} = \begin{pmatrix} (V - C)/2 &amp; V \\ 0 &amp; V/2 \end{pmatrix} =
 <span>  <span class="va">coords</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="running-hawk-dove-dynamics" class="section level3" number="20.3.4">
+<div class="section level3" id="running-hawk-dove-dynamics" number="20.3.4">
 <h3>
-<span class="header-section-number">20.3.4</span> Running Hawk-Dove dynamics<a class="anchor" aria-label="anchor" href="#running-hawk-dove-dynamics"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.3.4</span> Running Hawk-Dove dynamics<a aria-label="anchor" class="anchor" href="#running-hawk-dove-dynamics"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb536"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hd_initials</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.3</span>, <span class="fl">0.5</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span><span class="op">)</span></span>
@@ -312,14 +319,14 @@ A_{\text{HD}} = \begin{pmatrix} (V - C)/2 &amp; V \\ 0 &amp; V/2 \end{pmatrix} =
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="worked-example-16" class="section level2" number="20.4">
+<div class="section level2" id="worked-example-16" number="20.4">
 <h2>
-<span class="header-section-number">20.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-16"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-16"><i class="fas fa-link"></i></a>
 </h2>
 <p>We trace the replicator dynamics for specific initial conditions in both games.</p>
-<div id="rock-paper-scissors" class="section level3" number="20.4.1">
+<div class="section level3" id="rock-paper-scissors" number="20.4.1">
 <h3>
-<span class="header-section-number">20.4.1</span> Rock-Paper-Scissors<a class="anchor" aria-label="anchor" href="#rock-paper-scissors"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.4.1</span> Rock-Paper-Scissors<a aria-label="anchor" class="anchor" href="#rock-paper-scissors"><i class="fas fa-link"></i></a>
 </h3>
 <p>Starting from <span class="math inline">\(\mathbf{x}_0 = (0.6, 0.3, 0.1)\)</span> — a population dominated by Rock:</p>
 <div class="sourceCode" id="cb537"><pre class="downlit sourceCode r">
@@ -378,17 +385,17 @@ A_{\text{HD}} = \begin{pmatrix} (V - C)/2 &amp; V \\ 0 &amp; V/2 \end{pmatrix} =
 <span></span>
 <span><span class="va">p_rps</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:rps-simplex"></span>
-<img src="19-replicator-dynamics_files/figure-html/rps-simplex-1.png" alt="Replicator dynamics for Rock-Paper-Scissors on the two-dimensional simplex. Six trajectories from random initial conditions cycle around the interior equilibrium at (1/3, 1/3, 1/3). The orbits are closed curves — the system never converges, reflecting the non-transitive dominance structure of the game." width="80%"><p class="caption">
+<span id="fig:rps-simplex" style="display:block;"></span>
+<img alt="Replicator dynamics for Rock-Paper-Scissors on the two-dimensional simplex. Six trajectories from random initial conditions cycle around the interior equilibrium at (1/3, 1/3, 1/3). The orbits are closed curves — the system never converges, reflecting the non-transitive dominance structure of the game." src="19-replicator-dynamics_files/figure-html/rps-simplex-1.png" width="80%"/><p class="caption">
 Figure 20.1: Replicator dynamics for Rock-Paper-Scissors on the two-dimensional simplex. Six trajectories from random initial conditions cycle around the interior equilibrium at (1/3, 1/3, 1/3). The orbits are closed curves — the system never converges, reflecting the non-transitive dominance structure of the game.
 </p>
 </div>
 <div class="sourceCode" id="cb544"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_rps</span>, <span class="st">"replicator-rps-simplex"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="hawk-dove" class="section level3" number="20.4.2">
+<div class="section level3" id="hawk-dove" number="20.4.2">
 <h3>
-<span class="header-section-number">20.4.2</span> Hawk-Dove<a class="anchor" aria-label="anchor" href="#hawk-dove"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.4.2</span> Hawk-Dove<a aria-label="anchor" class="anchor" href="#hawk-dove"><i class="fas fa-link"></i></a>
 </h3>
 <p>Starting from <span class="math inline">\(x_H = 0.1\)</span> (a population with few Hawks):</p>
 <div class="sourceCode" id="cb545"><pre class="downlit sourceCode r">
@@ -424,8 +431,8 @@ Figure 20.1: Replicator dynamics for Rock-Paper-Scissors on the two-dimensional 
 <span></span>
 <span><span class="va">p_hd</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:hd-dynamics"></span>
-<img src="19-replicator-dynamics_files/figure-html/hd-dynamics-1.png" alt="Hawk frequency over time for five different initial conditions. All trajectories converge to the ESS at $x_H = 0.5$ (dashed line), regardless of starting point. Initial conditions below the ESS see Hawk increase; those above see it decrease." width="80%"><p class="caption">
+<span id="fig:hd-dynamics" style="display:block;"></span>
+<img alt="Hawk frequency over time for five different initial conditions. All trajectories converge to the ESS at $x_H = 0.5$ (dashed line), regardless of starting point. Initial conditions below the ESS see Hawk increase; those above see it decrease." src="19-replicator-dynamics_files/figure-html/hd-dynamics-1.png" width="80%"/><p class="caption">
 Figure 20.2: Hawk frequency over time for five different initial conditions. All trajectories converge to the ESS at <span class="math inline">\(x_H = 0.5\)</span> (dashed line), regardless of starting point. Initial conditions below the ESS see Hawk increase; those above see it decrease.
 </p>
 </div>
@@ -433,9 +440,9 @@ Figure 20.2: Hawk frequency over time for five different initial conditions. All
 <code class="sourceCode R"><span><span class="fu">save_pub_fig</span><span class="op">(</span><span class="va">p_hd</span>, <span class="st">"replicator-hd-dynamics"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p>The Hawk-Dove dynamics illustrate a core result in evolutionary game theory: <strong>the ESS is a global attractor of the replicator dynamics</strong>. No matter how the population starts (as long as both strategies are present), it converges to the mixed equilibrium where Hawks and Doves coexist. This is in stark contrast to RPS, where the dynamics cycle forever.</p>
 </div>
-<div id="comparing-the-two-games" class="section level3" number="20.4.3">
+<div class="section level3" id="comparing-the-two-games" number="20.4.3">
 <h3>
-<span class="header-section-number">20.4.3</span> Comparing the two games<a class="anchor" aria-label="anchor" href="#comparing-the-two-games"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.4.3</span> Comparing the two games<a aria-label="anchor" class="anchor" href="#comparing-the-two-games"><i class="fas fa-link"></i></a>
 </h3>
 <p>The difference between the two games reflects a deep structural distinction:</p>
 <ul>
@@ -447,9 +454,9 @@ Figure 20.2: Hawk frequency over time for five different initial conditions. All
 <p>This shows that the replicator equation’s behavior depends qualitatively on the game’s payoff structure — a theme we will revisit when studying evolutionarily stable strategies in <a href="sec-ess.html#sec-ess">21</a>.</p>
 </div>
 </div>
-<div id="extensions-18" class="section level2" number="20.5">
+<div class="section level2" id="extensions-18" number="20.5">
 <h2>
-<span class="header-section-number">20.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-18"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-18"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -463,8 +470,8 @@ Figure 20.2: Hawk frequency over time for five different initial conditions. All
 <li>For a comprehensive treatment, see <span class="citation">Hofbauer &amp; Sigmund (<a href="references.html#ref-hofbauer1998">1998</a>)</span>. For the connection between replicator dynamics and learning, see <span class="citation">Fudenberg &amp; Levine (<a href="references.html#ref-fudenberg1998">1998</a>)</span>.</li>
 </ul>
 </div>
-<div id="exercises-18" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-18"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-18">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-18"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li>
@@ -476,16 +483,14 @@ Figure 20.2: Hawk frequency over time for five different initial conditions. All
 <li><p><strong>Payoff perturbation.</strong> Modify the RPS payoff matrix to be slightly asymmetric: change the (1,2) entry from <span class="math inline">\(-1\)</span> to <span class="math inline">\(-1.1\)</span>. Run the dynamics and plot the trajectory. Does the system still cycle, or does it now converge to a vertex? Explain why breaking the skew-symmetry changes the qualitative dynamics.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -504,64 +509,15 @@ Figure 20.2: Hawk frequency over time for five different initial conditions. All
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  <div class="chapter-nav">
+<div class="chapter-nav">
 <div class="prev"><a href="sec-spatial-pd.html"><span class="header-section-number">19</span> The Spatial Prisoner’s Dilemma</a></div>
 <div class="next"><a href="sec-ess.html"><span class="header-section-number">21</span> Evolutionarily Stable Strategies</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-replicator-dynamics"><span class="header-section-number">20</span> Replicator Dynamics</a></li>
 <li><a class="nav-link" href="#learning-objectives-18">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-18"><span class="header-section-number">20.1</span> Motivation</a></li>
@@ -590,29 +546,23 @@ Figure 20.2: Hawk frequency over time for five different initial conditions. All
 <li><a class="nav-link" href="#extensions-18"><span class="header-section-number">20.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-18">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/19-replicator-dynamics.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/19-replicator-dynamics.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/19-replicator-dynamics.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/19-replicator-dynamics.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
-
 </div>
 </div> <!-- .container -->
-
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {

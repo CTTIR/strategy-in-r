@@ -1,37 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 <title>Chapter 15 Building Custom Solvers in R | Strategy in R</title>
-<meta name="author" content="Raban Heller">
-<meta name="description" content="Lemke-Howson, support enumeration, and fictitious play implemented from scratch in R — understanding the algorithms behind Nash equilibrium computation by building them yourself.  Learning...">
-<meta name="generator" content="bookdown 0.48 with bs4_book()">
-<meta property="og:title" content="Chapter 15 Building Custom Solvers in R | Strategy in R">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/sec-custom-solvers.html">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta property="og:description" content="Lemke-Howson, support enumeration, and fictitious play implemented from scratch in R — understanding the algorithms behind Nash equilibrium computation by building them yourself.  Learning...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 15 Building Custom Solvers in R | Strategy in R">
-<meta name="twitter:description" content="Lemke-Howson, support enumeration, and fictitious play implemented from scratch in R — understanding the algorithms behind Nash equilibrium computation by building them yourself.  Learning...">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Local Font Awesome 6 (vendored, no CDN) --><link rel="stylesheet" href="style/font-awesome.min.css">
-<!-- Open Graph / Twitter Card --><meta property="og:title" content="Chapter 15 Building Custom Solvers in R | Strategy in R: Game Theory, Simulation, and Machine Intelligence">
-<meta property="og:description" content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://cttir.github.io/strategy-in-r/">
-<meta property="og:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cttir.github.io/strategy-in-r/images/cover.png">
+<meta content="Raban Heller" name="author"/>
+<meta content="Lemke-Howson, support enumeration, and fictitious play implemented from scratch in R — understanding the algorithms behind Nash equilibrium computation by building them yourself.  Learning..." name="description"/>
+<meta content="bookdown 0.48 with bs4_book()" name="generator"/>
+<meta content="Chapter 15 Building Custom Solvers in R | Strategy in R" property="og:title"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/sec-custom-solvers.html" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="Lemke-Howson, support enumeration, and fictitious play implemented from scratch in R — understanding the algorithms behind Nash equilibrium computation by building them yourself.  Learning..." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Chapter 15 Building Custom Solvers in R | Strategy in R" name="twitter:title"/>
+<meta content="Lemke-Howson, support enumeration, and fictitious play implemented from scratch in R — understanding the algorithms behind Nash equilibrium computation by building them yourself.  Learning..." name="twitter:description"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
+<!-- JS --><script crossorigin="anonymous" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><script crossorigin="anonymous" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js"></script><script crossorigin="anonymous" src="https://kit.fontawesome.com/6ecbd6c532.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet"/>
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Inter-0.4.10/font.css" rel="stylesheet"/>
+<link href="libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"/>
+<script src="libs/bs3compat-0.10.0/transition.js"></script><script src="libs/bs3compat-0.10.0/tabs.js"></script><script src="libs/bs3compat-0.10.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet"/>
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Fonts (Hugo Coder set) --><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Local Font Awesome 6 (vendored, no CDN) --><link href="style/font-awesome.min.css" rel="stylesheet"/>
+<!-- Open Graph / Twitter Card --><meta content="Chapter 15 Building Custom Solvers in R | Strategy in R: Game Theory, Simulation, and Machine Intelligence" property="og:title"/>
+<meta content="An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R." property="og:description"/>
+<meta content="book" property="og:type"/>
+<meta content="https://cttir.github.io/strategy-in-r/" property="og:url"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://cttir.github.io/strategy-in-r/images/cover.png" name="twitter:image"/>
 <!-- Wide equations scroll locally instead of widening the reading column. --><style>
     @media (max-width: 767.98px) {
       main .figure {
@@ -45,7 +46,7 @@
       }
     }
     </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script crossorigin="anonymous" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js"></script><script crossorigin="anonymous" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -72,30 +73,37 @@
       margin-left: 2em;
     }
   </style>
-<link rel="stylesheet" href="style/style.css">
-<link rel="stylesheet" href="style/font-awesome.min.css">
-</head>
+<link href="style/style.css" rel="stylesheet"/>
+<link href="style/font-awesome.min.css" rel="stylesheet"/>
+<style id="unified-book-download-style">
+.book-downloads--unified {display:flex!important;flex-wrap:wrap;gap:12px 24px;margin:16px 0 24px!important;padding:14px 16px!important;border:1px solid #a8adb4;border-radius:8px;background:transparent;color:inherit;font-family:system-ui,sans-serif;font-size:14px;line-height:1.4;box-sizing:border-box;max-width:100%;}
+.book-downloads--unified .book-download-group {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.book-downloads--unified .book-download-label {font-weight:600;margin-right:4px;}
+.book-downloads--unified a {display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid currentColor;border-radius:5px;text-decoration:none!important;font-weight:600;color:inherit;}
+.book-downloads--unified a:hover {background:rgba(127,127,127,.14);}
+.book-downloads--unified a:focus-visible {outline:3px solid #2684d9;outline-offset:3px;}
+.book-downloads--unified svg {height:20px;width:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.book-downloads:not(.book-downloads--unified),.book-download-footer,.sidebar-downloads {display:none!important;}
+@media(max-width:500px){.book-downloads--unified{gap:12px;padding:12px!important;}.book-downloads--unified .book-download-group{width:100%;}.book-downloads--unified .book-download-label{min-width:92px;}}
+@media print{.book-downloads--unified{display:none!important;}}
+</style></head>
 <body data-spy="scroll" data-target="#toc">
-
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
+<header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<div class="d-flex align-items-start justify-content-between">
+<h1>
+<a href="index.html" title="Game Theory, Simulation, and Machine Intelligence">Strategy in R</a>:
         <small class="text-muted">Game Theory, Simulation, and Machine Intelligence</small>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
-
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</h1>
+<button aria-controls="main-nav" aria-expanded="true" class="btn btn-outline-primary d-lg-none ml-2 mt-1" data-target="#main-nav" data-toggle="collapse" type="button"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+</div>
+<div class="collapse-lg" id="main-nav">
+<form role="search">
+<input aria-label="Search" class="form-control" id="search" placeholder="Search" type="search"/>
 </form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
+<nav aria-label="Table of contents"><h2>Table of contents</h2>
+<ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome!</a></li>
 <li><a class="" href="impressum.html">Impressum</a></li>
 <li><a class="" href="how-to-use-this-book-1.html">How to use this book</a></li>
@@ -160,21 +168,20 @@
 <li><a class="" href="citing-this-guide-1.html">Citing this Guide</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/CTTIR/strategy-in-r">View book source <i class="fab fa-github"></i></a></p>
-        </div>
-      </nav>
+<div class="book-extra">
+<p><a href="https://github.com/CTTIR/strategy-in-r" id="book-repo">View book source <i class="fab fa-github"></i></a></p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sec-custom-solvers" class="section level1" number="15">
+</nav>
+</div>
+</header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div class="section level1" id="sec-custom-solvers" number="15">
 <h1>
-<span class="header-section-number">15</span> Building Custom Solvers in R<a class="anchor" aria-label="anchor" href="#sec-custom-solvers"><i class="fas fa-link"></i></a>
-</h1>
+<span class="header-section-number">15</span> Building Custom Solvers in R<a aria-label="anchor" class="anchor" href="#sec-custom-solvers"><i class="fas fa-link"></i></a>
+</h1><nav aria-label="Book and chapter downloads" class="book-downloads book-downloads--unified"><div class="book-download-group"><span class="book-download-label">Entire book</span><a aria-label="Download entire book as PDF" download="" href="strategy-in-r.pdf" title="Download entire book as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download entire book as EPUB" download="" href="strategy-in-r.epub" title="Download entire book as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div><div class="book-download-group"><span class="book-download-label">This chapter</span><a aria-label="Download this chapter as PDF" download="" href="downloads/chapters/sec-custom-solvers.pdf" title="Download this chapter as PDF"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7z"></path><path d="M14 2v6h5M8 13h8M8 17h6"></path></svg><span>PDF</span></a><a aria-label="Download this chapter as EPUB" download="" href="downloads/chapters/sec-custom-solvers.epub" title="Download this chapter as EPUB"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3 4h7a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3zM21 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5z"></path></svg><span>EPUB</span></a></div></nav>
 <blockquote>
 <p>Lemke-Howson, support enumeration, and fictitious play implemented from scratch in R — understanding the algorithms behind Nash equilibrium computation by building them yourself.</p>
 </blockquote>
-<div id="learning-objectives-13" class="section level2 unnumbered">
-<h2>Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-13"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="learning-objectives-13">
+<h2>Learning objectives<a aria-label="anchor" class="anchor" href="#learning-objectives-13"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Explain the geometric intuition behind the Lemke–Howson algorithm as a path-following method on the best-response polytope.</li>
@@ -184,9 +191,9 @@
 <li>Compare the strengths and limitations of exact vs. iterative equilibrium solvers.</li>
 </ul>
 </div>
-<div id="motivation-13" class="section level2" number="15.1">
+<div class="section level2" id="motivation-13" number="15.1">
 <h2>
-<span class="header-section-number">15.1</span> Motivation<a class="anchor" aria-label="anchor" href="#motivation-13"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.1</span> Motivation<a aria-label="anchor" class="anchor" href="#motivation-13"><i class="fas fa-link"></i></a>
 </h2>
 <p>The solvers in <code>R/solvers.R</code> handle 2x2 games by closed-form calculation. The support enumeration solver in <a href="sec-nashpy-reticulate.html#sec-nashpy-reticulate">14</a> extends this to general bimatrix games but is exponential in the number of strategies. Neither approach gives us geometric insight into <em>why</em> equilibria exist or <em>how</em> they are structured in the space of strategy profiles.</p>
 <p>This chapter builds three algorithms from scratch, each offering a different perspective on Nash equilibrium computation:</p>
@@ -200,19 +207,19 @@
 </ol>
 <p>Together these three algorithms span the landscape from brute-force enumeration through structured exact computation to adaptive approximation. Building them from scratch demystifies the “black box” of equilibrium solvers and prepares the reader to modify or extend them for custom applications <span class="citation">(<a href="references.html#ref-shoham2009">Shoham &amp; Leyton-Brown, 2009, Chapter 4</a>)</span>.</p>
 </div>
-<div id="theory-13" class="section level2" number="15.2">
+<div class="section level2" id="theory-13" number="15.2">
 <h2>
-<span class="header-section-number">15.2</span> Theory<a class="anchor" aria-label="anchor" href="#theory-13"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.2</span> Theory<a aria-label="anchor" class="anchor" href="#theory-13"><i class="fas fa-link"></i></a>
 </h2>
-<div id="support-enumeration-recap" class="section level3" number="15.2.1">
+<div class="section level3" id="support-enumeration-recap" number="15.2.1">
 <h3>
-<span class="header-section-number">15.2.1</span> Support enumeration (recap)<a class="anchor" aria-label="anchor" href="#support-enumeration-recap"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.2.1</span> Support enumeration (recap)<a aria-label="anchor" class="anchor" href="#support-enumeration-recap"><i class="fas fa-link"></i></a>
 </h3>
 <p>Support enumeration, detailed in <a href="sec-nashpy-reticulate.html#sec-nashpy-reticulate">14</a>, exploits the indifference principle from <a href="sec-mixed-strategies.html#sec-mixed-strategies">5</a>. For each pair of equal-sized support sets <span class="math inline">\((S_1, S_2)\)</span>, we solve the linear system that makes each player indifferent across the actions in the opponent’s support, check non-negativity and the no-profitable-deviation condition, and collect valid solutions. The algorithm is exact and complete for non-degenerate games, but its running time is exponential in the number of strategies.</p>
 </div>
-<div id="the-lemkehowson-algorithm" class="section level3" number="15.2.2">
+<div class="section level3" id="the-lemkehowson-algorithm" number="15.2.2">
 <h3>
-<span class="header-section-number">15.2.2</span> The Lemke–Howson algorithm<a class="anchor" aria-label="anchor" href="#the-lemkehowson-algorithm"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.2.2</span> The Lemke–Howson algorithm<a aria-label="anchor" class="anchor" href="#the-lemkehowson-algorithm"><i class="fas fa-link"></i></a>
 </h3>
 <p>The Lemke–Howson algorithm (1964) takes a geometric approach. Given an <span class="math inline">\(m \times n\)</span> bimatrix game <span class="math inline">\((A, B)\)</span> with <span class="math inline">\(A, B &gt; 0\)</span> (achieved by adding a constant if needed), define the <strong>best-response polytopes</strong>:</p>
 <p><span class="math display">\[
@@ -235,9 +242,9 @@ Q = \{ y \in \mathbb{R}^n_{\geq 0} : A y \leq \mathbf{1} \}
 <p>A full Lemke–Howson implementation requires careful handling of degeneracy via lexicographic pivoting. Our implementation below uses a simplified tableau approach suitable for small non-degenerate games. For production use, a solver like Gambit (see <a href="sec-gtree-package.html#sec-gtree-package">13</a>) is preferable.</p>
 </div>
 </div>
-<div id="fictitious-play" class="section level3" number="15.2.3">
+<div class="section level3" id="fictitious-play" number="15.2.3">
 <h3>
-<span class="header-section-number">15.2.3</span> Fictitious play<a class="anchor" aria-label="anchor" href="#fictitious-play"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.2.3</span> Fictitious play<a aria-label="anchor" class="anchor" href="#fictitious-play"><i class="fas fa-link"></i></a>
 </h3>
 <p>Fictitious play, introduced by Brown (1951), is an iterative learning dynamic:</p>
 <ol style="list-style-type: decimal">
@@ -265,13 +272,13 @@ a_1^{t+1} \in \arg\max_i \sum_j A_{ij} \hat{q}_j^t
 <p>When fictitious play converges, the empirical frequencies <span class="math inline">\((\hat{p}^t, \hat{q}^t)\)</span> approach a Nash equilibrium, but the actual actions may continue to cycle. The convergence is of the <em>time-averaged</em> strategies, not the instantaneous ones.</p>
 </div>
 </div>
-<div id="implementation-in-r-8" class="section level2" number="15.3">
+<div class="section level2" id="implementation-in-r-8" number="15.3">
 <h2>
-<span class="header-section-number">15.3</span> Implementation in R<a class="anchor" aria-label="anchor" href="#implementation-in-r-8"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.3</span> Implementation in R<a aria-label="anchor" class="anchor" href="#implementation-in-r-8"><i class="fas fa-link"></i></a>
 </h2>
-<div id="lemkehowson-sketch-for-2x2-games" class="section level3" number="15.3.1">
+<div class="section level3" id="lemkehowson-sketch-for-2x2-games" number="15.3.1">
 <h3>
-<span class="header-section-number">15.3.1</span> Lemke–Howson sketch for 2x2 games<a class="anchor" aria-label="anchor" href="#lemkehowson-sketch-for-2x2-games"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.3.1</span> Lemke–Howson sketch for 2x2 games<a aria-label="anchor" class="anchor" href="#lemkehowson-sketch-for-2x2-games"><i class="fas fa-link"></i></a>
 </h3>
 <p>The following function demonstrates the complementary pivoting logic for 2x2 games. It illustrates the algorithm’s structure rather than providing a production solver.</p>
 <div class="sourceCode" id="cb391"><pre class="downlit sourceCode r">
@@ -330,9 +337,9 @@ a_1^{t+1} \in \arg\max_i \sum_j A_{ij} \hat{q}_j^t
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  Payoffs: (%.2f, %.2f)\n"</span>, <span class="va">lh_result</span><span class="op">$</span><span class="va">payoff_1</span>, <span class="va">lh_result</span><span class="op">$</span><span class="va">payoff_2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>#&gt;   Payoffs: (0.00, 0.00)</code></pre>
 </div>
-<div id="fictitious-play-implementation" class="section level3" number="15.3.2">
+<div class="section level3" id="fictitious-play-implementation" number="15.3.2">
 <h3>
-<span class="header-section-number">15.3.2</span> Fictitious play implementation<a class="anchor" aria-label="anchor" href="#fictitious-play-implementation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.3.2</span> Fictitious play implementation<a aria-label="anchor" class="anchor" href="#fictitious-play-implementation"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb399"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fictitious_play</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">n_iter</span> <span class="op">=</span> <span class="fl">1000</span>, <span class="va">seed</span> <span class="op">=</span> <span class="fl">42</span><span class="op">)</span> <span class="op">{</span></span>
@@ -405,9 +412,9 @@ a_1^{t+1} \in \arg\max_i \sum_j A_{ij} \hat{q}_j^t
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="testing-on-matching-pennies" class="section level3" number="15.3.3">
+<div class="section level3" id="testing-on-matching-pennies" number="15.3.3">
 <h3>
-<span class="header-section-number">15.3.3</span> Testing on Matching Pennies<a class="anchor" aria-label="anchor" href="#testing-on-matching-pennies"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.3.3</span> Testing on Matching Pennies<a aria-label="anchor" class="anchor" href="#testing-on-matching-pennies"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb400"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fp_mp</span> <span class="op">&lt;-</span> <span class="fu">fictitious_play</span><span class="op">(</span><span class="va">A_mp</span>, <span class="va">B_mp</span>, n_iter <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span>
@@ -428,14 +435,14 @@ a_1^{t+1} \in \arg\max_i \sum_j A_{ij} \hat{q}_j^t
 <p>The empirical frequencies are close to the true mixed Nash equilibrium <span class="math inline">\((0.5, 0.5)\)</span>, demonstrating convergence. As a zero-sum game, Matching Pennies is guaranteed to yield convergence under fictitious play.</p>
 </div>
 </div>
-<div id="worked-example-11" class="section level2" number="15.4">
+<div class="section level2" id="worked-example-11" number="15.4">
 <h2>
-<span class="header-section-number">15.4</span> Worked example<a class="anchor" aria-label="anchor" href="#worked-example-11"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.4</span> Worked example<a aria-label="anchor" class="anchor" href="#worked-example-11"><i class="fas fa-link"></i></a>
 </h2>
 <p>We apply fictitious play to the <strong>Battle of the Sexes</strong> — a game with two pure Nash equilibria and one mixed Nash equilibrium — and visualize the convergence trajectory. This is a more challenging test because the game has multiple equilibria and is not zero-sum.</p>
-<div id="setting-up-the-game" class="section level3" number="15.4.1">
+<div class="section level3" id="setting-up-the-game" number="15.4.1">
 <h3>
-<span class="header-section-number">15.4.1</span> Setting up the game<a class="anchor" aria-label="anchor" href="#setting-up-the-game"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.4.1</span> Setting up the game<a aria-label="anchor" class="anchor" href="#setting-up-the-game"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb410"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Battle of the Sexes</span></span>
@@ -472,9 +479,9 @@ a_1^{t+1} \in \arg\max_i \sum_j A_{ij} \hat{q}_j^t
 <pre><code>#&gt; 
 #&gt; True mixed NE: p(Opera) = 0.60, q(Opera) = 0.40</code></pre>
 </div>
-<div id="running-fictitious-play" class="section level3" number="15.4.2">
+<div class="section level3" id="running-fictitious-play" number="15.4.2">
 <h3>
-<span class="header-section-number">15.4.2</span> Running fictitious play<a class="anchor" aria-label="anchor" href="#running-fictitious-play"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.4.2</span> Running fictitious play<a aria-label="anchor" class="anchor" href="#running-fictitious-play"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb422"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run fictitious play with many iterations</span></span>
@@ -503,9 +510,9 @@ a_1^{t+1} \in \arg\max_i \sum_j A_{ij} \hat{q}_j^t
 <pre><code>#&gt; Fictitious play payoffs:   3 , 2</code></pre>
 <p>The empirical frequencies approximate the mixed NE at <span class="math inline">\((p, q) = (0.6, 0.4)\)</span>. The convergence is slow — fictitious play converges at rate <span class="math inline">\(O(1/\sqrt{t})\)</span> — but it is robust and requires no matrix inversion or linear programming.</p>
 </div>
-<div id="publication-figure-convergence-trajectory" class="section level3" number="15.4.3">
+<div class="section level3" id="publication-figure-convergence-trajectory" number="15.4.3">
 <h3>
-<span class="header-section-number">15.4.3</span> Publication figure: convergence trajectory<a class="anchor" aria-label="anchor" href="#publication-figure-convergence-trajectory"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.4.3</span> Publication figure: convergence trajectory<a aria-label="anchor" class="anchor" href="#publication-figure-convergence-trajectory"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb432"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Build trajectory data for the plot</span></span>
@@ -566,8 +573,8 @@ a_1^{t+1} \in \arg\max_i \sum_j A_{ij} \hat{q}_j^t
 <span></span>
 <span><span class="va">p_fp</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:fp-convergence"></span>
-<img src="14-custom-solvers_files/figure-html/fp-convergence-1.png" alt="Fictitious play convergence in the Battle of the Sexes. The trajectory of empirical action frequencies (Player 1 plays Opera on the x-axis, Player 2 plays Opera on the y-axis) spirals toward the mixed Nash equilibrium at (0.6, 0.4). Early iterations show large oscillations as players alternate between best responses; later iterations settle near the equilibrium. The two pure Nash equilibria at (1, 1) and (0, 0) are shown as reference points." width="80%"><p class="caption">
+<span id="fig:fp-convergence" style="display:block;"></span>
+<img alt="Fictitious play convergence in the Battle of the Sexes. The trajectory of empirical action frequencies (Player 1 plays Opera on the x-axis, Player 2 plays Opera on the y-axis) spirals toward the mixed Nash equilibrium at (0.6, 0.4). Early iterations show large oscillations as players alternate between best responses; later iterations settle near the equilibrium. The two pure Nash equilibria at (1, 1) and (0, 0) are shown as reference points." src="14-custom-solvers_files/figure-html/fp-convergence-1.png" width="80%"/><p class="caption">
 Figure 15.1: Fictitious play convergence in the Battle of the Sexes. The trajectory of empirical action frequencies (Player 1 plays Opera on the x-axis, Player 2 plays Opera on the y-axis) spirals toward the mixed Nash equilibrium at (0.6, 0.4). Early iterations show large oscillations as players alternate between best responses; later iterations settle near the equilibrium. The two pure Nash equilibria at (1, 1) and (0, 0) are shown as reference points.
 </p>
 </div>
@@ -576,9 +583,9 @@ Figure 15.1: Fictitious play convergence in the Battle of the Sexes. The traject
 <p>The spiral pattern in the figure is characteristic of fictitious play in games with mixed equilibria. Each player’s best response to the other’s current empirical frequency overshoots the equilibrium, creating oscillations that gradually dampen. The early phase (orange) shows wild swings; the middle phase (blue) tightens the spiral; and the late phase (green) clusters near the mixed NE at <span class="math inline">\((0.6, 0.4)\)</span>.</p>
 <p>This convergence pattern explains why fictitious play, despite its simplicity, is useful as both a computational tool and a model of bounded rationality. Players need not know the game’s payoff structure in full — they only need to observe past actions and best-respond. The path to equilibrium emerges from this simple learning rule, without any explicit computation of the indifference conditions from <a href="sec-mixed-strategies.html#sec-mixed-strategies">5</a>.</p>
 </div>
-<div id="comparing-all-three-approaches" class="section level3" number="15.4.4">
+<div class="section level3" id="comparing-all-three-approaches" number="15.4.4">
 <h3>
-<span class="header-section-number">15.4.4</span> Comparing all three approaches<a class="anchor" aria-label="anchor" href="#comparing-all-three-approaches"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.4.4</span> Comparing all three approaches<a aria-label="anchor" class="anchor" href="#comparing-all-three-approaches"><i class="fas fa-link"></i></a>
 </h3>
 <p>We now apply all three algorithms to Battle of the Sexes and compare their outputs.</p>
 <div class="sourceCode" id="cb434"><pre class="downlit sourceCode r">
@@ -630,9 +637,9 @@ Figure 15.1: Fictitious play convergence in the Battle of the Sexes. The traject
 <pre><code>#&gt;   Mixed NE: p = (0.600, 0.400), q = (0.400, 0.600) -&gt; payoffs (1.20, 1.20)</code></pre>
 <p>The comparison reveals a key distinction. Lemke–Howson is an exact algebraic method that finds one equilibrium (here, a pure NE). Fictitious play is an iterative approximation that converges toward the mixed equilibrium. Support enumeration is the only method that finds <em>all</em> equilibria. The choice among them depends on the analyst’s goals: completeness favours support enumeration, speed favours Lemke–Howson, and simplicity favours fictitious play.</p>
 </div>
-<div id="convergence-speed-across-games" class="section level3" number="15.4.5">
+<div class="section level3" id="convergence-speed-across-games" number="15.4.5">
 <h3>
-<span class="header-section-number">15.4.5</span> Convergence speed across games<a class="anchor" aria-label="anchor" href="#convergence-speed-across-games"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.4.5</span> Convergence speed across games<a aria-label="anchor" class="anchor" href="#convergence-speed-across-games"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb452"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run fictitious play on two games and track convergence</span></span>
@@ -670,13 +677,13 @@ Figure 15.1: Fictitious play convergence in the Battle of the Sexes. The traject
 <span>    colour <span class="op">=</span> <span class="st">"Game"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme_publication</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="14-custom-solvers_files/figure-html/convergence-speed-1.png" alt="" width="80%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img alt="" src="14-custom-solvers_files/figure-html/convergence-speed-1.png" style="display: block; margin: auto;" width="80%"/></div>
 <p>Both games show the expected <span class="math inline">\(O(1/\sqrt{t})\)</span> convergence rate (approximately linear on the log-log scale with slope around <span class="math inline">\(-0.5\)</span>). Matching Pennies, being zero-sum, converges more smoothly. Battle of the Sexes shows more irregular convergence due to the coordination structure and the presence of multiple equilibria.</p>
 </div>
 </div>
-<div id="extensions-13" class="section level2" number="15.5">
+<div class="section level2" id="extensions-13" number="15.5">
 <h2>
-<span class="header-section-number">15.5</span> Extensions<a class="anchor" aria-label="anchor" href="#extensions-13"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.5</span> Extensions<a aria-label="anchor" class="anchor" href="#extensions-13"><i class="fas fa-link"></i></a>
 </h2>
 <p>The three algorithms in this chapter represent three broad families of equilibrium computation methods:</p>
 <ul>
@@ -689,8 +696,8 @@ Figure 15.1: Fictitious play convergence in the Battle of the Sexes. The traject
 </ul>
 <p>For the theoretical foundations of equilibrium computation, including the PPAD complexity class and the computational hardness of finding Nash equilibria, see <span class="citation">Shoham &amp; Leyton-Brown (<a href="references.html#ref-shoham2009">2009</a>)</span> (Chapter 4) and <span class="citation">Osborne (<a href="references.html#ref-osborne2004">2004</a>)</span> (Chapter 12). The connection between learning dynamics and equilibrium was a central theme in the work of <span class="citation">Nash (<a href="references.html#ref-nash1950">1950</a>)</span>, who originally motivated his equilibrium concept partly through a “mass action” interpretation — populations of players repeatedly interacting and adjusting their strategies.</p>
 </div>
-<div id="exercises-13" class="section level2 unnumbered">
-<h2>Exercises<a class="anchor" aria-label="anchor" href="#exercises-13"><i class="fas fa-link"></i></a>
+<div class="section level2 unnumbered" id="exercises-13">
+<h2>Exercises<a aria-label="anchor" class="anchor" href="#exercises-13"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>Fictitious play on a 3x3 game.</strong> Run fictitious play on the asymmetric Rock-Paper-Scissors game from <a href="sec-nashpy-reticulate.html#sec-nashpy-reticulate">14</a> (with payoffs +2 for winning and -1 for losing). Use 10,000 iterations and plot the empirical frequencies of all three actions for Player 1 over time (you will need to extend the <code>fictitious_play()</code> function to track all action frequencies, not just the first). Does fictitious play converge? Compare the final empirical frequencies to the exact Nash equilibrium found by support enumeration.</p></li>
@@ -700,18 +707,14 @@ Figure 15.1: Fictitious play convergence in the Battle of the Sexes. The traject
 <li><p><strong>Hybrid solver.</strong> Write a function <code>hybrid_solver(A, B, exact_threshold = 5)</code> that uses support enumeration (via the <code>support_enumeration_general()</code> function from <a href="sec-nashpy-reticulate.html#sec-nashpy-reticulate">14</a>) when both <span class="math inline">\(m \leq\)</span> <code>exact_threshold</code> and <span class="math inline">\(n \leq\)</span> <code>exact_threshold</code>, and falls back to fictitious play with 10,000 iterations otherwise. Test your function on random games of sizes 3x3, 5x5, and 10x10. Report timing results and comment on the quality of the fictitious play approximation relative to the exact solution.</p></li>
 </ol>
 <p>Solutions appear in <a href="sec-solutions.html#sec-solutions">D</a>.</p>
-
 </div>
 </div>
-
-
-
 <div class="chapter-nav">
 <div class="prev"><a href="sec-nashpy-reticulate.html"><span class="header-section-number">14</span> nashpy via reticulate</a></div>
 <div class="next"><a href="sec-monte-carlo.html"><span class="header-section-number">16</span> Monte Carlo Methods for Games</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
+<nav aria-label="On this page" data-toggle="toc" id="toc"><h2>On this page</h2>
+<ul class="nav navbar-nav">
 <li><a class="nav-link" href="#sec-custom-solvers"><span class="header-section-number">15</span> Building Custom Solvers in R</a></li>
 <li><a class="nav-link" href="#learning-objectives-13">Learning objectives</a></li>
 <li><a class="nav-link" href="#motivation-13"><span class="header-section-number">15.1</span> Motivation</a></li>
@@ -741,23 +744,21 @@ Figure 15.1: Fictitious play convergence in the Battle of the Sexes. The traject
 <li><a class="nav-link" href="#extensions-13"><span class="header-section-number">15.5</span> Extensions</a></li>
 <li><a class="nav-link" href="#exercises-13">Exercises</a></li>
 </ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/CTTIR/strategy-in-r/blob/main/14-custom-solvers.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/CTTIR/strategy-in-r/edit/main/14-custom-solvers.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="book-extra">
+<ul class="list-unstyled">
+<li><a href="https://github.com/CTTIR/strategy-in-r/blob/main/14-custom-solvers.Rmd" id="book-source">View source <i class="fab fa-github"></i></a></li>
+<li><a href="https://github.com/CTTIR/strategy-in-r/edit/main/14-custom-solvers.Rmd" id="book-edit">Edit this page <i class="fab fa-github"></i></a></li>
+</ul>
 </div>
-    </nav>
+</nav>
 </div>
 </div>
 <!-- Dark/light mode toggle -->
 <div class="sticky-item">
-  <button type="button" id="mode-switch" class="btn-circle-mode" aria-label="Toggle dark mode">
-    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-  </button>
+<button aria-label="Toggle dark mode" class="btn-circle-mode" id="mode-switch" type="button">
+<i aria-hidden="true" class="fa-solid fa-circle-half-stroke"></i>
+</button>
 </div>
-
 <script>
   (function () {
     var stored = localStorage.getItem('themeMode');
@@ -776,75 +777,18 @@ Figure 15.1: Fictitious play convergence in the Battle of the Sexes. The traject
       });
     });
   })();
-</script><!-- Downloads are offered only when the optional output exists. --><script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (document.querySelector(".sidebar-downloads")) return;
-    var anchor = null;
-    var chapterId = null;
-    var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
-    for (var i = 0; i < candidates.length; i++) {
-      var text = (candidates[i].textContent || "").trim().toLowerCase();
-      if (text === "view source" || text === "edit this page") {
-        if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
-      }
-    }
-    if (!anchor) return;
-    var choices = [
-      ["strategy-in-r.pdf", "Entire book (PDF)"],
-      ["strategy-in-r.epub", "Entire book (EPUB)"]
-    ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
-    var available = await Promise.all(choices.map(async function (item) {
-      try {
-        var response = await fetch(item[0], { method: "HEAD" });
-        return response.ok ? item : null;
-      } catch (error) {
-        return null;
-      }
-    }));
-    available = available.filter(Boolean);
-    if (!available.length) return;
-    var heading = document.createElement("h2");
-    heading.className = "sidebar-downloads-heading";
-    heading.textContent = "Download";
-    var list = document.createElement("ul");
-    list.className = "sidebar-downloads";
-    available.forEach(function (item) {
-      var li = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = item[0];
-      link.textContent = item[1];
-      li.appendChild(link);
-      list.appendChild(li);
-    });
-    anchor.parentNode.insertBefore(heading, anchor);
-    anchor.parentNode.insertBefore(list, anchor);
-  });
-</script><!-- Footer attribution --><div class="bookdown-attribution">
+</script><!-- Downloads are offered only when the optional output exists. --><!-- Footer attribution --><div class="bookdown-attribution">
   This book was built by the <a href="https://bookdown.org/"><strong>bookdown</strong></a> R package.
 </div>
-  
-
-  
-
 </div>
- <!-- .container -->
-
+<!-- .container -->
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
-  </div>
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
+<div class="col-12 col-md-6 mt-3">
+<p>"<strong>Strategy in R</strong>: Game Theory, Simulation, and Machine Intelligence" was written by Raban Heller. It was last built on 2026-11-09.</p>
+</div>
+<div class="col-12 col-md-6 mt-3">
+<p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+</div>
 </div></div>
 </footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {
