@@ -11,7 +11,7 @@ Source code released under the [MIT License](https://opensource.org/licenses/MIT
 Published online: <https://cttir.github.io/strategy-in-r/>
 Source repository: <https://github.com/CTTIR/strategy-in-r>
 
-Version: v0.1.0 · Build date: 2026-11-08
+Version: v0.1.0 · Build date: 2026-11-09
 
 ## Suggested citation {-}
 

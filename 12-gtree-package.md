@@ -925,7 +925,7 @@ configs |>
     <tr><td headers="depth" class="gt_row gt_right">4</td>
 <td headers="branching" class="gt_row gt_center">2</td>
 <td headers="n_terminals" class="gt_row gt_right">16</td>
-<td headers="time_ms" class="gt_row gt_right">0.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">1.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">5</td>
 <td headers="branching" class="gt_row gt_center">2</td>
 <td headers="n_terminals" class="gt_row gt_right">32</td>
@@ -945,7 +945,7 @@ configs |>
     <tr><td headers="depth" class="gt_row gt_right">2</td>
 <td headers="branching" class="gt_row gt_center">3</td>
 <td headers="n_terminals" class="gt_row gt_right">9</td>
-<td headers="time_ms" class="gt_row gt_right">1.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">0.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">3</td>
 <td headers="branching" class="gt_row gt_center">3</td>
 <td headers="n_terminals" class="gt_row gt_right">27</td>
@@ -965,11 +965,11 @@ configs |>
     <tr><td headers="depth" class="gt_row gt_right">7</td>
 <td headers="branching" class="gt_row gt_center">3</td>
 <td headers="n_terminals" class="gt_row gt_right">2,187</td>
-<td headers="time_ms" class="gt_row gt_right">18.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">17.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">8</td>
 <td headers="branching" class="gt_row gt_center">3</td>
 <td headers="n_terminals" class="gt_row gt_right">6,561</td>
-<td headers="time_ms" class="gt_row gt_right">57.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">54.00</td></tr>
   </tbody>
   
 </table>
