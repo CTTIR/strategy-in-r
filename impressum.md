@@ -8,14 +8,14 @@ Content released under the [Creative Commons Attribution 4.0 International Licen
 
 Source code released under the [MIT License](https://opensource.org/licenses/MIT).
 
-Published online: <https://r-heller.github.io/strategy-in-r/>
-Source repository: <https://github.com/r-heller/strategy-in-r>
+Published online: <https://cttir.github.io/strategy-in-r/>
+Source repository: <https://github.com/CTTIR/strategy-in-r>
 
 Version: v0.1.0 · Build date: 2026-11-08
 
 ## Suggested citation {-}
 
-> Heller, R. (2026). *Strategy in R: Game Theory, Simulation, and Machine Intelligence* (Version v0.1.0). <https://r-heller.github.io/strategy-in-r/>.
+> Heller, R. (2026). *Strategy in R: Game Theory, Simulation, and Machine Intelligence* (Version v0.1.0). <https://cttir.github.io/strategy-in-r/>.
 
 ## Disclaimer {-}
 
@@ -23,4 +23,4 @@ This book is provided "as is" without warranty of any kind. The author assumes n
 
 ## Contact {-}
 
-For corrections, suggestions, or issues: <https://github.com/r-heller/strategy-in-r/issues>
+For corrections, suggestions, or issues: <https://github.com/CTTIR/strategy-in-r/issues>

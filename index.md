@@ -9,15 +9,15 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 csl: apa.csl
 link-citations: yes
-github-repo: r-heller/strategy-in-r
-url: https://r-heller.github.io/strategy-in-r/
+github-repo: CTTIR/strategy-in-r
+url: https://cttir.github.io/strategy-in-r/
 description: "An open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R."
 cover-image: "images/cover.png"
 ---
 
 # Welcome! {-}
 
-<a href="https://r-heller.github.io/strategy-in-r/" target="_blank"><img src="images/cover.png" width="250" align="right" alt="Strategy in R cover" class="cover"></a> A free, open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.
+<a href="https://cttir.github.io/strategy-in-r/" target="_blank"><img src="images/cover.png" width="250" align="right" alt="Strategy in R cover" class="cover"></a> A free, open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.
 
 
 
@@ -37,11 +37,11 @@ The book is for graduate students, researchers, and practitioners with working R
 - **Code lives** under `R/` (helpers, theme, solvers) and `python/` (CFR, deep RL via `reticulate`); example data under `data/`. Every chapter is rebuildable in isolation: `bookdown::preview_chapter("12-gtree-package.Rmd")`.
 - **Per-chapter PDF.** When a chapter PDF is available, its download appears in the sidebar.
 - **Whole-book downloads.** The PDF and EPUB are linked from the navbar's Download menu.
-- **Corrections and suggestions** go to the [issue tracker](https://github.com/r-heller/strategy-in-r/issues).
+- **Corrections and suggestions** go to the [issue tracker](https://github.com/CTTIR/strategy-in-r/issues).
 
 ## License {-}
 
-The content of this book is released under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) (see [`LICENSE-CONTENT`](https://github.com/r-heller/strategy-in-r/blob/main/LICENSE-CONTENT)). Source code is released under the [MIT License](https://opensource.org/licenses/MIT).
+The content of this book is released under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) (see [`LICENSE-CONTENT`](https://github.com/CTTIR/strategy-in-r/blob/main/LICENSE-CONTENT)). Source code is released under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Citing this Guide {-}
 
@@ -51,8 +51,8 @@ The suggested citation is:
 <p><strong>Heller, R.</strong> (2026). <em>Strategy in R: Game Theory,
 Simulation, and Machine Intelligence</em> (Version v0.1.0).
 Self-published via GitHub Pages. <a
-href="https://r-heller.github.io/strategy-in-r/"
-class="uri">https://r-heller.github.io/strategy-in-r/</a>.</p>
+href="https://cttir.github.io/strategy-in-r/"
+class="uri">https://cttir.github.io/strategy-in-r/</a>.</p>
 </div>
 
-Download the reference as [BibTeX](https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.bib) or [RIS](https://raw.githubusercontent.com/r-heller/strategy-in-r/main/citation.ris).
+Download the reference as [BibTeX](https://raw.githubusercontent.com/CTTIR/strategy-in-r/main/citation.bib) or [RIS](https://raw.githubusercontent.com/CTTIR/strategy-in-r/main/citation.ris).
