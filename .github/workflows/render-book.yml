@@ -68,6 +68,10 @@ jobs:
             python3 scripts/check-epub.py docs/strategy-in-r.epub epub-check.json
           fi
 
+      # The LaTeX source is a build intermediate, not a published download.
+      - name: Keep the LaTeX source off the site
+        run: find docs -name '*.tex' -print -delete
+
       - name: Disable Jekyll on Pages
         run: touch docs/.nojekyll
 
