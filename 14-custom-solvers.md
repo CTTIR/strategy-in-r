@@ -1,5 +1,11 @@
 # Building Custom Solvers in R {#sec-custom-solvers}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Lemke-Howson, support enumeration, and fictitious play implemented from scratch in R --- understanding the algorithms behind Nash equilibrium computation by building them yourself.
 
 

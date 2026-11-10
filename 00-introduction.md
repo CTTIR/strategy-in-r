@@ -1,5 +1,11 @@
 # Introduction: Why Strategy in R? {#sec-introduction}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-09*
+:::
+<!-- page-provenance:end -->
+
 > Why study strategic interaction computationally, and why R is the right tool for the job.
 
 ## The computational turn in game theory

@@ -1,5 +1,11 @@
 # The Future of Strategy {#sec-future}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Emerging frontiers in strategic AI: computational complexity, multi-agent foundation models, and responsible deployment.
 
 

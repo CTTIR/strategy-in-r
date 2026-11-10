@@ -1,5 +1,11 @@
 # Nash Equilibrium {#sec-nash-equilibrium}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Definition, existence, computation, and multiplicity of Nash equilibrium — the central solution concept in non-cooperative game theory.
 
 

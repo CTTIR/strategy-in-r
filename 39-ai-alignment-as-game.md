@@ -1,5 +1,11 @@
 # AI Alignment as a Game {#sec-ai-alignment}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Principal-agent models, signaling games, and Bayesian trust dynamics for reasoning about AI alignment.
 
 

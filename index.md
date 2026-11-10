@@ -2,7 +2,7 @@
 title: "Strategy in R"
 subtitle: "Game Theory, Simulation, and Machine Intelligence"
 author: "Raban Heller"
-date: "2026-11-09"
+date: "2026-11-10"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -16,6 +16,12 @@ cover-image: "images/cover.png"
 ---
 
 # Welcome! {-}
+
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-11 · Last changed: 2026-11-09*
+:::
+<!-- page-provenance:end -->
 
 <a href="https://cttir.github.io/strategy-in-r/" target="_blank"><img src="images/cover.png" width="250" align="right" alt="Strategy in R cover" class="cover"></a> A free, open-source book on game theory, simulation, and machine intelligence — implemented end-to-end in R.
 

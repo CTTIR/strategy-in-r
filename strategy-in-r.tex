@@ -181,6 +181,13 @@
 \newcommand{\E}{\mathbb{E}}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+
+\input{style/provenance.tex}
+
+% Wrap long code and URLs within the printable text area.
+\usepackage{fvextra}
+\fvset{breaklines=true,breakanywhere=true}
+\usepackage{xurl}
 \usepackage{booktabs}
 \usepackage{caption}
 \usepackage{longtable}
@@ -206,7 +213,7 @@
 \makeatother
 \subtitle{Game Theory, Simulation, and Machine Intelligence}
 \author{Raban Heller}
-\date{2026-11-09}
+\date{2026-11-10}
 
 \begin{document}
 \maketitle
@@ -217,6 +224,8 @@
 }
 \chapter*{Welcome!}\label{welcome}
 \addcontentsline{toc}{chapter}{Welcome!}
+
+\emph{R. Heller · Date: 2026-05-11 · Last changed: 2026-11-09}
 
 A free, open-source book on game theory, simulation, and machine intelligence --- implemented end-to-end in R.
 
@@ -271,6 +280,8 @@ Download the reference as \href{https://raw.githubusercontent.com/CTTIR/strategy
 \chapter*{Impressum}\label{impressum}
 \addcontentsline{toc}{chapter}{Impressum}
 
+\emph{R. Heller · Date: 2026-05-11 · Last changed: 2026-11-09}
+
 \textbf{Strategy in R: Game Theory, Simulation, and Machine Intelligence}
 
 © 2026 Raban Heller. ORCID: \href{https://orcid.org/0000-0001-8006-9742}{0000-0001-8006-9742}.
@@ -282,7 +293,7 @@ Source code released under the \href{https://opensource.org/licenses/MIT}{MIT Li
 Published online: \url{https://cttir.github.io/strategy-in-r/}
 Source repository: \url{https://github.com/CTTIR/strategy-in-r}
 
-Version: v0.1.0 · Build date: 2026-11-09
+Version: v0.1.0 · Build date: 2026-11-10
 
 \section*{Suggested citation}\label{suggested-citation}
 \addcontentsline{toc}{section}{Suggested citation}
@@ -303,6 +314,8 @@ For corrections, suggestions, or issues: \url{https://github.com/CTTIR/strategy-
 
 \chapter*{How to use this book}\label{how-to-use-this-book-1}
 \addcontentsline{toc}{chapter}{How to use this book}
+
+\emph{R. Heller · Date: 2026-05-11 · Last changed: 2026-11-10}
 
 \section*{Reading paths}\label{reading-paths}
 \addcontentsline{toc}{section}{Reading paths}
@@ -363,6 +376,8 @@ See the \emph{Impressum} for the suggested citation, and \texttt{citation.bib} i
 
 \chapter*{Notation}\label{notation}
 \addcontentsline{toc}{chapter}{Notation}
+
+\emph{R. Heller · Date: 2026-05-11 · Last changed: 2026-05-11}
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
@@ -425,6 +440,8 @@ VCG & Vickrey--Clarke--Groves mechanism \\
 
 \chapter{Introduction: Why Strategy in R?}\label{sec-introduction}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-09}
+
 \begin{quote}
 Why study strategic interaction computationally, and why R is the right tool for the job.
 \end{quote}
@@ -475,6 +492,8 @@ Each chapter is self-contained enough to read independently, but the parts are d
 Let's begin.
 
 \chapter{What is a Game?}\label{sec-what-is-a-game}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Players, actions, payoffs, and information --- the four building blocks that turn any strategic situation into a formal game. This chapter introduces the modeling stance of game theory, walks through canonical examples such as the Prisoner's Dilemma, coordination, and zero-sum games, and implements a reusable payoff-matrix visualization in R.
@@ -756,6 +775,8 @@ The compact representation we built in R --- the \texttt{make\_payoff\_df()} fun
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Normal-Form Games}\label{sec-normal-form}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 The normal (strategic) form is the workhorse representation of simultaneous-move games. This chapter introduces payoff matrices, strict and weak dominance, iterated elimination of strictly dominated strategies (IESDS), and the four classic 2x2 games that recur throughout game theory.
@@ -1433,6 +1454,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Nash Equilibrium}\label{sec-nash-equilibrium}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Definition, existence, computation, and multiplicity of Nash equilibrium --- the central solution concept in non-cooperative game theory.
 \end{quote}
@@ -1891,6 +1914,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Mixed Strategies and the Indifference Principle}\label{sec-mixed-strategies}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Why rational players sometimes randomize, how the indifference principle pins down mixing probabilities, and how to compute and visualize mixed-strategy Nash equilibria in R.
 \end{quote}
@@ -2275,6 +2300,8 @@ For a thorough treatment of mixed strategies and their properties, consult Osbor
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Extensive-Form Games}\label{sec-extensive-form}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Game trees, backward induction, and subgame perfect equilibrium --- the tools for analyzing sequential strategic interaction where timing and information matter.
@@ -2746,6 +2773,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Bayesian Games}\label{sec-bayesian-games}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Games of incomplete information where players hold private types and form beliefs about opponents. Covers Bayesian Nash equilibrium, signaling games, and separating versus pooling equilibria with a worked job-market signaling example.
 \end{quote}
@@ -3159,6 +3188,8 @@ For a thorough treatment of Bayesian games, see Osborne (\citeproc{ref-osborne20
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Repeated Games}\label{sec-repeated-games}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 How repetition transforms strategic interaction. Covers finite and infinite horizon repeated games, discount factors, the folk theorem, and trigger strategies including Grim Trigger and Tit-for-Tat, with a worked example showing how cooperation can be sustained in the infinitely repeated Prisoner's Dilemma.
@@ -3649,6 +3680,8 @@ For the formal treatment of the folk theorem and its variants, see Osborne (\cit
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Cooperative Game Theory}\label{sec-cooperative-gt}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 An introduction to cooperative game theory with transferable utility. Covers the characteristic function, the core, and the Shapley value with computational examples in R, including a worked cost-sharing problem for three municipalities.
@@ -4216,6 +4249,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{The R Environment for Strategic Computation}\label{sec-r-environment}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 A practical guide to setting up RStudio or Positron for game-theoretic computation in R, managing reproducibility with renv, organizing projects with a consistent directory layout, and configuring the shared R/\_common.R pattern and knitr options used throughout this book.
 \end{quote}
@@ -4650,6 +4685,8 @@ For further reading on reproducible workflows in R, see Osborne (\citeproc{ref-o
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{The GameTheory Package}\label{sec-gametheory-package}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 A conceptual survey of the GameTheory R package for cooperative game theory, followed by from-scratch implementations of the Shapley value, Banzhaf index, and related solution concepts using base R and tidyverse.
@@ -5225,6 +5262,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{The CoopGame Package}\label{sec-coopgame-package}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 A conceptual survey of the CoopGame R package for transferable utility games, followed by from-scratch implementations of the characteristic function, core computation via linear constraints, and the nucleolus, with a three-player production game worked example and simplex visualization.
 \end{quote}
@@ -5782,6 +5821,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{The gtree Package}\label{sec-gtree-package}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Extensive-form games and backward induction with the gtree package's domain-specific language --- plus a from-scratch pure-R implementation for solving game trees when external solvers are unavailable.
 \end{quote}
@@ -6296,18 +6337,18 @@ Depth & Branching & Terminal Nodes & Time (ms) \\
 \midrule\addlinespace[2.5pt]
 2 & 2 & 4 & 0.00 \\ 
 3 & 2 & 8 & 0.00 \\ 
-4 & 2 & 16 & 0.00 \\ 
-5 & 2 & 32 & 0.00 \\ 
+4 & 2 & 16 & 1.00 \\ 
+5 & 2 & 32 & 1.00 \\ 
 6 & 2 & 64 & 1.00 \\ 
-7 & 2 & 128 & 3.00 \\ 
-8 & 2 & 256 & 5.00 \\ 
-2 & 3 & 9 & 1.00 \\ 
-3 & 3 & 27 & 1.00 \\ 
-4 & 3 & 81 & 1.00 \\ 
-5 & 3 & 243 & 3.00 \\ 
-6 & 3 & 729 & 8.00 \\ 
-7 & 3 & 2,187 & 23.00 \\ 
-8 & 3 & 6,561 & 69.00 \\ 
+7 & 2 & 128 & 1.00 \\ 
+8 & 2 & 256 & 3.00 \\ 
+2 & 3 & 9 & 0.00 \\ 
+3 & 3 & 27 & 0.00 \\ 
+4 & 3 & 81 & 0.00 \\ 
+5 & 3 & 243 & 2.00 \\ 
+6 & 3 & 729 & 4.00 \\ 
+7 & 3 & 2,187 & 14.00 \\ 
+8 & 3 & 6,561 & 45.00 \\ 
 \bottomrule
 \end{tabular*}
 \end{table}
@@ -6387,6 +6428,8 @@ For the foundational theory of extensive-form games and backward induction, see 
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{nashpy via reticulate}\label{sec-nashpy-reticulate}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Accessing Python's nashpy library from R via reticulate for Nash equilibrium computation --- conceptual workflow, pure-R support enumeration as an equivalent alternative, and a comparative analysis across canonical games.
@@ -7105,6 +7148,8 @@ The reticulate pattern generalizes beyond nashpy. Any Python game theory library
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Building Custom Solvers in R}\label{sec-custom-solvers}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Lemke-Howson, support enumeration, and fictitious play implemented from scratch in R --- understanding the algorithms behind Nash equilibrium computation by building them yourself.
@@ -7874,6 +7919,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Monte Carlo Methods for Games}\label{sec-monte-carlo}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Monte Carlo simulation applied to game theory: estimating mixed-strategy payoffs, evaluating extensive-form strategies by sampling terminal nodes, and constructing bootstrap confidence intervals for expected values.
 \end{quote}
@@ -8336,6 +8383,8 @@ The table confirms the \(O(1/\sqrt{n})\) convergence: each quadrupling of the sa
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Agent-Based Models for Strategic Interaction}\label{sec-agent-based-models}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Building agent-based models where heterogeneous agents play games, reproduce proportional to fitness, and evolve strategies over generations --- illustrated with the Hawk-Dove game.
@@ -8846,6 +8895,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Replicating Axelrod's Tournament}\label{sec-axelrod-tournament}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 A computational replication of Axelrod's 1980 iterated Prisoner's Dilemma tournament in R, exploring why Tit for Tat won and what it teaches about the evolution of cooperation.
 \end{quote}
@@ -9179,6 +9230,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{The Spatial Prisoner's Dilemma}\label{sec-spatial-pd}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 A computational exploration of Nowak and May's spatial Prisoner's Dilemma, showing how local interaction on a lattice allows cooperation to survive through cluster formation --- even without memory, reciprocity, or reputation.
 \end{quote}
@@ -9504,6 +9557,8 @@ The cooperation rate drops sharply in the first few generations as isolated coop
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Replicator Dynamics}\label{sec-replicator-dynamics}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 An introduction to the replicator equation --- the central dynamical system of evolutionary game theory --- with ODE solutions in R for Rock-Paper-Scissors and Hawk-Dove games, including simplex visualization.
@@ -9883,6 +9938,8 @@ This shows that the replicator equation's behavior depends qualitatively on the 
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Evolutionarily Stable Strategies}\label{sec-ess}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Formalizing evolutionary stability: ESS conditions, computational verification for symmetric games, invasion dynamics, and the Hawk-Dove-Retaliator game.
@@ -10561,6 +10618,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Games on Networks}\label{sec-network-games}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Strategic interaction on graph structures: adjacency-matrix representations, network generation, best-response dynamics, and cooperation on small-world networks --- all implemented without igraph.
 \end{quote}
@@ -11010,6 +11069,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Performance Optimization}\label{sec-performance-rcpp}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Profiling R code, vectorization strategies, memory-efficient history storage, and when to consider Rcpp --- demonstrated on game-theory simulations.
 \end{quote}
@@ -11223,7 +11284,7 @@ The key insight is that summing neighbor cooperators is a \textbf{convolution} -
 \end{Shaded}
 
 \begin{verbatim}
-#>   Loop-based:  0.270 s (sd: 0.022)
+#>   Loop-based:  0.187 s (sd: 0.012)
 \end{verbatim}
 
 \begin{Shaded}
@@ -11233,7 +11294,7 @@ The key insight is that summing neighbor cooperators is a \textbf{convolution} -
 \end{Shaded}
 
 \begin{verbatim}
-#>   Vectorized:  0.017 s (sd: 0.010)
+#>   Vectorized:  0.013 s (sd: 0.007)
 \end{verbatim}
 
 \begin{Shaded}
@@ -11243,7 +11304,7 @@ The key insight is that summing neighbor cooperators is a \textbf{convolution} -
 \end{Shaded}
 
 \begin{verbatim}
-#>   Speedup:     15.5x
+#>   Speedup:     14.6x
 \end{verbatim}
 
 \subsection{Verifying correctness}\label{verifying-correctness}
@@ -11415,7 +11476,7 @@ We optimize the spatial PD simulation step by step, measuring the impact of each
 \end{Shaded}
 
 \begin{verbatim}
-#>   Total elapsed time: 0.184 s
+#>   Total elapsed time: 0.121 s
 \end{verbatim}
 
 \begin{Shaded}
@@ -11461,7 +11522,7 @@ The key rewrite replaces the inner double loop with four matrix-shift operations
 \end{Shaded}
 
 \begin{verbatim}
-#>   Vectorized time:  0.007 s
+#>   Vectorized time:  0.005 s
 \end{verbatim}
 
 \begin{Shaded}
@@ -11471,7 +11532,7 @@ The key rewrite replaces the inner double loop with four matrix-shift operations
 \end{Shaded}
 
 \begin{verbatim}
-#>   Loop-based time:  0.184 s
+#>   Loop-based time:  0.121 s
 \end{verbatim}
 
 \begin{Shaded}
@@ -11481,7 +11542,7 @@ The key rewrite replaces the inner double loop with four matrix-shift operations
 \end{Shaded}
 
 \begin{verbatim}
-#>   Speedup:          26.3x
+#>   Speedup:          24.2x
 \end{verbatim}
 
 \subsection{Step 3: Memory pre-allocation matters}\label{step-3-memory-pre-allocation-matters}
@@ -11549,10 +11610,10 @@ A common anti-pattern in R is growing a data frame row by row. We demonstrate th
 \end{Shaded}
 
 \begin{verbatim}
-#>   1,000     0.0040    0.0030      1x
-#>   5,000     0.0180    0.0000      Infx
-#>   10,000    0.0660    0.0010      66x
-#>   20,000    0.2600    0.0010      260x
+#>   1,000     0.0030    0.0020      2x
+#>   5,000     0.0140    0.0000      Infx
+#>   10,000    0.0470    0.0000      Infx
+#>   20,000    0.1990    0.0010      199x
 \end{verbatim}
 
 The growing vector copies the entire vector on each append, producing \(O(n^2)\) total work. Pre-allocation is \(O(n)\).
@@ -11607,6 +11668,8 @@ Solutions appear in \ref{sec-solutions}.
 \part{Strategic AI}\label{part-strategic-ai}
 
 \chapter{Machine Learning Foundations for Game Theory}\label{sec-ml-foundations}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Supervised learning as a game against nature, regret minimization and regret matching, feature engineering for game-theoretic data, and cross-validation for strategic predictions.
@@ -12069,6 +12132,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Reinforcement Learning Foundations}\label{sec-reinforcement-learning}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Markov decision processes, the Bellman equation, tabular Q-learning and SARSA from scratch, and the exploration-exploitation trade-off via epsilon-greedy and UCB.
 \end{quote}
@@ -12530,6 +12595,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Q-Learning in 2-Player Games}\label{sec-q-learning}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Tabular Q-learning in matrix games: convergence in coordination games, divergence in zero-sum games, and the rational learning debate.
 \end{quote}
@@ -12888,6 +12955,8 @@ For the theoretical debate on rational learning in games, see Shoham \& Leyton-B
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Multi-Agent Reinforcement Learning}\label{sec-multi-agent-rl}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Independent learners, joint-action learners, minimax-Q for zero-sum games, and the conceptual foundations of MADDPG and PSRO.
@@ -13399,6 +13468,8 @@ For a comprehensive survey of MARL, see Shoham \& Leyton-Brown (\citeproc{ref-sh
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Self-Play and AlphaZero}\label{sec-self-play}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Monte Carlo tree search in base R, the self-play training paradigm, and how AlphaZero combines MCTS with deep learning to master board games from scratch.
@@ -13946,6 +14017,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Counterfactual Regret Minimization and Poker}\label{sec-cfr}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Counterfactual regret minimization for imperfect information games: information sets, regret matching, and a full Kuhn Poker implementation in R.
 \end{quote}
@@ -14415,6 +14488,8 @@ The CFR algorithm converges closely to the known analytical equilibrium. Player 
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{GANs as Minimax Games}\label{sec-gans}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Generative adversarial networks through the lens of game theory: the minimax formulation, Nash equilibrium, mode collapse, and a 1D distribution-matching implementation in base R.
@@ -14947,6 +15022,8 @@ For the foundational GAN paper, see Goodfellow et al. (\citeproc{ref-goodfellow2
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{LLM Agents and Strategic Reasoning}\label{sec-llm-agents}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Large language models as game-playing agents: level-k reasoning, cognitive hierarchy theory, bounded rationality, and simulated beauty contest experiments in R.
@@ -15522,6 +15599,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Auction Theory}\label{sec-auctions}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Game-theoretic analysis of auctions: first-price, second-price (Vickrey), English, and Dutch formats, revenue equivalence, optimal bidding strategies, and R simulations.
 \end{quote}
@@ -15892,6 +15971,8 @@ For a comprehensive treatment of auction theory, see Myerson (\citeproc{ref-myer
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Mechanism Design}\label{sec-mechanism-design}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Inverse game theory: the revelation principle, incentive compatibility, the VCG mechanism, and implementation in R for public goods provision.
@@ -16380,6 +16461,8 @@ The VCG mechanism chooses to build the park (total value \(8 + 3 - 2 = 9 > 0\)).
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Matching Markets}\label{sec-matching-markets}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Two-sided matching: stable matching, the Gale-Shapley deferred acceptance algorithm, strategy-proofness, and implementation in R.
@@ -16900,6 +16983,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Bargaining Theory}\label{sec-bargaining}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Nash bargaining and ultimatum games --- axiomatic solutions, alternating-offers models, and computational implementations in R.
 \end{quote}
@@ -17342,6 +17427,8 @@ The more patient firm (lower discount rate) captures a larger share, consistent 
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Conflict and Cooperation Models}\label{sec-conflict-cooperation}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Applying game theory to international relations and social dilemmas --- Chicken, Stag Hunt, Schelling focal points, and arms race dynamics.
@@ -17787,6 +17874,8 @@ In October 1962, the US and USSR faced a standoff over Soviet missiles in Cuba. 
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Empirical Case Studies}\label{sec-case-studies}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Real-world applications of game theory analyzed with R --- spectrum auctions, kidney exchange, and Braess's paradox in traffic routing.
@@ -18385,6 +18474,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{Ethical Frameworks for Strategic AI}\label{sec-ethics-frameworks}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Consequentialism, deontology, and virtue ethics applied to AI decisions, with formal social welfare functions for resource allocation.
 \end{quote}
@@ -18757,6 +18848,8 @@ Consider three agents sharing a budget of \(B = 100\) with utility functions \(u
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Fairness in Machine Learning}\label{sec-fairness-ml}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Fairness definitions, impossibility results, and the accuracy-fairness trade-off implemented as a multi-stakeholder game.
@@ -19226,6 +19319,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{AI Alignment as a Game}\label{sec-ai-alignment}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Principal-agent models, signaling games, and Bayesian trust dynamics for reasoning about AI alignment.
 \end{quote}
@@ -19686,6 +19781,8 @@ The deceptive misaligned AI is the dangerous case. When a misaligned AI can mimi
 Solutions appear in \ref{sec-solutions}.
 
 \chapter{Cooperative AI}\label{sec-cooperative-ai}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 Commitment devices, program equilibrium, and welfare gains from AI-to-AI cooperation mechanisms.
@@ -20262,6 +20359,8 @@ Solutions appear in \ref{sec-solutions}.
 
 \chapter{The Future of Strategy}\label{sec-future}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Emerging frontiers in strategic AI: computational complexity, multi-agent foundation models, and responsible deployment.
 \end{quote}
@@ -20757,6 +20856,8 @@ Solutions appear in \ref{sec-solutions}.
 
 
 \chapter{R Refresher}\label{sec-r-refresher}
+
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
 
 \begin{quote}
 A concise refresher on R fundamentals for readers who need a quick review.
@@ -21465,6 +21566,8 @@ A handful of patterns recur throughout the chapters.
 
 \chapter{Linear Algebra Essentials}\label{sec-linear-algebra}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Vectors, matrices, eigenvalues, and the linear algebra used throughout this book.
 \end{quote}
@@ -21999,6 +22102,8 @@ Outer product & \texttt{outer()} or \texttt{\%o\%} & \texttt{x\ \%o\%\ y} \\
 
 \chapter{Probability Essentials}\label{sec-probability}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Probability distributions, expectations, Bayes' rule, and stochastic processes.
 \end{quote}
@@ -22512,6 +22617,8 @@ Exponential & \texttt{dexp()} & \texttt{pexp()} & \texttt{qexp()} & \texttt{rexp
 
 \chapter{Exercise Solutions}\label{sec-solutions}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Solutions to end-of-chapter exercises.
 \end{quote}
@@ -22818,6 +22925,8 @@ Solving: \(\delta = \frac{5 \pm \sqrt{25 - 24}}{6} = \frac{5 \pm 1}{6}\), so \(\
 
 \chapter{Glossary}\label{sec-glossary}
 
+\emph{R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10}
+
 \begin{quote}
 Key terms and definitions used throughout this book.
 Action
@@ -22921,6 +23030,8 @@ A game in which the sum of all players' payoffs is zero (or constant) for every 
 \chapter*{Acknowledgments}\label{acknowledgments}
 \addcontentsline{toc}{chapter}{Acknowledgments}
 
+\emph{R. Heller · Date: 2026-05-11 · Last changed: 2026-06-10}
+
 This book stands on the shoulders of the open R ecosystem. Special thanks to the maintainers of \texttt{bookdown}, the tidyverse, and the domain-specific packages that make computational game theory tractable in R: \texttt{GameTheory}, \texttt{CoopGame}, \texttt{gtree}, \texttt{EvolutionaryGames}, \texttt{igraph}, \texttt{Rcpp}, and many others.
 
 I am grateful to the bookdown community for tooling that made this book possible, and to the broader R community for sustained generosity with code, documentation, and ideas.
@@ -22949,6 +23060,8 @@ was verified against its DOI, arXiv ID, or ISBN.
 \chapter*{About the author}\label{about-the-author}
 \addcontentsline{toc}{chapter}{About the author}
 
+\emph{R. Heller · Date: 2026-05-11 · Last changed: 2026-11-10}
+
 \textbf{Raban Heller} is a biomedical researcher and biostatistician working at the intersection of clinical data, statistical computing, and machine intelligence. He writes on R and reproducible research at \url{https://r-heller.github.io/website/}.
 
 \begin{itemize}
@@ -22964,6 +23077,8 @@ was verified against its DOI, arXiv ID, or ISBN.
 \chapter*{Colophon}\label{colophon}
 \addcontentsline{toc}{chapter}{Colophon}
 
+\emph{R. Heller · Date: 2026-05-11 · Last changed: 2026-06-10}
+
 \begin{verbatim}
 #> Built with:
 \end{verbatim}
@@ -22977,11 +23092,11 @@ was verified against its DOI, arXiv ID, or ISBN.
 \end{verbatim}
 
 \begin{verbatim}
-#>   Build date: 2026-11-09
+#>   Build date: 2026-11-10
 \end{verbatim}
 
 \begin{verbatim}
-#>   Commit:   5804818
+#>   Commit:   7cc2e92
 \end{verbatim}
 
 LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via Ollama/\texttt{ollamar}) was used for copyediting, formatting, and scaffolding tasks only --- see Acknowledgments.
@@ -23000,7 +23115,7 @@ LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via O
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-11-09
+#>  date     2026-11-10
 #>  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
@@ -23033,6 +23148,8 @@ LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via O
 \chapter*{Citing this Guide}\label{citing-this-guide-1}
 \addcontentsline{toc}{chapter}{Citing this Guide}
 
+\emph{R. Heller · Date: 2026-05-11 · Last changed: 2026-11-09}
+
 The suggested citation is:
 
 \begin{boxempty}
@@ -23045,6 +23162,8 @@ Download the reference as \href{https://raw.githubusercontent.com/CTTIR/strategy
 
 \chapter*{References}\label{references}
 \addcontentsline{toc}{chapter}{References}
+
+\emph{R. Heller · Date: 2026-05-11 · Last changed: 2026-05-11}
 
 \protect\phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}

@@ -1,5 +1,11 @@
 # Bargaining Theory {#sec-bargaining}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Nash bargaining and ultimatum games — axiomatic solutions, alternating-offers models, and computational implementations in R.
 
 

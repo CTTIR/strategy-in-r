@@ -1,5 +1,11 @@
 # Impressum {-}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-11 · Last changed: 2026-11-09*
+:::
+<!-- page-provenance:end -->
+
 **Strategy in R: Game Theory, Simulation, and Machine Intelligence**
 
 © 2026 Raban Heller. ORCID: [0000-0001-8006-9742](https://orcid.org/0000-0001-8006-9742).
@@ -11,7 +17,7 @@ Source code released under the [MIT License](https://opensource.org/licenses/MIT
 Published online: <https://cttir.github.io/strategy-in-r/>
 Source repository: <https://github.com/CTTIR/strategy-in-r>
 
-Version: v0.1.0 · Build date: 2026-11-09
+Version: v0.1.0 · Build date: 2026-11-10
 
 ## Suggested citation {-}
 

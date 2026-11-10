@@ -1,5 +1,11 @@
 # Probability Essentials {#sec-probability}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Probability distributions, expectations, Bayes' rule, and stochastic processes.
 
 

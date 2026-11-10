@@ -1,5 +1,11 @@
 # nashpy via reticulate {#sec-nashpy-reticulate}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Accessing Python's nashpy library from R via reticulate for Nash equilibrium computation --- conceptual workflow, pure-R support enumeration as an equivalent alternative, and a comparative analysis across canonical games.
 
 

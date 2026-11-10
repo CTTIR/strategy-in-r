@@ -1,5 +1,11 @@
 # How to use this book {-}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-11 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 ## Reading paths {-}
 
 - **Linear** — front-to-back; expects no prior game-theory background.

@@ -1,5 +1,11 @@
 # Glossary {#sec-glossary}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Key terms and definitions used throughout this book.
 Action
 : A choice available to a player at a decision point. In a simultaneous game, the terms "action" and "strategy" are often used interchangeably.

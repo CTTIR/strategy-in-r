@@ -1,5 +1,11 @@
 # The gtree Package {#sec-gtree-package}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Extensive-form games and backward induction with the gtree package's domain-specific language --- plus a from-scratch pure-R implementation for solving game trees when external solvers are unavailable.
 
 
@@ -917,7 +923,7 @@ configs |>
     <tr><td headers="depth" class="gt_row gt_right">2</td>
 <td headers="branching" class="gt_row gt_center">2</td>
 <td headers="n_terminals" class="gt_row gt_right">4</td>
-<td headers="time_ms" class="gt_row gt_right">0.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">1.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">3</td>
 <td headers="branching" class="gt_row gt_center">2</td>
 <td headers="n_terminals" class="gt_row gt_right">8</td>
@@ -925,7 +931,7 @@ configs |>
     <tr><td headers="depth" class="gt_row gt_right">4</td>
 <td headers="branching" class="gt_row gt_center">2</td>
 <td headers="n_terminals" class="gt_row gt_right">16</td>
-<td headers="time_ms" class="gt_row gt_right">1.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">0.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">5</td>
 <td headers="branching" class="gt_row gt_center">2</td>
 <td headers="n_terminals" class="gt_row gt_right">32</td>
@@ -937,11 +943,11 @@ configs |>
     <tr><td headers="depth" class="gt_row gt_right">7</td>
 <td headers="branching" class="gt_row gt_center">2</td>
 <td headers="n_terminals" class="gt_row gt_right">128</td>
-<td headers="time_ms" class="gt_row gt_right">2.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">1.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">8</td>
 <td headers="branching" class="gt_row gt_center">2</td>
 <td headers="n_terminals" class="gt_row gt_right">256</td>
-<td headers="time_ms" class="gt_row gt_right">5.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">3.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">2</td>
 <td headers="branching" class="gt_row gt_center">3</td>
 <td headers="n_terminals" class="gt_row gt_right">9</td>
@@ -949,27 +955,27 @@ configs |>
     <tr><td headers="depth" class="gt_row gt_right">3</td>
 <td headers="branching" class="gt_row gt_center">3</td>
 <td headers="n_terminals" class="gt_row gt_right">27</td>
-<td headers="time_ms" class="gt_row gt_right">1.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">0.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">4</td>
 <td headers="branching" class="gt_row gt_center">3</td>
 <td headers="n_terminals" class="gt_row gt_right">81</td>
-<td headers="time_ms" class="gt_row gt_right">1.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">0.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">5</td>
 <td headers="branching" class="gt_row gt_center">3</td>
 <td headers="n_terminals" class="gt_row gt_right">243</td>
-<td headers="time_ms" class="gt_row gt_right">3.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">2.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">6</td>
 <td headers="branching" class="gt_row gt_center">3</td>
 <td headers="n_terminals" class="gt_row gt_right">729</td>
-<td headers="time_ms" class="gt_row gt_right">7.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">4.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">7</td>
 <td headers="branching" class="gt_row gt_center">3</td>
 <td headers="n_terminals" class="gt_row gt_right">2,187</td>
-<td headers="time_ms" class="gt_row gt_right">23.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">14.00</td></tr>
     <tr><td headers="depth" class="gt_row gt_right">8</td>
 <td headers="branching" class="gt_row gt_center">3</td>
 <td headers="n_terminals" class="gt_row gt_right">6,561</td>
-<td headers="time_ms" class="gt_row gt_right">69.00</td></tr>
+<td headers="time_ms" class="gt_row gt_right">45.00</td></tr>
   </tbody>
   
 </table>

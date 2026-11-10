@@ -1,5 +1,11 @@
 # Cooperative AI {#sec-cooperative-ai}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Commitment devices, program equilibrium, and welfare gains from AI-to-AI cooperation mechanisms.
 
 

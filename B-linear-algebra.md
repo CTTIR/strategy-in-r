@@ -1,5 +1,11 @@
 # Linear Algebra Essentials {#sec-linear-algebra}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Vectors, matrices, eigenvalues, and the linear algebra used throughout this book.
 
 

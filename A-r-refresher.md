@@ -1,5 +1,11 @@
 # R Refresher {#sec-r-refresher}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > A concise refresher on R fundamentals for readers who need a quick review.
 
 

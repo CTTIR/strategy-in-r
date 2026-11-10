@@ -1,5 +1,11 @@
 # Exercise Solutions {#sec-solutions}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Solutions to end-of-chapter exercises.
 
 

@@ -1,5 +1,11 @@
 # Colophon {-}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-11 · Last changed: 2026-06-10*
+:::
+<!-- page-provenance:end -->
+
 
 ```
 #> Built with:
@@ -14,11 +20,11 @@
 ```
 
 ```
-#>   Build date: 2026-11-09
+#>   Build date: 2026-11-10
 ```
 
 ```
-#>   Commit:   5804818
+#>   Commit:   7cc2e92
 ```
 
 LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via Ollama/`ollamar`) was used for copyediting, formatting, and scaffolding tasks only — see Acknowledgments.
@@ -37,7 +43,7 @@ LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via O
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-11-09
+#>  date     2026-11-10
 #>  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 

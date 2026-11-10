@@ -1,5 +1,11 @@
 # Performance Optimization {#sec-performance-rcpp}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Profiling R code, vectorization strategies, memory-efficient history storage, and when to consider Rcpp — demonstrated on game-theory simulations.
 
 
@@ -184,7 +190,7 @@ cat(sprintf("  Loop-based:  %.3f s (sd: %.3f)\n", time_loop$mean, time_loop$sd))
 ```
 
 ```
-#>   Loop-based:  0.269 s (sd: 0.021)
+#>   Loop-based:  0.188 s (sd: 0.013)
 ```
 
 ``` r
@@ -192,7 +198,7 @@ cat(sprintf("  Vectorized:  %.3f s (sd: %.3f)\n", time_vec$mean, time_vec$sd))
 ```
 
 ```
-#>   Vectorized:  0.017 s (sd: 0.011)
+#>   Vectorized:  0.013 s (sd: 0.006)
 ```
 
 ``` r
@@ -200,7 +206,7 @@ cat(sprintf("  Speedup:     %.1fx\n", time_loop$mean / time_vec$mean))
 ```
 
 ```
-#>   Speedup:     15.8x
+#>   Speedup:     15.0x
 ```
 
 ### Verifying correctness
@@ -350,7 +356,7 @@ cat(sprintf("  Total elapsed time: %.3f s\n", t_full["elapsed"]))
 ```
 
 ```
-#>   Total elapsed time: 0.183 s
+#>   Total elapsed time: 0.126 s
 ```
 
 ``` r
@@ -389,7 +395,7 @@ cat(sprintf("  Vectorized time:  %.3f s\n", t_vec["elapsed"]))
 ```
 
 ```
-#>   Vectorized time:  0.007 s
+#>   Vectorized time:  0.005 s
 ```
 
 ``` r
@@ -397,7 +403,7 @@ cat(sprintf("  Loop-based time:  %.3f s\n", t_full["elapsed"]))
 ```
 
 ```
-#>   Loop-based time:  0.183 s
+#>   Loop-based time:  0.126 s
 ```
 
 ``` r
@@ -405,7 +411,7 @@ cat(sprintf("  Speedup:          %.1fx\n", t_full["elapsed"] / t_vec["elapsed"])
 ```
 
 ```
-#>   Speedup:          26.1x
+#>   Speedup:          25.2x
 ```
 
 ### Step 3: Memory pre-allocation matters
@@ -468,10 +474,10 @@ for (i in seq_len(nrow(prealloc_df))) {
 ```
 
 ```
-#>   1,000     0.0040    0.0030      1x
-#>   5,000     0.0180    0.0010      18x
-#>   10,000    0.0670    0.0010      67x
-#>   20,000    0.2590    0.0010      259x
+#>   1,000     0.0030    0.0020      1x
+#>   5,000     0.0140    0.0000      Infx
+#>   10,000    0.0500    0.0010      50x
+#>   20,000    0.1940    0.0000      Infx
 ```
 
 The growing vector copies the entire vector on each append, producing $O(n^2)$ total work. Pre-allocation is $O(n)$.
