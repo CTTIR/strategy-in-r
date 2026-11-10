@@ -1,5 +1,11 @@
 # The gtree Package {#sec-gtree-package}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-05-11*
+:::
+<!-- page-provenance:end -->
+
 > Extensive-form games and backward induction with the gtree package's domain-specific language --- plus a from-scratch pure-R implementation for solving game trees when external solvers are unavailable.
 ```{r, setup, include=FALSE}
 source(here::here("R", "_common.R"))

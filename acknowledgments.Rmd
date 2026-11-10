@@ -1,5 +1,11 @@
 # Acknowledgments {-}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-11 · Last changed: 2026-06-10*
+:::
+<!-- page-provenance:end -->
+
 This book stands on the shoulders of the open R ecosystem. Special thanks to the maintainers of `bookdown`, the tidyverse, and the domain-specific packages that make computational game theory tractable in R: `GameTheory`, `CoopGame`, `gtree`, `EvolutionaryGames`, `igraph`, `Rcpp`, and many others.
 
 I am grateful to the bookdown community for tooling that made this book possible, and to the broader R community for sustained generosity with code, documentation, and ideas.

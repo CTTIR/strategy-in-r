@@ -1,5 +1,11 @@
 # LLM Agents and Strategic Reasoning {#sec-llm-agents}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Large language models as game-playing agents: level-k reasoning, cognitive hierarchy theory, bounded rationality, and simulated beauty contest experiments in R.
 ```{r, setup, include=FALSE}
 source(here::here("R", "_common.R"))

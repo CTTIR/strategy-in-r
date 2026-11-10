@@ -1,5 +1,11 @@
 # Evolutionarily Stable Strategies {#sec-ess}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-05-11*
+:::
+<!-- page-provenance:end -->
+
 > Formalizing evolutionary stability: ESS conditions, computational verification for symmetric games, invasion dynamics, and the Hawk-Dove-Retaliator game.
 ```{r, setup, include=FALSE}
 source(here::here("R", "_common.R"))

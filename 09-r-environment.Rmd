@@ -1,5 +1,11 @@
 # The R Environment for Strategic Computation {#sec-r-environment}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > A practical guide to setting up RStudio or Positron for game-theoretic computation in R, managing reproducibility with renv, organizing projects with a consistent directory layout, and configuring the shared R/_common.R pattern and knitr options used throughout this book.
 ```{r, setup, include=FALSE}
 source(here::here("R", "_common.R"))

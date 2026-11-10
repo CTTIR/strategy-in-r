@@ -1,5 +1,11 @@
 # Performance Optimization {#sec-performance-rcpp}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-05-11*
+:::
+<!-- page-provenance:end -->
+
 > Profiling R code, vectorization strategies, memory-efficient history storage, and when to consider Rcpp — demonstrated on game-theory simulations.
 ```{r, setup, include=FALSE}
 source(here::here("R", "_common.R"))

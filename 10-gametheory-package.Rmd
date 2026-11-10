@@ -1,5 +1,11 @@
 # The GameTheory Package {#sec-gametheory-package}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-05-11*
+:::
+<!-- page-provenance:end -->
+
 > A conceptual survey of the GameTheory R package for cooperative game theory, followed by from-scratch implementations of the Shapley value, Banzhaf index, and related solution concepts using base R and tidyverse.
 ```{r, setup, include=FALSE}
 source(here::here("R", "_common.R"))

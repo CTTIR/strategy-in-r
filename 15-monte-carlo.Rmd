@@ -1,5 +1,11 @@
 # Monte Carlo Methods for Games {#sec-monte-carlo}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-11-10*
+:::
+<!-- page-provenance:end -->
+
 > Monte Carlo simulation applied to game theory: estimating mixed-strategy payoffs, evaluating extensive-form strategies by sampling terminal nodes, and constructing bootstrap confidence intervals for expected values.
 ```{r, setup, include=FALSE}
 source(here::here("R", "_common.R"))

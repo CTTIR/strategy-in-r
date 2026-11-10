@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
   warning    = FALSE,
   cache      = TRUE,
   cache.lazy = FALSE,
-  dev        = c("png", "pdf"),
+  dev        = c("png", "cairo_pdf"),
   dpi        = 300,
   fig.align  = "center",
   fig.width  = 7,
@@ -22,6 +22,12 @@ knitr::opts_chunk$set(
   out.width  = "90%",
   comment    = "#>"
 )
+
+# Package attachment and other setup side effects must run in every process.
+knitr::opts_hooks$set(cache = function(options) {
+  if (isTRUE(grepl("(^|[-_])setup($|[-_])", options$label))) options$cache <- FALSE
+  options
+})
 
 options(
   scipen = 999,

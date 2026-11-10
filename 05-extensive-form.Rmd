@@ -1,5 +1,11 @@
 # Extensive-Form Games {#sec-extensive-form}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-05-11*
+:::
+<!-- page-provenance:end -->
+
 > Game trees, backward induction, and subgame perfect equilibrium --- the tools for analyzing sequential strategic interaction where timing and information matter.
 ```{r, setup, include=FALSE}
 source(here::here("R", "_common.R"))

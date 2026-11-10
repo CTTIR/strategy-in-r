@@ -1,5 +1,11 @@
 # Replicating Axelrod's Tournament {#sec-axelrod-tournament}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-05-11*
+:::
+<!-- page-provenance:end -->
+
 > A computational replication of Axelrod's 1980 iterated Prisoner's Dilemma tournament in R, exploring why Tit for Tat won and what it teaches about the evolution of cooperation.
 ```{r, setup, include=FALSE}
 source(here::here("R", "_common.R"))

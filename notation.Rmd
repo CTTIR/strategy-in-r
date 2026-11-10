@@ -1,5 +1,11 @@
 # Notation {-}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-11 · Last changed: 2026-05-11*
+:::
+<!-- page-provenance:end -->
+
 | Symbol | Meaning |
 |--------|---------|
 | $N$ | Set of players, $N = \{1, 2, \dots, n\}$ |

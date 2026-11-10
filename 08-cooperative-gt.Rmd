@@ -1,5 +1,11 @@
 # Cooperative Game Theory {#sec-cooperative-gt}
 
+<!-- page-provenance:start -->
+::: {.page-provenance}
+*R. Heller · Date: 2026-05-08 · Last changed: 2026-05-11*
+:::
+<!-- page-provenance:end -->
+
 > An introduction to cooperative game theory with transferable utility. Covers the characteristic function, the core, and the Shapley value with computational examples in R, including a worked cost-sharing problem for three municipalities.
 ```{r, setup, include=FALSE}
 source(here::here("R", "_common.R"))

@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -39,6 +41,15 @@ jobs:
           python3 tests/test-epub.py
           Rscript tests/test-mcts.R
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PDF validation tools
+        run: python -m pip install pypdf
+
+      - name: Refresh source dates
+        run: python3 scripts/update-page-provenance.py
+
       - name: Render HTML
         run: Rscript -e 'bookdown::render_book("index.Rmd", output_format = "bookdown::bs4_book")'
 
@@ -47,11 +58,9 @@ jobs:
 
       - name: Render PDF
         run: Rscript -e 'bookdown::render_book("index.Rmd", output_format = "bookdown::pdf_book")'
-        continue-on-error: true
 
       - name: Render EPUB
         run: Rscript -e 'bookdown::render_book("index.Rmd", output_format = "bookdown::epub_book")'
-        continue-on-error: true
 
       - name: Validate EPUB when produced
         run: |
@@ -59,8 +68,20 @@ jobs:
             python3 scripts/check-epub.py docs/strategy-in-r.epub epub-check.json
           fi
 
+      - name: Extract verified chapter PDFs
+        run: python3 scripts/split-chapter-pdfs.py
+
       - name: Disable Jekyll on Pages
         run: touch docs/.nojekyll
+
+      - name: Verify page notes and downloadable formats
+        run: |
+          python3 tests/test_page_provenance.py
+          python3 tests/test_book_delivery.py
+          python3 tests/test_split_chapter_pdfs.py
+          Rscript tests/test_setup_cache.R
+          python3 scripts/finalize-book.py docs
+          python3 scripts/check-book.py docs
 
       - uses: actions/setup-python@v5
         with:
