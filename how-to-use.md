@@ -28,7 +28,7 @@
 ## Downloads {-}
 
 - A whole-book PDF and EPUB are linked from the navbar.
-- Each chapter page has a per-chapter PDF download in the top-right.
+- Each chapter page offers the chapter as PDF and EPUB below its title.
 
 ## How to cite {-}
 

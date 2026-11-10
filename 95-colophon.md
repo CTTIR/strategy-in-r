@@ -24,7 +24,7 @@
 ```
 
 ```
-#>   Commit:   7cc2e92
+#>   Commit:   4ee6938
 ```
 
 LLM assistance (Chat AI from KISSKI/GWDG, plus a self-hosted Mistral Small via Ollama/`ollamar`) was used for copyediting, formatting, and scaffolding tasks only — see Acknowledgments.
