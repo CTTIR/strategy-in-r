@@ -30,25 +30,19 @@
   document.addEventListener("DOMContentLoaded", async function () {
     if (document.querySelector(".sidebar-downloads")) return;
     var anchor = null;
-    var chapterId = null;
     var candidates = document.querySelectorAll(".sidebar-chapter a, aside a, nav a");
     for (var i = 0; i < candidates.length; i++) {
       var text = (candidates[i].textContent || "").trim().toLowerCase();
       if (text === "view source" || text === "edit this page") {
         if (!anchor) anchor = candidates[i].closest("h2, .page-links, div, ul");
-        var source = new URL(candidates[i].href, window.location.href);
-        var filename = decodeURIComponent(source.pathname.split("/").pop());
-        if (/^[a-zA-Z0-9_.-]+\.Rmd$/.test(filename)) {
-          chapterId = filename.replace(/\.Rmd$/, ".pdf");
-        }
       }
     }
     if (!anchor) return;
+    // Chapter downloads come from the shared panel under each chapter title.
     var choices = [
       ["strategy-in-r.pdf", "Entire book (PDF)"],
       ["strategy-in-r.epub", "Entire book (EPUB)"]
     ];
-    if (chapterId) choices.push(["pdf-chapters/" + chapterId, "This chapter (PDF)"]);
     var available = await Promise.all(choices.map(async function (item) {
       try {
         var response = await fetch(item[0], { method: "HEAD" });

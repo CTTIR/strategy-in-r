@@ -14,7 +14,7 @@ A free, open-source book by **Raban Heller**.
 
 - 📄 [Whole book (PDF)](https://cttir.github.io/strategy-in-r/strategy-in-r.pdf)
 - 📚 [EPUB](https://cttir.github.io/strategy-in-r/strategy-in-r.epub)
-- 📑 Per-chapter PDFs: available outputs appear in each chapter’s download sidebar.
+- 📑 Per-chapter PDF and EPUB: offered below each chapter’s title on the website.
 
 ## What this book covers
 
@@ -97,11 +97,11 @@ not the day the site is built. Then validate the actual downloadable artifacts:
 ```sh
 python3 scripts/update-page-provenance.py
 Rscript -e 'bookdown::render_book("index.Rmd", output_format = "all")'
-python3 scripts/split-chapter-pdfs.py
 python3 scripts/finalize-book.py
 python3 scripts/check-book.py
 ```
 
 The final check fails on missing author/date notes, broken local links or anchors,
-and missing or unreadable whole-book PDF/EPUB files. Chapter downloads reuse the
-whole-book PDF’s bookmarks instead of executing every chapter a second time.
+and missing or unreadable whole-book PDF/EPUB files. CI then builds and checks
+the chapter PDF and EPUB downloads in `docs/downloads/chapters/` with
+`scripts/build-downloads-ci.sh`.

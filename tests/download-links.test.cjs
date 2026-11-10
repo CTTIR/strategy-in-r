@@ -22,9 +22,9 @@ async function render(available, reject = false) {
 test('absent optional artifacts do not produce broken download links', async () => {
   assert.deepEqual(await render([]), []);
 });
-test('chapter download follows the source filename rather than the HTML anchor', async () => {
+test('the sidebar offers only the whole-book downloads', async () => {
   const files = ['strategy-in-r.pdf', 'strategy-in-r.epub', 'pdf-chapters/27-self-play-alphazero.pdf'];
-  assert.deepEqual(await render(files), files);
+  assert.deepEqual(await render(files), files.slice(0, 2));
 });
 test('partial format builds expose only their available artifacts', async () => {
   assert.deepEqual(await render(['strategy-in-r.epub']), ['strategy-in-r.epub']);

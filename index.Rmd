@@ -19,7 +19,7 @@ cover-image: "images/cover.png"
 
 <!-- page-provenance:start -->
 ::: {.page-provenance}
-*R. Heller · Date: 2026-05-11 · Last changed: 2026-11-09*
+*R. Heller · Date: 2026-05-11 · Last changed: 2026-11-10*
 :::
 <!-- page-provenance:end -->
 
@@ -43,7 +43,7 @@ The book is for graduate students, researchers, and practitioners with working R
 
 - **Reading paths.** Front-to-back works; theorists can skim Parts II–IV; R programmers can dip into Parts II–IV and refer back to Part I as needed.
 - **Code lives** under `R/` (helpers, theme, solvers) and `python/` (CFR, deep RL via `reticulate`); example data under `data/`. Every chapter is rebuildable in isolation: `bookdown::preview_chapter("12-gtree-package.Rmd")`.
-- **Per-chapter PDF.** When a chapter PDF is available, its download appears in the sidebar.
+- **Per-chapter downloads.** Each chapter page offers the chapter as PDF and EPUB below its title.
 - **Whole-book downloads.** The PDF and EPUB are linked from the navbar's Download menu.
 - **Corrections and suggestions** go to the [issue tracker](https://github.com/CTTIR/strategy-in-r/issues).
 
