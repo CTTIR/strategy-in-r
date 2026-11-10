@@ -58,3 +58,8 @@ desktop.ini
 /_generated/
 /*_cache/
 /_bookdown_files/
+
+# Local bookdown builds. CI renders the site into docs/ and deploys it to
+# gh-pages; bookdown also leaves the merged book's cache beside the sources.
+/docs/
+/strategy-in-r.rds
